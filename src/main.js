@@ -11,6 +11,8 @@ import Quasar from 'quasar'
 import VueResource from 'vue-resource'
 import VueLazyload from 'vue-lazyload'
 import VuePreview from 'vue-preview'
+import VueAnalytics from 'vue-analytics'
+
 import router from './router'
 import store from './store'
 
@@ -20,6 +22,10 @@ Vue.use(VueLazyload, {
   loading: 'statics/loading.gif'
 })
 Vue.use(VuePreview)
+Vue.use(VueAnalytics, {
+  id: 'UA-96644570-1',
+  router
+})
 
 Vue.http.options.root = 'https://bangdream.ga/'
 
