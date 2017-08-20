@@ -13,7 +13,7 @@
         :columns="cardColumns">
         <template slot="col-thumb" scope="cell">
           <div class="shadow-1 shadow-transition hoverable-3" :class="`thumb-${getCardThumbFrame(cell.row)}`">
-            <img class="thumb-table" v-lazy:background-image="`https://bangdream.ga/hotlink-ok//assets/thumb/chara/card0000${Math.trunc(Number(cell.row.cardID) / 50)}_${cell.row.cardRes}_normal.png`"
+            <img class="thumb-table" v-lazy:background-image="`https://bangdream.ga/assets/thumb/chara/card0000${Math.trunc(Number(cell.row.cardID) / 50)}_${cell.row.cardRes}_normal.png`"
             @click="$router.push({ name: 'cardDetail', params: { cardID: cell.row.cardID } })">
           </div>
         </template>

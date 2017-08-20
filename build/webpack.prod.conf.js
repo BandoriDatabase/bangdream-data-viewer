@@ -7,7 +7,8 @@ var
   baseWebpackConfig = require('./webpack.base.conf'),
   ExtractTextPlugin = require('extract-text-webpack-plugin'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
-  OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+  OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin'),
+  UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = merge(baseWebpackConfig, {
   module: {
@@ -19,12 +20,14 @@ module.exports = merge(baseWebpackConfig, {
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
+    new UglifyJSPlugin({
       sourceMap: config.build.productionSourceMap,
-      minimize: true,
-      compress: {
-        warnings: false
-      }
+      uglifyOptions: {
+        compress: {
+          warnings: false
+        },
+      },
+      parallel: true
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.

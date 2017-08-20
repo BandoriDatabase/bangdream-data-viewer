@@ -40,7 +40,7 @@ export default {
     gallery () {
       if (!this.singleFrameCartoons) return []
       return this.singleFrameCartoons.map(elem => {
-        elem.assetAddress = `https://bangdream.ga/hotlink-ok/assets/loading/downloading_${elem.assetBundleName}.png`
+        elem.assetAddress = `https://bangdream.ga/assets/loading/downloading_${elem.assetBundleName}.png`
         return elem
       })
     },
@@ -48,7 +48,7 @@ export default {
       // for photoswipe
       if (!this.singleFrameCartoons) return []
       return this.singleFrameCartoons.map(elem => ({
-        src: `https://bangdream.ga/hotlink-ok/assets/loading/downloading_${elem.assetBundleName}.png`,
+        src: `https://bangdream.ga/assets/loading/downloading_${elem.assetBundleName}.png`,
         title: elem.title,
         w: 800,
         h: 640

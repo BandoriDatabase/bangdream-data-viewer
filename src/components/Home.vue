@@ -34,7 +34,7 @@
               @click="$refs.cMnormal.$refs.cardModal.open()">
               N ID: {{getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardID, latestEvent.eventType}}
               <span class="row justify-center items-center">
-                <img class="thumb responsive" v-lazy="`https://bangdream.ga/hotlink-ok//assets/thumb/chara/card0000${Math.trunc(getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardID / 50)}_${getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardRes}_normal.png`">
+                <img class="thumb responsive" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${Math.trunc(getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardID / 50)}_${getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardRes}_normal.png`">
                 {{getCharacter(getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).characterId).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
               </span>
             </div>
@@ -46,7 +46,7 @@
               @click="$refs.cMspecial.$refs.cardModal.open()">
               SR ID: {{getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID}}
               <span class="row justify-center items-center">
-                <img class="thumb responsive" v-lazy="`https://bangdream.ga/hotlink-ok//assets/thumb/chara/card0000${Math.trunc(getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID / 50)}_${getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardRes}_normal.png`">
+                <img class="thumb responsive" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${Math.trunc(getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID / 50)}_${getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardRes}_normal.png`">
                 {{getCharacter(getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).characterId).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
               </span>
             </div>
@@ -92,7 +92,7 @@
         @click="$router.push({ name: 'cardDetail', params: { cardID: latestCard.cardID } })">
         ID: {{latestCard.cardID}}
         <span class="row justify-center items-center">
-          <img class="thumb" v-lazy="`https://bangdream.ga/hotlink-ok//assets/thumb/chara/card0000${Math.trunc(latestCard.cardID / 50)}_${latestCard.cardRes}_normal.png`">
+          <img class="thumb" v-lazy="`https://bangdream.ga//assets/thumb/chara/card0000${Math.trunc(latestCard.cardID / 50)}_${latestCard.cardRes}_normal.png`">
           {{getCharacter(latestCard.characterId).characterName}}
         </span>
       </div>-->
@@ -153,7 +153,7 @@ export default {
       const retKey = Object.keys(this.cardInfos).slice(-1)
       return this.cardInfos[retKey]
       // don't know why CloudFlare reject the image request
-      // return `https://bangdream.ga/hotlink-ok//assets/thumb/chara/card0000${latestCardGroup}_${latestCard.detail.cardRes}_normal.png`
+      // return `https://bangdream.ga//assets/thumb/chara/card0000${latestCardGroup}_${latestCard.detail.cardRes}_normal.png`
     },
     latestEvent () {
       if (this.getMasterDBStatus !== 2) return {eventID: 0}
