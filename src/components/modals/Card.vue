@@ -1,7 +1,9 @@
 <template>
   <q-modal ref="cardModal" :content-css="{maxWidth: '415px', padding: '5px'}">
     <div id="basic-info column gutter">
-      <h6 :class="`text-${getPalette(cardInfo.attr)}`">{{characterInfo.characterName}} - {{cardInfo.title}}</h6>
+      <div>
+        <h6 :class="`text-${getPalette(cardInfo.attr)}`">{{characterInfo.characterName}} - {{cardInfo.title}}</h6>
+      </div>
       <div class="card-img-parent" @click="$router.push({ name: 'cardDetail', params: { cardID: cardInfo.cardID } })">
         <img class="preview-img card-img-main" v-lazy="`https://bangdream.ga/assets/characters/resourceset/${cardInfo.cardRes}_card_normal.png`">
         <img class="card-img-frame" :src="`statics/frame_${getCardFrame()}.png`">
@@ -10,8 +12,8 @@
       </div>
       <div class="max-attr">
         <p>Max Attributes</p>
-        <div class="row">
-          <div class="width-1of4">
+        <div class="row gutter">
+          <div class="col-3">
             Total
             <h5>
               {{Number(cardInfo.parameterMap[cardInfo.maxLevel].performance) +
@@ -28,7 +30,7 @@
               Number(cardInfo.episodes.entries[1].appendVisual)}}
             </h5>
           </div>
-          <div class="width-1of4 text-pink-6">
+          <div class="col-3 text-pink-6">
             Perform
             <h5>
               {{Number(cardInfo.parameterMap[cardInfo.maxLevel].performance) +
@@ -37,7 +39,7 @@
               Number(cardInfo.episodes.entries[1].appendPerformance)}}
             </h5>
           </div>
-          <div class="width-1of4 text-indigo-6">
+          <div class="col-3 text-indigo-6">
             Technique
             <h5>
               {{Number(cardInfo.parameterMap[cardInfo.maxLevel].technique) +
@@ -46,7 +48,7 @@
               Number(cardInfo.episodes.entries[1].appendTechnique)}}
             </h5>
           </div>
-          <div class="width-1of4 text-orange-8">
+          <div class="col-3 text-orange-8">
             Visual
             <h5>
               {{Number(cardInfo.parameterMap[cardInfo.maxLevel].visual) +
@@ -58,20 +60,25 @@
         </div>
       </div>
       <div class="skill">
-        Skill Level {{skillLv}}:
+        Skill (Level {{skillLv}})
         <p>{{skillName}}</p>
         <p>{{skillInfo.simpleDescription}}</p>
         <p>{{getSkillDesc(skillInfo.description, skillEffect, judgeList, skillLv)}}</p>
       </div>
     </div>
     <div class="action-buttons">
-      <button class="primary" @click="$router.push({ name: 'cardDetail', params: { cardID: cardInfo.cardID } })">Detail page</button>
-      <button class="negative" @click="$refs.cardModal.close()">Close</button>
+      <q-btn color="primary" @click="$router.push({ name: 'cardDetail', params: { cardID: cardInfo.cardID } })">Detail page</q-btn>
+      <q-btn color="negative" @click="$refs.cardModal.close()">Close</q-btn>
     </div>
   </q-modal>
 </template>
 
 <script>
+import {
+  QModal,
+  QBtn,
+  QIcon
+} from 'quasar'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -93,6 +100,11 @@ export default {
       type: String,
       required: true
     }
+  },
+  components: {
+    QModal,
+    QBtn,
+    QIcon
   },
   computed: {
     ...mapGetters('DB', [

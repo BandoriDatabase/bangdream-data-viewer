@@ -5,7 +5,7 @@
       <div class="block">
         <p>Hint: <span class="desktop-only">Click</span><span class="mobile-only">Touch</span> Thumb/Character/Title to see detail infos. 
           Switch name display: <label><q-toggle v-model="displayName"></q-toggle>{{displayName ? 'Romaji' : 'Kanji'}}</label></p>
-        <button class="float-right pink" @click="$refs.rightDrawer.open()">Filter</button>
+        <q-btn color="pink" class="float-right" @click="showFilter">Filter</q-btn>
       </div>
       <q-data-table
         :data="showCardInfoList"
@@ -44,53 +44,17 @@
           {{skillMap[cell.data].skillName}}
         </template>
       </q-data-table>
-
-      <q-drawer right-side ref="rightDrawer">
-        <div class="list platform-delimiter">
-          <div class="toolbar pink">
-            <q-toolbar-title>
-              Filter
-            </q-toolbar-title>
-          </div>
-          <div>
-            <q-select class="full-width"
-              type="checkbox"
-              v-model="selectCharacters"
-              :options="Object.keys(characterInfos).filter(key => Number(key) <= 25).map(key => ({
-                label: displayName ? 
-                        capitalizeFirstLetter(WanaKana.toRomaji(characterInfos[key].ruby)) : 
-                        characterInfos[key].characterName,
-                value: characterInfos[key].characterID
-              }))"
-              label="Pick Characters (None=All)"
-            ></q-select>
-          </div>
-          <div>
-            <q-select class="full-width"
-              type="checkbox"
-              v-model="selectSkills"
-              :options="skillInfos.reduce((prev, curr) => {
-                if (prev.find(elem2 => elem2.skillId === curr.skillId)) return prev
-                prev.push(curr)
-                return prev
-              }, []).map(elem => ({
-                label: elem.simpleDescription,
-                value: elem.skillId
-              }))"
-              label="Pick Skills (None=All)"
-            ></q-select>
-          </div>
-          <div>
-            <button class="full-width pink" @click="doFilter">Apply</button>
-          </div>
-        </div>
-      </q-drawer>
     </div>
   </div>
 </template>
 
 <script>
-import { Platform } from 'quasar'
+import {
+  Platform,
+  QDataTable,
+  QBtn,
+  Dialog
+} from 'quasar'
 import { mapGetters } from 'vuex'
 import WanaKana from 'wanakana'
 
@@ -165,6 +129,10 @@ export default {
       showCardInfoList: [],
       selectSkills: []
     }
+  },
+  components: {
+    QDataTable,
+    QBtn
   },
   computed: {
     ...mapGetters('DB', [
@@ -241,6 +209,55 @@ export default {
         ret = ret.filter(elem => cardOfSkills.indexOf(elem.cardID) !== -1)
       }
       this.showCardInfoList = ret
+    },
+    showFilter () {
+      Dialog.create({
+        title: 'Filter options',
+        message: 'Two filters are avaliable: Characters and Skills',
+        form: {
+          header1: {
+            type: 'heading',
+            label: 'Characters'
+          },
+          characters: {
+            type: 'checkbox',
+            model: this.selectCharacters,
+            items: Object.keys(this.characterInfos).filter(key => Number(key) <= 25).map(key => ({
+              label: this.displayName
+                ? this.capitalizeFirstLetter(WanaKana.toRomaji(this.characterInfos[key].ruby))
+                : this.characterInfos[key].characterName,
+              value: this.characterInfos[key].characterID
+            }))
+          },
+          header2: {
+            type: 'heading',
+            label: 'Skills'
+          },
+          skills: {
+            type: 'checkbox',
+            model: this.selectSkills,
+            items: this.skillInfos.reduce((prev, curr) => {
+              if (prev.find(elem2 => elem2.skillId === curr.skillId)) return prev
+              prev.push(curr)
+              return prev
+            }, []).map(elem => ({
+              label: elem.simpleDescription,
+              value: elem.skillId
+            }))
+          }
+        },
+        buttons: [
+          'Cancel',
+          {
+            label: 'OK',
+            handler: (data) => {
+              console.log(data)
+              this.selectCharacters = data.characters
+              this.doFilter()
+            }
+          }
+        ]
+      })
     }
   }
 }

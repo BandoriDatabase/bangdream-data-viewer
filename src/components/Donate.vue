@@ -1,7 +1,7 @@
 <template>
   <div>
     <h4>Thank you for visiting this site and this donation page.</h4>
-    <h5>Developing and hosting this site has a few but still some cost. If you think this site is helpful and want me to continue on development steadily, please help and support me.</h5>
+    <h5>Developing and hosting this site cost a few. If you think this site is useful, you can support me to help continue the development work.</h5>
     <p>Choose one of those method to support:</p>
     <div>
       <p>中国大陆用户</p>

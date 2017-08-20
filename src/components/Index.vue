@@ -1,42 +1,45 @@
 <template>
-  <q-layout>
-    <div slot="header" class="toolbar pink">
-      <button @click="$refs.leftDrawer.open()">
-        <i>menu</i>
-      </button>
+  <q-layout ref="main" view="hHr LpR lFf">
+    <q-toolbar slot="header" class="toolbar bg-pink"
+      :left-breakpoint="996">
+      <q-btn flat @click="$refs.main.toggleLeft()">
+        <q-icon name="menu" />
+      </q-btn>
       <q-toolbar-title :padding="0">
-        Bandori Database v{{master.constants ? master.constants.resVer : '0.0.0.0'}}
+        Bandori Database v{{master.constants && master.constants.resVer ? master.constants.resVer : '0.0.0.0'}}
       </q-toolbar-title>
-    </div>
+    </q-toolbar>
 
-    <q-drawer ref="leftDrawer" swipe-only>
-      <div class="toolbar pink">
-        <q-toolbar-title>
-          Toolbox
-        </q-toolbar-title>
-      </div>
-      <div class="list no-border platform-delimiter">
-        <q-drawer-link icon="home" :to="{path: '/', exact: true}">
-          Home
-        </q-drawer-link>
-        <q-drawer-link icon="picture_in_picture" :to="'/card'">
-          Cards
-        </q-drawer-link>
-        <q-drawer-link icon="library_music" :to="'/music'">
-          Musics
-        </q-drawer-link>
-        <q-drawer-link icon="photo_library" :to="'/sfcs'">
-          Single Frame Cartoons
-        </q-drawer-link>
-        <q-drawer-link icon="card_giftcard" :to="'/donate'">
-          Donate
-        </q-drawer-link>
-      </div>
-      <div class="list platform-delimiter fixed-bottom">
-        <p>App Ver v0.1.0</p>
-        <p>Built with Quasar Framework v{{$q.version}}</p>
-      </div>
-    </q-drawer>
+    <div slot="left">
+      <q-list no-border link inset-separator>
+        <q-list-header>Toolbox</q-list-header>
+        <q-side-link item :to="{path: '/', exact: true}">
+          <q-item-side icon="home" />
+          <q-item-main label="Home" />
+        </q-side-link>
+        <q-side-link item to="/card">
+          <q-item-side icon="picture_in_picture" />
+          <q-item-main label="Cards" />
+        </q-side-link>
+        <q-side-link item to="/music">
+          <q-item-side icon="library_music" />
+          <q-item-main label="Musics" />
+        </q-side-link>
+        <q-side-link item to="/sfcs">
+          <q-item-side icon="photo_library" />
+          <q-item-main label="Single Frame Cartoons" />
+        </q-side-link>
+        <q-side-link item to="/donate">
+          <q-item-side icon="card_giftcard" />
+          <q-item-main label="Donate" />
+        </q-side-link>
+        <q-item-separator />
+        <q-list-header>Building info</q-list-header>
+        <q-item>
+          <q-item-main label="App Ver v0.1.0" />
+        </q-item>
+      </q-list>
+    </div>
 
     <!--
       Replace following "div" with
@@ -44,52 +47,57 @@
       if using subRoutes
     -->
     <div class="layout-view">
-      <!--<div class="logo-container non-selectable no-pointer-events">
-        <div class="logo" :style="position">
-          <img src="~assets/quasar-logo.png">
-          <p class="caption text-center">
-            <span v-if="orienting || rotating">Tilt your device.</span>
-            <template v-else>
-              <span class="touch-only">Touch screen and move.</span>
-            </template>
-          </p>
-        </div>
-      </div>-->
-      <router-view class="layout-padding"></router-view>
+      <router-view class="layout-padding" />
+      <q-btn
+        v-back-to-top.animate="{offset: 500, duration: 200}"
+        round
+        color="teal-5"
+        class="fixed-bottom-right"
+        style="margin: 0 15px 15px 0"
+      >
+        <q-icon name="keyboard_arrow_up" />
+      </q-btn>
     </div>
   </q-layout>
 </template>
 
 <script>
-// const moveForce = 30
-// const rotateForce = 40
-// const RAD_TO_DEG = 180 / Math.PI
-
-import { Loading } from 'quasar'
+import {
+  Loading,
+  QLayout,
+  QListHeader,
+  QList,
+  QIcon,
+  QSideLink,
+  QItemSide,
+  QItemMain,
+  QBtn,
+  QToolbar,
+  QToolbarTitle,
+  QItem,
+  BackToTop,
+  QItemSeparator
+} from 'quasar'
 import { mapActions, mapState } from 'vuex'
 
-// function getRotationFromAccel (accelX, accelY, accelZ) {
-//   /* Reference: http://stackoverflow.com/questions/3755059/3d-accelerometer-calculate-the-orientation#answer-30195572 */
-//   const sign = accelZ > 0 ? 1 : -1
-//   const miu = 0.001
-
-//   return {
-//     roll: Math.atan2(accelY, sign * Math.sqrt(Math.pow(accelZ, 2) + miu * Math.pow(accelX, 2))) * RAD_TO_DEG,
-//     pitch: -Math.atan2(accelX, Math.sqrt(Math.pow(accelY, 2) + Math.pow(accelZ, 2))) * RAD_TO_DEG
-//   }
-// }
-
 export default {
-  // data () {
-  //   return {
-  //     orienting: window.DeviceOrientationEvent && !Platform.is.desktop,
-  //     rotating: window.DeviceMotionEvent && !Platform.is.desktop,
-  //     moveX: 0,
-  //     moveY: 0,
-  //     rotateY: 0,
-  //     rotateX: 0
-  //   }
-  // },
+  components: {
+    QLayout,
+    QListHeader,
+    QList,
+    QIcon,
+    QSideLink,
+    QItemSide,
+    QItemMain,
+    QBtn,
+    QToolbar,
+    QToolbarTitle,
+    QItem,
+    QItemSeparator
+  },
+  directives: {
+    BackToTop
+  },
   computed: {
     ...mapState('DB', [
       'master',
@@ -97,16 +105,6 @@ export default {
       'live2d',
       'getLive2DDBStatus'
     ])
-    // position () {
-    //   const transform = `rotateX(${this.rotateX}deg) rotateY(${this.rotateY}deg)`
-    //   return {
-    //     top: this.moveY + 'px',
-    //     left: this.moveX + 'px',
-    //     '-webkit-transform': transform,
-    //     '-ms-transform': transform,
-    //     transform
-    //   }
-    // },
   },
   watch: {
     getMasterDBStatus (newVal) {
@@ -135,76 +133,14 @@ export default {
       'getMasterDB',
       'getLive2D'
     ])
-    // move (evt) {
-    //   const {width, height} = Utils.dom.viewport()
-    //   const {top, left} = Utils.event.position(evt)
-    //   const halfH = height / 2
-    //   const halfW = width / 2
-
-    //   this.moveX = (left - halfW) / halfW * -moveForce
-    //   this.moveY = (top - halfH) / halfH * -moveForce
-    //   this.rotateY = (left / width * rotateForce * 2) - rotateForce
-    //   this.rotateX = -((top / height * rotateForce * 2) - rotateForce)
-    // },
-    // rotate (evt) {
-    //   if (evt.rotationRate &&
-    //       evt.rotationRate.beta !== null &&
-    //       evt.rotationRate.gamma !== null) {
-    //     this.rotateX = evt.rotationRate.beta * 0.7
-    //     this.rotateY = evt.rotationRate.gamma * -0.7
-    //   }
-    //   else {
-    //     /* evt.acceleration may be null in some cases, so we'll fall back
-    //        to evt.accelerationIncludingGravity */
-    //     const accelX = evt.acceleration.x || evt.accelerationIncludingGravity.x
-    //     const accelY = evt.acceleration.y || evt.accelerationIncludingGravity.y
-    //     const accelZ = evt.acceleration.z || evt.accelerationIncludingGravity.z - 9.81
-
-    //     const rotation = getRotationFromAccel(accelX, accelY, accelZ)
-    //     this.rotateX = rotation.roll * 0.7
-    //     this.rotateY = rotation.pitch * -0.7
-    //   }
-    // },
-    // orient (evt) {
-    //   if (evt.beta === null || evt.gamma === null) {
-    //     window.removeEventListener('deviceorientation', this.orient, false)
-    //     this.orienting = false
-
-    //     window.addEventListener('devicemotion', this.rotate, false)
-    //   }
-    //   else {
-    //     this.rotateX = evt.beta * 0.7
-    //     this.rotateY = evt.gamma * -0.7
-    //   }
-    // }
   },
   mounted () {
     this.$nextTick(() => {
-      // if (this.orienting) {
-      //   window.addEventListener('deviceorientation', this.orient, false)
-      // }
-      // else if (this.rotating) {
-      //   window.addEventListener('devicemove', this.rotate, false)
-      // }
-      // else {
-      //   document.addEventListener('mousemove', this.move)
-      // }
       if (this.getMasterDBStatus !== 2) {
         this.getMasterDB()
           .then(() => this.getLive2D())
       }
     })
-  },
-  beforeDestroy () {
-    // if (this.orienting) {
-    //   window.removeEventListener('deviceorientation', this.orient, false)
-    // }
-    // else if (this.rotating) {
-    //   window.removeEventListener('devicemove', this.rotate, false)
-    // }
-    // else {
-    //   document.removeEventListener('mousemove', this.move)
-    // }
   }
 }
 </script>

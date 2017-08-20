@@ -23,6 +23,11 @@ Vue.use(VuePreview)
 
 Vue.http.options.root = 'https://bangdream.ga/'
 
+if (__THEME === 'mat') {
+  require('quasar-extras/roboto-font')
+}
+import 'quasar-extras/material-icons'
+
 Quasar.start(() => {
   /* eslint-disable no-new */
   new Vue({

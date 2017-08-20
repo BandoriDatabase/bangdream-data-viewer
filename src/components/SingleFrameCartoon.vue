@@ -1,24 +1,38 @@
 <template>
-  <section>
-    <div class="row sm-column md-column gutter" v-for="(singleFrames, idx) in gallery" :key="idx">
-      <div class="width-1of3" v-for="frame in singleFrames" :key="frame.singleFrameCartoonId">
-        <div class="card">
-          <div class="card-title bg-pink text-white">
-            {{frame.title}}
-          </div>
-          <div class="card-content card-force-top-padding">
-            <img v-lazy="frame.assetAddress" class="responsive">
-          </div>
-        </div>
-      </div>
+  <div>
+    <p>Hint: <span class="desktop-only">Click</span><span class="mobile-only">Touch</span> and open large picture</p>
+    <div class="row sm-column md-column">
+      <q-card class="col-lg-3 col-xl-3 col-12" v-for="(singleFrame, idx) in gallery" :key="idx">
+        <q-card-media>
+          <img v-lazy="singleFrame.assetAddress" class="responsive preview-img"
+            @click="$preview.open(idx, previewGallery, {
+              fullscreenEl: true,
+              zoomEl: true,
+              shareEl: true
+            })" />
+          <q-card-title slot="overlay">
+            {{singleFrame.title}}
+          </q-card-title>
+        </q-card-media>
+      </q-card>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
+import {
+  QCard,
+  QCardTitle,
+  QCardMedia
+} from 'quasar'
 import { mapGetters } from 'vuex'
 
 export default {
+  components: {
+    QCard,
+    QCardTitle,
+    QCardMedia
+  },
   computed: {
     ...mapGetters('DB', [
       'singleFrameCartoons'
@@ -28,12 +42,17 @@ export default {
       return this.singleFrameCartoons.map(elem => {
         elem.assetAddress = `https://bangdream.ga/hotlink-ok/assets/loading/downloading_${elem.assetBundleName}.png`
         return elem
-      }).reduce((prev, curr, currIdx) => {
-        const prevIdx = Math.trunc(currIdx / 3)
-        if (!prev[prevIdx]) prev[prevIdx] = []
-        prev[prevIdx].push(curr)
-        return prev
-      }, [])
+      })
+    },
+    previewGallery () {
+      // for photoswipe
+      if (!this.singleFrameCartoons) return []
+      return this.singleFrameCartoons.map(elem => ({
+        src: `https://bangdream.ga/hotlink-ok/assets/loading/downloading_${elem.assetBundleName}.png`,
+        title: elem.title,
+        w: 800,
+        h: 640
+      }))
     }
   }
 }

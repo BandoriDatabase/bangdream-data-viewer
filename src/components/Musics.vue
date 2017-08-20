@@ -1,40 +1,42 @@
 <template>
-  <section>
-    <div class="block">
-      <p>Hint: <span class="desktop-only">Click</span><span class="mobile-only">Touch</span> Jacket/Title/Band to see detail infos. </p>
-    </div>
-    <q-data-table v-if="musicList"
-      :data="musicList"
-      :config="musicTableConfig"
-      :columns="musicColumns">
-      <template slot="col-jacketImage" scope="cell">
-        <img class="thumb-table shadow-1 shadow-transition hoverable-3" v-lazy="`https://bangdream.ga/assets/musicjacket/${cell.row.jacketImage}_thumb.png`"
-          @click="">
-      </template>
-      <template slot="col-bandID" scope="cell">
-        <div v-if="Number(cell.data) > 5">{{bandMap[cell.data].bandName}}</div>
-        <img height="60px" width="90px" v-if="Number(cell.data) <= 5" v-lazy="`https://bangdream.ga/assets/band/logo/00${cell.data}_logoL.png`">
-      </template>
-      <template slot="col-diff" scope="cell">
-        {{getDifficulty(cell.row.id)[0].level}} /
-        {{getDifficulty(cell.row.id)[3].level}} /
-        {{getDifficulty(cell.row.id)[2].level}} /
-        {{getDifficulty(cell.row.id)[1].level}}
-      </template>
-    </q-data-table>
-  </section>
+  <div>
+    <router-view></router-view>
+    <section v-if="$route.params.musicID === undefined && musicList">
+      <div class="block">
+        <p>Hint: <span class="desktop-only">Click</span><span class="mobile-only">Touch</span> jacket image to see detail infos. </p>
+      </div>
+      <q-data-table v-if="musicList"
+        :data="musicList"
+        :config="musicTableConfig"
+        :columns="musicColumns">
+        <template slot="col-jacketImage" scope="cell">
+          <img class="thumb-table shadow-1 shadow-transition hoverable-3" v-lazy="`https://bangdream.ga/assets/musicjacket/${cell.row.jacketImage}_thumb.png`"
+            @click="$router.push({ name: 'musicDetail', params: { musicID: cell.row.id } })">
+        </template>
+        <template slot="col-bandID" scope="cell">
+          <div v-if="Number(cell.data) > 5">{{bandMap[cell.data].bandName}}</div>
+          <img height="60px" width="90px" v-if="Number(cell.data) <= 5" v-lazy="`https://bangdream.ga/assets/band/logo/00${cell.data}_logoL.png`">
+        </template>
+        <template slot="col-diff" scope="cell">
+          {{getDifficulty(cell.row.id)[0].level}} /
+          {{getDifficulty(cell.row.id)[3].level}} /
+          {{getDifficulty(cell.row.id)[2].level}} /
+          {{getDifficulty(cell.row.id)[1].level}}
+        </template>
+      </q-data-table>
+    </section>
+  </div>
 </template>
 
 <script>
-import { Platform } from 'quasar'
+import {
+  Platform,
+  QDataTable
+} from 'quasar'
 import { mapGetters } from 'vuex'
-import aPlayer from 'vue-aplayer'
 
 export default {
   name: 'musicList',
-  components: {
-    aPlayer
-  },
   data () {
     return {
       musicTableConfig: {
@@ -89,6 +91,9 @@ export default {
         width: '10px'
       }]
     }
+  },
+  components: {
+    QDataTable
   },
   computed: {
     ...mapGetters('DB', [

@@ -9,5 +9,9 @@
     "emmet.syntaxProfiles": {
         "vue-html": "html",
         "vue": "html"
+    },
+    "emmet.includeLanguages": {
+        "vue-html": "html",
+        "vue": "html"
     }
 }

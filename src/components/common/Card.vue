@@ -1,82 +1,79 @@
 <template>
-  <div class="row justify-center" v-if="cardInfo.cardRes">
-    <div class="card" :class="isWidthEnough ? 'width-2of3' : ''">
-      <button class="circular small" @click="$router.go(-1)" :class="getPalette(cardInfo.attr)">
-        <i>reply</i>
-      </button>
-      <div class="card-title item two-lines" :class="`bg-${getPalette(cardInfo.attr)}`" style="padding: 3px;">
-        <!--<div class="row items-center">-->
-          <img class="item-primary" style="margin-right: 7px;" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${cardGroup}_${cardInfo.cardRes}_${cardResType}.png`">
-          <!--<span>{{characterInfo.characterName}} - {{cardInfo.title}}</span>-->
-          <div class="item-content">
-            <div class="text-white">{{characterInfo.characterName}}</div>
-            <div class="text-white">{{cardInfo.title}}</div>      
-          </div>
-        <!--</div>-->
-      </div>
-      <div class="card-content column gutter">
-        <div class="width-1of2">
-          <div class="card-img-parent">
-            <img class="preview-img card-img-main" v-lazy="`https://bangdream.ga/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`"
-              @click="$preview.open(0, [{
-                src: `https://bangdream.ga/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
-                w: cardImgType === 'card' ? 1334 : 1120,
-                h: cardImgType === 'card' ? 1002 : 1120
-              }], {
-                fullscreenEl: true,
-                zoomEl: true,
-                shareEl: true
-              })">
-            <img class="card-img-frame" :src="`statics/frame_${getCardFrame()}.png`" v-if="cardImgType === 'card'"
-              @click="$preview.open(0, [{
-                src: `https://bangdream.ga/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
-                w: cardImgType === 'card' ? 1334 : 1120,
-                h: cardImgType === 'card' ? 1002 : 1120
-              }], {
-                fullscreenEl: true,
-                zoomEl: true,
-                shareEl: true
-              })">
-            <div :class="`card-img-attr-${cardInfo.attr}`" v-if="cardImgType === 'card'"></div>
-            <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" v-if="cardImgType === 'card'" :key="i"></div>
-          </div>
-          <div style="float: left">
-            <button class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3" @click="switchCardResType()">(un)trained</button>
-            <button class="light" style="margin: 5px;" @click="switchCardImgType()">Cut In / Normal</button>
-            <button class="light" style="margin: 5px;" @click="$preview.open(0, [{
-                src: `https://bangdream.ga/assets/characters/livesd/${cardInfo.live2dRes}_sdchara.png`,
-                w: 507,
-                h: 507
-              }], {
-                shareEl: true
-              })">Live Character</button>
-            <div class="column">
-              <label>
-                <q-toggle
-                  v-model="isSelfInfoReward"
-                ></q-toggle>
-                Self intro unlock reward
-              </label>
-              <label>
-                <q-toggle
-                  v-model="isMaxLvReward"
-                ></q-toggle>
-                Max Lv story unlock reward
-              </label>
-            </div>
+  <q-card v-if="cardInfo.cardRes">
+    <q-card-title :class="`bg-${getPalette(cardInfo.attr)}`">
+      <!-- <q-btn round small flat @click="$router.go(-1)" :class="getPalette(cardInfo.attr)">
+        <q-icon name="reply"></q-icon>
+      </q-btn> -->
+      <img class="avatar" style="width: 48px" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${cardGroup}_${cardInfo.cardRes}_${cardResType}.png`" />
+      {{characterInfo.characterName}}
+      <span class="text-white">{{cardInfo.title}}</span>
+    </q-card-title>
+    <q-card-main class="card-content column gutter">
+      <div>
+        <div class="card-img-parent">
+          <img class="preview-img card-img-main" v-lazy="`https://bangdream.ga/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`"
+            @click="$preview.open(0, [{
+              src: `https://bangdream.ga/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
+              w: cardImgType === 'card' ? 1334 : 1120,
+              h: cardImgType === 'card' ? 1002 : 1120
+            }], {
+              fullscreenEl: true,
+              zoomEl: true,
+              shareEl: true
+            })">
+          <img class="card-img-frame" :src="`statics/frame_${getCardFrame()}.png`" v-if="cardImgType === 'card'"
+            @click="$preview.open(0, [{
+              src: `https://bangdream.ga/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
+              w: cardImgType === 'card' ? 1334 : 1120,
+              h: cardImgType === 'card' ? 1002 : 1120
+            }], {
+              fullscreenEl: true,
+              zoomEl: true,
+              shareEl: true
+            })">
+          <div :class="`card-img-attr-${cardInfo.attr}`" v-if="cardImgType === 'card'"></div>
+          <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" v-if="cardImgType === 'card'" :key="i"></div>
+        </div>
+        <div style="float: left">
+          <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3" @click="switchCardResType()">(un)trained</q-btn>
+          <q-btn class="light" style="margin: 5px;" @click="switchCardImgType()">Cut In / Normal</q-btn>
+          <q-btn class="light" style="margin: 5px;" @click="$preview.open(0, [{
+              src: `https://bangdream.ga/assets/characters/livesd/${cardInfo.live2dRes}_sdchara.png`,
+              w: 507,
+              h: 507
+            }], {
+              shareEl: true
+            })">Live Character</q-btn>
+          <div class="column" v-if="cardInfo.episodes">
+            <label>
+              <q-toggle
+                v-model="isSelfInfoReward"
+              ></q-toggle>
+              Self intro unlock reward
+            </label>
+            <label>
+              <q-toggle
+                v-model="isMaxLvReward"
+              ></q-toggle>
+              Max Lv story unlock reward
+            </label>
           </div>
         </div>
-        <div class="width-1of2" v-if="cardInfo.parameterMap">
-          <div class="row">
-            <div class="width-1of2">
-              <h5>Level</h5>
-              <q-numeric
-                v-model="level"
-                :min="1"
-                :max="Number(cardInfo.parameterMap[cardInfo.maxLevel].level)"
-              ></q-numeric>
-            </div>
-            <div class="width-1of2">
+      </div>
+      <div v-if="cardInfo.parameterMap">
+        <div class="row">
+          <div class="col-md-6 col-xl-3 col-lg-3">
+            <h5>Level</h5>
+            <q-input
+              style="display: inline-block"
+              v-model="level"
+              type="number"
+              :min="1"
+              :max="Number(cardInfo.parameterMap[cardInfo.maxLevel].level)"
+            ></q-input>
+          </div>
+          <div class="row col-xl-9 col-lg-9 col-md-6">
+            <div class="col-xl-3 col-lg-3 col-md-6 col-12">
               Total
               <h5>
                 {{Number(cardInfo.parameterMap[level].performance) +
@@ -85,115 +82,129 @@
                 (cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) +
                 Number(cardInfo.training.trainingTechnic) +
                 Number(cardInfo.training.trainingVisual) : 0) +
-                (isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) +
+                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) +
                 Number(cardInfo.episodes.entries[0].appendTechnique) +
                 Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
-                (isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) +
+                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) +
                 Number(cardInfo.episodes.entries[1].appendTechnique) +
                 Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}
                 <br><small>+{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) +
                 Number(cardInfo.training.trainingTechnic) +
                 Number(cardInfo.training.trainingVisual) : 0) +
-                (isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) +
+                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) +
                 Number(cardInfo.episodes.entries[0].appendTechnique) +
                 Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
-                (isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) +
+                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) +
                 Number(cardInfo.episodes.entries[1].appendTechnique) +
                 Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}</small>
               </h5>
             </div>
-          </div>
-          <div class="row">
-            <div class="width-1of3 text-pink-6">
+            <div class="col-xl-3 col-lg-3 col-md-6 col-4 text-pink-6">
               Perform
               <h5>
                 {{Number(cardInfo.parameterMap[level].performance) +
                 (cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) : 0) +
-                (isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) : 0) +
-                (isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) : 0)}}
+                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) : 0) +
+                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) : 0)}}
                 <br><small>+{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) : 0) +
-                (isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) : 0) +
-                (isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) : 0)}}</small>
+                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) : 0) +
+                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) : 0)}}</small>
               </h5>
             </div>
-            <div class="width-1of3 text-indigo-6">
+            <div class="col-xl-3 col-lg-3 col-md-6 col-4 text-indigo-6">
               Technique 
               <h5>
                 {{Number(cardInfo.parameterMap[level].technique) +
                 (cardResType === 'after_training' ? Number(cardInfo.training.trainingTechnic) : 0) +
-                (isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendTechnique) : 0) +
-                (isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendTechnique) : 0)}}
+                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendTechnique) : 0) +
+                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendTechnique) : 0)}}
                 <br><small>+{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingTechnic) : 0) +
-                (isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendTechnique) : 0) +
-                (isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendTechnique) : 0)}}</small>
+                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendTechnique) : 0) +
+                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendTechnique) : 0)}}</small>
               </h5>
             </div>
-            <div class="width-1of3 text-orange-8">
+            <div class="col-xl-3 col-lg-3 col-md-6 col-4 text-orange-8">
               Visual
               <h5>
                 {{Number(cardInfo.parameterMap[level].visual) +
                 (cardResType === 'after_training' ? Number(cardInfo.training.trainingVisual) : 0) +
-                (isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
-                (isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}
+                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
+                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}
                 <br><small>+{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingVisual) : 0) +
-                (isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
-                (isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}</small>
+                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
+                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}</small>
               </h5>
             </div>
           </div>
-          <div class="row sm-column">
-            <div class="width-1of2">
-              Skill Level <q-numeric
-                v-model="skillLv"
-                :min="1"
-                :max="skillEffect.length"
-              ></q-numeric>
-              <p>{{skillName}}</p>
-              <p>{{skillInfo.simpleDescription}}</p>
-              <p>{{getSkillDesc(skillInfo.description, skillEffect, judgeList, skillLv)}}</p>
+        </div>
+        <div class="row sm-column">
+          <div class="col-6">
+            Skill Level
+            <q-input
+              style="display: inline-block"
+              v-model="skillLv"
+              type="number"
+              :min="1"
+              :max="skillEffect.length"
+            ></q-input>
+            <p>{{skillName}}</p>
+            <p>{{skillInfo.simpleDescription}}</p>
+            <p>{{getSkillDesc(skillInfo.description, skillEffect, judgeList, skillLv)}}</p>
+          </div>
+          <div class="col-6">
+            Training items
+            <div class="row" v-if="cardInfo.rarity >= 3">
+              <div v-for="entry in cardInfo.training.costs.entries" class="column col-md-4 col-xs-12 items-center" :key="entry.resourceID">
+                <img class="thumb-training" v-lazy="`https://bangdream.ga/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
+                <span>{{entry.quantity}}</span>
+              </div>
             </div>
-            <div class="width-1of2" v-if="cardInfo.rarity >= 3">
-              Training items
+            <div v-else>No training avaliable</div>
+          </div>
+        </div>
+        <p>Story episodes</p>
+        <div class="row sm-column md-column" v-if="cardInfo.episodes">
+          <div class="col-6">
+            <p>Self intro: {{cardInfo.episodes.entries[0].title}} <q-btn small color="pink" round flat><q-icon name="launch"></q-icon></q-btn>
+              <p>To unlock:</p>
               <div class="row">
-                <div v-for="entry in cardInfo.training.costs.entries" class="column width-1of3 items-center" :key="entry.resourceID">
+                <div v-for="entry in cardInfo.episodes.entries[0].costs.entries" class="column col-md-4 col-xs-12 items-center" :key="entry.resourceID">
                   <img class="thumb-training" v-lazy="`https://bangdream.ga/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
                   <span>{{entry.quantity}}</span>
                 </div>
               </div>
-            </div>
+            </p>
           </div>
-          <p>Story episodes</p>
-          <div class="row sm-column md-column">
-            <div class="width-1of2">
-              <p>Self intro: {{cardInfo.episodes.entries[0].title}} <button class="circular clear pink small"><i>launch</i></button>
-                <p>To unlock:</p>
-                <div class="row">
-                  <div v-for="entry in cardInfo.episodes.entries[0].costs.entries" class="column width-1of3 items-center" :key="entry.resourceID">
-                    <img class="thumb-training" v-lazy="`https://bangdream.ga/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
-                    <span>{{entry.quantity}}</span>
-                  </div>
+          <div class="col-6">
+            <p>Max Level Story: {{cardInfo.episodes.entries[1].title}} <q-btn small color="pink" round flat><q-icon name="launch"></q-icon></q-btn>
+              <p>To unlock:</p> 
+              <div class="row">
+                <div v-for="entry in cardInfo.episodes.entries[1].costs.entries" class="column col-md-4 col-xs-12 items-center" :key="entry.resourceID">
+                  <img class="thumb-training" v-lazy="`https://bangdream.ga/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
+                  <span>{{entry.quantity}}</span>
                 </div>
-              </p>
-            </div>
-            <div class="width-1of2">
-              <p>Max Level Story: {{cardInfo.episodes.entries[1].title}} <button class="circular clear pink small"><i>launch</i></button>
-                <p>To unlock:</p> 
-                <div class="row">
-                  <div v-for="entry in cardInfo.episodes.entries[1].costs.entries" class="column width-1of3 items-center" :key="entry.resourceID">
-                    <img class="thumb-training" v-lazy="`https://bangdream.ga/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
-                    <span>{{entry.quantity}}</span>
-                  </div>
-                </div>
-              </p>
-            </div>
+              </div>
+            </p>
           </div>
         </div>
+        <div class="row sm-column md-column" v-else>
+          No story avaliable
+        </div>
       </div>
-    </div>
-  </div>
+    </q-card-main>
+  </q-card>
 </template>
 
 <script>
+import {
+  QCard,
+  QBtn,
+  QIcon,
+  QCardTitle,
+  QCardMain,
+  QInput,
+  QToggle
+} from 'quasar'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -223,9 +234,17 @@ export default {
       level: 1,
       isSelfInfoReward: true,
       isMaxLvReward: true,
-      skillLv: 1,
-      isWidthEnough: window.innerWidth > 1280
+      skillLv: 1
     }
+  },
+  components: {
+    QCard,
+    QBtn,
+    QIcon,
+    QCardTitle,
+    QCardMain,
+    QInput,
+    QToggle
   },
   computed: {
     ...mapGetters('DB', [
@@ -296,12 +315,17 @@ export default {
     },
     getSkillDesc (skillDesc, skillEffects, judgeLists, skillLv) {
       const skillEffect = skillEffects[skillLv - 1]
-      if (judgeLists.length) {
+      console.log(judgeLists, this.skillId)
+      if (judgeLists.length && skillEffect) {
         const judgeEffect = judgeLists[skillLv - 1]
         return skillDesc.replace(/\{0\}/, judgeEffect.judgeName).replace(/\{1\}/, skillEffect.valueDescription)
       }
-      else {
+      else if (skillEffect) {
         return skillDesc.replace(/\{0\}/, skillEffect.valueDescription)
+      }
+      else if (judgeLists.length) {
+        const judgeEffect = judgeLists[skillLv - 1]
+        return skillDesc.replace(/\{0\}/, judgeEffect.judgeName)
       }
     }
   }

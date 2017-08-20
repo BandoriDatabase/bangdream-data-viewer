@@ -52,10 +52,6 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-          test: /vue-preview.src.*?js$/,
-          loader: 'babel-loader'
-      },
-      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
@@ -89,13 +85,6 @@ module.exports = {
     ]
   },
   plugins: [
-    /*
-      Take note!
-      Uncomment if you wish to load only one Moment locale:
-
-      new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
-    */
-
     new webpack.DefinePlugin({
       'process.env': config[env.prod ? 'build' : 'dev'].env,
       'DEV': env.dev,

@@ -1,20 +1,40 @@
 <template>
-  <div class="row items-center">
-    <div class="column items-center cd-elem">
-      <h3 class="no-margin">{{days}}</h3>
-      <h5 class="no-margin">Days</h5>
+  <div>
+    <div class="row items-center" v-if="!small">
+      <div class="column items-center cd-elem">
+        <h3 class="no-margin">{{days}}</h3>
+        <h5 class="no-margin">Days</h5>
+      </div>
+      <div class="column items-center cd-elem">
+        <h3 class="no-margin">{{hours}}</h3>
+        <h5 class="no-margin">Hours</h5>
+      </div>
+      <div class="column items-center cd-elem">
+        <h3 class="no-margin">{{minutes}}</h3>
+        <h5 class="no-margin">Minutes</h5>
+      </div>
+      <div class="column items-center cd-elem">
+        <h3 class="no-margin">{{seconds}}</h3>
+        <h5 class="no-margin">Seconds</h5>
+      </div>
     </div>
-    <div class="column items-center cd-elem">
-      <h3 class="no-margin">{{hours}}</h3>
-      <h5 class="no-margin">Hours</h5>
-    </div>
-    <div class="column items-center cd-elem">
-      <h3 class="no-margin">{{minutes}}</h3>
-      <h5 class="no-margin">Minutes</h5>
-    </div>
-    <div class="column items-center cd-elem">
-      <h3 class="no-margin">{{seconds}}</h3>
-      <h5 class="no-margin">Seconds</h5>
+    <div class="row items-center" v-else>
+      <div class="column items-center cd-elem">
+        <h5 class="no-margin">{{days}}</h5>
+        <h7 class="no-margin">Days</h7>
+      </div>
+      <div class="column items-center cd-elem">
+        <h5 class="no-margin">{{hours}}</h5>
+        <h7 class="no-margin">Hours</h7>
+      </div>
+      <div class="column items-center cd-elem">
+        <h5 class="no-margin">{{minutes}}</h5>
+        <h7 class="no-margin">Minutes</h7>
+      </div>
+      <div class="column items-center cd-elem">
+        <h5 class="no-margin">{{seconds}}</h5>
+        <h7 class="no-margin">Seconds</h7>
+      </div>
     </div>
   </div>
 </template>
@@ -31,11 +51,14 @@ export default {
     targetTime: {
       type: Number,
       required: true
+    },
+    small: {
+      type: Boolean
     }
   },
   computed: {
     toTargetTime () {
-      if (this.targetTime) {  // make sure we can calculate
+      if (this.targetTime) { // make sure we can calculate
         const targetTimeSec = Math.trunc((new Date(this.targetTime)).getTime() / 1000)
         return targetTimeSec - this.timeNow
       }

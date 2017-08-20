@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+  - "8"
+sudo: false
+
+before_script:
+  - npm install -g quasar-cli
+  - npm install
+
+script:
+  - quasar lint
+  - quasar build
+
+cache:
+  directories:
+    - node_modules
+
+addons:
+  sauce_connect:
+    username: "DNARoma"
+  jwt:
+    secure: "YKs+ldejsnnnqr6JzqzaaEFzGJDhI6t3WEZcxKUuvKXNDcIMxscAKDah0ybVX9OyzmKgGPNvFVPx1GcpbpjpR8p6iLfQd4V1+SQH8PK2Ays7ovWtWlv1WXBMk23usVjv+P+n54gX+q1pjPINMPf/wMekcAmpDOfKFOe+kVzqKYkUCra++onyYU1O2Q6tIPdvCcBivjJM6b4SyC/uG78rUCEMLT7WhTac4k+LPitldfrdgYyN32fDuYoyAU11nCgR7ATFgaQGNAuJ78wWpPG+/gzYeRYxkcOhJNhRAODfauZoD+0jQNbFTBhS6YRrUZv6r0G8ZXUhHkVKONHc82RhdTYY9febPcUnlBVGdO15OeNJy0vfJ+Fl1R7iiwR3puEtBFYCWIAB+tYKbG8xKb44RH/vG4YQbcu3Zs71Mz39CIpM5qI8RHQAV7fDwmS3NW0XgK0zyh9lKM+QuJATscRhSan0+QOI87k7euBBHs2lh1f4DGxui8CVByDeKxEGGBE56wfI317lM9bynem4KHMIYik1Oy/EEl0UhtM11rrmpdVx00p9Q//JUxiHVkFyCSYMq1qeeehuHMxEYBD6mP9wudUdrQbwbG3b1Vk/dS75KrEbFHgrZm6ooImvYSGcwbJgwkVEP5R+/oyItMnlzBaeYHhCqxezJ5grwgZIR3Do4Pc= "

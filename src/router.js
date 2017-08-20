@@ -32,7 +32,12 @@ export default new VueRouter({
           ]
         },
         { path: '/sfcs', component: load('SingleFrameCartoon') },
-        { path: '/music', component: load('Musics') },
+        { path: '/music',
+          component: load('Musics'),
+          children: [
+            { name: 'musicDetail', path: '/music/:musicID', component: load('MusicDetail') }
+          ]
+        },
         { path: '/donate', component: load('Donate') }
       ]}, // Default
     { path: '*', component: load('Error404') } // Not found
