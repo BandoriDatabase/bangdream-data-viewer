@@ -21,19 +21,19 @@
     <div class="row items-center" v-else>
       <div class="column items-center cd-elem">
         <h5 class="no-margin">{{days}}</h5>
-        <h7 class="no-margin">Days</h7>
+        <p class="no-margin">Days</p>
       </div>
       <div class="column items-center cd-elem">
         <h5 class="no-margin">{{hours}}</h5>
-        <h7 class="no-margin">Hours</h7>
+        <p class="no-margin">Hours</p>
       </div>
       <div class="column items-center cd-elem">
         <h5 class="no-margin">{{minutes}}</h5>
-        <h7 class="no-margin">Minutes</h7>
+        <p class="no-margin">Minutes</p>
       </div>
       <div class="column items-center cd-elem">
         <h5 class="no-margin">{{seconds}}</h5>
-        <h7 class="no-margin">Seconds</h7>
+        <p class="no-margin">Seconds</p>
       </div>
     </div>
   </div>
@@ -90,6 +90,6 @@ export default {
   margin: 0;
 }
 .cd-elem {
-  margin: 5px;
+  margin: 3px;
 }
 </style>

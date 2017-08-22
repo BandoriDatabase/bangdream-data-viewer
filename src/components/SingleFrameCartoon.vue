@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Hint: <span class="desktop-only">Click</span><span class="mobile-only">Touch</span> and open large picture</p>
+    <p>{{$t('hint[0]')}} <span class="desktop-only">{{$t('hint[1]')}}</span><span class="mobile-only">{{$t('hint[2]')}}</span>{{$t('hint[3]')}}</p>
     <div class="row sm-column md-column">
       <q-card class="col-lg-3 col-xl-3 col-12" v-for="(singleFrame, idx) in gallery" :key="idx">
         <q-card-media>
@@ -18,6 +18,35 @@
     </div>
   </div>
 </template>
+
+<i18n>
+{
+  "en": {
+    "hint": [
+      "Hint:",
+      "Click",
+      "Touch",
+      " to open large picture"
+    ]
+  },
+  "zh-CN": {
+    "hint": [
+      "提示：",
+      "点击",
+      "触摸",
+      "可以查看大图"
+    ]
+  },
+  "zh-TW": {
+    "hint": [
+      "提示：",
+      "點擊",
+      "觸摸",
+      "可以查看大圖"
+    ]
+  }
+}
+</i18n>
 
 <script>
 import {

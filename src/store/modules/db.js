@@ -87,6 +87,10 @@ const getters = {
   singleFrameCartoons (state) {
     if (!state.master.singleFrameCartoonList) return null
     return state.master.singleFrameCartoonList.entries
+  },
+  stampMap (state) {
+    if (!state.master.stampMap) return null
+    return state.master.stampMap.entries
   }
 }
 

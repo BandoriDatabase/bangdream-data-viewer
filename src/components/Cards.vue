@@ -21,7 +21,7 @@
           <div @click="$router.push({ name: 'cardDetail', params: { cardID: cell.row.cardID } })"
             style="cursor: pointer" :class="`text-${getPalette(cell.row.attr)}`">
             {{displayName ? 
-              capitalizeFirstLetter(WanaKana.toRomaji(getCharacter(cell.row.characterId).ruby)) : 
+              capitalizeFirstLetter(toRomaji(getCharacter(cell.row.characterId).ruby)) : 
               getCharacter(cell.row.characterId).characterName}}
           </div>
         </template>
@@ -53,16 +53,17 @@ import {
   Platform,
   QDataTable,
   QBtn,
-  Dialog
+  Dialog,
+  QToggle
 } from 'quasar'
 import { mapGetters } from 'vuex'
-import WanaKana from 'wanakana'
+import { toRomaji } from 'wanakana'
 
 export default {
   name: 'CardsView',
   data () {
     return {
-      WanaKana,
+      toRomaji,
       displayName: false,
       cardTableConfig: {
         pagination: {
@@ -132,7 +133,8 @@ export default {
   },
   components: {
     QDataTable,
-    QBtn
+    QBtn,
+    QToggle
   },
   computed: {
     ...mapGetters('DB', [
@@ -224,7 +226,7 @@ export default {
             model: this.selectCharacters,
             items: Object.keys(this.characterInfos).filter(key => Number(key) <= 25).map(key => ({
               label: this.displayName
-                ? this.capitalizeFirstLetter(WanaKana.toRomaji(this.characterInfos[key].ruby))
+                ? this.capitalizeFirstLetter(toRomaji(this.characterInfos[key].ruby))
                 : this.characterInfos[key].characterName,
               value: this.characterInfos[key].characterID
             }))

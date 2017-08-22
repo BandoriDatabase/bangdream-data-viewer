@@ -45,8 +45,12 @@ module.exports = {
     // Also see /build/script.dev.js and search for "proxy api requests"
     // https://github.com/chimurai/http-proxy-middleware
     proxyTable: {
-      'static/MasterDB.json': {
-        target: 'http://localhost:8080/',
+      '/static/': {
+        target: 'https://bangdream.ga/',
+        changeOrigin: true,
+      },
+      '/assets/': {
+        target: 'https://bangdream.ga/',
         changeOrigin: true,
       }
     }

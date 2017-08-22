@@ -40,6 +40,6 @@ export default new VueRouter({
         },
         { path: '/donate', component: load('Donate') }
       ]}, // Default
-    { path: '*', component: load('Error404') } // Not found
+    { path: '*', redirect: '/' } // Not found
   ]
 })

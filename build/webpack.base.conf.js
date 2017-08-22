@@ -22,7 +22,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: config[env.prod ? 'build' : 'dev'].publicPath,
-    filename: 'js/[name].js',
+    filename: 'js/[name].[hash].js',
     chunkFilename: 'js/[id].[chunkhash].js'
   },
   resolve: {
@@ -59,7 +59,7 @@ module.exports = {
           loaders: merge({js: 'babel-loader'}, cssUtils.styleLoaders({
             sourceMap: useCssSourceMap,
             extract: env.prod
-          }))
+          }), {i18n: '@kazupon/vue-i18n-loader'})
         }
       },
       {

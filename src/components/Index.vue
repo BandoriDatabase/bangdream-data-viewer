@@ -6,37 +6,37 @@
         <q-icon name="menu" />
       </q-btn>
       <q-toolbar-title :padding="0">
-        Bandori Database v{{master.constants && master.constants.resVer ? master.constants.resVer : '0.0.0.0'}}
+        Bandori {{$t('toolbar.title')}} v{{master.constants && master.constants.resVer ? master.constants.resVer : '0.0.0.0'}}
       </q-toolbar-title>
     </q-toolbar>
 
     <div slot="left">
       <q-list no-border link inset-separator>
-        <q-list-header>Toolbox</q-list-header>
+        <q-list-header>{{$t('left.title')}}</q-list-header>
         <q-side-link item :to="{path: '/', exact: true}">
           <q-item-side icon="home" />
-          <q-item-main label="Home" />
+          <q-item-main :label="$t('left.home')" />
         </q-side-link>
         <q-side-link item to="/card">
           <q-item-side icon="picture_in_picture" />
-          <q-item-main label="Cards" />
+          <q-item-main :label="$t('left.card')" />
         </q-side-link>
         <q-side-link item to="/music">
           <q-item-side icon="library_music" />
-          <q-item-main label="Musics" />
+          <q-item-main :label="$t('left.music')" />
         </q-side-link>
         <q-side-link item to="/sfcs">
           <q-item-side icon="photo_library" />
-          <q-item-main label="Single Frame Cartoons" />
+          <q-item-main :label="$t('left.SFC')" />
         </q-side-link>
         <q-side-link item to="/donate">
           <q-item-side icon="card_giftcard" />
-          <q-item-main label="Donate" />
+          <q-item-main :label="$t('left.donate')" />
         </q-side-link>
         <q-item-separator />
-        <q-list-header>Building info</q-list-header>
+        <q-list-header>{{$t('left.secTitle')}}</q-list-header>
         <q-item>
-          <q-item-main label="App Ver v0.1.0" />
+          <q-item-main label="v0.1.0" />
         </q-item>
       </q-list>
     </div>
@@ -60,6 +60,53 @@
     </div>
   </q-layout>
 </template>
+
+<i18n>
+{
+  "en": {
+    "toolbar": {
+      "title": "Database"
+    },
+    "left": {
+      "title": "Toolbox",
+      "home": "Home",
+      "card": "Cards",
+      "music": "Musics",
+      "SFC": "Loading Cartoons",
+      "donate": "Help us",
+      "secTitle": "Building info"
+    }
+  },
+  "zh-CN": {
+    "toolbar": {
+      "title": "数据库"
+    },
+    "left": {
+      "title": "工具箱",
+      "home": "首页",
+      "card": "卡牌",
+      "music": "歌曲",
+      "SFC": "加载界面漫画",
+      "donate": "帮助我们",
+      "secTitle": "版本"
+    }
+  },
+  "zh-TW": {
+    "toolbar": {
+      "title": "數據庫"
+    },
+    "left": {
+      "title": "工具箱",
+      "home": "首頁",
+      "card": "卡牌",
+      "music": "歌曲",
+      "SFC": "加載界面漫畫",
+      "donate": "幫助我們",
+      "secTitle": "版本"
+    }
+  }
+}
+</i18n>
 
 <script>
 import {

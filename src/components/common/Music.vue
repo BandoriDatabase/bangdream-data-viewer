@@ -22,7 +22,7 @@
       author: bandMap[data.bandID].bandName,
       url: `https://bangdream.ga/assets/sound/${data.bgmId}.mp3`,
       pic: `https://bangdream.ga/assets/musicjacket/${data.jacketImage}_thumb.png`
-    }"></a-player>
+    }" ref="player" mode="single"></a-player>
     <q-card-main>
       <p>Composer: {{data.composer}}</p>
       <p>Lyricist: {{data.lyricist}}</p>
@@ -137,6 +137,10 @@ export default {
     ...mapGetters('DB', [
       'bandMap'
     ])
+  },
+  beforeDestroy () {
+    let aplayer = this.$refs.player.control
+    aplayer.destroy()
   },
   methods: {
     getAchievement (name) {
