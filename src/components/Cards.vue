@@ -3,9 +3,9 @@
     <router-view></router-view>
     <div v-if="$route.params.cardID === undefined && cardInfoList">
       <div class="block">
-        <p>Hint: <span class="desktop-only">Click</span><span class="mobile-only">Touch</span> Thumb/Character/Title to see detail infos. 
-          Switch name display: <label><q-toggle v-model="displayName"></q-toggle>{{displayName ? 'Romaji' : 'Kanji'}}</label></p>
-        <q-btn color="pink" class="float-right" @click="showFilter">Filter</q-btn>
+        <p>{{$t('hint[0]')}}<span class="desktop-only">{{$t('hint[1]')}}</span><span class="mobile-only">{{$t('hint[2]')}}</span>{{$t('hint[3]')}}</p>
+        <p>{{$t('hint[4]')}}<label><q-toggle v-model="displayName"></q-toggle>{{displayName ? $t('hint[5]'):$t('hint[6]')}}</label></p>
+        <q-btn color="pink" class="float-right" @click="showFilter">{{$t('table.filter')}}</q-btn>
       </div>
       <q-data-table
         :data="showCardInfoList"
@@ -48,6 +48,104 @@
   </div>
 </template>
 
+<i18n>
+{
+  "en": {
+    "hint": [
+      "Hint: ",
+      "Click",
+      "Touch",
+      " Thumb/Character/Title to see detail infos.",
+      "Switch name display: ",
+      "Romaji",
+      "Kanji"
+    ],
+    "table": {
+      "title": "Card Database",
+      "columns": "Columns",
+      "filter": "Filter",
+      "label": {
+        "thumb": "Thumb",
+        "name": "Name",
+        "title": "Title",
+        "perform": "Perform",
+        "technic": "Technique",
+        "visual": "Visual",
+        "skill": "Skill"
+      }
+    },
+    "filter": {
+      "title": "Filter options",
+      "messgae": "Two filters are avaliable: Characters and Skills",
+      "heading1": "Characters",
+      "heading2": "Skills"
+    }
+  },
+  "zh-CN": {
+    "hint": [
+      "提示: ",
+      "点击",
+      "触摸",
+      "头像/角色名/卡牌标题可查看详细信息",
+      "切换姓名显示",
+      "罗马字",
+      "汉字"
+    ],
+    "table": {
+      "title": "卡牌数据库",
+      "columns": "选择列",
+      "filter": "过滤",
+      "label": {
+        "thumb": "头像",
+        "name": "角色名",
+        "title": "卡牌标题",
+        "perform": "Perform",
+        "technic": "Technique",
+        "visual": "Visual",
+        "skill": "技能"
+      }
+    },
+    "filter": {
+      "title": "过滤选项",
+      "messgae": "可以按照角色名或者技能进行过滤",
+      "heading1": "角色名",
+      "heading2": "技能"
+    }
+  },
+  "zh-TW": {
+    "hint": [
+      "提示: ",
+      "點擊",
+      "觸摸",
+      "頭像/角色名/卡牌標題可查看詳細信息",
+      "切換姓名顯示",
+      "羅馬字",
+      "漢字"
+    ],
+    "table": {
+      "title": "卡牌數據庫",
+      "columns": "選擇列",
+      "filter": "過濾",
+      "label": {
+        "thumb": "頭像",
+        "name": "角色名",
+        "title": "卡牌標題",
+        "perform": "Perform",
+        "technic": "Technique",
+        "visual": "Visual",
+        "skill": "技能"
+      }
+    },
+    "filter": {
+      "title": "過濾選項",
+      "messgae": "可以按照角色名或者技能進行過濾",
+      "heading1": "角色名",
+      "heading2": "技能"
+    }
+  }
+}
+</i18n>
+
 <script>
 import {
   Platform,
@@ -75,10 +173,13 @@ export default {
           maxHeight: Platform.is.mobile ? '60vh' : '85vh'
         },
         columnPicker: true,
-        title: 'Card Database',
+        title: this.$t('table.title'),
         messages: {
-          noData: '<i>warning</i> No data available to show.',
-          noDataAfterFiltering: '<i>warning</i> No results. Please refine your search terms.'
+          noData: 'No data available to show.',
+          noDataAfterFiltering: 'No results. Please refine your search terms.'
+        },
+        labels: {
+          columns: this.$t('table.columns')
         }
       },
       cardColumns: [{
@@ -89,40 +190,40 @@ export default {
           return Number(b) - Number(a)
         }
       }, {
-        label: 'Thumb',
+        label: this.$t('table.label.thumb'),
         field: 'thumb',
         width: '12px'
       }, {
-        label: 'Character',
+        label: this.$t('table.label.name'),
         field: 'name',
         width: '13px'
       }, {
-        label: 'Title',
+        label: this.$t('table.label.title'),
         field: 'title',
         width: '20px'
       }, {
-        label: 'Perform',
+        label: this.$t('table.label.perform'),
         field: 'maxPerformance',
         width: '10px',
         sort (a, b) {
           return Number(b) - Number(a)
         }
       }, {
-        label: 'Technique',
+        label: this.$t('table.label.technic'),
         field: 'maxTechnique',
         width: '10px',
         sort (a, b) {
           return Number(b) - Number(a)
         }
       }, {
-        label: 'Visual',
+        label: this.$t('table.label.visual'),
         field: 'maxVisual',
         width: '10px',
         sort (a, b) {
           return Number(b) - Number(a)
         }
       }, {
-        label: 'Skill',
+        label: this.$t('table.label.skill'),
         field: 'skillID',
         width: '15px'
       }],
@@ -214,12 +315,12 @@ export default {
     },
     showFilter () {
       Dialog.create({
-        title: 'Filter options',
-        message: 'Two filters are avaliable: Characters and Skills',
+        title: this.$t('filter.title'),
+        message: this.$t('filter.messgae'),
         form: {
           header1: {
             type: 'heading',
-            label: 'Characters'
+            label: this.$t('filter.heading1')
           },
           characters: {
             type: 'checkbox',
@@ -233,7 +334,7 @@ export default {
           },
           header2: {
             type: 'heading',
-            label: 'Skills'
+            label: this.$t('filter.heading2')
           },
           skills: {
             type: 'checkbox',

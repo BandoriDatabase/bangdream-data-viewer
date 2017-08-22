@@ -68,6 +68,27 @@
         "您的帮助会让我们不断把网站做得更好！"
       ]
     }]
+  },
+  "zh-TW": {
+    "title": "幫助和支持我們",
+    "paras": [{
+      "title": "開發",
+      "contents": [
+        "Bandori 數據庫是一個開源項目(不包括遊戲數據)，您可以訪問我們的<a href='https://github.com/tangpei506/bangdream-data-viewer'>代碼倉庫</a>，提出一個Issue或者提交一個Pull request。您的貢獻是對我們最大的幫助！"
+      ]
+    }, {
+      "title": "翻譯",
+      "contents": [
+        "我們歡迎任何新語言的翻譯或者對於現有翻譯的改進，您可以把您的翻譯發送到<a href=''>Email</a>（還沒做好）或者在<a href='https ://github.com/tangpei506/bangdream-data-viewer'>代碼倉庫</a>裡開一個Issue。"
+      ]
+    }, {
+      "title": "捐贈",
+      "contents": [
+        "開發和維護這個網站有很小的花費。如果您認為這個網站對您有幫助，您可以考慮提供小小的支持來幫助開發者把網站做得更好。",
+        "您可以通過以下方式支持我：",
+        "您的幫助會讓我們不斷把網站做得更好！"
+      ]
+    }]
   }
 }
 </i18n>

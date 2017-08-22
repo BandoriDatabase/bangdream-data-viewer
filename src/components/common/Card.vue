@@ -35,27 +35,27 @@
           <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" v-if="cardImgType === 'card'" :key="i"></div>
         </div>
         <div style="float: left">
-          <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3" @click="switchCardResType()">(un)trained</q-btn>
-          <q-btn class="light" style="margin: 5px;" @click="switchCardImgType()">Cut In / Normal</q-btn>
+          <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3" @click="switchCardResType()">{{$t('un-trained')}}</q-btn>
+          <q-btn class="light" style="margin: 5px;" @click="switchCardImgType()">{{$t('cut-in-normal')}}</q-btn>
           <q-btn class="light" style="margin: 5px;" @click="$preview.open(0, [{
               src: `https://bangdream.ga/assets/characters/livesd/${cardInfo.live2dRes}_sdchara.png`,
               w: 507,
               h: 507
             }], {
               shareEl: true
-            })">Live Character</q-btn>
+            })">{{$t('live-chara')}}</q-btn>
           <div class="column" v-if="cardInfo.episodes">
             <label>
               <q-toggle
                 v-model="isSelfInfoReward"
               ></q-toggle>
-              Self intro unlock reward
+              {{$t('self-intro-unlock-reward')}}
             </label>
             <label>
               <q-toggle
                 v-model="isMaxLvReward"
               ></q-toggle>
-              Max Lv story unlock reward
+              {{$t('max-lv-unlock-reward')}}
             </label>
           </div>
         </div>
@@ -139,7 +139,7 @@
         </div>
         <div class="row sm-column">
           <div class="col-6">
-            Skill Level
+            {{$t('skill-level')}}
             <q-input
               style="display: inline-block"
               v-model="skillLv"
@@ -152,21 +152,21 @@
             <p>{{getSkillDesc(skillInfo.description, skillEffect, judgeList, skillLv)}}</p>
           </div>
           <div class="col-6">
-            Training items
+            {{$t('train-item')}}
             <div class="row" v-if="cardInfo.rarity >= 3">
               <div v-for="entry in cardInfo.training.costs.entries" class="column col-md-4 col-xs-12 items-center" :key="entry.resourceID">
                 <img class="thumb-training" v-lazy="`https://bangdream.ga/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
                 <span>{{entry.quantity}}</span>
               </div>
             </div>
-            <div v-else>No training avaliable</div>
+            <div v-else>{{$t('no-train-ava')}}</div>
           </div>
         </div>
-        <p>Story episodes</p>
+        <p>{{$t('story')}}</p>
         <div class="row sm-column md-column" v-if="cardInfo.episodes">
           <div class="col-6">
-            <p>Self intro: {{cardInfo.episodes.entries[0].title}} <q-btn small color="pink" round flat><q-icon name="launch"></q-icon></q-btn>
-              <p>To unlock:</p>
+            <p>{{$t('story-self-intro')}}{{cardInfo.episodes.entries[0].title}} <q-btn small color="pink" round flat><q-icon name="launch"></q-icon></q-btn>
+              <p>{{$t('story-to-unlock')}}</p>
               <div class="row">
                 <div v-for="entry in cardInfo.episodes.entries[0].costs.entries" class="column col-md-4 col-xs-12 items-center" :key="entry.resourceID">
                   <img class="thumb-training" v-lazy="`https://bangdream.ga/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
@@ -176,8 +176,8 @@
             </p>
           </div>
           <div class="col-6">
-            <p>Max Level Story: {{cardInfo.episodes.entries[1].title}} <q-btn small color="pink" round flat><q-icon name="launch"></q-icon></q-btn>
-              <p>To unlock:</p> 
+            <p>{{$t('story-max-level')}}{{cardInfo.episodes.entries[1].title}} <q-btn small color="pink" round flat><q-icon name="launch"></q-icon></q-btn>
+              <p>{{$t('story-to-unlock')}}</p> 
               <div class="row">
                 <div v-for="entry in cardInfo.episodes.entries[1].costs.entries" class="column col-md-4 col-xs-12 items-center" :key="entry.resourceID">
                   <img class="thumb-training" v-lazy="`https://bangdream.ga/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
@@ -188,12 +188,62 @@
           </div>
         </div>
         <div class="row sm-column md-column" v-else>
-          No story avaliable
+          {{$t('story-none')}}
         </div>
       </div>
     </q-card-main>
   </q-card>
 </template>
+
+<i18n>
+{
+  "en": {
+    "un-trained": "(un)trained",
+    "cut-in-normal": "Cut In / Normal",
+    "live-chara": "Live Character",
+    "self-intro-unlock-reward": "Self intro unlock reward",
+    "max-lv-unlock-reward": "Max Lv story unlock reward",
+    "skill-level": "Skill Level",
+    "train-item": "Training items",
+    "no-train-ava": "No training avaliable",
+    "story": "Story episodes",
+    "story-self-intro": "Self intro: ",
+    "story-to-unlock": "To unlock:",
+    "story-max-level": "Max Level Story: ",
+    "story-none": "No story avaliable"
+  },
+  "zh-CN": {
+    "un-trained": "切换觉醒",
+    "cut-in-normal": "切换卡面/立绘",
+    "live-chara": "Live角色图",
+    "self-intro-unlock-reward": "自我介绍解锁奖励属性",
+    "max-lv-unlock-reward": "满级剧情解锁奖励属性",
+    "skill-level": "技能等级",
+    "train-item": "觉醒材料",
+    "no-train-ava": "无法觉醒",
+    "story": "卡牌剧情",
+    "story-self-intro": "自我介绍：",
+    "story-to-unlock": "解锁材料",
+    "story-max-level": "满级剧情：",
+    "story-none": "该卡牌没有剧情"
+  },
+  "zh-TW": {
+    "un-trained": "切換覺醒",
+    "cut-in-normal": "切換卡面/立繪",
+    "live-chara": "Live角色圖",
+    "self-intro-unlock-reward": "自我介紹解鎖獎勵屬性",
+    "max-lv-unlock-reward": "滿級劇情解鎖獎勵屬性",
+    "skill-level": "技能等級",
+    "train-item": "覺醒材料",
+    "no-train-ava": "無法覺醒",
+    "story": "卡牌劇情",
+    "story-self-intro": "自我介紹：",
+    "story-to-unlock": "解鎖材料",
+    "story-max-level": "滿級劇情：",
+    "story-none": "該卡牌沒有劇情"
+  }
+}
+</i18n>
 
 <script>
 import {

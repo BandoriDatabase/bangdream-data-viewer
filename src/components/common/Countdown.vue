@@ -1,37 +1,37 @@
 <template>
   <div>
     <div class="row items-center" v-if="!small">
-      <div class="column items-center cd-elem">
-        <h3 class="no-margin">{{days}}</h3>
-        <h5 class="no-margin">Days</h5>
+      <div class="column items-center cd-elem col-3">
+        <h4 class="no-margin">{{days}}</h4>
+        <h6 class="no-margin">Days</h6>
       </div>
-      <div class="column items-center cd-elem">
-        <h3 class="no-margin">{{hours}}</h3>
-        <h5 class="no-margin">Hours</h5>
+      <div class="column items-center cd-elem col-3">
+        <h4 class="no-margin">{{hours}}</h4>
+        <h6 class="no-margin">Hours</h6>
       </div>
-      <div class="column items-center cd-elem">
-        <h3 class="no-margin">{{minutes}}</h3>
-        <h5 class="no-margin">Minutes</h5>
+      <div class="column items-center cd-elem col-3">
+        <h4 class="no-margin">{{minutes}}</h4>
+        <h6 class="no-margin">Minutes</h6>
       </div>
-      <div class="column items-center cd-elem">
-        <h3 class="no-margin">{{seconds}}</h3>
-        <h5 class="no-margin">Seconds</h5>
+      <div class="column items-center cd-elem col-3">
+        <h4 class="no-margin">{{seconds}}</h4>
+        <h6 class="no-margin">Seconds</h6>
       </div>
     </div>
     <div class="row items-center" v-else>
-      <div class="column items-center cd-elem">
+      <div class="column items-center cd-elem col-3">
         <h5 class="no-margin">{{days}}</h5>
         <p class="no-margin">Days</p>
       </div>
-      <div class="column items-center cd-elem">
+      <div class="column items-center cd-elem col-3">
         <h5 class="no-margin">{{hours}}</h5>
         <p class="no-margin">Hours</p>
       </div>
-      <div class="column items-center cd-elem">
+      <div class="column items-center cd-elem col-3">
         <h5 class="no-margin">{{minutes}}</h5>
         <p class="no-margin">Minutes</p>
       </div>
-      <div class="column items-center cd-elem">
+      <div class="column items-center cd-elem col-3">
         <h5 class="no-margin">{{seconds}}</h5>
         <p class="no-margin">Seconds</p>
       </div>
@@ -90,6 +90,6 @@ export default {
   margin: 0;
 }
 .cd-elem {
-  margin: 3px;
+  margin: 0px;
 }
 </style>

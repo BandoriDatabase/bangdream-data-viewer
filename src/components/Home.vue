@@ -1,7 +1,7 @@
 <template>
   <div>
     
-    <div class="row justify-center items-center sm-column">
+    <div class="row justify-center items-center">
       <h4 class="col-3">{{$t('title[0]')}}</h4>
       <img src="~assets/h1.png" class="col-3 responsive">
       <h4 class="col-3">{{$t('title[1]')}}</h4>
