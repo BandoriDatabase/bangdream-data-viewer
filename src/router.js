@@ -23,8 +23,9 @@ export default new VueRouter({
   routes: [
     { path: '/',
       component: load('Index'),
+      redirect: '/index',
       children: [
-        { path: '/', component: load('Home') },
+        { path: '/index', component: load('Home') },
         { path: '/card',
           component: load('Cards'), // Cards viewer
           children: [
@@ -38,8 +39,8 @@ export default new VueRouter({
             { name: 'musicDetail', path: '/music/:musicID', component: load('MusicDetail') }
           ]
         },
-        { path: '/donate', component: load('Donate') }
+        { path: '/about', component: load('About') }
       ]}, // Default
-    { path: '*', redirect: '/' } // Not found
+    { path: '*', redirect: '/index' } // Not found
   ]
 })

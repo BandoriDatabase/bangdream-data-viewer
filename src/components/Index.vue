@@ -1,5 +1,5 @@
 <template>
-  <q-layout ref="main" view="hHr LpR lFf">
+  <q-layout ref="main" view="hHr LpR lFf" reveal>
     <q-toolbar slot="header" class="toolbar bg-pink"
       :left-breakpoint="996">
       <q-btn flat @click="$refs.main.toggleLeft()">
@@ -13,7 +13,7 @@
     <div slot="left">
       <q-list no-border link inset-separator>
         <q-list-header>{{$t('left.title')}}</q-list-header>
-        <q-side-link item :to="{path: '/', exact: true}">
+        <q-side-link item :to="{path: '/index', exact: true}">
           <q-item-side icon="home" />
           <q-item-main :label="$t('left.home')" />
         </q-side-link>
@@ -29,14 +29,14 @@
           <q-item-side icon="photo_library" />
           <q-item-main :label="$t('left.SFC')" />
         </q-side-link>
-        <q-side-link item to="/donate">
-          <q-item-side icon="card_giftcard" />
-          <q-item-main :label="$t('left.donate')" />
+        <q-side-link item to="/about">
+          <q-item-side icon="info" />
+          <q-item-main :label="$t('left.about')" />
         </q-side-link>
         <q-item-separator />
         <q-list-header>{{$t('left.secTitle')}}</q-list-header>
         <q-item>
-          <q-item-main label="v0.1.0" />
+          <q-item-main label="v0.1.1" />
         </q-item>
       </q-list>
     </div>
@@ -73,7 +73,7 @@
       "card": "Cards",
       "music": "Musics",
       "SFC": "Loading Cartoons",
-      "donate": "Help us",
+      "about": "About",
       "secTitle": "Building info"
     }
   },
@@ -87,7 +87,7 @@
       "card": "卡牌",
       "music": "歌曲",
       "SFC": "加载界面漫画",
-      "donate": "帮助我们",
+      "about": "关于我们",
       "secTitle": "版本"
     }
   },
@@ -101,7 +101,7 @@
       "card": "卡牌",
       "music": "歌曲",
       "SFC": "加載界面漫畫",
-      "donate": "幫助我們",
+      "about": "關於我們",
       "secTitle": "版本"
     }
   }

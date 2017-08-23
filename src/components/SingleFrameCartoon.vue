@@ -2,19 +2,22 @@
   <div>
     <p>{{$t('hint[0]')}} <span class="desktop-only">{{$t('hint[1]')}}</span><span class="mobile-only">{{$t('hint[2]')}}</span>{{$t('hint[3]')}}</p>
     <div class="row sm-column md-column">
-      <q-card class="col-lg-3 col-xl-3 col-12" v-for="(singleFrame, idx) in gallery" :key="idx">
-        <q-card-media>
-          <img v-lazy="singleFrame.assetAddress" class="responsive preview-img"
-            @click="$preview.open(idx, previewGallery, {
-              fullscreenEl: true,
-              zoomEl: true,
-              shareEl: true
-            })" />
-          <q-card-title slot="overlay">
-            {{singleFrame.title}}
-          </q-card-title>
-        </q-card-media>
-      </q-card>
+      <div class="col-lg-4 col-xl-3 col-md-6 col-12" v-for="(singleFrame, idx) in gallery" :key="idx">
+        <q-card>
+          <q-card-media>
+            <img v-lazy="singleFrame.assetAddress" class="responsive preview-img"
+              @click="$preview.open(idx, previewGallery, {
+                fullscreenEl: true,
+                zoomEl: true,
+                shareEl: true,
+                history: false
+              })" />
+            <q-card-title slot="overlay">
+              {{singleFrame.title}}
+            </q-card-title>
+          </q-card-media>
+        </q-card>
+      </div>
     </div>
   </div>
 </template>

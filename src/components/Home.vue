@@ -5,72 +5,74 @@
       <h4 class="col-3">{{$t('title[0]')}}</h4>
       <img src="~assets/h1.png" class="col-3 responsive">
       <h4 class="col-3">{{$t('title[1]')}}</h4>
+      <p v-html="$t('paras[0]')"></p>
     </div>
 
     <!-- <div class="column items-center">
       <router-link to="/donate" tag="h5"><a>If you love this site, you can support me to make it better!</a></router-link>
     </div> -->
 
-    <div class="column gutter" v-if="getMasterDBStatus === 2">
-      <q-card v-if="latestEvent.enableFlag">
-        <!-- <div class="item two-lines bg-pink">
-          <img class="item-primary responsive" v-lazy="`https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/images_logo.png`">
-        </div> -->
-        <q-card-media>
-          <img class="event-cover preview-img" v-lazy:background-image="latestEvent.eventType === 'story' ? `https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png` : `https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_trim_eventtop.png`" 
-            @click="$preview.open(0, [{
-              src: latestEvent.eventType === 'story' ? `https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png` : `https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_trim_eventtop.png`,
-              w: 1334,
-              h: 1002
-            }], {
-              fullscreenEl: true,
-              zoomEl: true,
-              shareEl: true
-            })"/>
-          <!-- Notice the slot="overlay" -->
-          <q-card-title slot="overlay">
-            {{latestEvent.eventName}}
-            <span slot="subtitle">{{$t('event-type')}} {{latestEvent.eventType}}</span>
-          </q-card-title>
-        </q-card-media>
-        <q-card-main>
-          <div><a-player :music="eventMusic" ref="player" mode="single"></a-player></div>
-          <div class="column items-center latest-event">
-            <p>{{$t('event-end-cd')}}</p>
-            <count-down :target-time="Number(latestEvent.endAt)"></count-down>
-            <p>{{$t('event-reward-card')}}</p>
-            <div class="row justify-center items-center sm-column card-small"
-              @click="$refs.cMnormal.$refs.cardModal.open()">
-              N ID: {{getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardID, latestEvent.eventType}}
-              <span class="row justify-center items-center">
-                <img class="thumb responsive" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${Math.trunc(getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardID / 50)}_${getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardRes}_normal.png`">
-                {{getCharacter(getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).characterId).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
-              </span>
+    <div class="row gutter" v-if="getMasterDBStatus === 2">
+      <div class="col-lg-4 col-xl-4 col-12 card">
+        <q-card v-if="latestEvent.enableFlag">
+          <q-card-media>
+            <img class="event-cover preview-img" v-lazy:background-image="latestEvent.eventType === 'story' ? `https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png` : `https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_trim_eventtop.png`" 
+              @click="$preview.open(0, [{
+                src: latestEvent.eventType === 'story' ? `https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png` : `https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_trim_eventtop.png`,
+                w: 1334,
+                h: 1002
+              }], {
+                fullscreenEl: true,
+                zoomEl: true,
+                shareEl: true,
+                history: false
+              })"/>
+            <!-- Notice the slot="overlay" -->
+            <q-card-title slot="overlay">
+              {{latestEvent.eventName}}
+              <span slot="subtitle">{{$t('event-type')}} {{latestEvent.eventType}}</span>
+            </q-card-title>
+          </q-card-media>
+          <q-card-main>
+            <div><a-player :music="eventMusic" ref="player" mode="single"></a-player></div>
+            <div class="column items-center latest-event">
+              <p>{{$t('event-end-cd')}}</p>
+              <count-down :target-time="Number(latestEvent.endAt)"></count-down>
+              <p>{{$t('event-reward-card')}}</p>
+              <div class="row justify-center items-center sm-column card-small"
+                @click="$refs.cMnormal.$refs.cardModal.open()">
+                N ID: {{getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardID, latestEvent.eventType}}
+                <span class="row justify-center items-center">
+                  <img class="thumb responsive" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${Math.trunc(getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardID / 50)}_${getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardRes}_normal.png`">
+                  {{getCharacter(getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).characterId).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
+                </span>
+              </div>
+              <card-modal ref="cMnormal" :cardInfo="getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType)"
+                :characterInfo="getCharacter(getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).characterId, latestEvent.eventType)"
+                :skillName="skillMap[getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardID].skillName"
+                :skillId="Number(skillMap[getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardID].skillID)"></card-modal>
+              <div class="row justify-center items-center sm-column card-small"
+                @click="$refs.cMspecial.$refs.cardModal.open()">
+                SR ID: {{getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID}}
+                <span class="row justify-center items-center">
+                  <img class="thumb responsive" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${Math.trunc(getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID / 50)}_${getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardRes}_normal.png`">
+                  {{getCharacter(getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).characterId).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
+                </span>
+              </div>
+              <card-modal ref="cMspecial" :cardInfo="getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType)"
+                :characterInfo="getCharacter(getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).characterId)"
+                :skillName="skillMap[getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID].skillName"
+                :skillId="Number(skillMap[getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID].skillID)"></card-modal>
+              <p>{{$t('event-reward-stamp')}}</p>
+              <img v-if="eventRewardStamp" v-lazy="`https://bangdream.ga/assets/stamp/01_${eventRewardStamp.imageName}_icon.png`"></img>
+              <!-- <p>{{$t('event-bonus-card')}}</p>
+              <img class="responsive" style="max-width: 100%;" v-lazy="`https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/images_event_point_banner.png`"> -->
             </div>
-            <card-modal ref="cMnormal" :cardInfo="getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType)"
-              :characterInfo="getCharacter(getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).characterId, latestEvent.eventType)"
-              :skillName="skillMap[getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardID].skillName"
-              :skillId="Number(skillMap[getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardID].skillID)"></card-modal>
-            <div class="row justify-center items-center sm-column card-small"
-              @click="$refs.cMspecial.$refs.cardModal.open()">
-              SR ID: {{getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID}}
-              <span class="row justify-center items-center">
-                <img class="thumb responsive" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${Math.trunc(getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID / 50)}_${getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardRes}_normal.png`">
-                {{getCharacter(getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).characterId).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
-              </span>
-            </div>
-            <card-modal ref="cMspecial" :cardInfo="getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType)"
-              :characterInfo="getCharacter(getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).characterId)"
-              :skillName="skillMap[getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID].skillName"
-              :skillId="Number(skillMap[getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID].skillID)"></card-modal>
-            <p>{{$t('event-reward-stamp')}}</p>
-            <img v-if="eventRewardStamp" v-lazy="`https://bangdream.ga/assets/stamp/01_${eventRewardStamp.imageName}_icon.png`"></img>
-            <p>{{$t('event-bonus-card')}}</p>
-            <img class="responsive" style="max-width: 100%;" v-lazy="`https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/images_event_point_banner.png`">
-          </div>
-        </q-card-main>
-      </q-card>
-      <div class="row sm-column md-column gutter">
+          </q-card-main>
+        </q-card>
+      </div>
+      
+      <!-- <div class="row sm-column md-column gutter"> -->
         <div class="col-lg-4 col-xl-4 col-12" v-for="gacha in currentGachaList" :key="gacha.gachaId">
           <q-card class="card">
             <q-card-media>
@@ -87,7 +89,7 @@
             </div>
           </q-card>
         </div>
-      </div>
+      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -101,7 +103,10 @@
     "event-reward-card": "Reward cards",
     "event-reward-stamp": "Reward stamp",
     "event-bonus-card": "Bonus cards",
-    "gacha-end-cd": "Gacha ending countdown"
+    "gacha-end-cd": "Gacha ending countdown",
+    "paras": [
+      "We have our Discord server now! <a href='https://discord.gg/vGb3eHH' target='_blank'>Join us!</a>"
+    ]
   },
   "zh-CN": {
     "title": ["欢迎访问", "数据库!"],
@@ -110,7 +115,10 @@
     "event-reward-card": "奖励卡片",
     "event-reward-stamp": "奖励表情",
     "event-bonus-card": "加成卡牌",
-    "gacha-end-cd": "抽卡倒计时"
+    "gacha-end-cd": "抽卡倒计时",
+    "paras": [
+      "我们有Discord服务器了!赶快<a href='https://discord.gg/vGb3eHH' target='_blank'>加入</a>吧！"
+    ]
   },
   "zh-TW": {
     "title": ["歡迎訪問", "數據庫!"],
@@ -119,7 +127,10 @@
     "event-reward-card": "獎勵卡片",
     "event-reward-stamp": "獎勵表情",
     "event-bonus-card": "加成卡牌",
-    "gacha-end-cd": "抽卡倒計時"
+    "gacha-end-cd": "抽卡倒計時",
+    "paras": [
+      "我們有Discord服務器了!趕快<a href='https://discord.gg/vGb3eHH' target='_blank'>加入</a>吧！"
+    ]
   }
 }
 </i18n>

@@ -5,8 +5,7 @@
         <q-icon name="reply"></q-icon>
       </q-btn> -->
       <img class="avatar" style="width: 48px" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${cardGroup}_${cardInfo.cardRes}_${cardResType}.png`" />
-      {{characterInfo.characterName}}
-      <span class="text-white">{{cardInfo.title}}</span>
+      <span class="text-white">[{{cardInfo.title}}] {{characterInfo.characterName}}</span>
     </q-card-title>
     <q-card-main class="card-content column gutter">
       <div>
@@ -14,22 +13,26 @@
           <img class="preview-img card-img-main" v-lazy="`https://bangdream.ga/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`"
             @click="$preview.open(0, [{
               src: `https://bangdream.ga/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
+              title: `[${cardInfo.title}] ${characterInfo.characterName}`,
               w: cardImgType === 'card' ? 1334 : 1120,
               h: cardImgType === 'card' ? 1002 : 1120
             }], {
               fullscreenEl: true,
               zoomEl: true,
-              shareEl: true
+              shareEl: true,
+              history: false
             })">
           <img class="card-img-frame" :src="`statics/frame_${getCardFrame()}.png`" v-if="cardImgType === 'card'"
             @click="$preview.open(0, [{
               src: `https://bangdream.ga/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
+              title: `[${cardInfo.title}] ${characterInfo.characterName}`,
               w: cardImgType === 'card' ? 1334 : 1120,
               h: cardImgType === 'card' ? 1002 : 1120
             }], {
               fullscreenEl: true,
               zoomEl: true,
-              shareEl: true
+              shareEl: true,
+              history: false
             })">
           <div :class="`card-img-attr-${cardInfo.attr}`" v-if="cardImgType === 'card'"></div>
           <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" v-if="cardImgType === 'card'" :key="i"></div>
@@ -42,7 +45,8 @@
               w: 507,
               h: 507
             }], {
-              shareEl: true
+              shareEl: true,
+              history: false
             })">{{$t('live-chara')}}</q-btn>
           <div class="column" v-if="cardInfo.episodes">
             <label>
@@ -365,7 +369,6 @@ export default {
     },
     getSkillDesc (skillDesc, skillEffects, judgeLists, skillLv) {
       const skillEffect = skillEffects[skillLv - 1]
-      console.log(judgeLists, this.skillId)
       if (judgeLists.length && skillEffect) {
         const judgeEffect = judgeLists[skillLv - 1]
         return skillDesc.replace(/\{0\}/, judgeEffect.judgeName).replace(/\{1\}/, skillEffect.valueDescription)

@@ -95,7 +95,7 @@
 
 <script>
 export default {
-  name: 'donate'
+  name: 'about'
 }
 </script>
 

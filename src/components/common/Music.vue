@@ -10,7 +10,8 @@
         }], {
           fullscreenEl: true,
           zoomEl: true,
-          shareEl: true
+          shareEl: true,
+          history: false
         })" />
       <q-card-title slot="overlay">
         {{data.title}}
