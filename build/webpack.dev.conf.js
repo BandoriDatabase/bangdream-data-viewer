@@ -19,6 +19,9 @@ module.exports = merge(baseWebpackConfig, {
     historyApiFallback: true,
     noInfo: true
   },
+  output: {
+    filename: 'js/[name].js',
+  },
   module: {
     rules: cssUtils.styleRules({
       sourceMap: config.dev.cssSourceMap,

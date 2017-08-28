@@ -23,13 +23,15 @@ export default new VueRouter({
   routes: [
     { path: '/',
       component: load('Index'),
-      redirect: '/index',
       children: [
-        { path: '/index', component: load('Home') },
+        { path: '/', component: load('Home') },
         { path: '/card',
+          redirect: '/card/overview',
           component: load('Cards'), // Cards viewer
           children: [
-            { name: 'cardDetail', path: '/card/:cardID', component: load('CardDetail') }
+            { name: 'cardDetail', path: '/card/:cardID(\\d+)', component: load('CardDetail') },
+            { name: 'cardTable', path: '/card/table', component: load('cards/CardTable') },
+            { name: 'cardOverview', path: '/card/overview', component: load('cards/CardOverview') }
           ]
         },
         { path: '/sfcs', component: load('SingleFrameCartoon') },
@@ -39,8 +41,9 @@ export default new VueRouter({
             { name: 'musicDetail', path: '/music/:musicID', component: load('MusicDetail') }
           ]
         },
+        { path: '/currevent', component: load('EventInfo') },
         { path: '/about', component: load('About') }
       ]}, // Default
-    { path: '*', redirect: '/index' } // Not found
+    { path: '*', redirect: '/' } // Not found
   ]
 })

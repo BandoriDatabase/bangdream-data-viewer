@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width: 100%">
     <div class="row items-center" v-if="!small">
       <div class="column items-center cd-elem col-3">
         <h4 class="no-margin">{{days}}</h4>

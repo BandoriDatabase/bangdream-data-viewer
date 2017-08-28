@@ -15,7 +15,7 @@
         </template>
         <template slot="col-bandID" scope="cell">
           <div v-if="Number(cell.data) > 5">{{bandMap[cell.data].bandName}}</div>
-          <img height="60px" width="90px" v-if="Number(cell.data) <= 5" v-lazy="`https://bangdream.ga/assets/band/logo/00${cell.data}_logoL.png`">
+          <img height="60px" width="90px" v-if="Number(cell.data) <= 5" v-lazy="`https://bangdream.ga/assets/band/logo/00${cell.data}_logoL.png`" :alt="bandMap[cell.data].bandName">
         </template>
         <template slot="col-tag" scope="cell">
           {{$t(cell.row.tag)}}

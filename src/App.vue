@@ -55,4 +55,10 @@ export default {}
   height: 60px;
   background-size: 1120% 1120%;
 }
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+svg.material-design-icon__svg {
+    fill: rgba(0,0,0,0.54);
+}
 </style>

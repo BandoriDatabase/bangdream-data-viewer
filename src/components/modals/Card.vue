@@ -92,7 +92,7 @@ export default {
       type: Object,
       required: true
     },
-    skillId: {
+    skillID: {
       type: Number,
       required: true
     },
@@ -114,13 +114,13 @@ export default {
       'judgeLists'
     ]),
     skillInfo () {
-      return this.skillInfos.find(elem => Number(elem.skillId) === this.skillId)
+      return this.skillInfos.find(elem => Number(elem.skillID) === this.skillID)
     },
     skillEffect () {
-      return this.skillEffects.filter(elem => Number(elem.skillId) === this.skillId && elem.u3 === '1')
+      return this.skillEffects.filter(elem => Number(elem.skillID) === this.skillID && elem.u3 === '1')
     },
     judgeList () {
-      return this.judgeLists.filter(elem => Number(elem.skillId) === this.skillId)
+      return this.judgeLists.filter(elem => Number(elem.skillID) === this.skillID)
     }
   },
   data () {

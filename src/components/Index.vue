@@ -11,16 +11,24 @@
     </q-toolbar>
 
     <div slot="left">
-      <q-list no-border link inset-separator>
+      <q-list no-border link>
         <q-list-header>{{$t('left.title')}}</q-list-header>
-        <q-side-link item :to="{path: '/index', exact: true}">
+        <q-side-link item to="/" exact>
           <q-item-side icon="home" />
           <q-item-main :label="$t('left.home')" />
         </q-side-link>
-        <q-side-link item to="/card">
-          <q-item-side icon="picture_in_picture" />
-          <q-item-main :label="$t('left.card')" />
-        </q-side-link>
+        <q-collapsible icon="picture_in_picture" :label="$t('left.card')">
+          <q-side-link item to="/card/overview">
+            <q-item-side icon="image" />
+            <q-item-main :label="$t('left.gallery')" />
+          </q-side-link>
+          <q-side-link item to="/card/table">
+            <q-item-side>
+              <table-large-icon />
+            </q-item-side>
+            <q-item-main :label="$t('left.table')" />
+          </q-side-link>
+        </q-collapsible>
         <q-side-link item to="/music">
           <q-item-side icon="library_music" />
           <q-item-main :label="$t('left.music')" />
@@ -29,14 +37,18 @@
           <q-item-side icon="photo_library" />
           <q-item-main :label="$t('left.SFC')" />
         </q-side-link>
+        <q-side-link item to="/currevent">
+          <q-item-side icon="schedule" />
+          <q-item-main :label="$t('left.current-event')" />
+        </q-side-link>
         <q-side-link item to="/about">
           <q-item-side icon="info" />
           <q-item-main :label="$t('left.about')" />
         </q-side-link>
         <q-item-separator />
         <q-list-header>{{$t('left.secTitle')}}</q-list-header>
-        <q-item>
-          <q-item-main label="v0.1.1" />
+        <q-item :highlight="false">
+          <q-item-main label="v0.2.0" />
         </q-item>
       </q-list>
     </div>
@@ -71,10 +83,13 @@
       "title": "Toolbox",
       "home": "Home",
       "card": "Cards",
+      "table": "Table",
+      "gallery": "Gallery",
       "music": "Musics",
       "SFC": "Loading Cartoons",
       "about": "About",
-      "secTitle": "Building info"
+      "secTitle": "Building info",
+      "current-event": "Current Event"
     }
   },
   "zh-CN": {
@@ -85,10 +100,13 @@
       "title": "工具箱",
       "home": "首页",
       "card": "卡牌",
+      "table": "表格模式",
+      "gallery": "大图模式",
       "music": "歌曲",
       "SFC": "加载界面漫画",
       "about": "关于我们",
-      "secTitle": "版本"
+      "secTitle": "版本",
+      "current-event": "当前活动"
     }
   },
   "zh-TW": {
@@ -99,10 +117,13 @@
       "title": "工具箱",
       "home": "首頁",
       "card": "卡牌",
+      "table": "表格模式",
+      "gallery": "大圖模式",
       "music": "歌曲",
       "SFC": "加載界面漫畫",
       "about": "關於我們",
-      "secTitle": "版本"
+      "secTitle": "版本",
+      "current-event": "當前活動"
     }
   }
 }
@@ -123,9 +144,12 @@ import {
   QToolbarTitle,
   QItem,
   BackToTop,
-  QItemSeparator
+  QItemSeparator,
+  QCollapsible
 } from 'quasar'
 import { mapActions, mapState } from 'vuex'
+
+import tableLargeIcon from 'icons/table-large'
 
 export default {
   components: {
@@ -140,7 +164,9 @@ export default {
     QToolbar,
     QToolbarTitle,
     QItem,
-    QItemSeparator
+    QItemSeparator,
+    QCollapsible,
+    tableLargeIcon
   },
   directives: {
     BackToTop

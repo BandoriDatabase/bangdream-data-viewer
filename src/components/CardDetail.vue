@@ -1,7 +1,7 @@
 <template>
   <div v-if="skillMap && cardInfos && characterInfos">
     <p>Hint: <span class="desktop-only">Click</span><span class="mobile-only">Touch</span> card image to show full screen image.</p>
-    <card :cardInfo="cardInfo" :characterInfo="characterInfo" :skillId="Number(skillMap[cardInfo.cardID].skillID)" :skillName="skillMap[cardInfo.cardID].skillName"></card>
+    <card :cardInfo="cardInfo" :characterInfo="characterInfo" :skillID="Number(skillMap[cardInfo.cardID].skillID)" :skillName="skillMap[cardInfo.cardID].skillName"></card>
     <div class="comments">
       <vue-disqus shortname="bandori-database" :identifier="`card_${$route.params.cardID}`"></vue-disqus>
     </div>
@@ -32,7 +32,7 @@ export default {
     },
     characterInfo () {
       if (!this.characterInfos || !this.cardInfo) return {}
-      return this.characterInfos[this.cardInfo.characterId]
+      return this.characterInfos[this.cardInfo.characterID]
     }
   }
 }

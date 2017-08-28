@@ -18,6 +18,9 @@ module.exports = merge(baseWebpackConfig, {
       postcss: true
     })
   },
+  output: {
+    filename: 'js/[name].[hash].js',
+  },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   plugins: [
     new UglifyJSPlugin({

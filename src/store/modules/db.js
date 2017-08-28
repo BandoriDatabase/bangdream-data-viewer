@@ -91,6 +91,22 @@ const getters = {
   stampMap (state) {
     if (!state.master.stampMap) return null
     return state.master.stampMap.entries
+  },
+  challengeEventBadgeMap (state) {
+    if (!state.master.challengeEventBadgeMap) return null
+    return state.master.challengeEventBadgeMap.entries
+  },
+  challengeEventDetailMap (state) {
+    if (!state.master.challengeEventDetailMap) return null
+    return state.master.challengeEventDetailMap.entries
+  },
+  eventBadgeMap (state) {
+    if (!state.master.eventBadgeMap) return null
+    return state.master.eventBadgeMap.entries
+  },
+  degreeMap (state) {
+    if (!state.master.degreeMap) return null
+    return state.master.degreeMap.entries
   }
 }
 
