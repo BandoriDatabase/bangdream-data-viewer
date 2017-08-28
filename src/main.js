@@ -30,9 +30,9 @@ Vue.use(VueAnalytics, {
 Vue.use(VueI18n)
 
 const i18n = new VueI18n({
-  // locale: window.navigator.userLanguage || window.navigator.language,
+  locale: window.navigator.userLanguage || window.navigator.language,
   // locale: 'en',
-  locale: 'zh-TW',
+  // locale: 'zh-TW',
   fallbackLocale: 'en'
 })
 

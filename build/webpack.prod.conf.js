@@ -19,7 +19,7 @@ module.exports = merge(baseWebpackConfig, {
     })
   },
   output: {
-    filename: 'js/[name].[hash].js',
+    filename: 'js/[name].[chunkhash].js',
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   plugins: [
