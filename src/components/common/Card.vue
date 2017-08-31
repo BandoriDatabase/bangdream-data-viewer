@@ -334,7 +334,7 @@ export default {
   },
   mounted () {
     this.level = Number(this.cardInfo.maxLevel) - 10
-    this.skillLv = this.skillEffect.length
+    this.skillLv = this.skillEffect.length || this.judgeList.length
   },
   methods: {
     switchCardResType () {
@@ -392,7 +392,7 @@ export default {
       }
       else if (judgeLists.length) {
         const judgeEffect = judgeLists[skillLv - 1]
-        return skillDesc.replace(/\{0\}/, judgeEffect.judgeName)
+        return skillDesc.replace(/\{0\}/, `${judgeEffect.judgeName}(${judgeEffect.judgeEffectValue})`)
       }
     }
   }

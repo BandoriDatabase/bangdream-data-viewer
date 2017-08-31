@@ -48,7 +48,7 @@
         <q-item-separator />
         <q-list-header>{{$t('left.secTitle')}}</q-list-header>
         <q-item :highlight="false">
-          <q-item-main label="v0.2.0" />
+          <q-item-main label="v0.2.1" />
         </q-item>
       </q-list>
     </div>

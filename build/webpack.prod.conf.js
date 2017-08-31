@@ -8,7 +8,8 @@ var
   ExtractTextPlugin = require('extract-text-webpack-plugin'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin'),
-  UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+  UglifyJSPlugin = require('uglifyjs-webpack-plugin'),
+  PrerenderSpaPlugin = require('prerender-spa-plugin')
 
 module.exports = merge(baseWebpackConfig, {
   module: {
@@ -79,6 +80,13 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       chunks: ['vendor']
-    })
+    }),
+    new PrerenderSpaPlugin(
+      path.join(__dirname, '../dist'),
+      ['/'],
+      {
+        captureAfterElementExists: '#q-app',
+      }
+    )
   ]
 })

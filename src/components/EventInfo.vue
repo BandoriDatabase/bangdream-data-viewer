@@ -2,7 +2,8 @@
   <div>
     <q-card v-if="latestEvent.enableFlag">
       <q-card-media>
-        <div class="event-cover" :style="{ 'background-image': `url(https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_trim_eventtop.png), url(https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png)` }"></div>
+        <div v-if="challengeEventDetailMap" class="event-cover" :style="{ 'background-image': `url(https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_trim_eventtop.png), url(https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png)` }"></div>
+        <div v-else class="event-cover" :style="{ 'background-image': `url(https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png)` }"></div>
         <q-card-title slot="overlay">
           {{latestEvent.eventName}}
           <span slot="subtitle" class="text-white">{{$t('event-type')}} {{latestEvent.eventType}}</span>
@@ -47,14 +48,19 @@
         <p>{{$t('event-bonus-attr-card')}}</p>
         <img class="responsive" style="max-width: 100%;" v-lazy="`https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/images_event_point_banner.png`">
         <p>{{$t('event-badge')}}</p>
-        <img class="badge" v-lazy="`https://bangdream.ga/assets/thumb/common_${eventBadgeMap[challengeEventBadgeMap[latestEvent.eventID].details[0].badgeID].badgeAssetBundleName}.png`">
+        <img class="badge" v-if="challengeEventDetailMap" v-lazy="`https://bangdream.ga/assets/thumb/common_${eventBadgeMap[challengeEventBadgeMap[latestEvent.eventID].details[0].badgeID].badgeAssetBundleName}.png`">
+        <img class="badge" v-else v-lazy="`https://bangdream.ga/assets/thumb/common_${eventBadgeMap[Object.keys(eventBadgeMap).find(elem => eventBadgeMap[elem].eventID === latestEvent.eventID)].badgeAssetBundleName}.png`">
         <p>{{$t('event-degrees')}}</p>
         <img class="event-degree" :style="{ 'background-image': `url(https://bangdream.ga/assets/thumb/degree_event_point_icon_1.png), url(https://bangdream.ga/assets/thumb/degree_event_point_1.png), url(https://bangdream.ga/assets/thumb/degree_${degreeMap[latestEvent.rankingRewards[0].rewardID].imageName}.png)` }">
-        <img class="event-degree" v-for="eventMusic in challengeEventDetailMap[latestEvent.eventID].eventMusic" :key="eventMusic.seq"
+        <span v-if="challengeEventDetailMap">
+          <img class="event-degree" v-for="eventMusic in challengeEventDetailMap[latestEvent.eventID].eventMusic" :key="eventMusic.seq"
           :style="{ 'background-image': `url(https://bangdream.ga/assets/thumb/degree_opening_1_1.png), url(https://bangdream.ga/assets/thumb/degree_score_ranking_1.png), url(https://bangdream.ga/assets/thumb/degree_${degreeMap[eventMusic.musicRankingRewards[0].rewardID].imageName}.png)` }">
-        <p>{{$t('event-musics')}}</p>
-        <img v-for="eventMusic in challengeEventDetailMap[latestEvent.eventID].eventMusic" :key="eventMusic.seq" v-lazy="`https://bangdream.ga/assets/musicjacket/${musicList.find(elem => elem.id === eventMusic.musicID).jacketImage}_thumb.png`"
-          style="margin: 0 5px; cursor: pointer;" @click="$router.push({ name: 'musicDetail', params: { musicID: eventMusic.musicID } })">
+        </span>
+        <span v-if="challengeEventDetailMap">
+          <p>{{$t('event-musics')}}</p>
+          <img v-for="eventMusic in challengeEventDetailMap[latestEvent.eventID].eventMusic" :key="eventMusic.seq" v-lazy="`https://bangdream.ga/assets/musicjacket/${musicList.find(elem => elem.id === eventMusic.musicID).jacketImage}_thumb.png`"
+            style="margin: 0 5px; cursor: pointer;" @click="$router.push({ name: 'musicDetail', params: { musicID: eventMusic.musicID } })">
+        </span>
       </q-card-main>
     </q-card>
   </div>

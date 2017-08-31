@@ -129,7 +129,7 @@ export default {
     }
   },
   mounted () {
-    this.skillLv = this.skillEffect.length
+    this.skillLv = this.skillEffect.length || this.judgeList.length
   },
   methods: {
     getPalette (type) {
@@ -160,12 +160,16 @@ export default {
     },
     getSkillDesc (skillDesc, skillEffects, judgeLists, skillLv) {
       const skillEffect = skillEffects[skillLv - 1]
-      if (judgeLists.length) {
+      if (judgeLists.length && skillEffect) {
         const judgeEffect = judgeLists[skillLv - 1]
         return skillDesc.replace(/\{0\}/, judgeEffect.judgeName).replace(/\{1\}/, skillEffect.valueDescription)
       }
-      else {
+      else if (skillEffect) {
         return skillDesc.replace(/\{0\}/, skillEffect.valueDescription)
+      }
+      else if (judgeLists.length) {
+        const judgeEffect = judgeLists[skillLv - 1]
+        return skillDesc.replace(/\{0\}/, `${judgeEffect.judgeName}(${judgeEffect.judgeEffectValue})`)
       }
     }
   }
