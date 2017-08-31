@@ -42,7 +42,7 @@ export default new VueRouter({
           ]
         },
         { path: '/currevent', component: load('EventInfo') },
-        { path: '/live2d', component: load('Live2D') },
+        // { path: '/live2d', component: load('Live2D') },
         { path: '/about', component: load('About') }
       ]}, // Default
     { path: '*', redirect: '/' } // Not found
