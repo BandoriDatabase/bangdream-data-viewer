@@ -1,7 +1,6 @@
 <template>
-  <q-layout ref="main" view="hHr LpR lFf" reveal>
-    <q-toolbar slot="header" class="toolbar bg-pink"
-      :left-breakpoint="996">
+  <q-layout ref="main" view="hHr LpR lFf" reveal :left-breakpoint="1365">
+    <q-toolbar slot="header" class="toolbar bg-pink">
       <q-btn flat @click="$refs.main.toggleLeft()">
         <q-icon name="menu" />
       </q-btn>

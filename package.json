@@ -16,6 +16,7 @@
     "coverage": "cat ./coverage/report-lcovonly.txt | coveralls"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.0.0",
     "fastclick": "^1.0.6",
     "material-design-icons": "^3.0.1",
@@ -23,6 +24,7 @@
     "photoswipe": "^4.1.2",
     "pixi-live2d": "^1.2.1",
     "pixi.js": "^4.5.5",
+    "prerenderer-webpack-plugin": "^0.5.0",
     "quasar-extras": "0.0.7",
     "quasar-framework": "^0.14.0",
     "roboto-fontface": "^0.8.0",

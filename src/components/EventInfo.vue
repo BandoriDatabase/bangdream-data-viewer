@@ -2,7 +2,7 @@
   <div>
     <q-card v-if="latestEvent.enableFlag">
       <q-card-media>
-        <div v-if="challengeEventDetailMap" class="event-cover" :style="{ 'background-image': `url(https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_trim_eventtop.png), url(https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png)` }"></div>
+        <div v-if="challengeEventDetailMap || latestEvent.eventType === 'versus'" class="event-cover" :style="{ 'background-image': `url(https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_trim_eventtop.png), url(https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png)` }"></div>
         <div v-else class="event-cover" :style="{ 'background-image': `url(https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png)` }"></div>
         <q-card-title slot="overlay">
           {{latestEvent.eventName}}
@@ -44,7 +44,7 @@
           :skillName="skillMap[getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID].skillName"
           :skillID="Number(skillMap[getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID].skillID)"></card-modal>
         <p>{{$t('event-reward-stamp')}}</p>
-        <img v-if="eventRewardStamp" v-lazy="`https://bangdream.ga/assets/stamp/01_${eventRewardStamp.imageName}_icon.png`"></img>
+        <img v-if="eventRewardStamp" v-lazy="`https://bangdream.ga/assets/stamp/01_${eventRewardStamp.imageName}.png`"></img>
         <p>{{$t('event-bonus-attr-card')}}</p>
         <img class="responsive" style="max-width: 100%;" v-lazy="`https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/images_event_point_banner.png`">
         <p>{{$t('event-badge')}}</p>
@@ -78,7 +78,7 @@
     "event-reward-stamp": "Reward stamp",
     "event-bonus-attr-card": "Bonus attribute and cards",
     "event-badge": "Event badge",
-    "event-degrees": "Degress preview",
+    "event-degrees": "Degrees preview",
     "event-musics": "Event musics"
   },
   "zh-CN": {
@@ -204,6 +204,9 @@ export default {
         case 'challenge':
           normalRewardPoint = '20000'
           break
+        case 'versus':
+          normalRewardPoint = '50000'
+          break
       }
       const normalID = rewards.find(elem => elem.point === normalRewardPoint).rewardID
       return this.cardInfos[normalID]
@@ -217,6 +220,9 @@ export default {
         case 'challenge':
           specialRewardPoint = '100000'
           break
+        case 'versus':
+          specialRewardPoint = '150000'
+          break
       }
       const specialID = rewards.find(elem => elem.point === specialRewardPoint).rewardID
       return this.cardInfos[specialID]
@@ -224,6 +230,10 @@ export default {
     getCharacter (characterID) {
       return this.characterInfos[characterID]
     }
+  },
+  beforeDestroy () {
+    let aplayer = this.$refs.player.control
+    aplayer.destroy()
   }
 }
 </script>

@@ -387,6 +387,9 @@ export default {
         case 'challenge':
           normalRewardPoint = '20000'
           break
+        case 'versus':
+          normalRewardPoint = '50000'
+          break
       }
       const normalID = rewards.find(elem => elem.point === normalRewardPoint).rewardID
       return this.cardInfos[normalID]
@@ -399,6 +402,9 @@ export default {
           break
         case 'challenge':
           specialRewardPoint = '100000'
+          break
+        case 'versus':
+          specialRewardPoint = '150000'
           break
       }
       const specialID = rewards.find(elem => elem.point === specialRewardPoint).rewardID
