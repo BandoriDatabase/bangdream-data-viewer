@@ -161,7 +161,7 @@
           <q-collapsible icon="highlight" :label="$t('training.title')">
             <div>
               <div class="row" v-if="cardInfo.rarity >= 3">
-                <div v-for="entry in cardInfo.training.costs.entries" class="column col-md-4 col-xs-12 items-center" :key="entry.resourceID">
+                <div v-for="entry in cardInfo.training.costs.entries" class="column col-4 items-center" :key="entry.resourceID">
                   <img class="thumb-training" v-lazy="`https://bangdream.ga/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
                   <span>{{entry.quantity}}</span>
                 </div>
@@ -171,10 +171,10 @@
           </q-collapsible>
           <q-collapsible icon="insert comment" :label="$t('story')" v-if="cardInfo.episodes">
             <div v-for="episode in cardInfo.episodes.entries" :key="episode.episodeID">
-              <p>{{$t('story-self-intro')}}{{episode.title}} <q-btn small color="pink" round flat><q-icon name="launch"></q-icon></q-btn></p>
+              <p>{{$t('story-self-intro')}}{{episode.title}} <q-btn small color="pink" round flat disabled><q-icon name="launch"></q-icon></q-btn></p>
               <p>{{$t('story-to-unlock')}}</p>
               <div class="row">
-                <div v-for="entry in episode.costs.entries" class="column col-md-4 col-xs-12 items-center" :key="entry.resourceID">
+                <div v-for="entry in episode.costs.entries" class="column col-4 items-center" :key="entry.resourceID">
                   <img class="thumb-training" v-lazy="`https://bangdream.ga/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
                   <span>{{entry.quantity}}</span>
                 </div>
@@ -198,7 +198,7 @@
 {
   "en": {
     "un-trained": "(un)trained",
-    "cut-in-normal": "Cut In / Normal",
+    "cut-in-normal": "Transparent / Normal",
     "live-chara": "Live Character",
     "self-intro-unlock-reward": "Self intro unlock reward",
     "max-lv-unlock-reward": "Max Lv story unlock reward",
@@ -218,7 +218,7 @@
   },
   "zh-CN": {
     "un-trained": "切换觉醒",
-    "cut-in-normal": "切换卡面/立绘",
+    "cut-in-normal": "切换有/无背景",
     "live-chara": "Live角色图",
     "self-intro-unlock-reward": "自我介绍解锁奖励属性",
     "max-lv-unlock-reward": "满级剧情解锁奖励属性",
@@ -238,7 +238,7 @@
   },
   "zh-TW": {
     "un-trained": "切換覺醒",
-    "cut-in-normal": "切換卡面/立繪",
+    "cut-in-normal": "切換有/無背景",
     "live-chara": "Live角色圖",
     "self-intro-unlock-reward": "自我介紹解鎖獎勵屬性",
     "max-lv-unlock-reward": "滿級劇情解鎖獎勵屬性",

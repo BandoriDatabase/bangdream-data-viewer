@@ -2,22 +2,20 @@
   <div v-if="skillMap && cardInfos && characterInfos">
     <p>Hint: <span class="desktop-only">Click</span><span class="mobile-only">Touch</span> card image to show full screen image.</p>
     <card :cardInfo="cardInfo" :characterInfo="characterInfo" :skillID="Number(skillMap[cardInfo.cardID].skillID)" :skillName="skillMap[cardInfo.cardID].skillName"></card>
-    <div class="comments">
+    <!-- <div class="comments">
       <vue-disqus shortname="bandori-database" :identifier="`card_${$route.params.cardID}`" :title="`card_${$route.params.cardID}`"></vue-disqus>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import VueDisqus from 'vue-disqus/VueDisqus.vue'
 import Card from './common/Card'
 
 export default {
   name: 'CardDetailComponent',
   components: {
-    Card,
-    VueDisqus
+    Card
   },
   computed: {
     ...mapGetters('DB', [

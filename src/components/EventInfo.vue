@@ -21,28 +21,28 @@
         <p>{{$t('event-reward-card')}}</p>
         <div class="row justify-center items-center sm-column card-small"
           @click="$refs.cMnormal.$refs.cardModal.open()">
-          N ID: {{getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardID, latestEvent.eventType}}
+          N ID: {{getEventNormalCard(latestEvent.pointRewards).cardID}}
           <span class="row justify-center items-center">
-            <img class="thumb responsive" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${Math.trunc(getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardID / 50)}_${getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardRes}_normal.png`">
-            {{getCharacter(getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).characterID).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
+            <img class="thumb responsive" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${Math.trunc(getEventNormalCard(latestEvent.pointRewards).cardID / 50)}_${getEventNormalCard(latestEvent.pointRewards).cardRes}_normal.png`">
+            {{getCharacter(getEventNormalCard(latestEvent.pointRewards).characterID).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
           </span>
         </div>
-        <card-modal ref="cMnormal" :cardInfo="getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType)"
-          :characterInfo="getCharacter(getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).characterID, latestEvent.eventType)"
-          :skillName="skillMap[getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardID].skillName"
-          :skillID="Number(skillMap[getEventNormalCard(latestEvent.pointRewards, latestEvent.eventType).cardID].skillID)"></card-modal>
+        <card-modal ref="cMnormal" :cardInfo="getEventNormalCard(latestEvent.pointRewards)"
+          :characterInfo="getCharacter(getEventNormalCard(latestEvent.pointRewards).characterID)"
+          :skillName="skillMap[getEventNormalCard(latestEvent.pointRewards).cardID].skillName"
+          :skillID="Number(skillMap[getEventNormalCard(latestEvent.pointRewards).cardID].skillID)"></card-modal>
         <div class="row justify-center items-center sm-column card-small"
           @click="$refs.cMspecial.$refs.cardModal.open()">
-          SR ID: {{getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID}}
+          SR ID: {{getEventSpecialCard(latestEvent.pointRewards).cardID}}
           <span class="row justify-center items-center">
-            <img class="thumb responsive" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${Math.trunc(getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID / 50)}_${getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardRes}_normal.png`">
-            {{getCharacter(getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).characterID).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
+            <img class="thumb responsive" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${Math.trunc(getEventSpecialCard(latestEvent.pointRewards).cardID / 50)}_${getEventSpecialCard(latestEvent.pointRewards).cardRes}_normal.png`">
+            {{getCharacter(getEventSpecialCard(latestEvent.pointRewards).characterID).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
           </span>
         </div>
-        <card-modal ref="cMspecial" :cardInfo="getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType)"
-          :characterInfo="getCharacter(getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).characterID)"
-          :skillName="skillMap[getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID].skillName"
-          :skillID="Number(skillMap[getEventSpecialCard(latestEvent.pointRewards, latestEvent.eventType).cardID].skillID)"></card-modal>
+        <card-modal ref="cMspecial" :cardInfo="getEventSpecialCard(latestEvent.pointRewards)"
+          :characterInfo="getCharacter(getEventSpecialCard(latestEvent.pointRewards).characterID)"
+          :skillName="skillMap[getEventSpecialCard(latestEvent.pointRewards).cardID].skillName"
+          :skillID="Number(skillMap[getEventSpecialCard(latestEvent.pointRewards).cardID].skillID)"></card-modal>
         <p>{{$t('event-reward-stamp')}}</p>
         <img v-if="eventRewardStamp" v-lazy="`https://bangdream.ga/assets/stamp/01_${eventRewardStamp.imageName}.png`"></img>
         <p>{{$t('event-bonus-attr-card')}}</p>
@@ -195,36 +195,12 @@ export default {
     }
   },
   methods: {
-    getEventNormalCard (rewards, eventType) {
-      let normalRewardPoint
-      switch (eventType) {
-        case 'story':
-          normalRewardPoint = '30000'
-          break
-        case 'challenge':
-          normalRewardPoint = '20000'
-          break
-        case 'versus':
-          normalRewardPoint = '50000'
-          break
-      }
-      const normalID = rewards.find(elem => elem.point === normalRewardPoint).rewardID
+    getEventNormalCard (rewards) {
+      const normalID = rewards.filter(elem => elem.rewardType === 'situation')[0].rewardID
       return this.cardInfos[normalID]
     },
-    getEventSpecialCard (rewards, eventType) {
-      let specialRewardPoint
-      switch (eventType) {
-        case 'story':
-          specialRewardPoint = '150000'
-          break
-        case 'challenge':
-          specialRewardPoint = '100000'
-          break
-        case 'versus':
-          specialRewardPoint = '150000'
-          break
-      }
-      const specialID = rewards.find(elem => elem.point === specialRewardPoint).rewardID
+    getEventSpecialCard (rewards) {
+      const specialID = rewards.filter(elem => elem.rewardType === 'situation')[1].rewardID
       return this.cardInfos[specialID]
     },
     getCharacter (characterID) {
