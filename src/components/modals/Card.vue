@@ -5,7 +5,7 @@
         <h6 :class="`text-${getPalette(cardInfo.attr)}`">{{characterInfo.characterName}} - {{cardInfo.title}}</h6>
       </div>
       <div class="card-img-parent" @click="$router.push({ name: 'cardDetail', params: { cardID: cardInfo.cardID } })">
-        <img class="preview-img card-img-main" v-lazy="`https://bangdream.ga/assets/characters/resourceset/${cardInfo.cardRes}_card_normal.png`">
+        <img class="preview-img card-img-main" v-lazy="`/assets/characters/resourceset/${cardInfo.cardRes}_card_normal.png`">
         <img class="card-img-frame" :src="`statics/frame_${getCardFrame()}.png`">
         <div :class="`card-img-attr-${cardInfo.attr}`"></div>
         <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-normal-${i}`" :key="i"></div>

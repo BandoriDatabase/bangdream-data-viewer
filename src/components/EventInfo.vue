@@ -2,15 +2,15 @@
   <div>
     <q-card v-if="latestEvent.enableFlag">
       <q-card-media>
-        <div v-if="challengeEventDetailMap || latestEvent.eventType === 'versus'" class="event-cover" :style="{ 'background-image': `url(https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_trim_eventtop.png), url(https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png)` }"></div>
-        <div v-else class="event-cover" :style="{ 'background-image': `url(https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png)` }"></div>
+        <div v-if="challengeEventDetailMap || latestEvent.eventType === 'versus'" class="event-cover" :style="{ 'background-image': `url(/assets/event/${latestEvent.assetBundleName}/topscreen_trim_eventtop.png), url(/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png)` }"></div>
+        <div v-else class="event-cover" :style="{ 'background-image': `url(/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png)` }"></div>
         <q-card-title slot="overlay">
           {{latestEvent.eventName}}
           <span slot="subtitle" class="text-white">{{$t('event-type')}} {{latestEvent.eventType}}</span>
         </q-card-title>
       </q-card-media>
       <q-card-main style="text-align: center">
-        <img class="responsive" v-lazy="`https://bangdream.ga/assets/homebanner_banner_event${latestEvent.eventID}.png`"/>
+        <img class="responsive" v-lazy="`/assets/homebanner_banner_event${latestEvent.eventID}.png`"/>
         <div><a-player :music="eventMusic" ref="player" mode="single"></a-player></div>
         <p v-if="Number(latestEvent.endAt) > Date.now()">{{$t('event-end-cd')}}</p>
         <count-down :target-time="Number(latestEvent.endAt)" v-if="Number(latestEvent.endAt) > Date.now()"></count-down>
@@ -23,7 +23,7 @@
           @click="$refs.cMnormal.$refs.cardModal.open()">
           N ID: {{getEventNormalCard(latestEvent.pointRewards).cardID}}
           <span class="row justify-center items-center">
-            <img class="thumb responsive" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${Math.trunc(getEventNormalCard(latestEvent.pointRewards).cardID / 50)}_${getEventNormalCard(latestEvent.pointRewards).cardRes}_normal.png`">
+            <img class="thumb responsive" v-lazy="`/assets/thumb/chara/card0000${Math.trunc(getEventNormalCard(latestEvent.pointRewards).cardID / 50)}_${getEventNormalCard(latestEvent.pointRewards).cardRes}_normal.png`">
             {{getCharacter(getEventNormalCard(latestEvent.pointRewards).characterID).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
           </span>
         </div>
@@ -35,7 +35,7 @@
           @click="$refs.cMspecial.$refs.cardModal.open()">
           SR ID: {{getEventSpecialCard(latestEvent.pointRewards).cardID}}
           <span class="row justify-center items-center">
-            <img class="thumb responsive" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${Math.trunc(getEventSpecialCard(latestEvent.pointRewards).cardID / 50)}_${getEventSpecialCard(latestEvent.pointRewards).cardRes}_normal.png`">
+            <img class="thumb responsive" v-lazy="`/assets/thumb/chara/card0000${Math.trunc(getEventSpecialCard(latestEvent.pointRewards).cardID / 50)}_${getEventSpecialCard(latestEvent.pointRewards).cardRes}_normal.png`">
             {{getCharacter(getEventSpecialCard(latestEvent.pointRewards).characterID).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
           </span>
         </div>
@@ -44,21 +44,21 @@
           :skillName="skillMap[getEventSpecialCard(latestEvent.pointRewards).cardID].skillName"
           :skillID="Number(skillMap[getEventSpecialCard(latestEvent.pointRewards).cardID].skillID)"></card-modal>
         <p>{{$t('event-reward-stamp')}}</p>
-        <img v-if="eventRewardStamp" v-lazy="`https://bangdream.ga/assets/stamp/01_${eventRewardStamp.imageName}.png`"></img>
+        <img v-if="eventRewardStamp" v-lazy="`/assets/stamp/01_${eventRewardStamp.imageName}.png`"></img>
         <p>{{$t('event-bonus-attr-card')}}</p>
-        <img class="responsive" style="max-width: 100%;" v-lazy="`https://bangdream.ga/assets/event/${latestEvent.assetBundleName}/images_event_point_banner.png`">
+        <img class="responsive" style="max-width: 100%;" v-lazy="`/assets/event/${latestEvent.assetBundleName}/images_event_point_banner.png`">
         <p>{{$t('event-badge')}}</p>
-        <img class="badge" v-if="challengeEventDetailMap" v-lazy="`https://bangdream.ga/assets/thumb/common_${eventBadgeMap[challengeEventBadgeMap[latestEvent.eventID].details[0].badgeID].badgeAssetBundleName}.png`">
-        <img class="badge" v-else v-lazy="`https://bangdream.ga/assets/thumb/common_${eventBadgeMap[Object.keys(eventBadgeMap).find(elem => eventBadgeMap[elem].eventID === latestEvent.eventID)].badgeAssetBundleName}.png`">
+        <img class="badge" v-if="challengeEventDetailMap" v-lazy="`/assets/thumb/common_${eventBadgeMap[challengeEventBadgeMap[latestEvent.eventID].details[0].badgeID].badgeAssetBundleName}.png`">
+        <img class="badge" v-else v-lazy="`/assets/thumb/common_${eventBadgeMap[Object.keys(eventBadgeMap).find(elem => eventBadgeMap[elem].eventID === latestEvent.eventID)].badgeAssetBundleName}.png`">
         <p>{{$t('event-degrees')}}</p>
-        <img class="event-degree" :style="{ 'background-image': `url(https://bangdream.ga/assets/thumb/degree_event_point_icon_1.png), url(https://bangdream.ga/assets/thumb/degree_event_point_1.png), url(https://bangdream.ga/assets/thumb/degree_${degreeMap[latestEvent.rankingRewards[0].rewardID].imageName}.png)` }">
+        <img class="event-degree" :style="{ 'background-image': `url(/assets/thumb/degree_event_point_icon_1.png), url(/assets/thumb/degree_event_point_1.png), url(/assets/thumb/degree_${degreeMap[latestEvent.rankingRewards[0].rewardID].imageName}.png)` }">
         <span v-if="challengeEventDetailMap">
           <img class="event-degree" v-for="eventMusic in challengeEventDetailMap[latestEvent.eventID].eventMusic" :key="eventMusic.seq"
-          :style="{ 'background-image': `url(https://bangdream.ga/assets/thumb/degree_opening_1_1.png), url(https://bangdream.ga/assets/thumb/degree_score_ranking_1.png), url(https://bangdream.ga/assets/thumb/degree_${degreeMap[eventMusic.musicRankingRewards[0].rewardID].imageName}.png)` }">
+          :style="{ 'background-image': `url(/assets/thumb/degree_opening_1_1.png), url(/assets/thumb/degree_score_ranking_1.png), url(/assets/thumb/degree_${degreeMap[eventMusic.musicRankingRewards[0].rewardID].imageName}.png)` }">
         </span>
         <span v-if="challengeEventDetailMap">
           <p>{{$t('event-musics')}}</p>
-          <img v-for="eventMusic in challengeEventDetailMap[latestEvent.eventID].eventMusic" :key="eventMusic.seq" v-lazy="`https://bangdream.ga/assets/musicjacket/${musicList.find(elem => elem.id === eventMusic.musicID).jacketImage}_thumb.png`"
+          <img v-for="eventMusic in challengeEventDetailMap[latestEvent.eventID].eventMusic" :key="eventMusic.seq" v-lazy="`/assets/musicjacket/${musicList.find(elem => elem.id === eventMusic.musicID).jacketImage}_thumb.png`"
             style="margin: 0 5px; cursor: pointer;" @click="$router.push({ name: 'musicDetail', params: { musicID: eventMusic.musicID } })">
         </span>
       </q-card-main>
@@ -183,8 +183,8 @@ export default {
       return {
         title: this.latestEvent.eventName,
         author: 'Event BGM',
-        url: `https://bangdream.ga/assets/${arr.slice(0, arr.length - 1).join('/')}/${this.latestEvent.bgmFileName}.mp3`,
-        pic: `https://bangdream.ga/assets/event/${this.latestEvent.assetBundleName}/images_logo.png`
+        url: `/assets/${arr.slice(0, arr.length - 1).join('/')}/${this.latestEvent.bgmFileName}.mp3`,
+        pic: `/assets/event/${this.latestEvent.assetBundleName}/images_logo.png`
       }
     },
     eventRewardStamp () {

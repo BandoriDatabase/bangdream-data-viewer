@@ -5,15 +5,15 @@
         <!-- <q-btn round small flat @click="$router.go(-1)" :class="getPalette(cardInfo.attr)">
           <q-icon name="reply"></q-icon>
         </q-btn> -->
-        <img class="avatar" style="width: 48px" v-lazy="`https://bangdream.ga/assets/thumb/chara/card0000${cardGroup}_${cardInfo.cardRes}_${cardResType}.png`" />
+        <img class="avatar" style="width: 48px" v-lazy="`/assets/thumb/chara/card0000${cardGroup}_${cardInfo.cardRes}_${cardResType}.png`" />
         <span class="text-white">[{{cardInfo.title}}] {{characterInfo.characterName}}</span>
       </q-card-title>
       <q-card-main class="card-content column gutter">
         <div class="row gutter">
           <div class="card-img-parent col-xl-6 col-lg-6 col-md-6 col-12">
-            <img class="preview-img card-img-main" v-lazy="`https://bangdream.ga/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`"
+            <img class="preview-img card-img-main" v-lazy="`/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`"
               @click="$preview.open(0, [{
-                src: `https://bangdream.ga/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
+                src: `/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
                 title: `[${cardInfo.title}] ${characterInfo.characterName}`,
                 w: cardImgType === 'card' ? 1334 : 1120,
                 h: cardImgType === 'card' ? 1002 : 1120
@@ -25,7 +25,7 @@
               })">
             <!-- <img class="card-img-frame" :src="`statics/frame_${getCardFrame()}.png`" v-if="cardImgType === 'card'"
               @click="$preview.open(0, [{
-                src: `https://bangdream.ga/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
+                src: `/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
                 title: `[${cardInfo.title}] ${characterInfo.characterName}`,
                 w: cardImgType === 'card' ? 1334 : 1120,
                 h: cardImgType === 'card' ? 1002 : 1120
@@ -42,7 +42,7 @@
             <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3" @click="switchCardResType()">{{$t('un-trained')}}</q-btn>
             <q-btn class="light" style="margin: 5px;" @click="switchCardImgType()">{{$t('cut-in-normal')}}</q-btn>
             <q-btn class="light" style="margin: 5px;" @click="$preview.open(0, [{
-                src: `https://bangdream.ga/assets/characters/livesd/${cardInfo.live2dRes}_sdchara.png`,
+                src: `/assets/characters/livesd/${cardInfo.live2dRes}_sdchara.png`,
                 w: 507,
                 h: 507
               }], {
@@ -162,7 +162,7 @@
             <div>
               <div class="row" v-if="cardInfo.rarity >= 3">
                 <div v-for="entry in cardInfo.training.costs.entries" class="column col-4 items-center" :key="entry.resourceID">
-                  <img class="thumb-training" v-lazy="`https://bangdream.ga/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
+                  <img class="thumb-training" v-lazy="`/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
                   <span>{{entry.quantity}}</span>
                 </div>
               </div>
@@ -175,7 +175,7 @@
               <p>{{$t('story-to-unlock')}}</p>
               <div class="row">
                 <div v-for="entry in episode.costs.entries" class="column col-4 items-center" :key="entry.resourceID">
-                  <img class="thumb-training" v-lazy="`https://bangdream.ga/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
+                  <img class="thumb-training" v-lazy="`/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
                   <span>{{entry.quantity}}</span>
                 </div>
               </div>

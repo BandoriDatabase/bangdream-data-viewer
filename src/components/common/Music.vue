@@ -2,9 +2,9 @@
   <div>
     <q-card v-if="data && diffi && bandMap">
       <q-card-media>
-        <img v-lazy:background-image="`https://bangdream.ga/assets/musicjacket/${data.jacketImage}_jacket.png`" class="jacket-img preview-img"
+        <img v-lazy:background-image="`/assets/musicjacket/${data.jacketImage}_jacket.png`" class="jacket-img preview-img"
           @click="$preview.open(0, [{
-            src: `https://bangdream.ga/assets/musicjacket/${data.jacketImage}_jacket.png`,
+            src: `/assets/musicjacket/${data.jacketImage}_jacket.png`,
             title: data.title,
             w: 600,
             h: 600
@@ -22,15 +22,15 @@
       <a-player :music="{
         title: data.title,
         author: bandMap[data.bandID].bandName,
-        url: `https://bangdream.ga/assets/sound/${data.bgmID}.mp3`,
-        pic: `https://bangdream.ga/assets/musicjacket/${data.jacketImage}_thumb.png`
+        url: `/assets/sound/${data.bgmID}.mp3`,
+        pic: `/assets/musicjacket/${data.jacketImage}_thumb.png`
       }" ref="player" mode="single"></a-player>
       <q-card-main>
         <p>{{$t('composer')}}: {{data.composer}}</p>
         <p>{{$t('lyricist')}}: {{data.lyricist}}</p>
         <p>{{$t('arranger')}}: {{data.arranger}}</p>
         <p>{{$t('band')}}: <span v-if="Number(data.bandID) > 5">{{bandMap[data.bandID].bandName}}</span>
-            <img height="60px" width="90px" v-if="Number(data.bandID) <= 5" v-lazy="`https://bangdream.ga/assets/band/logo/00${data.bandID}_logoL.png`" :alt="bandMap[data.bandID].bandName"></p>
+            <img height="60px" width="90px" v-if="Number(data.bandID) <= 5" v-lazy="`/assets/band/logo/00${data.bandID}_logoL.png`" :alt="bandMap[data.bandID].bandName"></p>
         <p>{{$t('howtoget')}}: {{data.howToGet}}</p>
         <p>{{$t('difficulty')}}: {{getDifficulty(data.id)[0].level}} /
             {{getDifficulty(data.id)[3].level}} /
@@ -42,22 +42,22 @@
               <p class="col-3 col-xs-12">Combo</p>
               <span class="row">
                 <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`https://bangdream.ga/assets/thumb/common_${getRwardFileName(getAchievement('combo_easy'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('combo_easy'))}.png`">
                   <p>{{getAchievement('combo_easy').quantity}}</p>
                   <p>Easy</p>
                 </span>
                 <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`https://bangdream.ga/assets/thumb/common_${getRwardFileName(getAchievement('combo_normal'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('combo_normal'))}.png`">
                   <p>{{getAchievement('combo_normal').quantity}}</p>
                   <p>Normal</p>
                 </span>
                 <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`https://bangdream.ga/assets/thumb/common_${getRwardFileName(getAchievement('combo_hard'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('combo_hard'))}.png`">
                   <p>{{getAchievement('combo_hard').quantity}}</p>
                   <p>Hard</p>
                 </span>
                 <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`https://bangdream.ga/assets/thumb/common_${getRwardFileName(getAchievement('combo_expert'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('combo_expert'))}.png`">
                   <p>{{getAchievement('combo_expert').quantity}}</p>
                   <p>Expert</p>
                 </span>
@@ -67,22 +67,22 @@
               <p class="col-3 col-xs-12">Full combo</p>
               <span class="row">
                 <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`https://bangdream.ga/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_easy'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_easy'))}.png`">
                   <p>{{getAchievement('full_combo_easy').quantity}}</p>
                   <p>Easy</p>
                 </span>
                 <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`https://bangdream.ga/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_normal'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_normal'))}.png`">
                   <p>{{getAchievement('full_combo_normal').quantity}}</p>
                   <p>Normal</p>
                 </span>
                 <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`https://bangdream.ga/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_hard'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_hard'))}.png`">
                   <p>{{getAchievement('full_combo_hard').quantity}}</p>
                   <p>Hard</p>
                 </span>
                 <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`https://bangdream.ga/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_expert'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_expert'))}.png`">
                   <p>{{getAchievement('full_combo_expert').quantity}}</p>
                   <p>Expert</p>
                 </span>
@@ -92,22 +92,22 @@
               <p class="col-3 col-xs-12">Score rank</p>
               <span class="row">
                 <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`https://bangdream.ga/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_c'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_c'))}.png`">
                   <p>{{getAchievement('score_rank_c').quantity}}</p>
                   <p>Rank C</p>
                 </span>
                 <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`https://bangdream.ga/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_b'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_b'))}.png`">
                   <p>{{getAchievement('score_rank_b').quantity}}</p>
                   <p>Rank B</p>
                 </span>
                 <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`https://bangdream.ga/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_a'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_a'))}.png`">
                   <p>{{getAchievement('score_rank_a').quantity}}</p>
                   <p>Rank A</p>
                 </span>
                 <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`https://bangdream.ga/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_s'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_s'))}.png`">
                   <p>{{getAchievement('score_rank_s').quantity}}</p>
                   <p>Rank S</p>
                 </span>

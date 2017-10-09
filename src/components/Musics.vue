@@ -10,12 +10,12 @@
         :config="musicTableConfig"
         :columns="musicColumns">
         <template slot="col-jacketImage" scope="cell">
-          <img class="thumb-table shadow-1 shadow-transition hoverable-3" v-lazy="`https://bangdream.ga/assets/musicjacket/${cell.row.jacketImage}_thumb.png`"
+          <img class="thumb-table shadow-1 shadow-transition hoverable-3" v-lazy="`/assets/musicjacket/${cell.row.jacketImage}_thumb.png`"
             @click="$router.push({ name: 'musicDetail', params: { musicID: cell.row.id } })">
         </template>
         <template slot="col-bandID" scope="cell">
           <div v-if="Number(cell.data) > 5">{{bandMap[cell.data].bandName}}</div>
-          <img height="60px" width="90px" v-if="Number(cell.data) <= 5" v-lazy="`https://bangdream.ga/assets/band/logo/00${cell.data}_logoL.png`" :alt="bandMap[cell.data].bandName">
+          <img height="60px" width="90px" v-if="Number(cell.data) <= 5" v-lazy="`/assets/band/logo/00${cell.data}_logoL.png`" :alt="bandMap[cell.data].bandName">
         </template>
         <template slot="col-tag" scope="cell">
           {{$t(cell.row.tag)}}

@@ -13,17 +13,17 @@
         <q-card style="height: 500px; cursor: pointer;" @click="$router.push({ name: 'cardDetail', params: { cardID: card.cardID } })">
           <q-card-media class="full-height" style="position: relative;">
             <span :class="`card-img-attr-${card.attr}`"></span>
-            <img v-lazy:background-image="`https://bangdream.ga/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity < 3" class="one-img-full full-height">
-            <div v-lazy:background-image="`https://bangdream.ga/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3" class="two-img-split full-height gt-md"
+            <img v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity < 3" class="one-img-full full-height">
+            <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3" class="two-img-split full-height gt-md"
               :ref="`splitL${card.cardID}`" @mouseover="handleMouseOver(`splitL${card.cardID}`)" @mouseout="handleMouseOut(card.cardID)">
             </div>
-            <div v-lazy:background-image="`https://bangdream.ga/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.rarity >= 3" class="two-img-split full-height gt-md"
+            <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.rarity >= 3" class="two-img-split full-height gt-md"
               :ref="`splitR${card.cardID}`" @mouseover="handleMouseOver(`splitR${card.cardID}`)" @mouseout="handleMouseOut(card.cardID)">
             </div>
-            <div v-lazy:background-image="`https://bangdream.ga/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3" class="two-img-full full-width lt-md"
+            <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3" class="two-img-full full-width lt-md"
               style="height: 50%;">
             </div>
-            <div v-lazy:background-image="`https://bangdream.ga/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.rarity >= 3" class="two-img-full full-width lt-md"
+            <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.rarity >= 3" class="two-img-full full-width lt-md"
               style="height: 50%;">
             </div>
             <q-card-title slot="overlay">
