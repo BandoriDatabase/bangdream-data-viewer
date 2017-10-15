@@ -152,7 +152,7 @@
                 v-model="skillLv"
                 type="number"
                 :min="1"
-                :max="skillEffect.length"
+                :max="skillEffect.length || judgeList.length"
               ></q-input>
               <p>{{skillName}}</p>
               <p>{{skillInfo.simpleDescription}}</p>

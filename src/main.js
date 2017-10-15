@@ -26,10 +26,12 @@ Vue.use(VueLazyload, {
   loading: 'statics/loading.gif'
 })
 Vue.use(VuePreview)
-Vue.use(VueAnalytics, {
-  id: 'UA-96644570-1',
-  router
-})
+if (process.env.NODE_ENV === 'production') {
+  Vue.use(VueAnalytics, {
+    id: 'UA-96644570-1',
+    router
+  })
+}
 Vue.use(VueI18n)
 
 const i18n = new VueI18n({

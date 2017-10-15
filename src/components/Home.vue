@@ -143,6 +143,12 @@
                 </a>
               </q-item>
               <q-item>
+                <a href="http://home.bangdream.space/" target="_blank">
+                <img src="https://bangdream.space/favicon.ico" style="height: 24px; width: 24px" />
+                  炸帮裂梦乐团Mastodon
+                </a>
+              </q-item>
+              <q-item>
                 <a href="https://forum.gamer.com.tw/A.php?bsn=31877" target="_blank">
                 <img src="https://forum.gamer.com.tw/favicon.ico" style="height: 24px; width: 24px" />
                   BanG Dream！少女樂團派對 哈啦板 - 巴哈姆特
