@@ -46,8 +46,11 @@
         </q-side-link>
         <q-item-separator />
         <q-list-header>{{$t('left.secTitle')}}</q-list-header>
+        <q-item>
+          <q-item-main :label="`Data Ver: v${master.constants && master.constants.resVer ? master.constants.resVer : '0.0.0.0'}`"></q-item-main>
+        </q-item>
         <q-item :highlight="false">
-          <q-item-main label="v0.2.2" />
+          <q-item-main label="App Ver: v0.2.2" />
         </q-item>
       </q-list>
     </div>
