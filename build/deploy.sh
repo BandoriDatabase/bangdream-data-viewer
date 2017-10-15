@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/bin/sh
 rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/dist root@bangdream.ga:/var/www/html/
-rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/dist root@bangdream.ga:/var/www/html/
+rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/dist root@bandori.tech:/var/www/html/
