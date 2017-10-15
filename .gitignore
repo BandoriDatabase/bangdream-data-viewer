@@ -11,3 +11,4 @@ cordova/plugins
 thumbs.db
 !.gitkeep
 cordova/
+deploy_rsa*
