@@ -8,10 +8,10 @@ var
   ExtractTextPlugin = require('extract-text-webpack-plugin'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin'),
-  UglifyJSPlugin = require('uglifyjs-webpack-plugin'),
+  UglifyJSPlugin = require('uglifyjs-webpack-plugin')
   // PrerenderSpaPlugin = require('prerender-spa-plugin'),
-  PrerendererWebpackPlugin = require('prerenderer-webpack-plugin'),
-  BrowserRenderer = PrerendererWebpackPlugin.BrowserRenderer // or JSDOMRenderer, or ChromeRenderer
+  // PrerendererWebpackPlugin = require('prerenderer-webpack-plugin'),
+  // BrowserRenderer = PrerendererWebpackPlugin.BrowserRenderer // or JSDOMRenderer, or ChromeRenderer
 
 module.exports = merge(baseWebpackConfig, {
   module: {
@@ -91,12 +91,12 @@ module.exports = merge(baseWebpackConfig, {
     //     ignoreJSErrors: true,
     //   }
     // ),
-    new PrerendererWebpackPlugin({
-      staticDir: path.join(__dirname, '../dist'),
-      routes: [ '/' ],
-      renderer: new BrowserRenderer({
-        renderAfterElementExists: 'div.layout'
-      })
-    })
+    // new PrerendererWebpackPlugin({
+    //   staticDir: path.join(__dirname, '../dist'),
+    //   routes: [ '/' ],
+    //   renderer: new BrowserRenderer({
+    //     renderAfterElementExists: 'div.layout'
+    //   })
+    // })
   ]
 })

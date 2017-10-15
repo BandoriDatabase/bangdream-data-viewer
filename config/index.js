@@ -47,7 +47,7 @@ module.exports = {
     // https://github.com/chimurai/http-proxy-middleware
     proxyTable: {
       '/static/': {
-        target: 'https://bangdream.ga/',
+        target: 'http://127.0.0.1:8080/',
         changeOrigin: true,
       },
       '/assets/': {

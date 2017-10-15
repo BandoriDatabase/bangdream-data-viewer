@@ -37,6 +37,7 @@
               })"> -->
             <!-- <div :class="`card-img-attr-${cardInfo.attr}`" v-if="cardImgType === 'card'"></div> -->
             <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" v-if="cardImgType === 'card'" :key="i"></div>
+            <span :class="`card-img-band-${characterInfos[cardInfo.characterId].bandId}`"></span>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3" @click="switchCardResType()">{{$t('un-trained')}}</q-btn>
@@ -161,8 +162,8 @@
           <q-collapsible icon="highlight" :label="$t('training.title')">
             <div>
               <div class="row" v-if="cardInfo.rarity >= 3">
-                <div v-for="entry in cardInfo.training.costs.entries" class="column col-4 items-center" :key="entry.resourceID">
-                  <img class="thumb-training" v-lazy="`/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
+                <div v-for="entry in cardInfo.training.costs.entries" class="column col-4 items-center" :key="entry.resourceId">
+                  <img class="thumb-training" v-lazy="`/assets/thumb/material_material0${String(entry.resourceId).length === 1 ? `0${entry.resourceId}` : entry.resourceId}.png`">
                   <span>{{entry.quantity}}</span>
                 </div>
               </div>
@@ -170,12 +171,12 @@
             </div>
           </q-collapsible>
           <q-collapsible icon="insert comment" :label="$t('story')" v-if="cardInfo.episodes">
-            <div v-for="episode in cardInfo.episodes.entries" :key="episode.episodeID">
+            <div v-for="episode in cardInfo.episodes.entries" :key="episode.episodeid">
               <p>{{$t('story-self-intro')}}{{episode.title}} <q-btn small color="pink" round flat disabled><q-icon name="launch"></q-icon></q-btn></p>
               <p>{{$t('story-to-unlock')}}</p>
               <div class="row">
-                <div v-for="entry in episode.costs.entries" class="column col-4 items-center" :key="entry.resourceID">
-                  <img class="thumb-training" v-lazy="`/assets/thumb/material_material0${entry.resourceID.length === 1 ? `0${entry.resourceID}` : entry.resourceID}.png`">
+                <div v-for="entry in episode.costs.entries" class="column col-4 items-center" :key="entry.resourceId">
+                  <img class="thumb-training" v-lazy="`/assets/thumb/material_material0${String(entry.resourceId).length === 1 ? `0${entry.resourceId}` : entry.resourceId}.png`">
                   <span>{{entry.quantity}}</span>
                 </div>
               </div>
@@ -283,7 +284,7 @@ export default {
       type: Object,
       required: true
     },
-    skillID: {
+    skillId: {
       type: Number,
       required: true
     },
@@ -317,19 +318,20 @@ export default {
       'skillInfos',
       'skillMap',
       'skillEffects',
-      'judgeLists'
+      'judgeLists',
+      'characterInfos'
     ]),
     cardGroup () {
-      return Math.trunc(this.cardInfo.cardID / 50)
+      return Math.trunc(this.cardInfo.cardId / 50)
     },
     skillInfo () {
-      return this.skillInfos.find(elem => Number(elem.skillID) === this.skillID)
+      return this.skillInfos.find(elem => Number(elem.skillId) === this.skillId)
     },
     skillEffect () {
-      return this.skillEffects.filter(elem => Number(elem.skillID) === this.skillID && elem.u3 === '1')
+      return this.skillEffects.filter(elem => Number(elem.skillId) === this.skillId && elem.u3 === '1')
     },
     judgeList () {
-      return this.judgeLists.filter(elem => Number(elem.skillID) === this.skillID)
+      return this.judgeLists.filter(elem => Number(elem.skillId) === this.skillId)
     }
   },
   mounted () {
@@ -527,4 +529,44 @@ img
 
 div.row
   padding: 5px
+
+.card-img-band-1
+  position: absolute
+  top: 2%
+  left: 1%
+  width: 50px
+  height: 50px
+  background: url('/statics/band_icon_1.png') no-repeat
+
+.card-img-band-2
+  position: absolute
+  top: 2%
+  left: 1%
+  width: 50px
+  height: 50px
+  background: url('/statics/band_icon_2.png') no-repeat
+
+.card-img-band-3
+  position: absolute
+  top: 2%
+  left: 1%
+  width: 50px
+  height: 50px
+  background: url('/statics/band_icon_3.png') no-repeat
+
+.card-img-band-4
+  position: absolute
+  top: 2%
+  left: 1%
+  width: 50px
+  height: 50px
+  background: url('/statics/band_icon_4.png') no-repeat
+
+.card-img-band-5
+  position: absolute
+  top: 2%
+  left: 1%
+  width: 50px
+  height: 50px
+  background: url('/statics/band_icon_5.png') no-repeat
 </style>

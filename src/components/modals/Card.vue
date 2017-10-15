@@ -4,7 +4,7 @@
       <div>
         <h6 :class="`text-${getPalette(cardInfo.attr)}`">{{characterInfo.characterName}} - {{cardInfo.title}}</h6>
       </div>
-      <div class="card-img-parent" @click="$router.push({ name: 'cardDetail', params: { cardID: cardInfo.cardID } })">
+      <div class="card-img-parent" @click="$router.push({ name: 'cardDetail', params: { cardId: cardInfo.cardId } })">
         <img class="preview-img card-img-main" v-lazy="`/assets/characters/resourceset/${cardInfo.cardRes}_card_normal.png`">
         <img class="card-img-frame" :src="`statics/frame_${getCardFrame()}.png`">
         <div :class="`card-img-attr-${cardInfo.attr}`"></div>
@@ -67,7 +67,7 @@
       </div>
     </div>
     <div class="action-buttons">
-      <q-btn color="primary" @click="$router.push({ name: 'cardDetail', params: { cardID: cardInfo.cardID } })">Detail page</q-btn>
+      <q-btn color="primary" @click="$router.push({ name: 'cardDetail', params: { cardId: cardInfo.cardId } })">Detail page</q-btn>
       <q-btn color="negative" @click="$refs.cardModal.close()">Close</q-btn>
     </div>
   </q-modal>
@@ -92,7 +92,7 @@ export default {
       type: Object,
       required: true
     },
-    skillID: {
+    skillId: {
       type: Number,
       required: true
     },
@@ -114,13 +114,13 @@ export default {
       'judgeLists'
     ]),
     skillInfo () {
-      return this.skillInfos.find(elem => Number(elem.skillID) === this.skillID)
+      return this.skillInfos.find(elem => Number(elem.skillId) === this.skillId)
     },
     skillEffect () {
-      return this.skillEffects.filter(elem => Number(elem.skillID) === this.skillID && elem.u3 === '1')
+      return this.skillEffects.filter(elem => Number(elem.skillId) === this.skillId && elem.u3 === '1')
     },
     judgeList () {
-      return this.judgeLists.filter(elem => Number(elem.skillID) === this.skillID)
+      return this.judgeLists.filter(elem => Number(elem.skillId) === this.skillId)
     }
   },
   data () {
@@ -171,6 +171,9 @@ export default {
         const judgeEffect = judgeLists[skillLv - 1]
         return skillDesc.replace(/\{0\}/, `${judgeEffect.judgeName}(${judgeEffect.judgeEffectValue})`)
       }
+    },
+    open () {
+      this.$refs.cardModal.open()
     }
   }
 }

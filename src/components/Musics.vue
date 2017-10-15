@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-view></router-view>
-    <section v-if="$route.params.musicID === undefined && musicList">
+    <section v-if="$route.params.musicId === undefined && musicList">
       <div class="block">
         <p>{{$t('hint[0]')}}<span class="desktop-only">{{$t('hint[1]')}}</span><span class="mobile-only">{{$t('hint[2]')}}</span>{{$t('hint[3]')}}</p>
       </div>
@@ -11,9 +11,9 @@
         :columns="musicColumns">
         <template slot="col-jacketImage" scope="cell">
           <img class="thumb-table shadow-1 shadow-transition hoverable-3" v-lazy="`/assets/musicjacket/${cell.row.jacketImage}_thumb.png`"
-            @click="$router.push({ name: 'musicDetail', params: { musicID: cell.row.id } })">
+            @click="$router.push({ name: 'musicDetail', params: { musicId: cell.row.id } })">
         </template>
-        <template slot="col-bandID" scope="cell">
+        <template slot="col-bandId" scope="cell">
           <div v-if="Number(cell.data) > 5">{{bandMap[cell.data].bandName}}</div>
           <img height="60px" width="90px" v-if="Number(cell.data) <= 5" v-lazy="`/assets/band/logo/00${cell.data}_logoL.png`" :alt="bandMap[cell.data].bandName">
         </template>
@@ -125,7 +125,7 @@ export default {
         }
       },
       musicColumns: [{
-        label: 'ID',
+        label: 'id',
         field: 'id',
         width: '4px',
         sort (a, b) {
@@ -147,7 +147,7 @@ export default {
         sort: true
       }, {
         label: this.$t('table.band'),
-        field: 'bandID',
+        field: 'bandId',
         width: '10px',
         sort: true
       }, {
@@ -172,8 +172,8 @@ export default {
     ])
   },
   methods: {
-    getDifficulty (musicID) {
-      return this.musicDifficultyList.filter(elem => elem.musicID === musicID)
+    getDifficulty (musicId) {
+      return this.musicDifficultyList.filter(elem => elem.musicId === musicId)
     }
   }
 }

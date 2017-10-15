@@ -29,7 +29,7 @@ export default new VueRouter({
           redirect: '/card/overview',
           component: load('Cards'), // Cards viewer
           children: [
-            { name: 'cardDetail', path: '/card/:cardID(\\d+)', component: load('CardDetail') },
+            { name: 'cardDetail', path: '/card/:cardId(\\d+)', component: load('CardDetail') },
             { name: 'cardTable', path: '/card/table', component: load('cards/CardTable') },
             { name: 'cardOverview', path: '/card/overview', component: load('cards/CardOverview') }
           ]
@@ -38,7 +38,7 @@ export default new VueRouter({
         { path: '/music',
           component: load('Musics'),
           children: [
-            { name: 'musicDetail', path: '/music/:musicID', component: load('MusicDetail') }
+            { name: 'musicDetail', path: '/music/:musicId', component: load('MusicDetail') }
           ]
         },
         { path: '/currevent', component: load('EventInfo') },

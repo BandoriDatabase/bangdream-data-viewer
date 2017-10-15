@@ -1,5 +1,7 @@
 <template>
-  <div ref="viewer"></div>
+  <div ref="viewer">
+    <router-link to="/">Back to main</router-link>
+  </div>
 </template>
 
 <script>
@@ -7,9 +9,9 @@
 export default {
   name: 'Live2DPage',
   mounted () {
-    const renderer = new PIXI.WebGLRenderer(800, 600)
-    this.$refs.viewer.appendChild(renderer.view)
-    const stage = new PIXI.Container()
+    this.renderer = new PIXI.WebGLRenderer(800, 600)
+    this.$refs.viewer.appendChild(this.renderer.view)
+    this.stage = new PIXI.Container()
 
     const modelHaru = {
       'type': 'Live2D Model Setting',
@@ -43,29 +45,30 @@ export default {
       }
     }
 
-    const live2dSprite = new PIXI.Live2DSprite(modelHaru, {
-      debugLog: false,
-      randomMotion: false,
-      eyeBlink: false
-    })
+    const live2dSprite = new PIXI.Live2DSprite(modelHaru)
 
-    stage.addChild(live2dSprite)
+    this.stage.addChild(live2dSprite)
 
     live2dSprite.x = -105
     live2dSprite.adjustScale(0, 0, 0.7)
     live2dSprite.adjustTranslate(0.4, 0)
     live2dSprite.startRandomMotion('idle')
 
-    live2dSprite.on('mousemove', (evt) => {
-      const point = evt.data.global
-      live2dSprite.setViewPoint(point.x, point.y)
-    })
+    // live2dSprite.on('mousemove', (evt) => {
+    //   const point = evt.data.global
+    //   live2dSprite.setViewPoint(point.x, point.y)
+    // })
 
-    function animate () {
-      requestAnimationFrame(animate)
-      renderer.render(stage)
+    this.animate = () => {
+      requestAnimationFrame(this.animate)
+      this.renderer.render(this.stage)
     }
-    animate()
+    this.animate()
+  },
+  beforeDestroy () {
+    // this.stage.destory()
+    this.renderer.destroy()
+    Object.keys(PIXI.utils.TextureCache).forEach((texture) => { PIXI.utils.TextureCache[texture].destroy(true) })
   }
 }
 </script>

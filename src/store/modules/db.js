@@ -16,9 +16,13 @@ const getters = {
       .reduce((prev, elem) => {
         const detail = {...state.master.cardInfos.entries[elem]}
         detail.maxLevel = Object.keys(detail.parameterMap).slice(-1)
-        detail.maxPerformance = Number(detail.parameterMap[detail.maxLevel].performance)
+        detail.maxPerformance = detail.parameterMap[detail.maxLevel].performance
         detail.maxTechnique = detail.parameterMap[detail.maxLevel].technique
         detail.maxVisual = detail.parameterMap[detail.maxLevel].visual
+        detail.totalAttr =
+          Number(detail.parameterMap[detail.maxLevel].performance) +
+          Number(detail.parameterMap[detail.maxLevel].technique) +
+          Number(detail.parameterMap[detail.maxLevel].visual)
         prev[elem] = detail
         return prev
       }, {})
@@ -29,9 +33,13 @@ const getters = {
       .map(elem => {
         const detail = {...state.master.cardInfos.entries[elem]}
         detail.maxLevel = Object.keys(detail.parameterMap).slice(-1)
-        detail.maxPerformance = Number(detail.parameterMap[detail.maxLevel].performance)
+        detail.maxPerformance = detail.parameterMap[detail.maxLevel].performance
         detail.maxTechnique = detail.parameterMap[detail.maxLevel].technique
         detail.maxVisual = detail.parameterMap[detail.maxLevel].visual
+        detail.totalAttr =
+          Number(detail.parameterMap[detail.maxLevel].performance) +
+          Number(detail.parameterMap[detail.maxLevel].technique) +
+          Number(detail.parameterMap[detail.maxLevel].visual)
         return detail
       })
   },

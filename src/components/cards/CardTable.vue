@@ -10,26 +10,31 @@
       :config="cardTableConfig"
       :columns="cardColumns">
       <template slot="col-thumb" scope="cell">
-        <div class="shadow-1 shadow-transition hoverable-3" :class="`thumb-${getCardThumbFrame(cell.row)}`">
-          <img class="thumb-table" v-lazy:background-image="`/assets/thumb/chara/card0000${Math.trunc(Number(cell.row.cardID) / 50)}_${cell.row.cardRes}_normal.png`"
-          @click="$router.push({ name: 'cardDetail', params: { cardID: cell.row.cardID } })">
-        </div>
+        <!-- <div class="shadow-1 shadow-transition hoverable-3" :class="`thumb-${getCardThumbFrame(cell.row)}`">
+          <img class="thumb-table" v-lazy:background-image="`/assets/thumb/chara/card0000${Math.trunc(Number(cell.row.cardId) / 50)}_${cell.row.cardRes}_normal.png`"
+          @click="$router.push({ name: 'cardDetail', params: { cardId: cell.row.cardId } })">
+        </div> -->
+        <card-thumb :cardInfo="cell.row"></card-thumb>
       </template>
       <template slot="col-name" scope="cell">
-        <div @click="$router.push({ name: 'cardDetail', params: { cardID: cell.row.cardID } })"
+        <div @click="$router.push({ name: 'cardDetail', params: { cardId: cell.row.cardId } })"
           style="cursor: pointer" :class="`text-${getPalette(cell.row.attr)}`">
           {{displayName ? 
-            capitalizeFirstLetter(toRomaji(getCharacter(cell.row.characterID).ruby)) : 
-            getCharacter(cell.row.characterID).characterName}}
+            capitalizeFirstLetter(toRomaji(getCharacter(cell.row.characterId).ruby)) : 
+            getCharacter(cell.row.characterId).characterName}}
         </div>
       </template>
       <template slot="col-title" scope="cell">
-        <div @click="$router.push({ name: 'cardDetail', params: { cardID: cell.row.cardID } })"
+        <div @click="$router.push({ name: 'cardDetail', params: { cardId: cell.row.cardId } })"
           style="cursor: pointer" :class="`text-${getPalette(cell.row.attr)}`">
           {{cell.data}}
         </div>
       </template>
-      <template slot="col-maxPerformance" scope="cell">
+      <template slot="col-characterId" scope="cell">
+        <!-- <div v-if="Number(getCharacter(cell.data).bandId) > 5">{{bandMap[getCharacter(cell.data).bandId].bandName}}</div> -->
+        <img height="60px" width="90px" v-if="Number(getCharacter(cell.data).bandId) <= 5" v-lazy="`/assets/band/logo/00${getCharacter(cell.data).bandId}_logoL.png`" :alt="bandMap[getCharacter(cell.data).bandId].bandName">
+      </template>
+      <!-- <template slot="col-maxPerformance" scope="cell">
         {{getMaxAttr(cell.row).performance}}
       </template>
       <template slot="col-maxTechnique" scope="cell">
@@ -37,8 +42,13 @@
       </template>
       <template slot="col-maxVisual" scope="cell">
         {{getMaxAttr(cell.row).visual}}
-      </template>
-      <template slot="col-skillID" scope="cell">
+      </template> -->
+      <!-- <template slot="col-totalAttr" scope="cell">
+        {{Number(getMaxAttr(cell.row).performance) +
+          Number(getMaxAttr(cell.row).technique) +
+          Number(getMaxAttr(cell.row).visual)}}
+      </template> -->
+      <template slot="col-skillId" scope="cell">
         {{skillMap[cell.data].skillName}}
       </template>
     </q-data-table>
@@ -65,9 +75,11 @@
         "thumb": "Thumb",
         "name": "Name",
         "title": "Title",
+        "band": "Band",
         "perform": "Perform",
         "technic": "Technique",
         "visual": "Visual",
+        "total": "Total",
         "skill": "Skill"
       }
     },
@@ -97,9 +109,11 @@
         "thumb": "头像",
         "name": "角色名",
         "title": "卡牌标题",
+        "band": "乐队",
         "perform": "Perform",
         "technic": "Technique",
         "visual": "Visual",
+        "total": "总和",
         "skill": "技能"
       }
     },
@@ -129,9 +143,11 @@
         "thumb": "頭像",
         "name": "角色名",
         "title": "卡牌標題",
+        "band": "樂隊",
         "perform": "Perform",
         "technic": "Technique",
         "visual": "Visual",
+        "total": "加和",
         "skill": "技能"
       }
     },
@@ -156,6 +172,7 @@ import {
 } from 'quasar'
 import { mapGetters } from 'vuex'
 import { toRomaji } from 'wanakana'
+import cardThumb from '../common/CardThumb'
 
 export default {
   name: 'CardTableComponent',
@@ -183,8 +200,8 @@ export default {
         }
       },
       cardColumns: [{
-        label: 'ID',
-        field: 'cardID',
+        label: 'id',
+        field: 'cardId',
         width: '6px',
         sort (a, b) {
           return Number(b) - Number(a)
@@ -201,6 +218,11 @@ export default {
         label: this.$t('table.label.title'),
         field: 'title',
         width: '20px'
+      }, {
+        label: this.$t('table.label.band'),
+        field: 'characterId',
+        width: '10px',
+        sort: true
       }, {
         label: this.$t('table.label.perform'),
         field: 'maxPerformance',
@@ -223,8 +245,15 @@ export default {
           return Number(b) - Number(a)
         }
       }, {
+        label: this.$t('table.label.total'),
+        field: 'totalAttr',
+        width: '10px',
+        sort (a, b) {
+          return Number(b) - Number(a)
+        }
+      }, {
         label: this.$t('table.label.skill'),
-        field: 'skillID',
+        field: 'skillId',
         width: '15px'
       }],
       selectCharacters: [],
@@ -236,14 +265,16 @@ export default {
   components: {
     QDataTable,
     QBtn,
-    QToggle
+    QToggle,
+    cardThumb
   },
   computed: {
     ...mapGetters('DB', [
       'cardInfoList',
       'characterInfos',
       'skillMap',
-      'skillInfos'
+      'skillInfos',
+      'bandMap'
     ])
   },
   mounted () {
@@ -259,8 +290,8 @@ export default {
     }
   },
   methods: {
-    getCharacter (memberID) {
-      return this.characterInfos[memberID]
+    getCharacter (memberid) {
+      return this.characterInfos[memberid]
     },
     getMaxAttr (card) {
       return card.parameterMap[card.maxLevel]
@@ -306,11 +337,11 @@ export default {
     doFilter () {
       let ret = this.cardInfoList.slice().reverse()
       if (this.selectCharacters.length) {
-        ret = ret.filter(elem => this.selectCharacters.indexOf(elem.characterID) !== -1)
+        ret = ret.filter(elem => this.selectCharacters.indexOf(elem.characterId) !== -1)
       }
       if (this.selectSkills.length) {
-        const cardOfSkills = Object.keys(this.skillMap).filter(key => this.selectSkills.indexOf(this.skillMap[key].skillID) !== -1)
-        ret = ret.filter(elem => cardOfSkills.indexOf(elem.cardID) !== -1)
+        const cardOfSkills = Object.keys(this.skillMap).filter(key => this.selectSkills.indexOf(this.skillMap[key].skillId) !== -1)
+        ret = ret.filter(elem => cardOfSkills.indexOf(elem.cardId) !== -1)
       }
       if (this.selectRarity.length) {
         ret = ret.filter(elem => this.selectRarity.indexOf(elem.rarity) !== -1)
@@ -330,16 +361,16 @@ export default {
             type: 'checkbox',
             model: this.selectRarity,
             items: [{
-              label: '🟊🟊🟊🟊',
+              label: '\u2605\u2605\u2605\u2605',
               value: '4'
             }, {
-              label: '🟊🟊🟊',
+              label: '\u2605\u2605\u2605',
               value: '3'
             }, {
-              label: '🟊🟊',
+              label: '\u2605\u2605',
               value: '2'
             }, {
-              label: '🟊',
+              label: '\u2605',
               value: '1'
             }]
           },
@@ -354,7 +385,7 @@ export default {
               label: this.displayName
                 ? this.capitalizeFirstLetter(toRomaji(this.characterInfos[key].ruby))
                 : this.characterInfos[key].characterName,
-              value: this.characterInfos[key].characterID
+              value: this.characterInfos[key].characterId
             }))
           },
           header2: {
@@ -365,12 +396,12 @@ export default {
             type: 'checkbox',
             model: this.selectSkills,
             items: this.skillInfos.reduce((prev, curr) => {
-              if (prev.find(elem2 => elem2.skillID === curr.skillID)) return prev
+              if (prev.find(elem2 => elem2.skillId === curr.skillId)) return prev
               prev.push(curr)
               return prev
             }, []).map(elem => ({
               label: elem.simpleDescription,
-              value: elem.skillID
+              value: elem.skillId
             }))
           }
         },

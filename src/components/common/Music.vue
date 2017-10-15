@@ -16,21 +16,21 @@
           })" />
         <q-card-title slot="overlay">
           {{data.title}}
-          <span slot="subtitle">{{bandMap[data.bandID].bandName}}</span>
+          <span slot="subtitle">{{bandMap[data.bandId].bandName}}</span>
         </q-card-title>
       </q-card-media>
       <a-player :music="{
         title: data.title,
-        author: bandMap[data.bandID].bandName,
-        url: `/assets/sound/${data.bgmID}.mp3`,
+        author: bandMap[data.bandId].bandName,
+        url: `/assets/sound/${data.bgmId}.mp3`,
         pic: `/assets/musicjacket/${data.jacketImage}_thumb.png`
       }" ref="player" mode="single"></a-player>
       <q-card-main>
         <p>{{$t('composer')}}: {{data.composer}}</p>
         <p>{{$t('lyricist')}}: {{data.lyricist}}</p>
         <p>{{$t('arranger')}}: {{data.arranger}}</p>
-        <p>{{$t('band')}}: <span v-if="Number(data.bandID) > 5">{{bandMap[data.bandID].bandName}}</span>
-            <img height="60px" width="90px" v-if="Number(data.bandID) <= 5" v-lazy="`/assets/band/logo/00${data.bandID}_logoL.png`" :alt="bandMap[data.bandID].bandName"></p>
+        <p>{{$t('band')}}: <span v-if="Number(data.bandId) > 5">{{bandMap[data.bandId].bandName}}</span>
+            <img height="60px" width="90px" v-if="Number(data.bandId) <= 5" v-lazy="`/assets/band/logo/00${data.bandId}_logoL.png`" :alt="bandMap[data.bandId].bandName"></p>
         <p>{{$t('howtoget')}}: {{data.howToGet}}</p>
         <p>{{$t('difficulty')}}: {{getDifficulty(data.id)[0].level}} /
             {{getDifficulty(data.id)[3].level}} /
@@ -186,17 +186,17 @@ export default {
       return this.data.achievements.find(elem => elem.name === name)
     },
     getRwardFileName (achievement) {
-      if (achievement.rewardID) {
+      if (achievement.rewardId) {
         const splitName = achievement.rewardType.split('_')
         splitName[1] = splitName[1].charAt(0).toUpperCase() + splitName[1].slice(1)
-        return splitName.join('').concat(achievement.rewardID)
+        return splitName.join('').concat(achievement.rewardId)
       }
       else {
         return achievement.rewardType
       }
     },
-    getDifficulty (musicID) {
-      return this.musicDifficultyList.filter(elem => elem.musicID === musicID)
+    getDifficulty (musicId) {
+      return this.musicDifficultyList.filter(elem => elem.musicId === musicId)
     }
   }
 }

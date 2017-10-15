@@ -29,7 +29,7 @@
                 shareEl: true,
                 history: false
               })"/> -->
-            <img v-lazy="`/assets/homebanner_banner_event${latestEvent.eventID}.png`" alt="" class="event-banner" />
+            <img v-lazy="`/assets/homebanner_banner_event${latestEvent.eventId}.png`" alt="" class="event-banner" />
           </q-card-media>
           <q-card-main>
             <div><a-player :music="eventMusic" ref="player" mode="single"></a-player></div>
@@ -39,29 +39,29 @@
               <count-down :target-time="Number(latestEvent.distributionEndAt)" v-if="Number(latestEvent.distributionStartAt) < Date.now()"></count-down>
               <p>{{$t('event-reward-card')}}</p>
               <div class="row justify-center items-center sm-column card-small"
-                @click="$refs.cMnormal.$refs.cardModal.open()">
-                N ID: {{getEventNormalCard(latestEvent.pointRewards).cardID}}
+                @click="$refs.cMnormal.open()">
+                N id: {{getEventNormalCard(latestEvent.pointRewards).cardId}}
                 <span class="row justify-center items-center">
-                  <img class="thumb responsive" v-lazy="`/assets/thumb/chara/card0000${Math.trunc(getEventNormalCard(latestEvent.pointRewards).cardID / 50)}_${getEventNormalCard(latestEvent.pointRewards).cardRes}_normal.png`">
-                  {{getCharacter(getEventNormalCard(latestEvent.pointRewards).characterID).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
+                  <img class="thumb responsive" v-lazy="`/assets/thumb/chara/card0000${Math.trunc(getEventNormalCard(latestEvent.pointRewards).cardId / 50)}_${getEventNormalCard(latestEvent.pointRewards).cardRes}_normal.png`">
+                  {{getCharacter(getEventNormalCard(latestEvent.pointRewards).characterId).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
                 </span>
               </div>
               <card-modal ref="cMnormal" :cardInfo="getEventNormalCard(latestEvent.pointRewards)"
-                :characterInfo="getCharacter(getEventNormalCard(latestEvent.pointRewards).characterID)"
-                :skillName="skillMap[getEventNormalCard(latestEvent.pointRewards).cardID].skillName"
-                :skillID="Number(skillMap[getEventNormalCard(latestEvent.pointRewards).cardID].skillID)"></card-modal>
+                :characterInfo="getCharacter(getEventNormalCard(latestEvent.pointRewards).characterId)"
+                :skillName="skillMap[getEventNormalCard(latestEvent.pointRewards).cardId].skillName"
+                :skillId="Number(skillMap[getEventNormalCard(latestEvent.pointRewards).cardId].skillId)"></card-modal>
               <div class="row justify-center items-center sm-column card-small"
-                @click="$refs.cMspecial.$refs.cardModal.open()">
-                SR ID: {{getEventSpecialCard(latestEvent.pointRewards).cardID}}
+                @click="$refs.cMspecial.open()">
+                SR id: {{getEventSpecialCard(latestEvent.pointRewards).cardId}}
                 <span class="row justify-center items-center">
-                  <img class="thumb responsive" v-lazy="`/assets/thumb/chara/card0000${Math.trunc(getEventSpecialCard(latestEvent.pointRewards).cardID / 50)}_${getEventSpecialCard(latestEvent.pointRewards).cardRes}_normal.png`">
-                  {{getCharacter(getEventSpecialCard(latestEvent.pointRewards).characterID).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
+                  <img class="thumb responsive" v-lazy="`/assets/thumb/chara/card0000${Math.trunc(getEventSpecialCard(latestEvent.pointRewards).cardId / 50)}_${getEventSpecialCard(latestEvent.pointRewards).cardRes}_normal.png`">
+                  {{getCharacter(getEventSpecialCard(latestEvent.pointRewards).characterId).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
                 </span>
               </div>
               <card-modal ref="cMspecial" :cardInfo="getEventSpecialCard(latestEvent.pointRewards)"
-                :characterInfo="getCharacter(getEventSpecialCard(latestEvent.pointRewards).characterID)"
-                :skillName="skillMap[getEventSpecialCard(latestEvent.pointRewards).cardID].skillName"
-                :skillID="Number(skillMap[getEventSpecialCard(latestEvent.pointRewards).cardID].skillID)"></card-modal>
+                :characterInfo="getCharacter(getEventSpecialCard(latestEvent.pointRewards).characterId)"
+                :skillName="skillMap[getEventSpecialCard(latestEvent.pointRewards).cardId].skillName"
+                :skillId="Number(skillMap[getEventSpecialCard(latestEvent.pointRewards).cardId].skillId)"></card-modal>
               <p>{{$t('event-reward-stamp')}}</p>
               <img v-if="eventRewardStamp" v-lazy="`/assets/stamp/01_${eventRewardStamp.imageName}_icon.png`"></img>
               <!-- <p>{{$t('event-bonus-card')}}</p>
@@ -78,10 +78,12 @@
             <span slot="subtitle" class="text-white">{{$t('gacha-list-count')}}: {{currentGachaList.length}}</span>
           </q-card-title>
           <q-card-main>
-            <div v-for="gacha in currentGachaList" :key="gacha.gachaID" style="width: 100%; margin: 10px 0;">
+            <div v-for="gacha in currentGachaList" :key="gacha.gachaId" style="width: 100%; margin: 10px 0; text-align: center;">
               <img v-lazy="`/assets/gacha/screen/${gacha.resourceName}_logo.png`" alt="" class="gacha-banner" />
+              <p>{{gacha.gachaName}}<q-btn flat round small class="text-pink" @click="$refs.gachaModal.open(gacha.gachaId)"><q-icon name="launch" /></q-btn></p>
               <count-down :target-time="Number(gacha.closedAt)"></count-down>
             </div>
+            <gacha-modal ref="gachaModal"></gacha-modal>
           </q-card-main>
         </q-card>
       </div>
@@ -183,7 +185,7 @@
       </div>
       
       <!-- <div class="row sm-column md-column gutter"> -->
-        <!-- <div class="col-lg-4 col-xl-4 col-12" v-for="gacha in currentGachaList" :key="gacha.gachaID">
+        <!-- <div class="col-lg-4 col-xl-4 col-12" v-for="gacha in currentGachaList" :key="gacha.gachaId">
           <q-card>
             <q-card-media>
               <div class="gacha-cover" v-lazy:background-image="`/assets/gacha/screen/${gacha.resourceName}_logo.png`" />
@@ -191,7 +193,7 @@
                 {{gacha.gachaName}}
               </q-card-title>
             </q-card-media>
-            <div class="gacha-img" v-lazy:background-image="`/assets/gacha/screen/${gacha.resourceName}_pickup${gacha.gachaID === '121' ? '1' : ''}.png`" />
+            <div class="gacha-img" v-lazy:background-image="`/assets/gacha/screen/${gacha.resourceName}_pickup${gacha.gachaId === '121' ? '1' : ''}.png`" />
             <div class="card-content column items-center" style="margin: 15px 0">
               <p>{{$t('gacha-end-cd')}}</p>
               <count-down :target-time="Number(gacha.closedAt)" small></count-down>
@@ -279,6 +281,7 @@ import { mapGetters, mapState } from 'vuex'
 import VueAplayer from 'vue-aplayer'
 import CountDown from './common/Countdown'
 import cardModal from './modals/Card'
+import gachaModal from './modals/Gacha'
 
 import discordIcon from 'icons/discord'
 import redditIcon from 'icons/reddit'
@@ -288,7 +291,8 @@ export default {
   name: 'HomeView',
   data () {
     return {
-      // latestCardID: 0
+      // latestCardid: 0
+      log: console.log
     }
   },
   components: {
@@ -307,7 +311,8 @@ export default {
     QItem,
     QItemSeparator,
     redditIcon,
-    twitterIcon
+    twitterIcon,
+    gachaModal
   },
   beforeDestroy () {
     let aplayer = this.$refs.player.control
@@ -329,14 +334,14 @@ export default {
       'getLive2DDBStatus'
     ]),
     latestCard () {
-      if (this.getMasterDBStatus !== 2) return {cardID: 0}
+      if (this.getMasterDBStatus !== 2) return {cardId: 0}
       const retKey = Object.keys(this.cardInfos).slice(-1)
       return this.cardInfos[retKey]
       // don't know why CloudFlare reject the image request
       // return `/assets/thumb/chara/card0000${latestCardGroup}_${latestCard.detail.cardRes}_normal.png`
     },
     latestEvent () {
-      if (this.getMasterDBStatus !== 2) return {eventID: 0}
+      if (this.getMasterDBStatus !== 2) return {eventId: 0}
       const retKey = Object.keys(this.eventMap).slice(-1)
       // console.log(this.eventMap[retKey])
       return this.eventMap[retKey]
@@ -374,20 +379,20 @@ export default {
       if (this.getMasterDBStatus !== 2) {
         return null
       }
-      return this.stampMap[this.latestEvent.pointRewards.find(reward => reward.rewardType === 'stamp').rewardID]
+      return this.stampMap[this.latestEvent.pointRewards.find(reward => reward.rewardType === 'stamp').rewardId]
     }
   },
   methods: {
     getEventNormalCard (rewards) {
-      const normalID = rewards.filter(elem => elem.rewardType === 'situation')[0].rewardID
-      return this.cardInfos[normalID]
+      const normalid = rewards.filter(elem => elem.rewardType === 'situation')[0].rewardId
+      return this.cardInfos[normalid]
     },
     getEventSpecialCard (rewards) {
-      const specialID = rewards.filter(elem => elem.rewardType === 'situation')[1].rewardID
-      return this.cardInfos[specialID]
+      const specialid = rewards.filter(elem => elem.rewardType === 'situation')[1].rewardId
+      return this.cardInfos[specialid]
     },
-    getCharacter (characterID) {
-      return this.characterInfos[characterID]
+    getCharacter (characterId) {
+      return this.characterInfos[characterId]
     }
   }
 }

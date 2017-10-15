@@ -9,16 +9,17 @@
       <!-- <q-btn color="pink" @click="showFilter">{{$t('toolbar.next-page')}}</q-btn> -->
     </div>
     <div class="row">
-      <div v-for="card in showCardInfoList" :key="card.cardID" class="col-12 col-xl-4 col-lg-6 full-height">
-        <q-card style="height: 500px; cursor: pointer;" @click="$router.push({ name: 'cardDetail', params: { cardID: card.cardID } })">
+      <div v-for="card in showCardInfoList" :key="card.cardId" class="col-12 col-xl-4 col-lg-6 full-height">
+        <q-card style="height: 500px; cursor: pointer;" @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId } })">
           <q-card-media class="full-height" style="position: relative;">
             <span :class="`card-img-attr-${card.attr}`"></span>
+            <span :class="`card-img-band-${characterInfos[card.characterId].bandId}`"></span>
             <img v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity < 3" class="one-img-full full-height">
             <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3" class="two-img-split full-height gt-md"
-              :ref="`splitL${card.cardID}`" @mouseover="handleMouseOver(`splitL${card.cardID}`)" @mouseout="handleMouseOut(card.cardID)">
+              :ref="`splitL${card.cardId}`" @mouseover="handleMouseOver(`splitL${card.cardId}`)" @mouseout="handleMouseOut(card.cardId)">
             </div>
             <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.rarity >= 3" class="two-img-split full-height gt-md"
-              :ref="`splitR${card.cardID}`" @mouseover="handleMouseOver(`splitR${card.cardID}`)" @mouseout="handleMouseOut(card.cardID)">
+              :ref="`splitR${card.cardId}`" @mouseover="handleMouseOver(`splitR${card.cardId}`)" @mouseout="handleMouseOut(card.cardId)">
             </div>
             <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3" class="two-img-full full-width lt-md"
               style="height: 50%;">
@@ -27,8 +28,8 @@
               style="height: 50%;">
             </div>
             <q-card-title slot="overlay">
-              [{{card.title}}] {{displayName ? capitalizeFirstLetter(toRomaji(characterInfos[card.characterID].ruby)) : characterInfos[card.characterID].characterName}}
-              <span v-for="i in Number(card.rarity)" :key="i">🟊</span>
+              [{{card.title}}] {{displayName ? capitalizeFirstLetter(toRomaji(characterInfos[card.characterId].ruby)) : characterInfos[card.characterId].characterName}}
+              <span v-for="i in Number(card.rarity)" :key="i">&#x2605;</span>
             </q-card-title>
           </q-card-media>
         </q-card>
@@ -208,9 +209,9 @@ export default {
       }
       this.$refs[ref][0].className += ' show-full'
     },
-    handleMouseOut (cardID) {
-      this.$refs[`splitL${cardID}`][0].className = 'two-img-split full-height gt-md'
-      this.$refs[`splitR${cardID}`][0].className = 'two-img-split full-height gt-md'
+    handleMouseOut (cardId) {
+      this.$refs[`splitL${cardId}`][0].className = 'two-img-split full-height gt-md'
+      this.$refs[`splitR${cardId}`][0].className = 'two-img-split full-height gt-md'
     },
     capitalizeFirstLetter (str) {
       return str.split(' ')
@@ -220,11 +221,11 @@ export default {
     doFilter () {
       let ret = this.cardInfoList.slice().reverse()
       if (this.selectCharacters.length) {
-        ret = ret.filter(elem => this.selectCharacters.indexOf(elem.characterID) !== -1)
+        ret = ret.filter(elem => this.selectCharacters.indexOf(elem.characterId) !== -1)
       }
       if (this.selectSkills.length) {
-        const cardOfSkills = Object.keys(this.skillMap).filter(key => this.selectSkills.indexOf(this.skillMap[key].skillID) !== -1)
-        ret = ret.filter(elem => cardOfSkills.indexOf(elem.cardID) !== -1)
+        const cardOfSkills = Object.keys(this.skillMap).filter(key => this.selectSkills.indexOf(this.skillMap[key].skillId) !== -1)
+        ret = ret.filter(elem => cardOfSkills.indexOf(elem.cardId) !== -1)
       }
       if (this.selectRarity.length) {
         ret = ret.filter(elem => this.selectRarity.indexOf(elem.rarity) !== -1)
@@ -244,16 +245,16 @@ export default {
             type: 'checkbox',
             model: this.selectRarity,
             items: [{
-              label: '🟊🟊🟊🟊',
+              label: '\u2605\u2605\u2605\u2605',
               value: '4'
             }, {
-              label: '🟊🟊🟊',
+              label: '\u2605\u2605\u2605',
               value: '3'
             }, {
-              label: '🟊🟊',
+              label: '\u2605\u2605',
               value: '2'
             }, {
-              label: '🟊',
+              label: '\u2605',
               value: '1'
             }]
           },
@@ -268,7 +269,7 @@ export default {
               label: this.displayName
                 ? this.capitalizeFirstLetter(toRomaji(this.characterInfos[key].ruby))
                 : this.characterInfos[key].characterName,
-              value: this.characterInfos[key].characterID
+              value: this.characterInfos[key].characterId
             }))
           },
           header2: {
@@ -279,12 +280,12 @@ export default {
             type: 'checkbox',
             model: this.selectSkills,
             items: this.skillInfos.reduce((prev, curr) => {
-              if (prev.find(elem2 => elem2.skillID === curr.skillID)) return prev
+              if (prev.find(elem2 => elem2.skillId === curr.skillId)) return prev
               prev.push(curr)
               return prev
             }, []).map(elem => ({
               label: elem.simpleDescription,
-              value: elem.skillID
+              value: elem.skillId
             }))
           }
         },
@@ -368,5 +369,45 @@ export default {
   width: 50px
   height: 50px
   background: url('~assets/MenuAtlas.png') no-repeat -1448px -159px
+
+.card-img-band-1
+  position: absolute
+  top: 2%
+  left: 5%
+  width: 50px
+  height: 50px
+  background: url('/statics/band_icon_1.png') no-repeat
+
+.card-img-band-2
+  position: absolute
+  top: 2%
+  left: 5%
+  width: 50px
+  height: 50px
+  background: url('/statics/band_icon_2.png') no-repeat
+
+.card-img-band-3
+  position: absolute
+  top: 2%
+  left: 5%
+  width: 50px
+  height: 50px
+  background: url('/statics/band_icon_3.png') no-repeat
+
+.card-img-band-4
+  position: absolute
+  top: 2%
+  left: 5%
+  width: 50px
+  height: 50px
+  background: url('/statics/band_icon_4.png') no-repeat
+
+.card-img-band-5
+  position: absolute
+  top: 2%
+  left: 5%
+  width: 50px
+  height: 50px
+  background: url('/statics/band_icon_5.png') no-repeat
 </style>
 
