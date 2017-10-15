@@ -11,6 +11,9 @@ cache:
   directories:
   - node_modules
 addons:
+  ssh_known_hosts:
+    - bangdream.ga
+    - bandori.tech
   sauce_connect:
     username: DNARoma
   jwt:

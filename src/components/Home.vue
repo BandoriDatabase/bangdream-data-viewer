@@ -227,8 +227,8 @@
     "info-update": "Recent update",
     "info-links": "External links",
     "update": [
-      "We have our Discord server and official twitter now! Click the links below!",
-      "Pages added: card gallery and detailed current event info"
+      "Band icons are added to all pages relevant to card",
+      "Add gacha detail modal"
     ]
   },
   "zh-CN": {
@@ -245,8 +245,8 @@
     "info-update": "最近更新",
     "info-links": "友情链接",
     "update": [
-      "我们有Discord服务器和官方Twitter了！点击下面的链接查看！",
-      "新增了卡牌大图浏览模式和当前进行中活动详细信息页"
+      "为所有卡面页面增加了乐队标识",
+      "增加里卡片详情弹窗"
     ]
   },
   "zh-TW": {
@@ -263,8 +263,8 @@
     "info-update": "最近更新",
     "info-links": "友情鏈接",
     "update": [
-      "我們有Discord服務器和官方Twitter了！點擊下面的鏈接查看！",
-      "新增了卡牌大圖瀏覽模式和當前進行中活動詳細信息頁"
+      "為所有卡面頁面增加了樂隊標識",
+      "增加裏卡片詳情彈窗"
     ]
   }
 }
