@@ -10,34 +10,37 @@
       </q-card-title>
       <q-card-main class="card-content column gutter">
         <div class="row gutter">
-          <div class="card-img-parent col-xl-6 col-lg-6 col-md-6 col-12">
-            <img class="preview-img card-img-main" v-lazy="`/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`"
-              @click="$preview.open(0, [{
-                src: `/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
-                title: `[${cardInfo.title}] ${characterInfo.characterName}`,
-                w: cardImgType === 'card' ? 1334 : 1120,
-                h: cardImgType === 'card' ? 1002 : 1120
-              }], {
-                fullscreenEl: true,
-                zoomEl: true,
-                shareEl: true,
-                history: false
-              })">
-            <!-- <img class="card-img-frame" :src="`statics/frame_${getCardFrame()}.png`" v-if="cardImgType === 'card'"
-              @click="$preview.open(0, [{
-                src: `/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
-                title: `[${cardInfo.title}] ${characterInfo.characterName}`,
-                w: cardImgType === 'card' ? 1334 : 1120,
-                h: cardImgType === 'card' ? 1002 : 1120
-              }], {
-                fullscreenEl: true,
-                zoomEl: true,
-                shareEl: true,
-                history: false
-              })"> -->
-            <!-- <div :class="`card-img-attr-${cardInfo.attr}`" v-if="cardImgType === 'card'"></div> -->
-            <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" v-if="cardImgType === 'card'" :key="i"></div>
-            <span :class="`card-img-band-${characterInfos[cardInfo.characterId].bandId}`"></span>
+          <div class="card-img-parent col-xl-6 col-lg-6 col-md-6 col-12" v-if="cardImgType === 'card'"
+            @click="$preview.open(0, [{
+              src: `/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
+              title: `[${cardInfo.title}] ${characterInfo.characterName}`,
+              w: cardImgType === 'card' ? 1334 : 1120,
+              h: cardImgType === 'card' ? 1002 : 1120
+            }], {
+              fullscreenEl: true,
+              zoomEl: true,
+              shareEl: true,
+              history: false
+            })">
+            <div class="preview-img card-img-main" v-lazy:background-image="`/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`" />
+            <div :class="`card-img-frame-${getCardFrame()}`" />
+            <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" :key="i"></div>
+            <div :class="`card-img-band-${characterInfo.bandId}`"></div>
+            <div :class="`card-img-attr-${cardInfo.attr}`"></div>
+          </div>
+          <div v-else class="card-img-parent col-xl-6 col-lg-6 col-md-6 col-12"
+            @click="$preview.open(0, [{
+              src: `/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
+              title: `[${cardInfo.title}] ${characterInfo.characterName}`,
+              w: cardImgType === 'card' ? 1334 : 1120,
+              h: cardImgType === 'card' ? 1002 : 1120
+            }], {
+              fullscreenEl: true,
+              zoomEl: true,
+              shareEl: true,
+              history: false
+            })">
+            <div class="preview-img card-img-main" v-lazy:background-image="`/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`" />
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3" @click="switchCardResType()">{{$t('un-trained')}}</q-btn>
@@ -152,11 +155,11 @@
                 v-model="skillLv"
                 type="number"
                 :min="1"
-                :max="skillEffect.length || judgeList.length"
+                :max="skillInfo.skillEffect.length || skillInfo.judgeEffect.length"
               ></q-input>
-              <p>{{skillName}}</p>
-              <p>{{skillInfo.simpleDescription}}</p>
-              <p>{{getSkillDesc(skillInfo.description, skillEffect, judgeList, skillLv)}}</p>
+              <p>{{skillInfo.skillName}}</p>
+              <p>{{(skillInfo.skillDetail[skillLv] || skillInfo.skillDetail[Math.floor((skillLv - 1)/2)]).simpleDescription}}</p>
+              <p>{{getSkillDesc((skillInfo.skillDetail[skillLv] || skillInfo.skillDetail[Math.floor((skillLv - 1)/2)]).description, skillInfo.skillEffect, skillInfo.judgeEffect, skillLv)}}</p>
             </div>
           </q-collapsible>
           <q-collapsible icon="highlight" :label="$t('training.title')">
@@ -271,7 +274,6 @@ import {
   QToggle,
   QCollapsible
 } from 'quasar'
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'cardComponent',
@@ -284,12 +286,8 @@ export default {
       type: Object,
       required: true
     },
-    skillId: {
-      type: Number,
-      required: true
-    },
-    skillName: {
-      type: String,
+    skillInfo: {
+      type: Object,
       required: true
     }
   },
@@ -313,30 +311,14 @@ export default {
     QToggle,
     QCollapsible
   },
-  computed: {
-    ...mapGetters('DB', [
-      'skillInfos',
-      'skillMap',
-      'skillEffects',
-      'judgeLists',
-      'characterInfos'
-    ]),
-    cardGroup () {
-      return Math.trunc(this.cardInfo.cardId / 50)
-    },
-    skillInfo () {
-      return this.skillInfos.find(elem => Number(elem.skillId) === this.skillId)
-    },
-    skillEffect () {
-      return this.skillEffects.filter(elem => Number(elem.skillId) === this.skillId && elem.u3 === '1')
-    },
-    judgeList () {
-      return this.judgeLists.filter(elem => Number(elem.skillId) === this.skillId)
-    }
-  },
   mounted () {
     this.level = Number(this.cardInfo.maxLevel) - 10
-    this.skillLv = this.skillEffect.length || this.judgeList.length
+    this.skillLv = this.skillInfo.skillEffect.length || this.skillInfo.judgeEffect.length
+  },
+  computed: {
+    cardGroup () {
+      return Math.trunc(this.cardInfo.cardId / 50)
+    }
   },
   methods: {
     switchCardResType () {
@@ -374,13 +356,13 @@ export default {
     getCardFrame () {
       switch (this.cardInfo.rarity) {
         case '4':
-          return 'ss_rainbow'
+          return 'rainbow'
         case '3':
-          return 's_gold'
+          return 'gold'
         case '2':
-          return 'r_silver'
+          return 'silver'
         default:
-          return `n_${this.cardInfo.attr}`
+          return this.cardInfo.attr
       }
     },
     getSkillDesc (skillDesc, skillEffects, judgeLists, skillLv) {
@@ -414,118 +396,206 @@ img
   height 72px
 
 .card-img-parent
-  float left
+  width 100%
+  height 280px
+  max-width 420px
   position relative
+  cursor pointer
 
 .card-img-main
-  cursor: pointer
-  max-width: 402px
-  max-height 100%
+  position absolute
+  width 97.5%
+  height 268px
+  max-width 408px
+  background-size cover
+  background-repeat no-repeat
+  background-position center center
+  left 6px
+  top 6px
 
-// .card-img-frame
-//   max-width: 402px
-//   width 100%
-//   height 100%
-//   position absolute
-//   cursor pointer
-//   left 0
-//   top 0
+.card-img-attr-powerful
+  position absolute
+  top 1.7%
+  right 1%
+  width 45px
+  height 45px
+  background url('/statics/icon_powerful.png') no-repeat
+  background-size 100% 100%
 
-// .card-img-attr-powerful
-//   position: absolute
-//   top: 2%
-//   left: 87%
-//   width: 50px
-//   height: 50px
-//   background: url('~assets/MenuAtlas.png') no-repeat -1448px -211px
+.card-img-attr-cool
+  position absolute
+  top 1.7%
+  right 1%
+  width 45px
+  height 45px
+  background url('/statics/icon_cool.png') no-repeat
+  background-size 100% 100%
 
-// .card-img-attr-cool
-//   position: absolute
-//   top: 2%
-//   left: 87%
-//   width: 50px
-//   height: 50px
-//   background: url('~assets/MenuAtlas.png') no-repeat -1448px -55px
+.card-img-attr-happy
+  position absolute
+  ttop 1.7%
+  right 1%
+  width 45px
+  height 45px
+  background url('/statics/icon_happy.png') no-repeat
+  background-size 100% 100%
 
-// .card-img-attr-happy
-//   position: absolute
-//   top: 2%
-//   left: 87%
-//   width: 50px
-//   height: 50px
-//   background: url('~assets/MenuAtlas.png') no-repeat -1448px -263px
-
-// .card-img-attr-pure
-//   position: absolute
-//   top: 2%
-//   left: 87%
-//   width: 50px
-//   height: 50px
-//   background: url('~assets/MenuAtlas.png') no-repeat -1448px -159px
+.card-img-attr-pure
+  position absolute
+  top 1.7%
+  right 1%
+  width 45px
+  height 45px
+  background url('/statics/icon_pure.png') no-repeat
+  background-size 100% 100%
 
 .card-img-rarity-normal-1
-  position: absolute
-  top: 86%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1308px -3px
+  position absolute
+  top 86%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_untrained.png') no-repeat
+  background-size 100% 100%
 
 .card-img-rarity-normal-2
-  position: absolute
-  top: 75%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1308px -3px
+  position absolute
+  top 76%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_untrained.png') no-repeat
+  background-size 100% 100%
 
 .card-img-rarity-normal-3
-  position: absolute
-  top: 65%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1308px -3px
+  position absolute
+  top 66%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_untrained.png') no-repeat
+  background-size 100% 100%
 
 .card-img-rarity-normal-4
-  position: absolute
-  top: 54%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1308px -3px
+  position absolute
+  top 56%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_untrained.png') no-repeat
+  background-size 100% 100%
 
 .card-img-rarity-after_training-1
-  position: absolute
-  top: 86%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1906px -451px
+  position absolute
+  top 86%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_after_training.png') no-repeat
+  background-size 100% 100%
 
 .card-img-rarity-after_training-2
-  position: absolute
-  top: 75%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1906px -451px
+  position absolute
+  top 76%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_after_training.png') no-repeat
+  background-size 100% 100%
 
 .card-img-rarity-after_training-3
-  position: absolute
-  top: 65%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1906px -451px
+  position absolute
+  top 66%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_after_training.png') no-repeat
+  background-size 100% 100%
 
 .card-img-rarity-after_training-4
+  position absolute
+  top 56%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_after_training.png') no-repeat
+  background-size 100% 100%
+
+.card-img-frame-rainbow
   position: absolute
-  top: 54%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1906px -451px
+  width 100%
+  height 280px
+  max-width 420px
+  background url('/statics/frame_ss_rainbow.png') no-repeat
+  background-size cover
+  background-size 100% 100%
+  left 0
+  top 0
+
+.card-img-frame-gold
+  position: absolute
+  width 100%
+  height 280px
+  max-width 420px
+  background url('/statics/frame_s_gold.png') no-repeat
+  background-size cover
+  background-size 100% 100%
+  left 0
+  top 0
+
+.card-img-frame-silver
+  position: absolute
+  width 100%
+  height 280px
+  max-width 420px
+  background url('/statics/frame_r_silver.png') no-repeat
+  background-size 100% 100%
+  left 0
+  top 0
+
+.card-img-frame-pure
+  position: absolute
+  width 100%
+  height 280px
+  max-width 420px
+  background url('/statics/frame_n_pure.png') no-repeat
+  background-size cover
+  background-size 100% 100%
+  left 0
+  top 0
+
+.card-img-frame-powerful
+  position: absolute
+  width 100%
+  height 280px
+  max-width 420px
+  background url('/statics/frame_n_powerful.png') no-repeat
+  background-size cover
+  background-size 100% 100%
+  left 0
+  top 0
+
+.card-img-frame-happy
+  position: absolute
+  width 100%
+  height 280px
+  max-width 420px
+  background url('/statics/frame_n_happy.png') no-repeat
+  background-size cover
+  background-size 100% 100%
+  left 0
+  top 0
+
+.card-img-frame-cool
+  position: absolute
+  width 100%
+  height 280px
+  max-width 420px
+  background url('/statics/frame_n_cool.png') no-repeat
+  background-size cover
+  background-size 100% 100%
+  left 0
+  top 0
 
 div.row
   padding: 5px

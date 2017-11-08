@@ -10,69 +10,63 @@
       <router-link to="/donate" tag="h5"><a>If you love this site, you can support me to make it better!</a></router-link>
     </div> -->
 
-    <div class="row gutter" v-if="getMasterDBStatus === 2">
+    <div class="row gutter">
       <div class="col-lg-4 col-xl-4 col-12 card">
-        <q-card v-if="latestEvent.enableFlag">
+        <q-card v-if="isEventReady">
           <q-card-title class="bg-pink text-white">
-            {{latestEvent.eventName}}
-            <span slot="subtitle" class="text-white">{{$t('event-type')}} {{latestEvent.eventType}}</span>
+            {{currentEvent.eventName}}
+            <span slot="subtitle" class="text-white">{{$t('event-type')}} {{currentEvent.eventType}}</span>
           </q-card-title>
           <q-card-media>
-            <!-- <img class="event-cover preview-img" v-lazy:background-image="latestEvent.eventType === 'story' ? `/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png` : `/assets/event/${latestEvent.assetBundleName}/topscreen_trim_eventtop.png`" 
-              @click="$preview.open(0, [{
-                src: latestEvent.eventType === 'story' ? `/assets/event/${latestEvent.assetBundleName}/topscreen_bg_eventtop.png` : `/assets/event/${latestEvent.assetBundleName}/topscreen_trim_eventtop.png`,
-                w: 1334,
-                h: 1002
-              }], {
-                fullscreenEl: true,
-                zoomEl: true,
-                shareEl: true,
-                history: false
-              })"/> -->
-            <img v-lazy="`/assets/homebanner_banner_event${latestEvent.eventId}.png`" alt="" class="event-banner" />
+            <div v-lazy:background-image="`/assets/homebanner_banner_event${currentEvent.eventId}.png`" alt="" class="event-banner" />
           </q-card-media>
           <q-card-main>
             <div><a-player :music="eventMusic" ref="player" mode="single"></a-player></div>
             <div class="column items-center latest-event">
               <!-- <p>{{$t('event-end-cd')}}</p> -->
-              <count-down :target-time="Number(latestEvent.endAt)" v-if="Number(latestEvent.endAt) > Date.now()"></count-down>
-              <count-down :target-time="Number(latestEvent.distributionEndAt)" v-if="Number(latestEvent.distributionStartAt) < Date.now()"></count-down>
+              <count-down :target-time="Number(currentEvent.endAt)" v-if="Number(currentEvent.endAt) > Date.now()"></count-down>
+              <count-down :target-time="Number(currentEvent.distributionEndAt)" v-if="Number(currentEvent.distributionStartAt) < Date.now()"></count-down>
               <p>{{$t('event-reward-card')}}</p>
-              <div class="row justify-center items-center sm-column card-small"
+              <div class="card-small"
                 @click="$refs.cMnormal.open()">
-                N id: {{getEventNormalCard(latestEvent.pointRewards).cardId}}
                 <span class="row justify-center items-center">
-                  <img class="thumb responsive" v-lazy="`/assets/thumb/chara/card0000${Math.trunc(getEventNormalCard(latestEvent.pointRewards).cardId / 50)}_${getEventNormalCard(latestEvent.pointRewards).cardRes}_normal.png`">
-                  {{getCharacter(getEventNormalCard(latestEvent.pointRewards).characterId).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
+                  <card-thumb :cardId="Number(eventNormalCard.cardId)"></card-thumb>
+                  {{charaMap[eventNormalCard.characterId].characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
                 </span>
               </div>
-              <card-modal ref="cMnormal" :cardInfo="getEventNormalCard(latestEvent.pointRewards)"
-                :characterInfo="getCharacter(getEventNormalCard(latestEvent.pointRewards).characterId)"
-                :skillName="skillMap[getEventNormalCard(latestEvent.pointRewards).cardId].skillName"
-                :skillId="Number(skillMap[getEventNormalCard(latestEvent.pointRewards).cardId].skillId)"></card-modal>
-              <div class="row justify-center items-center sm-column card-small"
+              <card-modal ref="cMnormal" :cardInfo="eventNormalCard"
+                :characterInfo="charaMap[eventNormalCard.characterId]"
+                :skillInfo="skillMap[eventNormalCard.cardId]"></card-modal>
+              <div class="card-small"
                 @click="$refs.cMspecial.open()">
-                SR id: {{getEventSpecialCard(latestEvent.pointRewards).cardId}}
                 <span class="row justify-center items-center">
-                  <img class="thumb responsive" v-lazy="`/assets/thumb/chara/card0000${Math.trunc(getEventSpecialCard(latestEvent.pointRewards).cardId / 50)}_${getEventSpecialCard(latestEvent.pointRewards).cardRes}_normal.png`">
-                  {{getCharacter(getEventSpecialCard(latestEvent.pointRewards).characterId).characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
+                  <card-thumb :cardId="Number(eventSpecialCard.cardId)"></card-thumb>
+                  {{charaMap[eventSpecialCard.characterId].characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
                 </span>
               </div>
-              <card-modal ref="cMspecial" :cardInfo="getEventSpecialCard(latestEvent.pointRewards)"
-                :characterInfo="getCharacter(getEventSpecialCard(latestEvent.pointRewards).characterId)"
-                :skillName="skillMap[getEventSpecialCard(latestEvent.pointRewards).cardId].skillName"
-                :skillId="Number(skillMap[getEventSpecialCard(latestEvent.pointRewards).cardId].skillId)"></card-modal>
+              <card-modal ref="cMspecial" :cardInfo="eventSpecialCard"
+                :characterInfo="charaMap[eventSpecialCard.characterId]"
+                :skillInfo="skillMap[eventSpecialCard.cardId]"></card-modal>
               <p>{{$t('event-reward-stamp')}}</p>
               <img v-if="eventRewardStamp" v-lazy="`/assets/stamp/01_${eventRewardStamp.imageName}_icon.png`"></img>
               <!-- <p>{{$t('event-bonus-card')}}</p>
-              <img class="responsive" style="max-width: 100%;" v-lazy="`/assets/event/${latestEvent.assetBundleName}/images_event_point_banner.png`"> -->
+              <img class="responsive" style="max-width: 100%;" v-lazy="`/assets/event/${currentEvent.assetBundleName}/images_event_point_banner.png`"> -->
             </div>
+          </q-card-main>
+        </q-card>
+        <q-card v-else>
+          <q-card-title class="bg-pink text-white">
+            {{$t('fetch-event-data')}}
+            <span slot="subtitle" class="text-white">{{$t('event-type')}} {{$t('fetch-event-data')}}</span>
+          </q-card-title>
+          <q-card-main>
+            <q-spinner color="pink" size="48px"></q-spinner>
           </q-card-main>
         </q-card>
       </div>
 
       <div class="col-lg-4 col-xl-4 col-12">
-        <q-card>
+        <q-card v-if="isGcahaReady">
           <q-card-title class="bg-pink text-white">
             {{$t('gache-list')}}
             <span slot="subtitle" class="text-white">{{$t('gacha-list-count')}}: {{currentGachaList.length}}</span>
@@ -80,10 +74,19 @@
           <q-card-main>
             <div v-for="gacha in currentGachaList" :key="gacha.gachaId" style="width: 100%; margin: 10px 0; text-align: center;">
               <img v-lazy="`/assets/gacha/screen/${gacha.resourceName}_logo.png`" alt="" class="gacha-banner" />
-              <p>{{gacha.gachaName}}<q-btn flat round small class="text-pink" @click="$refs.gachaModal.open(gacha.gachaId)"><q-icon name="launch" /></q-btn></p>
+              <p>{{gacha.gachaName}}<q-btn flat round small class="text-pink" @click="$refs.gachaModal.open(gacha)"><q-icon name="launch" /></q-btn></p>
               <count-down :target-time="Number(gacha.closedAt)"></count-down>
             </div>
             <gacha-modal ref="gachaModal"></gacha-modal>
+          </q-card-main>
+        </q-card>
+        <q-card v-else>
+          <q-card-title class="bg-pink text-white">
+            {{$t('fetch-gacha-data')}}
+            <span slot="subtitle" class="text-white">{{$t('gacha-list-count')}} {{$t('fetch-gacha-data')}}</span>
+          </q-card-title>
+          <q-card-main>
+            <q-spinner color="pink" size="48px"></q-spinner>
           </q-card-main>
         </q-card>
       </div>
@@ -229,7 +232,9 @@
     "update": [
       "Band icons are added to all pages relevant to card",
       "Add gacha detail modal"
-    ]
+    ],
+    "fetch-event-data": "Fetching Event Data...",
+    "fetch-gacha-data": "Fetching Gacha Data..."
   },
   "zh-CN": {
     "title": ["欢迎访问", "数据库!"],
@@ -247,7 +252,9 @@
     "update": [
       "为所有卡面页面增加了乐队标识",
       "增加里卡片详情弹窗"
-    ]
+    ],
+    "fetch-event-data": "获取活动数据中",
+    "fetch-gacha-data": "获取扭蛋池数据中"
   },
   "zh-TW": {
     "title": ["歡迎訪問", "數據庫!"],
@@ -265,7 +272,9 @@
     "update": [
       "為所有卡面頁面增加了樂隊標識",
       "增加裏卡片詳情彈窗"
-    ]
+    ],
+    "fetch-event-data": "獲取活動數據中",
+    "fetch-gacha-data": "獲取扭蛋池數據中"
   }
 }
 </i18n>
@@ -281,9 +290,11 @@ import {
   QList,
   QListHeader,
   QItem,
-  QItemSeparator
+  QItemSeparator,
+  QSpinner
 } from 'quasar'
-import { mapGetters, mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import cardThumb from './common/CardThumb'
 import VueAplayer from 'vue-aplayer'
 import CountDown from './common/Countdown'
 import cardModal from './modals/Card'
@@ -298,7 +309,12 @@ export default {
   data () {
     return {
       // latestCardid: 0
-      log: console.log
+      log: console.log,
+      isEventReady: false,
+      eventNormalCard: null,
+      eventSpecialCard: null,
+      eventRewardStamp: null,
+      isGcahaReady: false
     }
   },
   components: {
@@ -318,88 +334,76 @@ export default {
     QItemSeparator,
     redditIcon,
     twitterIcon,
-    gachaModal
+    gachaModal,
+    QSpinner,
+    cardThumb
   },
   beforeDestroy () {
     let aplayer = this.$refs.player.control
-    aplayer.destroy()
+    if (aplayer) aplayer.destroy()
+  },
+  mounted () {
+    this.$nextTick(async () => {
+      await this.getCurrentEvent()
+      const eventCards = this.currentEvent.pointRewards.filter(elem => elem.rewardType === 'situation')
+      this.eventNormalCard = await this.getCardById(eventCards[0].rewardId)
+      this.eventSpecialCard = await this.getCardById(eventCards[1].rewardId)
+      await this.getSkillById(this.eventNormalCard.cardId)
+      await this.getSkillById(this.eventSpecialCard.cardId)
+      await this.getCharaById(this.eventNormalCard.characterId)
+      await this.getCharaById(this.eventSpecialCard.characterId)
+      this.eventRewardStamp = await this.getStampById(this.currentEvent.pointRewards.find(reward => reward.rewardType === 'stamp').rewardId)
+      this.isEventReady = true
+    })
+    this.$nextTick(async () => {
+      await this.getGachaCurrent()
+      this.isGcahaReady = true
+    })
   },
   computed: {
-    ...mapGetters('DB', [
-      'cardInfos',
-      'characterInfos',
-      'eventMap',
-      'homeBannerList',
-      'gachaList',
-      'skillInfos',
-      'skillMap',
+    ...mapState('event', [
+      'currentEvent'
+    ]),
+    ...mapState('card', [
+      'cardMap',
+      'skillMap'
+    ]),
+    ...mapState('chara', [
+      'charaMap'
+    ]),
+    ...mapState('stamp', [
       'stampMap'
     ]),
-    ...mapState('DB', [
-      'getMasterDBStatus',
-      'getLive2DDBStatus'
+    ...mapState('gacha', [
+      'currentGachaList'
     ]),
-    latestCard () {
-      if (this.getMasterDBStatus !== 2) return {cardId: 0}
-      const retKey = Object.keys(this.cardInfos).slice(-1)
-      return this.cardInfos[retKey]
-      // don't know why CloudFlare reject the image request
-      // return `/assets/thumb/chara/card0000${latestCardGroup}_${latestCard.detail.cardRes}_normal.png`
-    },
-    latestEvent () {
-      if (this.getMasterDBStatus !== 2) return {eventId: 0}
-      const retKey = Object.keys(this.eventMap).slice(-1)
-      // console.log(this.eventMap[retKey])
-      return this.eventMap[retKey]
-    },
-    currentHomeBanner () {
-      if (this.getMasterDBStatus !== 2) return []
-      return this.homeBannerList
-        .filter(elem => Number(elem.publishedAt) < Date.now() && Number(elem.closedAt) > Date.now())
-        .filter(elem => elem.assetBundleName.indexOf('event') !== -1 || elem.assetBundleName.indexOf('gacha') !== -1)
-        .map(elem => `/assets/homebanner_${elem.assetBundleName}.png`)
-    },
-    currentGachaList () {
-      if (this.getMasterDBStatus !== 2) return []
-      return this.gachaList.filter(elem => Number(elem.publishedAt) < Date.now() && Number(elem.closedAt) > Date.now() && elem.closedAt.substring(0, 1) !== '4')
-    },
     eventMusic () {
-      if (this.getMasterDBStatus !== 2) {
-        return {
-          title: 'Preparation',
-          author: 'Hans Zimmer/Richard Harvey',
-          url: 'http://devtest.qiniudn.com/Preparation.mp3',
-          pic: 'http://devtest.qiniudn.com/Preparation.jpg',
-          lrc: '[00:00.00]lrc here\n[00:01.00]aplayer'
-        }
-      }
-      const arr = this.latestEvent.bgmAssetBundleName.split('/')
+      const arr = this.currentEvent.bgmAssetBundleName.split('/')
       return {
-        title: this.latestEvent.eventName,
+        title: this.currentEvent.eventName,
         author: 'Event BGM',
-        url: `/assets/${arr.slice(0, arr.length - 1).join('/')}/${this.latestEvent.bgmFileName}.mp3`,
-        pic: `/assets/event/${this.latestEvent.assetBundleName}/images_logo.png`
+        url: `/assets/${arr.slice(0, arr.length - 1).join('/')}/${this.currentEvent.bgmFileName}.mp3`,
+        pic: `/assets/event/${this.currentEvent.assetBundleName}/images_logo.png`
       }
-    },
-    eventRewardStamp () {
-      if (this.getMasterDBStatus !== 2) {
-        return null
-      }
-      return this.stampMap[this.latestEvent.pointRewards.find(reward => reward.rewardType === 'stamp').rewardId]
     }
   },
   methods: {
-    getEventNormalCard (rewards) {
-      const normalid = rewards.filter(elem => elem.rewardType === 'situation')[0].rewardId
-      return this.cardInfos[normalid]
-    },
-    getEventSpecialCard (rewards) {
-      const specialid = rewards.filter(elem => elem.rewardType === 'situation')[1].rewardId
-      return this.cardInfos[specialid]
-    },
-    getCharacter (characterId) {
-      return this.characterInfos[characterId]
-    }
+    ...mapActions('card', [
+      'getCardById',
+      'getSkillById'
+    ]),
+    ...mapActions('event', [
+      'getCurrentEvent'
+    ]),
+    ...mapActions('stamp', [
+      'getStampById'
+    ]),
+    ...mapActions('gacha', [
+      'getGachaCurrent'
+    ]),
+    ...mapActions('chara', [
+      'getCharaById'
+    ])
   }
 }
 </script>
@@ -415,13 +419,11 @@ export default {
   margin 10px 0
 
 .event-banner
-  width 420px
   height 120px
-  // background-size: cover
-  // background-repeat: no-repeat
-  // background-position: center
+  background-size contain
+  background-repeat no-repeat
+  background-position center
   margin 0 auto
-  max-width 100%
 
 .gacha-banner
   width 280px

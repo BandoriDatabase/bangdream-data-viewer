@@ -1,5 +1,5 @@
 <template>
-  <div v-if="cardInfoList">
+  <div>
     <div class="block">
       <p>{{$t('hint[0]')}}<span class="desktop-only">{{$t('hint[1]')}}</span><span class="mobile-only">{{$t('hint[2]')}}</span>{{$t('hint[3]')}}</p>
       <p>{{$t('hint[4]')}}<label><q-toggle v-model="displayName"></q-toggle>{{displayName ? $t('hint[5]'):$t('hint[6]')}}</label></p>
@@ -8,33 +8,44 @@
       <q-btn color="pink" @click="showFilter">{{$t('toolbar.filter')}}</q-btn>
       <!-- <q-btn color="pink" @click="showFilter">{{$t('toolbar.next-page')}}</q-btn> -->
     </div>
-    <div class="row">
-      <div v-for="card in showCardInfoList" :key="card.cardId" class="col-12 col-xl-4 col-lg-6 full-height">
-        <q-card style="height: 500px; cursor: pointer;" @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId } })">
-          <q-card-media class="full-height" style="position: relative;">
-            <span :class="`card-img-attr-${card.attr}`"></span>
-            <span :class="`card-img-band-${characterInfos[card.characterId].bandId}`"></span>
-            <img v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity < 3" class="one-img-full full-height">
-            <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3" class="two-img-split full-height gt-md"
-              :ref="`splitL${card.cardId}`" @mouseover="handleMouseOver(`splitL${card.cardId}`)" @mouseout="handleMouseOut(card.cardId)">
-            </div>
-            <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.rarity >= 3" class="two-img-split full-height gt-md"
-              :ref="`splitR${card.cardId}`" @mouseover="handleMouseOver(`splitR${card.cardId}`)" @mouseout="handleMouseOut(card.cardId)">
-            </div>
-            <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3" class="two-img-full full-width lt-md"
-              style="height: 50%;">
-            </div>
-            <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.rarity >= 3" class="two-img-full full-width lt-md"
-              style="height: 50%;">
-            </div>
-            <q-card-title slot="overlay">
-              [{{card.title}}] {{displayName ? capitalizeFirstLetter(toRomaji(characterInfos[card.characterId].ruby)) : characterInfos[card.characterId].characterName}}
-              <span v-for="i in Number(card.rarity)" :key="i">&#x2605;</span>
-            </q-card-title>
-          </q-card-media>
-        </q-card>
+    <q-infinite-scroll ref="cardScroll" v-if="isReady" :handler="loadMore">
+      <div class="row">
+        <div v-for="card in showCardInfoList" :key="card.cardId" class="col-12 col-xl-4 col-lg-6 full-height">
+          <q-card style="height: 500px; cursor: pointer;" @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId } })">
+            <q-card-media class="full-height" style="position: relative;">
+              <span :class="`card-img-attr-${card.attr}`"></span>
+              <span :class="`card-img-band-${bandCharaList[Number(card.characterId) - 1].bandId}`"></span>
+              <img v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity < 3" class="one-img-full full-height">
+              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3" class="two-img-split full-height gt-md"
+                :ref="`splitL${card.cardId}`" @mouseover="handleMouseOver(`splitL${card.cardId}`)" @mouseout="handleMouseOut(card.cardId)">
+              </div>
+              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.rarity >= 3" class="two-img-split full-height gt-md"
+                :ref="`splitR${card.cardId}`" @mouseover="handleMouseOver(`splitR${card.cardId}`)" @mouseout="handleMouseOut(card.cardId)">
+              </div>
+              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3" class="two-img-full full-width lt-md"
+                style="height: 50%;">
+              </div>
+              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.rarity >= 3" class="two-img-full full-width lt-md"
+                style="height: 50%;">
+              </div>
+              <q-card-title slot="overlay">
+                [{{card.title}}] {{displayName ? capitalizeFirstLetter(toRomaji(bandCharaList[Number(card.characterId) - 1].ruby)) : bandCharaList[Number(card.characterId) - 1].characterName}}
+                <span v-for="i in Number(card.rarity)" :key="i">&#x2605;</span><br>
+                Lv {{card.maxLevel}}: {{card.maxPerformance}}/{{card.maxTechnique}}/{{card.maxVisual}}/{{card.totalMaxParam}}
+              </q-card-title>
+            </q-card-media>
+          </q-card>
+        </div>
       </div>
-    </div>
+      
+      <div slot="message" class="row justify-center items-center" style="margin-bottom: 50px;">
+        <q-spinner color="pink" size="48px"></q-spinner>
+        Loading more cards...
+      </div>
+    </q-infinite-scroll>
+    <q-inner-loading :visible="!isReady">
+      <q-spinner color="pink" size="48px"></q-spinner>
+    </q-inner-loading>
   </div>
 </template>
 
@@ -154,10 +165,14 @@ import {
   QIcon,
   QBtn,
   QToggle,
-  Dialog
+  Dialog,
+  QSpinner,
+  QInnerLoading,
+  QInfiniteScroll
 } from 'quasar'
 import { toRomaji } from 'wanakana'
-import { mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import apiDBInfo from 'api/dbinfo'
 
 export default {
   name: 'CardOverviewComponent',
@@ -168,7 +183,10 @@ export default {
     QCardMain,
     QIcon,
     QBtn,
-    QToggle
+    QToggle,
+    QSpinner,
+    QInnerLoading,
+    QInfiniteScroll
   },
   data () {
     return {
@@ -177,29 +195,36 @@ export default {
       showCardInfoList: [],
       selectSkills: [],
       selectRarity: [],
-      toRomaji
+      toRomaji,
+      isReady: false
     }
   },
   mounted () {
-    if (this.cardInfoList) {
+    this.$nextTick(async () => {
+      await this.getCardList({ limit: 12, page: 1 })
+      await this.getBandCharaList()
+      await this.getSkillList()
       this.doFilter()
-    }
+      this.isReady = true
+    })
   },
   computed: {
-    ...mapGetters('DB', [
-      'cardInfoList',
-      'characterInfos',
-      'skillInfos'
+    ...mapState('card', [
+      'cardList',
+      'skillList'
+    ]),
+    ...mapState('chara', [
+      'bandCharaList'
     ])
   },
-  watch: {
-    cardInfoList (newVal) {
-      if (newVal) {
-        this.showCardInfoList = newVal.slice().reverse()
-      }
-    }
-  },
   methods: {
+    ...mapActions('card', [
+      'getCardList',
+      'getSkillList'
+    ]),
+    ...mapActions('chara', [
+      'getBandCharaList'
+    ]),
     handleMouseOver (ref) {
       if (ref.indexOf('L') !== -1) {
         this.$refs[ref.replace(/L/, 'R')][0].className += ' hide'
@@ -218,14 +243,18 @@ export default {
         .map(elem => elem.charAt(0).toUpperCase() + elem.slice(1))
         .join(' ')
     },
-    doFilter () {
-      let ret = this.cardInfoList.slice().reverse()
+    async doFilter () {
+      let ret = this.cardList.slice()
       if (this.selectCharacters.length) {
         ret = ret.filter(elem => this.selectCharacters.indexOf(elem.characterId) !== -1)
       }
       if (this.selectSkills.length) {
-        const cardOfSkills = Object.keys(this.skillMap).filter(key => this.selectSkills.indexOf(this.skillMap[key].skillId) !== -1)
-        ret = ret.filter(elem => cardOfSkills.indexOf(elem.cardId) !== -1)
+        let tempRet = []
+        for (let skillId of this.selectSkills) {
+          const cardOfSkills = await apiDBInfo.getCardsBySkillId(skillId)
+          tempRet = tempRet.concat(ret.filter(elem => cardOfSkills.indexOf(elem.cardId) !== -1))
+        }
+        ret = tempRet
       }
       if (this.selectRarity.length) {
         ret = ret.filter(elem => this.selectRarity.indexOf(elem.rarity) !== -1)
@@ -265,11 +294,11 @@ export default {
           characters: {
             type: 'checkbox',
             model: this.selectCharacters,
-            items: Object.keys(this.characterInfos).filter(key => Number(key) <= 25).map(key => ({
+            items: Object.keys(this.bandCharaList).filter(key => Number(key) <= 25).map(key => ({
               label: this.displayName
-                ? this.capitalizeFirstLetter(toRomaji(this.characterInfos[key].ruby))
-                : this.characterInfos[key].characterName,
-              value: this.characterInfos[key].characterId
+                ? this.capitalizeFirstLetter(toRomaji(this.bandCharaList[key].ruby))
+                : this.bandCharaList[key].characterName,
+              value: this.bandCharaList[key].characterId
             }))
           },
           header2: {
@@ -279,11 +308,7 @@ export default {
           skills: {
             type: 'checkbox',
             model: this.selectSkills,
-            items: this.skillInfos.reduce((prev, curr) => {
-              if (prev.find(elem2 => elem2.skillId === curr.skillId)) return prev
-              prev.push(curr)
-              return prev
-            }, []).map(elem => ({
+            items: this.skillList.map(elem => ({
               label: elem.simpleDescription,
               value: elem.skillId
             }))
@@ -300,6 +325,19 @@ export default {
           }
         ]
       })
+    },
+    async loadMore (index, done) {
+      try {
+        await this.getCardList({ limit: 12, page: index + 1 })
+        this.doFilter()
+      }
+      catch (error) {
+        console.log('no more cards')
+        this.$refs.cardScroll.stop()
+      }
+      finally {
+        done()
+      }
     }
   }
 }
@@ -344,7 +382,8 @@ export default {
   right: 5%
   width: 50px
   height: 50px
-  background: url('~assets/MenuAtlas.png') no-repeat -1448px -211px
+  background url('/statics/icon_powerful.png') no-repeat
+  background-size cover
 
 .card-img-attr-cool
   position: absolute
@@ -352,7 +391,8 @@ export default {
   right: 5%
   width: 50px
   height: 50px
-  background: url('~assets/MenuAtlas.png') no-repeat -1448px -55px
+  background url('/statics/icon_cool.png') no-repeat
+  background-size cover
 
 .card-img-attr-happy
   position: absolute
@@ -360,7 +400,8 @@ export default {
   right: 5%
   width: 50px
   height: 50px
-  background: url('~assets/MenuAtlas.png') no-repeat -1448px -263px
+  background url('/statics/icon_happy.png') no-repeat
+  background-size cover
 
 .card-img-attr-pure
   position: absolute
@@ -368,7 +409,8 @@ export default {
   right: 5%
   width: 50px
   height: 50px
-  background: url('~assets/MenuAtlas.png') no-repeat -1448px -159px
+  background url('/statics/icon_pure.png') no-repeat
+  background-size cover
 
 .card-img-band-1
   position: absolute

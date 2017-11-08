@@ -5,10 +5,10 @@
         <h6 :class="`text-${getPalette(cardInfo.attr)}`">{{characterInfo.characterName}} - {{cardInfo.title}}</h6>
       </div>
       <div class="card-img-parent" @click="$router.push({ name: 'cardDetail', params: { cardId: cardInfo.cardId } })">
-        <img class="preview-img card-img-main" v-lazy="`/assets/characters/resourceset/${cardInfo.cardRes}_card_normal.png`">
-        <img class="card-img-frame" :src="`statics/frame_${getCardFrame()}.png`">
-        <div :class="`card-img-attr-${cardInfo.attr}`"></div>
-        <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-normal-${i}`" :key="i"></div>
+        <div class="card-img-main" v-lazy:background-image="`/assets/characters/resourceset/${cardInfo.cardRes}_card_normal.png`" />
+        <div :class="`card-img-frame-${getCardFrame()}`" />
+        <div :class="`card-img-attr-${cardInfo.attr}`" />
+        <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-normal-${i}`" :key="i" />
       </div>
       <div class="max-attr">
         <p>Max Attributes</p>
@@ -59,11 +59,11 @@
           </div>
         </div>
       </div>
-      <div class="skill">
+      <div class="skill" v-if="skillInfo">
         Skill (Level {{skillLv}})
-        <p>{{skillName}}</p>
-        <p>{{skillInfo.simpleDescription}}</p>
-        <p>{{getSkillDesc(skillInfo.description, skillEffect, judgeList, skillLv)}}</p>
+        <p>{{skillInfo.skillName}}</p>
+        <p>{{skillInfo.skillDetail[skillLv - 1].simpleDescription}}</p>
+        <p>{{getSkillDesc(skillInfo.skillDetail[skillLv - 1].description, skillInfo.skillEffect, skillInfo.judgeEffect, skillLv)}}</p>
       </div>
     </div>
     <div class="action-buttons">
@@ -79,7 +79,6 @@ import {
   QBtn,
   QIcon
 } from 'quasar'
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'cardModal',
@@ -92,12 +91,8 @@ export default {
       type: Object,
       required: true
     },
-    skillId: {
-      type: Number,
-      required: true
-    },
-    skillName: {
-      type: String,
+    skillInfo: {
+      type: Object,
       required: true
     }
   },
@@ -106,30 +101,13 @@ export default {
     QBtn,
     QIcon
   },
-  computed: {
-    ...mapGetters('DB', [
-      'skillInfos',
-      'skillMap',
-      'skillEffects',
-      'judgeLists'
-    ]),
-    skillInfo () {
-      return this.skillInfos.find(elem => Number(elem.skillId) === this.skillId)
-    },
-    skillEffect () {
-      return this.skillEffects.filter(elem => Number(elem.skillId) === this.skillId && elem.u3 === '1')
-    },
-    judgeList () {
-      return this.judgeLists.filter(elem => Number(elem.skillId) === this.skillId)
-    }
-  },
   data () {
     return {
       skillLv: 1
     }
   },
   mounted () {
-    this.skillLv = this.skillEffect.length || this.judgeList.length
+    this.skillLv = this.skillInfo.skillEffect.length || this.skillInfo.judgeEffect.length
   },
   methods: {
     getPalette (type) {
@@ -149,13 +127,13 @@ export default {
     getCardFrame () {
       switch (this.cardInfo.rarity) {
         case '4':
-          return 'ss_rainbow'
+          return 'rainbow'
         case '3':
-          return 's_gold'
+          return 'gold'
         case '2':
-          return 'r_silver'
+          return 'silver'
         default:
-          return `n_${this.cardInfo.attr}`
+          return `${this.cardInfo.attr}`
       }
     },
     getSkillDesc (skillDesc, skillEffects, judgeLists, skillLv) {
@@ -181,113 +159,195 @@ export default {
 
 <style lang="stylus" scoped>
 .card-img-parent
-  float left
+  width 402px
+  height 280px
   position relative
+  cursor pointer
 
 .card-img-main
-  max-width: 402px
-
-.card-img-frame
-  width 100%
-  height 100%
   position absolute
-  cursor pointer
+  width 390px
+  height 268px
+  background-size cover
+  background-repeat no-repeat
+  background-position center center
+  left 6px
+  top 6px
+
+.card-img-attr-powerful
+  position absolute
+  top 1.7%
+  right 1%
+  width 45px
+  height 45px
+  background url('/statics/icon_powerful.png') no-repeat
+  background-size 100% 100%
+
+.card-img-attr-cool
+  position absolute
+  top 1.7%
+  right 1%
+  width 45px
+  height 45px
+  background url('/statics/icon_cool.png') no-repeat
+  background-size 100% 100%
+
+.card-img-attr-happy
+  position absolute
+  ttop 1.7%
+  right 1%
+  width 45px
+  height 45px
+  background url('/statics/icon_happy.png') no-repeat
+  background-size 100% 100%
+
+.card-img-attr-pure
+  position absolute
+  top 1.7%
+  right 1%
+  width 45px
+  height 45px
+  background url('/statics/icon_pure.png') no-repeat
+  background-size 100% 100%
+
+.card-img-rarity-normal-1
+  position absolute
+  top 86%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_untrained.png') no-repeat
+  background-size 100% 100%
+
+.card-img-rarity-normal-2
+  position absolute
+  top 76%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_untrained.png') no-repeat
+  background-size 100% 100%
+
+.card-img-rarity-normal-3
+  position absolute
+  top 66%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_untrained.png') no-repeat
+  background-size 100% 100%
+
+.card-img-rarity-normal-4
+  position absolute
+  top 56%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_untrained.png') no-repeat
+  background-size 100% 100%
+
+.card-img-rarity-trained-1
+  position absolute
+  top 86%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_after_training.png') no-repeat
+  background-size 100% 100%
+
+.card-img-rarity-trained-2
+  position absolute
+  top 76%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_after_training.png') no-repeat
+  background-size 100% 100%
+
+.card-img-rarity-trained-3
+  position absolute
+  top 66%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_after_training.png') no-repeat
+  background-size 100% 100%
+
+.card-img-rarity-trained-4
+  position absolute
+  top 56%
+  left 1%
+  width 35px
+  height 35px
+  background url('/statics/star_after_training.png') no-repeat
+  background-size 100% 100%
+
+.card-img-frame-rainbow
+  position: absolute
+  width 402px
+  height 280px
+  background url('/statics/frame_ss_rainbow.png') no-repeat
+  background-size cover
+  background-size 100% 100%
   left 0
   top 0
 
-.card-img-attr-powerful
+.card-img-frame-gold
   position: absolute
-  top: 2%
-  left: 87%
-  width: 50px
-  height: 50px
-  background: url('~assets/MenuAtlas.png') no-repeat -1448px -211px
+  width 402px
+  height 280px
+  background url('/statics/frame_s_gold.png') no-repeat
+  background-size cover
+  background-size 100% 100%
+  left 0
+  top 0
 
-.card-img-attr-cool
+.card-img-frame-silver
   position: absolute
-  top: 2%
-  left: 87%
-  width: 50px
-  height: 50px
-  background: url('~assets/MenuAtlas.png') no-repeat -1448px -55px
+  width 402px
+  height 280px
+  background url('/statics/frame_r_silver.png') no-repeat
+  background-size 100% 100%
+  left 0
+  top 0
 
-.card-img-attr-happy
+.card-img-frame-pure
   position: absolute
-  top: 2%
-  left: 87%
-  width: 50px
-  height: 50px
-  background: url('~assets/MenuAtlas.png') no-repeat -1448px -263px
+  width 402px
+  height 280px
+  background url('/statics/frame_n_pure.png') no-repeat
+  background-size cover
+  background-size 100% 100%
+  left 0
+  top 0
 
-.card-img-attr-pure
+.card-img-frame-powerful
   position: absolute
-  top: 2%
-  left: 87%
-  width: 50px
-  height: 50px
-  background: url('~assets/MenuAtlas.png') no-repeat -1448px -159px
+  width 402px
+  height 280px
+  background url('/statics/frame_n_powerful.png') no-repeat
+  background-size cover
+  background-size 100% 100%
+  left 0
+  top 0
 
-.card-img-rarity-normal-1
+.card-img-frame-happy
   position: absolute
-  top: 86%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1308px -3px
+  width 402px
+  height 280px
+  background url('/statics/frame_n_happy.png') no-repeat
+  background-size cover
+  background-size 100% 100%
+  left 0
+  top 0
 
-.card-img-rarity-normal-2
+.card-img-frame-cool
   position: absolute
-  top: 75%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1308px -3px
-
-.card-img-rarity-normal-3
-  position: absolute
-  top: 65%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1308px -3px
-
-.card-img-rarity-normal-4
-  position: absolute
-  top: 54%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1308px -3px
-
-.card-img-rarity-after_training-1
-  position: absolute
-  top: 86%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1906px -451px
-
-.card-img-rarity-after_training-2
-  position: absolute
-  top: 75%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1906px -451px
-
-.card-img-rarity-after_training-3
-  position: absolute
-  top: 65%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1906px -451px
-
-.card-img-rarity-after_training-4
-  position: absolute
-  top: 54%
-  left: 1%
-  width: 38px
-  height: 38px
-  background: url('~assets/MenuAtlas.png') no-repeat -1906px -451px
+  width 402px
+  height 280px
+  background url('/statics/frame_n_cool.png') no-repeat
+  background-size cover
+  background-size 100% 100%
+  left 0
+  top 0
 </style>

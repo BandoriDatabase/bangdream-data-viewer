@@ -1,15 +1,13 @@
 <template>
-  <div v-if="skillMap && cardInfos && characterInfos">
+  <div v-if="isReady">
     <p>Hint: <span class="desktop-only">Click</span><span class="mobile-only">Touch</span> card image to show full screen image.</p>
-    <card :cardInfo="cardInfo" :characterInfo="characterInfo" :skillId="Number(skillMap[cardInfo.cardId].skillId)" :skillName="skillMap[cardInfo.cardId].skillName"></card>
-    <!-- <div class="comments">
-      <vue-disqus shortname="bandori-database" :identifier="`card_${$route.params.cardId}`" :title="`card_${$route.params.cardId}`"></vue-disqus>
-    </div> -->
+    <card :cardInfo="cardMap[$route.params.cardId]" :characterInfo="charaInfo"
+      :skillInfo="skillMap[$route.params.cardId]"></card>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import Card from './common/Card'
 
 export default {
@@ -17,21 +15,37 @@ export default {
   components: {
     Card
   },
+  data () {
+    return {
+      isReady: false,
+      charaInfo: null
+    }
+  },
+  mounted () {
+    this.$nextTick(async () => {
+      const card = await this.getCardById(this.$route.params.cardId)
+      await this.getSkillById(card.cardId)
+      this.charaInfo = await this.getCharaById(card.characterId)
+      this.isReady = true
+    })
+  },
   computed: {
-    ...mapGetters('DB', [
-      'cardInfos',
-      'characterInfos',
+    ...mapState('card', [
+      'cardMap',
       'skillMap'
     ]),
-    cardInfo () {
-      if (!this.cardInfos) return {}
-      // console.log(this.$route)
-      return this.cardInfos[this.$route.params.cardId]
-    },
-    characterInfo () {
-      if (!this.characterInfos || !this.cardInfo) return {}
-      return this.characterInfos[this.cardInfo.characterId]
-    }
+    ...mapState('chara', [
+      'charaMap'
+    ])
+  },
+  methods: {
+    ...mapActions('card', [
+      'getCardById',
+      'getSkillById'
+    ]),
+    ...mapActions('chara', [
+      'getCharaById'
+    ])
   }
 }
 </script>

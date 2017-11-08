@@ -5,7 +5,7 @@
         <q-icon name="menu" />
       </q-btn>
       <q-toolbar-title :padding="0">
-        Bandori {{$t('toolbar.title')}} v{{master.constants && master.constants.resVer ? master.constants.resVer : '0.0.0.0'}}
+        Bandori {{$t('toolbar.title')}} v{{resVer ? resVer : '0.0.0.0'}}
       </q-toolbar-title>
     </q-toolbar>
 
@@ -16,7 +16,7 @@
           <q-item-side icon="home" />
           <q-item-main :label="$t('left.home')" />
         </q-side-link>
-        <q-collapsible icon="picture_in_picture" :label="$t('left.card')">
+        <!-- <q-collapsible icon="picture_in_picture" :label="$t('left.card')">
           <q-side-link item to="/card/overview">
             <q-item-side icon="image" />
             <q-item-main :label="$t('left.gallery')" />
@@ -27,7 +27,11 @@
             </q-item-side>
             <q-item-main :label="$t('left.table')" />
           </q-side-link>
-        </q-collapsible>
+        </q-collapsible> -->
+        <q-side-link item to="/card/overview">
+          <q-item-side icon="image" />
+          <q-item-main :label="$t('left.card')" />
+        </q-side-link>
         <q-side-link item to="/music">
           <q-item-side icon="library_music" />
           <q-item-main :label="$t('left.music')" />
@@ -47,7 +51,7 @@
         <q-item-separator />
         <q-list-header>{{$t('left.secTitle')}}</q-list-header>
         <q-item>
-          <q-item-main :label="`Data Ver: v${master.constants && master.constants.resVer ? master.constants.resVer : '0.0.0.0'}`"></q-item-main>
+          <q-item-main :label="`Data Ver: v${resVer ? resVer : '0.0.0.0'}`"></q-item-main>
         </q-item>
         <q-item :highlight="false">
           <q-item-main label="App Ver: v0.2.2" />
@@ -66,7 +70,7 @@
         v-back-to-top.animate="{offset: 500, duration: 200}"
         round
         color="teal-5"
-        class="fixed-bottom-right"
+        class="fixed-bottom-right animate-pop"
         style="margin: 0 15px 15px 0"
       >
         <q-icon name="keyboard_arrow_up" />
@@ -133,7 +137,6 @@
 
 <script>
 import {
-  Loading,
   QLayout,
   QListHeader,
   QList,
@@ -174,47 +177,18 @@ export default {
     BackToTop
   },
   computed: {
-    ...mapState('DB', [
-      'master',
-      'getMasterDBStatus',
-      'live2d',
-      'getLive2DDBStatus'
+    ...mapState('version', [
+      'resVer'
     ])
   },
-  watch: {
-    getMasterDBStatus (newVal) {
-      if (newVal === 1) {
-        Loading.show({
-          message: 'Loading Master Database...'
-        })
-      }
-      else {
-        Loading.hide()
-      }
-    },
-    getLive2DDBStatus (newVal) {
-      if (newVal === 1) {
-        Loading.show({
-          message: 'Loading Live2D Database...'
-        })
-      }
-      else {
-        Loading.hide()
-      }
-    }
-  },
   methods: {
-    ...mapActions('DB', [
-      'getMasterDB',
-      'getLive2D'
+    ...mapActions('version', [
+      'getResourceVersion'
     ])
   },
   mounted () {
-    this.$nextTick(() => {
-      if (this.getMasterDBStatus !== 2) {
-        this.getMasterDB()
-          .then(() => this.getLive2D())
-      }
+    this.$nextTick(async () => {
+      await this.getResourceVersion()
     })
   }
 }

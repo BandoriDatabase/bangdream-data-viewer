@@ -8,10 +8,8 @@ var
   ExtractTextPlugin = require('extract-text-webpack-plugin'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin'),
-  UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-  // PrerenderSpaPlugin = require('prerender-spa-plugin'),
-  // PrerendererWebpackPlugin = require('prerenderer-webpack-plugin'),
-  // BrowserRenderer = PrerendererWebpackPlugin.BrowserRenderer // or JSDOMRenderer, or ChromeRenderer
+  UglifyJSPlugin = require('uglifyjs-webpack-plugin'),
+  workboxPlugin = require('workbox-webpack-plugin')
 
 module.exports = merge(baseWebpackConfig, {
   module: {
@@ -83,20 +81,13 @@ module.exports = merge(baseWebpackConfig, {
       name: 'manifest',
       chunks: ['vendor']
     }),
-    // new PrerenderSpaPlugin(
-    //   path.join(__dirname, '../dist'),
-    //   ['/'],
-    //   {
-    //     captureAfterElementExists: '#q-app',
-    //     ignoreJSErrors: true,
-    //   }
-    // ),
-    // new PrerendererWebpackPlugin({
-    //   staticDir: path.join(__dirname, '../dist'),
-    //   routes: [ '/' ],
-    //   renderer: new BrowserRenderer({
-    //     renderAfterElementExists: 'div.layout'
-    //   })
-    // })
+    // create service worker using workbox by Google
+    new workboxPlugin({
+      globDirectory: path.resolve(__dirname, '../dist'),
+      globPatterns: ['**/*.{html,js,css,png,gif}'],
+      swDest: path.join(path.resolve(__dirname, '../dist'), 'sw.js'),
+      clientsClaim: true,
+      skipWaiting: true,
+    })
   ]
 })

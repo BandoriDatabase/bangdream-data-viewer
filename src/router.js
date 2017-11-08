@@ -25,22 +25,11 @@ export default new VueRouter({
       component: load('Index'),
       children: [
         { path: '/', component: load('Home') },
-        { path: '/card',
-          redirect: '/card/overview',
-          component: load('Cards'), // Cards viewer
-          children: [
-            { name: 'cardDetail', path: '/card/:cardId(\\d+)', component: load('CardDetail') },
-            { name: 'cardTable', path: '/card/table', component: load('cards/CardTable') },
-            { name: 'cardOverview', path: '/card/overview', component: load('cards/CardOverview') }
-          ]
-        },
+        { name: 'cardOverview', path: '/card/overview', component: load('cards/CardOverview') },
+        { name: 'cardDetail', path: '/card/:cardId(\\d+)', component: load('CardDetail') },
         { path: '/sfcs', component: load('SingleFrameCartoon') },
-        { path: '/music',
-          component: load('Musics'),
-          children: [
-            { name: 'musicDetail', path: '/music/:musicId', component: load('MusicDetail') }
-          ]
-        },
+        { path: '/music', component: load('Musics') },
+        { name: 'musicDetail', path: '/music/:musicId', component: load('MusicDetail') },
         { path: '/currevent', component: load('EventInfo') },
         // { path: '/live2d', component: load('Live2D') },
         { path: '/about', component: load('About') }
