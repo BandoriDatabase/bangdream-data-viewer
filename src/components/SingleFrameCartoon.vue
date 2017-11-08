@@ -1,11 +1,11 @@
 <template>
   <div>
     <p>{{$t('hint[0]')}} <span class="desktop-only">{{$t('hint[1]')}}</span><span class="mobile-only">{{$t('hint[2]')}}</span>{{$t('hint[3]')}}</p>
-    <div class="row sm-column md-column">
-      <div class="col-lg-4 col-xl-3 col-md-6 col-12" v-for="(singleFrame, idx) in gallery" :key="idx">
+    <div class="row sm-column md-column" v-if="isReady">
+      <div class="col-lg-4 col-xl-3 col-md-6 col-12" v-for="(singleFrame, idx) in sfcList" :key="idx">
         <q-card>
           <q-card-media>
-            <img v-lazy="singleFrame.assetAddress" class="responsive preview-img"
+            <img v-lazy="singleFrame.assetAddress" class="single-frame-img preview-img"
               @click="$preview.open(idx, previewGallery, {
                 fullscreenEl: true,
                 zoomEl: true,
@@ -19,6 +19,7 @@
         </q-card>
       </div>
     </div>
+    <q-spinner v-else color="pink" size="48px"></q-spinner>
   </div>
 </template>
 
@@ -55,40 +56,48 @@
 import {
   QCard,
   QCardTitle,
-  QCardMedia
+  QCardMedia,
+  QSpinner
 } from 'quasar'
-import { mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
     QCard,
     QCardTitle,
-    QCardMedia
+    QCardMedia,
+    QSpinner
   },
-  computed: {
-    ...mapGetters('DB', [
-      'singleFrameCartoons'
-    ]),
-    gallery () {
-      if (!this.singleFrameCartoons) return []
-      return this.singleFrameCartoons.map(elem => {
-        elem.assetAddress = `/assets/loading/downloading_${elem.assetBundleName}.png`
-        return elem
-      })
-    },
-    previewGallery () {
-      // for photoswipe
-      if (!this.singleFrameCartoons) return []
-      return this.singleFrameCartoons.map(elem => ({
-        src: `/assets/loading/downloading_${elem.assetBundleName}.png`,
+  data () {
+    return {
+      isReady: false,
+      previewGallery: []
+    }
+  },
+  mounted () {
+    this.$nextTick(async () => {
+      await this.getSFCList()
+      this.previewGallery = this.sfcList.map(elem => ({
+        src: elem.assetAddress,
         title: elem.title,
         w: 800,
         h: 640
       }))
-    }
+      this.isReady = true
+    })
+  },
+  computed: {
+    ...mapState('sfc', [
+      'sfcList'
+    ])
+  },
+  methods: {
+    ...mapActions('sfc', [
+      'getSFCList'
+    ])
   }
 }
 </script>
 
-<style>
+<style lang="stylus" scoped>
 </style>

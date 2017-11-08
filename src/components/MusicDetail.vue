@@ -1,9 +1,9 @@
 <template>
-  <music :data="currMusic" :diffi="currDiffi"></music>
+  <music v-if="isReady" :data="musicMap[$route.params.musicId]"></music>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import Music from './common/Music'
 
 export default {
@@ -11,19 +11,27 @@ export default {
   components: {
     Music
   },
-  computed: {
-    ...mapGetters('DB', [
-      'musicList',
-      'musicDifficultyList'
-    ]),
-    currMusic () {
-      if (!this.musicList) return {}
-      return this.musicList.find(music => music.id === this.$route.params.musicId)
-    },
-    currDiffi () {
-      if (!this.musicDifficultyList) return {}
-      return this.musicDifficultyList.find(music => music.musicId === this.$route.params.musicId)
+  data () {
+    return {
+      isReady: false,
+      currDiffi: {}
     }
+  },
+  mounted () {
+    this.$nextTick(async () => {
+      await this.getMusicById(this.$route.params.musicId)
+      this.isReady = true
+    })
+  },
+  computed: {
+    ...mapState('music', [
+      'musicMap'
+    ])
+  },
+  methods: {
+    ...mapActions('music', [
+      'getMusicById'
+    ])
   }
 }
 </script>

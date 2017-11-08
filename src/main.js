@@ -7,7 +7,7 @@ require(`quasar/dist/quasar.${__THEME}.css`)
 // ==============================
 
 import Vue from 'vue'
-import Quasar from 'quasar'
+import Quasar, { LocalStorage } from 'quasar'
 import VueResource from 'vue-resource'
 import VueLazyload from 'vue-lazyload'
 import VuePreview from 'vue-preview'
@@ -34,8 +34,13 @@ if (process.env.NODE_ENV === 'production') {
 }
 Vue.use(VueI18n)
 
+let locale = LocalStorage.get.item('useLocale')
+if (!locale) {
+  locale = window.navigator.userLanguage || window.navigator.language
+  LocalStorage.set('useLocale', locale)
+}
 const i18n = new VueI18n({
-  locale: window.navigator.userLanguage || window.navigator.language,
+  locale,
   // locale: 'en',
   // locale: 'zh-TW',
   fallbackLocale: 'en'

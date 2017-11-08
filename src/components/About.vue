@@ -32,12 +32,12 @@
     "paras": [{
       "title": "Development",
       "contents": [
-        "Bandori Database is a open source project (without game data), you can visit our <a href='https://github.com/tangpei506/bangdream-data-viewer'>repo</a>, open a issue or create your pull request. Your collaboration is highly appreciated!"
+        "Bandori Database is a open source project (without game data), you can visit our <a href='https://github.com/BandoriDatabase/bangdream-data-viewer'>repo</a>, open a issue or create your pull request. Your collaboration is highly appreciated!"
       ]
     }, {
       "title": "Translation",
       "contents": [
-        "Any translation for new language and any translation improvement are welcomed. You can send your translation through <a href=''>email</a> (currently unavaliable) or open a issue on the <a href='https://github.com/tangpei506/bangdream-data-viewer'>repo</a>."
+        "Any translation for new language and any translation improvement are welcomed. You can send your translation through <a href=''>email</a> (currently unavaliable) or open a issue on the <a href='https://github.com/BandoriDatabase/bangdream-data-viewer'>repo</a>."
       ]
     }, {
       "title": "Donation",
@@ -53,12 +53,12 @@
     "paras": [{
       "title": "开发",
       "contents": [
-        "Bandori 数据库是一个开源项目(不包括游戏数据)，您可以访问我们的<a href='https://github.com/tangpei506/bangdream-data-viewer'>代码仓库</a>，提出一个Issue或者提交一个Pull request。您的贡献是对我们最大的帮助！"
+        "Bandori 数据库是一个开源项目(不包括游戏数据)，您可以访问我们的<a href='https://github.com/BandoriDatabase/bangdream-data-viewer'>代码仓库</a>，提出一个Issue或者提交一个Pull request。您的贡献是对我们最大的帮助！"
       ]
     }, {
       "title": "翻译",
       "contents": [
-        "我们欢迎任何新语言的翻译或者对于现有翻译的改进，您可以把您的翻译发送到<a href=''>Email</a>（还没做好）或者在<a href='https://github.com/tangpei506/bangdream-data-viewer'>代码仓库</a>里开一个Issue。"
+        "我们欢迎任何新语言的翻译或者对于现有翻译的改进，您可以把您的翻译发送到<a href=''>Email</a>（还没做好）或者在<a href='https://github.com/BandoriDatabase/bangdream-data-viewer'>代码仓库</a>里开一个Issue。"
       ]
     }, {
       "title": "捐赠",
@@ -74,12 +74,12 @@
     "paras": [{
       "title": "開發",
       "contents": [
-        "Bandori 數據庫是一個開源項目(不包括遊戲數據)，您可以訪問我們的<a href='https://github.com/tangpei506/bangdream-data-viewer'>代碼倉庫</a>，提出一個Issue或者提交一個Pull request。您的貢獻是對我們最大的幫助！"
+        "Bandori 數據庫是一個開源項目(不包括遊戲數據)，您可以訪問我們的<a href='https://github.com/BandoriDatabase/bangdream-data-viewer'>代碼倉庫</a>，提出一個Issue或者提交一個Pull request。您的貢獻是對我們最大的幫助！"
       ]
     }, {
       "title": "翻譯",
       "contents": [
-        "我們歡迎任何新語言的翻譯或者對於現有翻譯的改進，您可以把您的翻譯發送到<a href=''>Email</a>（還沒做好）或者在<a href='https ://github.com/tangpei506/bangdream-data-viewer'>代碼倉庫</a>裡開一個Issue。"
+        "我們歡迎任何新語言的翻譯或者對於現有翻譯的改進，您可以把您的翻譯發送到<a href=''>Email</a>（還沒做好）或者在<a href='https ://github.com/BandoriDatabase/bangdream-data-viewer'>代碼倉庫</a>裡開一個Issue。"
       ]
     }, {
       "title": "捐贈",

@@ -46,13 +46,20 @@ module.exports = {
     // Also see /build/script.dev.js and search for "proxy api requests"
     // https://github.com/chimurai/http-proxy-middleware
     proxyTable: {
-      '/static/': {
-        target: 'http://127.0.0.1:8080/',
+      // '/static/': {
+      //   target: 'http://127.0.0.1:8080/',
+      //   changeOrigin: true,
+      // },
+      '/assets': {
+        target: 'https://res.bangdream.ga',
         changeOrigin: true,
       },
-      '/assets/': {
-        target: 'https://bangdream.ga/',
+      '/api': {
+        target: 'https://api.bangdream.ga',
         changeOrigin: true,
+        pathRewrite: {
+          '^/api/v1': '/v1'
+        }
       }
     }
   }

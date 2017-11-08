@@ -1,11 +1,30 @@
 <template>
   <div>
-    <router-view></router-view>
-    <section v-if="$route.params.musicId === undefined && musicList">
+    <section v-if="$route.params.musicId === undefined">
       <div class="block">
         <p>{{$t('hint[0]')}}<span class="desktop-only">{{$t('hint[1]')}}</span><span class="mobile-only">{{$t('hint[2]')}}</span>{{$t('hint[3]')}}</p>
       </div>
-      <q-data-table v-if="musicList"
+      <q-infinite-scroll ref="musicScroll" v-if="isReady" :handler="loadMore">
+        <div class="row">
+          <div v-for="music in musicList" :key="music.cardId" class="col-6 col-xl-3 col-lg-4 full-height">
+            <q-card style="height: 500px; cursor: pointer;" @click="$router.push({ name: 'musicDetail', params: { musicId: music.id } })">
+              <q-card-media class="full-height" style="position: relative;">
+                <span :class="`music-img-band-${music.bandId}`"></span>
+                <div v-lazy:background-image="music.jacket" class="full-height one-img-full" />
+                <q-card-title slot="overlay">
+                  {{music.title}}
+                </q-card-title>
+              </q-card-media>
+            </q-card>
+          </div>
+        </div>
+        
+        <div slot="message" class="row justify-center items-center" style="margin-bottom: 50px;">
+          <q-spinner color="pink" size="48px"></q-spinner>
+          Loading more musics...
+        </div>
+      </q-infinite-scroll>
+      <!-- <q-data-table v-if="musicList"
         :data="musicList"
         :config="musicTableConfig"
         :columns="musicColumns">
@@ -26,7 +45,7 @@
           {{getDifficulty(cell.row.id)[2].level}} /
           {{getDifficulty(cell.row.id)[1].level}}
         </template>
-      </q-data-table>
+      </q-data-table> -->
     </section>
   </div>
 </template>
@@ -97,9 +116,15 @@
 <script>
 import {
   Platform,
-  QDataTable
+  // QDataTable,
+  QInfiniteScroll,
+  QSpinner,
+  QCard,
+  QCardTitle,
+  QCardMedia,
+  QCardMain
 } from 'quasar'
-import { mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'musicList',
@@ -158,31 +183,105 @@ export default {
         label: this.$t('table.diffi'),
         field: 'diff',
         width: '10px'
-      }]
+      }],
+      isReady: false
     }
   },
   components: {
-    QDataTable
+    // QDataTable,
+    QInfiniteScroll,
+    QSpinner,
+    QCard,
+    QCardTitle,
+    QCardMedia,
+    QCardMain
+  },
+  mounted () {
+    this.$nextTick(async () => {
+      await this.getMusicList({ limit: 12, page: 1 })
+      // this.doFilter()
+      this.isReady = true
+    })
   },
   computed: {
-    ...mapGetters('DB', [
-      'musicList',
-      'bandMap',
-      'musicDifficultyList'
+    ...mapState('music', [
+      'musicList'
     ])
   },
   methods: {
-    getDifficulty (musicId) {
-      return this.musicDifficultyList.filter(elem => elem.musicId === musicId)
+    ...mapActions('music', [
+      'getMusicList'
+    ]),
+    async loadMore (index, done) {
+      try {
+        await this.getMusicList({ limit: 12, page: index + 1 })
+        // this.doFilter()
+      }
+      catch (error) {
+        console.log('no more musics')
+        this.$refs.musicScroll.stop()
+      }
+      finally {
+        done()
+      }
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-.thumb-table
-  width 64px
-  height 64px
-  cursor pointer
+.one-img-full
+  background-size: auto 100%
+  background-repeat: no-repeat
+  background-position: center
+
+.music-img-band-1
+  position: absolute
+  top: 3%
+  left: 5%
+  width 90px
+  height 40px
+  background: url('/statics/band_logo_1.png') no-repeat
   background-size cover
+  background-position center
+
+.music-img-band-2
+  position: absolute
+  top: 3%
+  left: 5%
+  width 90px
+  height 60px
+  background: url('/statics/band_logo_2.png') no-repeat
+  background-size cover
+  background-position center
+
+.music-img-band-3
+  position: absolute
+  top: 3%
+  left: 5%
+  width 90px
+  height 90px
+  background: url('/statics/band_logo_3.png') no-repeat
+  background-size cover
+  background-position center
+
+.music-img-band-4
+  position: absolute
+  top: 3%
+  left: 5%
+  width 90px
+  height 80px
+  background: url('/statics/band_logo_4.png') no-repeat
+  background-size cover
+  background-position center
+
+.music-img-band-5
+  position: absolute
+  top: 3%
+  left: 5%
+  width 90px
+  height 70px
+  background: url('/statics/band_logo_5.png') no-repeat
+  background-size cover
+  background-position center
 </style>
