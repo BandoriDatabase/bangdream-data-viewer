@@ -54,7 +54,7 @@
           <q-item-main :label="`Data Ver: v${resVer ? resVer : '0.0.0.0'}`"></q-item-main>
         </q-item>
         <q-item :highlight="false">
-          <q-item-main label="App Ver: v0.2.2" />
+          <q-item-main label="App Ver: v0.3.0" />
         </q-item>
       </q-list>
     </div>

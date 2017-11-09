@@ -90,8 +90,16 @@ module.exports = merge(baseWebpackConfig, {
       skipWaiting: true,
       runtimeCaching: [
         {
+          urlPattern: new RegExp('/api'),
+          handler: 'staleWhileRevalidate'
+        },
+        {
           urlPattern: new RegExp('https://api.bangdream.ga'),
-          handler: 'networkFirst'
+          handler: 'staleWhileRevalidate'
+        },
+        {
+          urlPattern: new RegExp('/assets'),
+          handler: 'cacheFirst'
         },
         {
           urlPattern: new RegExp('https://res.bangdream.ga/assets'),

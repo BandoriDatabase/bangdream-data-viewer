@@ -27,30 +27,15 @@
               <count-down :target-time="Number(currentEvent.endAt)" v-if="Number(currentEvent.endAt) > Date.now()"></count-down>
               <count-down :target-time="Number(currentEvent.distributionEndAt)" v-if="Number(currentEvent.distributionStartAt) < Date.now()"></count-down>
               <p>{{$t('event-reward-card')}}</p>
-              <div class="card-small"
-                @click="$refs.cMnormal.open()">
-                <span class="row justify-center items-center">
-                  <card-thumb :cardId="Number(eventNormalCard.cardId)"></card-thumb>
-                  {{charaMap[eventNormalCard.characterId].characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
-                </span>
+              <div class="row sm-column">
+                <div class="col-lg-6"><card-thumb :cardId="Number(eventNormalCardId)"></card-thumb></div>
+                <div class="col-lg-6"><card-thumb :cardId="Number(eventSpecialCardId)"></card-thumb></div>
               </div>
-              <card-modal ref="cMnormal" :cardInfo="eventNormalCard"
-                :characterInfo="charaMap[eventNormalCard.characterId]"
-                :skillInfo="skillMap[eventNormalCard.cardId]"></card-modal>
-              <div class="card-small"
-                @click="$refs.cMspecial.open()">
-                <span class="row justify-center items-center">
-                  <card-thumb :cardId="Number(eventSpecialCard.cardId)"></card-thumb>
-                  {{charaMap[eventSpecialCard.characterId].characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
-                </span>
-              </div>
-              <card-modal ref="cMspecial" :cardInfo="eventSpecialCard"
-                :characterInfo="charaMap[eventSpecialCard.characterId]"
-                :skillInfo="skillMap[eventSpecialCard.cardId]"></card-modal>
               <p>{{$t('event-reward-stamp')}}</p>
               <img v-if="eventRewardStamp" v-lazy="`/assets/stamp/01_${eventRewardStamp.imageName}_icon.png`"></img>
-              <!-- <p>{{$t('event-bonus-card')}}</p>
-              <img class="responsive" style="max-width: 100%;" v-lazy="`/assets/event/${currentEvent.assetBundleName}/images_event_point_banner.png`"> -->
+              <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
+              <p>{{$t('event-bonus-attr-card')}}</p>
+              <img class="responsive" style="max-width: 100%;" v-lazy="`/assets/event/${currentEvent.assetBundleName}/images_event_point_banner.png`">
             </div>
           </q-card-main>
         </q-card>
@@ -100,10 +85,7 @@
             <q-list :highlight="false">
               <q-list-header>{{$t('info-update')}}</q-list-header>
               <q-item>
-                <span v-html="$t('update[0]')"></span>
-              </q-item>
-              <q-item>
-                <span v-html="$t('update[1]')"></span>
+                <span v-html="$t('update')"></span>
               </q-item>
               <q-item-separator />
               <q-list-header>{{$t('info-links')}}</q-list-header>
@@ -192,24 +174,6 @@
           <!-- </q-card-main> -->
         </q-card>
       </div>
-      
-      <!-- <div class="row sm-column md-column gutter"> -->
-        <!-- <div class="col-lg-4 col-xl-4 col-12" v-for="gacha in currentGachaList" :key="gacha.gachaId">
-          <q-card>
-            <q-card-media>
-              <div class="gacha-cover" v-lazy:background-image="`/assets/gacha/screen/${gacha.resourceName}_logo.png`" />
-              <q-card-title slot="overlay">
-                {{gacha.gachaName}}
-              </q-card-title>
-            </q-card-media>
-            <div class="gacha-img" v-lazy:background-image="`/assets/gacha/screen/${gacha.resourceName}_pickup${gacha.gachaId === '121' ? '1' : ''}.png`" />
-            <div class="card-content column items-center" style="margin: 15px 0">
-              <p>{{$t('gacha-end-cd')}}</p>
-              <count-down :target-time="Number(gacha.closedAt)" small></count-down>
-            </div>
-          </q-card>
-        </div> -->
-      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -229,12 +193,10 @@
     "info-list": "Infos and links",
     "info-update": "Recent update",
     "info-links": "External links",
-    "update": [
-      "Band icons are added to all pages relevant to card",
-      "Add gacha detail modal"
-    ],
+    "update": "All news now on <a href='https://dnaroma.site' target='_blank'>my blog</a>",
     "fetch-event-data": "Fetching Event Data...",
-    "fetch-gacha-data": "Fetching Gacha Data..."
+    "fetch-gacha-data": "Fetching Gacha Data...",
+    "event-bonus-attr-card": "Bonus attribute and cards"
   },
   "zh-CN": {
     "title": ["欢迎访问", "数据库!"],
@@ -249,12 +211,10 @@
     "info-list": "公告及友链",
     "info-update": "最近更新",
     "info-links": "友情链接",
-    "update": [
-      "为所有卡面页面增加了乐队标识",
-      "增加里卡片详情弹窗"
-    ],
+    "update": "更新资讯均在<a href='https://dnaroma.site' target='_blank'>我的博客</a>",
     "fetch-event-data": "获取活动数据中",
-    "fetch-gacha-data": "获取扭蛋池数据中"
+    "fetch-gacha-data": "获取扭蛋池数据中",
+    "event-bonus-attr-card": "加成属性和卡牌"
   },
   "zh-TW": {
     "title": ["歡迎訪問", "數據庫!"],
@@ -269,12 +229,10 @@
     "info-list": "公告及友鏈",
     "info-update": "最近更新",
     "info-links": "友情鏈接",
-    "update": [
-      "為所有卡面頁面增加了樂隊標識",
-      "增加裏卡片詳情彈窗"
-    ],
+    "update": "更新資訊均在<a href='https://dnaroma.site' target='_blank'>我的博客</a>",
     "fetch-event-data": "獲取活動數據中",
-    "fetch-gacha-data": "獲取扭蛋池數據中"
+    "fetch-gacha-data": "獲取扭蛋池數據中",
+    "event-bonus-attr-card": "加成屬性和加成卡牌"
   }
 }
 </i18n>
@@ -291,7 +249,8 @@ import {
   QListHeader,
   QItem,
   QItemSeparator,
-  QSpinner
+  QSpinner,
+  QSpinnerFacebook
 } from 'quasar'
 import { mapState, mapActions } from 'vuex'
 import cardThumb from './common/CardThumb'
@@ -311,8 +270,8 @@ export default {
       // latestCardid: 0
       log: console.log,
       isEventReady: false,
-      eventNormalCard: null,
-      eventSpecialCard: null,
+      eventNormalCardId: null,
+      eventSpecialCardId: null,
       eventRewardStamp: null,
       isGcahaReady: false
     }
@@ -336,7 +295,8 @@ export default {
     twitterIcon,
     gachaModal,
     QSpinner,
-    cardThumb
+    cardThumb,
+    QSpinnerFacebook
   },
   beforeDestroy () {
     let aplayer = this.$refs.player.control
@@ -346,14 +306,13 @@ export default {
     this.$nextTick(async () => {
       await this.getCurrentEvent()
       const eventCards = this.currentEvent.pointRewards.filter(elem => elem.rewardType === 'situation')
-      this.eventNormalCard = await this.getCardById(eventCards[0].rewardId)
-      this.eventSpecialCard = await this.getCardById(eventCards[1].rewardId)
-      await this.getSkillById(this.eventNormalCard.cardId)
-      await this.getSkillById(this.eventSpecialCard.cardId)
-      await this.getCharaById(this.eventNormalCard.characterId)
-      await this.getCharaById(this.eventSpecialCard.characterId)
-      this.eventRewardStamp = await this.getStampById(this.currentEvent.pointRewards.find(reward => reward.rewardType === 'stamp').rewardId)
+      this.eventNormalCardId = eventCards[0].rewardId
+      this.eventSpecialCardId = eventCards[1].rewardId
       this.isEventReady = true
+      this.getStampById(this.currentEvent.pointRewards.find(reward => reward.rewardType === 'stamp').rewardId)
+        .then(res => {
+          this.eventRewardStamp = res
+        })
     })
     this.$nextTick(async () => {
       await this.getGachaCurrent()

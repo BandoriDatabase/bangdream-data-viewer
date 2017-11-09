@@ -1,17 +1,20 @@
 <template>
-  <div class="shadow-1 shadow-transition hoverable-3 card-img-parent" v-if="readyToShow" @click="$router.push({ name: 'cardDetail', params: { cardId: cardMap[cardId].cardId } })">
+  <div class="card-img-parent" v-if="isReady" @click="$router.push({ name: 'cardDetail', params: { cardId: cardMap[cardId].cardId } })">
     <div class="thumb-table" v-lazy:background-image="`/assets/thumb/chara/card0000${Math.trunc(Number(cardMap[cardId].cardId) / 50)}_${cardMap[cardId].cardRes}_normal.png`"></div>
     <div :class="`thumb-frame-${getThumbFrame(Number(cardMap[cardId].rarity), cardMap[cardId].attr)}`"></div>
     <div :class="`thumb-attr-${cardMap[cardId].attr}`"></div>
   </div>
-  <div v-else>
-    <q-spinner color="pink" size="48px"></q-spinner>
+  <div class="card-img-parent" v-else>
+    <q-inner-loading :visible="!isReady">
+      <q-spinner-facebook color="pink" size="48px"></q-spinner-facebook>
+    </q-inner-loading>
   </div>
 </template>
 
 <script>
 import {
-  QSpinner
+  QSpinnerFacebook,
+  QInnerLoading
 } from 'quasar'
 import { mapState, mapActions } from 'vuex'
 
@@ -24,11 +27,12 @@ export default {
   },
   data () {
     return {
-      readyToShow: false
+      isReady: false
     }
   },
   components: {
-    QSpinner
+    QSpinnerFacebook,
+    QInnerLoading
   },
   computed: {
     ...mapState('card', [
@@ -38,7 +42,7 @@ export default {
   mounted () {
     this.$nextTick(async () => {
       await this.getCardById(this.cardId)
-      this.readyToShow = true
+      this.isReady = true
     })
   },
   methods: {
