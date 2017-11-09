@@ -1,15 +1,22 @@
 <template>
-  <music v-if="isReady" :data="musicMap[$route.params.musicId]"></music>
+  <div>
+    <music v-if="isReady" :data="musicMap[$route.params.musicId]"></music>
+    <q-spinner v-else color="pink" size="48px"></q-spinner>
+  </div>
 </template>
 
 <script>
+import {
+  QSpinner
+} from 'quasar'
 import { mapState, mapActions } from 'vuex'
 import Music from './common/Music'
 
 export default {
   name: 'musicDetailComponent',
   components: {
-    Music
+    Music,
+    QSpinner
   },
   data () {
     return {

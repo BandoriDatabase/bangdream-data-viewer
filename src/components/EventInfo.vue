@@ -10,7 +10,7 @@
           <span slot="subtitle" class="text-white">{{$t('event-type')}} {{currentEvent.eventType}}</span>
         </q-card-title>
       </q-card-media>
-      <q-card-main style="text-align: center">
+      <q-card-main class="column items-center">
         <img class="responsive" v-lazy="`/assets/homebanner_banner_event${currentEvent.eventId}.png`"/>
         <div><a-player :music="eventMusic" ref="player" mode="single"></a-player></div>
         <p v-if="Number(currentEvent.endAt) > Date.now()">{{$t('event-end-cd')}}</p>
@@ -20,7 +20,7 @@
         <p v-if="Number(currentEvent.distributionStartAt) < Date.now() && Number(currentEvent.publicEndAt) > Date.now()">{{$t('next-event-cd')}}</p>
         <count-down :target-time="Number(currentEvent.publicEndAt)" v-if="Number(currentEvent.distributionStartAt) < Date.now() && Number(currentEvent.publicEndAt) > Date.now()"></count-down>
         <p>{{$t('event-reward-card')}}</p>
-        <div class="card-small"
+        <!-- <div class="card-small"
           @click="$refs.cMnormal.open()">
           <span class="row justify-center items-center">
             <card-thumb :cardId="Number(eventNormalCard.cardId)"></card-thumb>
@@ -39,18 +39,25 @@
         </div>
         <card-modal ref="cMspecial" :cardInfo="eventSpecialCard"
           :characterInfo="charaMap[eventSpecialCard.characterId]"
-          :skillInfo="skillMap[eventSpecialCard.cardId]"></card-modal>
+          :skillInfo="skillMap[eventSpecialCard.cardId]"></card-modal> -->
+        <div class="row sm-column">
+          <div class="col-lg-6"><card-thumb :cardId="Number(eventNormalCardId)"></card-thumb></div>
+          <div class="col-lg-6"><card-thumb :cardId="Number(eventSpecialCardId)"></card-thumb></div>
+        </div>
         <p>{{$t('event-reward-stamp')}}</p>
         <img v-if="eventRewardStamp" v-lazy="`/assets/stamp/01_${eventRewardStamp.imageName}.png`"></img>
+        <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         <p>{{$t('event-bonus-attr-card')}}</p>
         <img class="responsive" style="max-width: 100%;" v-lazy="`/assets/event/${currentEvent.assetBundleName}/images_event_point_banner.png`">
         <p>{{$t('event-badge')}}</p>
-        <img class="badge" v-lazy="`/assets/thumb/common_${eventBadgeMap[currentEvent.eventId].badgeAssetBundleName}.png`">
+        <img v-if="isBadgeReady" class="badge" v-lazy="`/assets/thumb/common_${eventBadgeMap[currentEvent.eventId].badgeAssetBundleName}.png`">
+        <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         <p>{{$t('event-degrees')}}</p>
-        <img class="event-degree" :style="{ 'background-image': `url(/assets/thumb/degree_event_point_icon_1.png), url(/assets/thumb/degree_event_point_1.png), url(/assets/thumb/degree_${degreeMap[currentEvent.rankingRewards[0].rewardId].imageName}.png)` }">
+        <div v-if="isDegreeReady" class="event-degree" :style="{ 'background-image': `url(/assets/thumb/degree_event_point_icon_1.png), url(/assets/thumb/degree_event_point_1.png), url(/assets/thumb/degree_${degreeMap[currentEvent.rankingRewards[0].rewardId].imageName}.png)` }" />
+        <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         <span v-if="currentEvent.eventType === 'challenge'">
-          <img class="event-degree" v-for="eventMusic in currentEvent.detail.eventMusic" :key="eventMusic.seq"
-          :style="{ 'background-image': `url(/assets/thumb/degree_opening_1_1.png), url(/assets/thumb/degree_score_ranking_1.png), url(/assets/thumb/degree_${degreeMap[eventMusic.musicRankingRewards[0].rewardId].imageName}.png)` }">
+          <div class="event-degree" v-for="eventMusic in currentEvent.detail.eventMusic" :key="eventMusic.seq"
+          :style="{ 'background-image': `url(/assets/thumb/degree_opening_1_1.png), url(/assets/thumb/degree_score_ranking_1.png), url(/assets/thumb/degree_${degreeMap[eventMusic.musicRankingRewards[0].rewardId].imageName}.png)` }" />
         </span>
         <span v-if="currentEvent.eventType === 'challenge'">
           <p>{{$t('event-musics')}}</p>
@@ -130,7 +137,8 @@ import {
   QListHeader,
   QItem,
   QItemSeparator,
-  QSpinner
+  QSpinner,
+  QSpinnerFacebook
 } from 'quasar'
 import { mapState, mapActions } from 'vuex'
 import VueAplayer from 'vue-aplayer'
@@ -155,30 +163,39 @@ export default {
     QItem,
     QItemSeparator,
     QSpinner,
-    cardThumb
+    cardThumb,
+    QSpinnerFacebook
   },
   data () {
     return {
       isEventReady: false,
-      eventNormalCard: null,
-      eventSpecialCard: null,
-      eventRewardStamp: null
+      eventNormalCardId: null,
+      eventSpecialCardId: null,
+      eventRewardStamp: null,
+      // isStampReady: false,
+      isBadgeReady: false,
+      isDegreeReady: false
     }
   },
   mounted () {
     this.$nextTick(async () => {
       await this.getCurrentEvent()
       const eventCards = this.currentEvent.pointRewards.filter(elem => elem.rewardType === 'situation')
-      this.eventNormalCard = await this.getCardById(eventCards[0].rewardId)
-      this.eventSpecialCard = await this.getCardById(eventCards[1].rewardId)
-      await this.getSkillById(this.eventNormalCard.cardId)
-      await this.getSkillById(this.eventSpecialCard.cardId)
-      await this.getCharaById(this.eventNormalCard.characterId)
-      await this.getCharaById(this.eventSpecialCard.characterId)
-      this.eventRewardStamp = await this.getStampById(this.currentEvent.pointRewards.find(reward => reward.rewardType === 'stamp').rewardId)
-      await this.getEventBadgeById(this.currentEvent.eventId)
-      await this.getDegreeById(this.currentEvent.rankingRewards[0].rewardId)
+      this.eventNormalCardId = eventCards[0].rewardId
+      this.eventSpecialCardId = eventCards[1].rewardId
       this.isEventReady = true
+      this.getStampById(this.currentEvent.pointRewards.find(reward => reward.rewardType === 'stamp').rewardId)
+        .then(res => {
+          this.eventRewardStamp = res
+        })
+      this.getEventBadgeById(this.currentEvent.eventId)
+        .then(res => {
+          this.isBadgeReady = true
+        })
+      this.getDegreeById(this.currentEvent.rankingRewards[0].rewardId)
+        .then(res => {
+          this.isDegreeReady = true
+        })
     })
   },
   computed: {

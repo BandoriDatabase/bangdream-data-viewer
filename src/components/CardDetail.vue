@@ -1,19 +1,52 @@
 <template>
-  <div v-if="isReady">
+  <div>
     <p>Hint: <span class="desktop-only">Click</span><span class="mobile-only">Touch</span> card image to show full screen image.</p>
-    <card :cardInfo="cardMap[$route.params.cardId]" :characterInfo="charaInfo"
+    <card v-if="isReady" :cardInfo="cardMap[$route.params.cardId]" :characterInfo="charaInfo"
       :skillInfo="skillMap[$route.params.cardId]"></card>
+    <q-card v-else>
+      <q-card-title class="bg-pink text-white">
+        {{$t('fetch-card-data')}}
+        <!-- <span slot="subtitle" class="text-white">{{$t('fetch-card-data')}}</span> -->
+      </q-card-title>
+      <q-card-main>
+        <q-spinner color="pink" size="48px"></q-spinner>
+      </q-card-main>
+    </q-card>
   </div>
 </template>
 
+<i18n>
+{
+  "en": {
+    "fetch-card-data": "Fetching Card Data..."
+  },
+  "zh-CN": {
+    "fetch-card-data": "获取卡牌数据中"
+  },
+  "zh-TW": {
+    "fetch-card-data": "獲取卡牌數據中"
+  }
+}
+</i18n>
+
 <script>
+import {
+  QCard,
+  QCardTitle,
+  QCardMain,
+  QSpinner
+} from 'quasar'
 import { mapState, mapActions } from 'vuex'
 import Card from './common/Card'
 
 export default {
   name: 'CardDetailComponent',
   components: {
-    Card
+    Card,
+    QCard,
+    QCardTitle,
+    QCardMain,
+    QSpinner
   },
   data () {
     return {

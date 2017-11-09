@@ -416,7 +416,7 @@ img
 .card-img-attr-powerful
   position absolute
   top 1.7%
-  right 1%
+  right 1.5%
   width 45px
   height 45px
   background url('/statics/icon_powerful.png') no-repeat
@@ -425,7 +425,7 @@ img
 .card-img-attr-cool
   position absolute
   top 1.7%
-  right 1%
+  right 1.5%
   width 45px
   height 45px
   background url('/statics/icon_cool.png') no-repeat
@@ -433,8 +433,8 @@ img
 
 .card-img-attr-happy
   position absolute
-  ttop 1.7%
-  right 1%
+  top 1.7%
+  right 1.5%
   width 45px
   height 45px
   background url('/statics/icon_happy.png') no-repeat
@@ -443,7 +443,7 @@ img
 .card-img-attr-pure
   position absolute
   top 1.7%
-  right 1%
+  right 1.5%
   width 45px
   height 45px
   background url('/statics/icon_pure.png') no-repeat

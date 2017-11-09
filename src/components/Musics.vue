@@ -24,28 +24,9 @@
           Loading more musics...
         </div>
       </q-infinite-scroll>
-      <!-- <q-data-table v-if="musicList"
-        :data="musicList"
-        :config="musicTableConfig"
-        :columns="musicColumns">
-        <template slot="col-jacketImage" scope="cell">
-          <img class="thumb-table shadow-1 shadow-transition hoverable-3" v-lazy="`/assets/musicjacket/${cell.row.jacketImage}_thumb.png`"
-            @click="$router.push({ name: 'musicDetail', params: { musicId: cell.row.id } })">
-        </template>
-        <template slot="col-bandId" scope="cell">
-          <div v-if="Number(cell.data) > 5">{{bandMap[cell.data].bandName}}</div>
-          <img height="60px" width="90px" v-if="Number(cell.data) <= 5" v-lazy="`/assets/band/logo/00${cell.data}_logoL.png`" :alt="bandMap[cell.data].bandName">
-        </template>
-        <template slot="col-tag" scope="cell">
-          {{$t(cell.row.tag)}}
-        </template>
-        <template slot="col-diff" scope="cell">
-          {{getDifficulty(cell.row.id)[0].level}} /
-          {{getDifficulty(cell.row.id)[3].level}} /
-          {{getDifficulty(cell.row.id)[2].level}} /
-          {{getDifficulty(cell.row.id)[1].level}}
-        </template>
-      </q-data-table> -->
+      <q-inner-loading :visible="!isReady">
+        <q-spinner color="pink" size="48px"></q-spinner>
+      </q-inner-loading>
     </section>
   </div>
 </template>
@@ -116,13 +97,13 @@
 <script>
 import {
   Platform,
-  // QDataTable,
   QInfiniteScroll,
   QSpinner,
   QCard,
   QCardTitle,
   QCardMedia,
-  QCardMain
+  QCardMain,
+  QInnerLoading
 } from 'quasar'
 import { mapState, mapActions } from 'vuex'
 
@@ -188,13 +169,13 @@ export default {
     }
   },
   components: {
-    // QDataTable,
     QInfiniteScroll,
     QSpinner,
     QCard,
     QCardTitle,
     QCardMedia,
-    QCardMain
+    QCardMain,
+    QInnerLoading
   },
   mounted () {
     this.$nextTick(async () => {
