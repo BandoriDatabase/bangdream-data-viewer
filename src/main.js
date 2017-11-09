@@ -31,6 +31,9 @@ if (process.env.NODE_ENV === 'production') {
     id: 'UA-96644570-1',
     router
   })
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+  }
 }
 Vue.use(VueI18n)
 
@@ -58,6 +61,6 @@ Quasar.start(() => {
     i18n,
     router,
     store,
-    render: h => h(require('./App'))
+    render: h => h(require('./App').default)
   })
 })

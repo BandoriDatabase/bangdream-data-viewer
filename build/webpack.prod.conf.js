@@ -84,10 +84,20 @@ module.exports = merge(baseWebpackConfig, {
     // create service worker using workbox by Google
     new workboxPlugin({
       globDirectory: path.resolve(__dirname, '../dist'),
-      globPatterns: ['**/*.{html,js,css,png,gif}'],
+      globPatterns: ['**/*.{html,js,css,png,gif,woff}'],
       swDest: path.join(path.resolve(__dirname, '../dist'), 'sw.js'),
       clientsClaim: true,
       skipWaiting: true,
+      runtimeCaching: [
+        {
+          urlPattern: new RegExp('https://api.bangdream.ga'),
+          handler: 'networkFirst'
+        },
+        {
+          urlPattern: new RegExp('https://res.bangdream.ga/assets'),
+          handler: 'cacheFirst'
+        }
+      ]
     })
   ]
 })
