@@ -27,9 +27,9 @@
               <count-down :target-time="Number(currentEvent.endAt)" v-if="Number(currentEvent.endAt) > Date.now()"></count-down>
               <count-down :target-time="Number(currentEvent.distributionEndAt)" v-if="Number(currentEvent.distributionStartAt) < Date.now()"></count-down>
               <p>{{$t('event-reward-card')}}</p>
-              <div class="row sm-column">
-                <div class="col-lg-6"><card-thumb :cardId="Number(eventNormalCardId)"></card-thumb></div>
-                <div class="col-lg-6"><card-thumb :cardId="Number(eventSpecialCardId)"></card-thumb></div>
+              <div class="row">
+                <div class="col-6"><card-thumb :cardId="Number(eventNormalCardId)"></card-thumb></div>
+                <div class="col-6"><card-thumb :cardId="Number(eventSpecialCardId)"></card-thumb></div>
               </div>
               <p>{{$t('event-reward-stamp')}}</p>
               <img v-if="eventRewardStamp" v-lazy="`/assets/stamp/01_${eventRewardStamp.imageName}_icon.png`"></img>

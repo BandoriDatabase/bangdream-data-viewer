@@ -20,29 +20,9 @@
         <p v-if="Number(currentEvent.distributionStartAt) < Date.now() && Number(currentEvent.publicEndAt) > Date.now()">{{$t('next-event-cd')}}</p>
         <count-down :target-time="Number(currentEvent.publicEndAt)" v-if="Number(currentEvent.distributionStartAt) < Date.now() && Number(currentEvent.publicEndAt) > Date.now()"></count-down>
         <p>{{$t('event-reward-card')}}</p>
-        <!-- <div class="card-small"
-          @click="$refs.cMnormal.open()">
-          <span class="row justify-center items-center">
-            <card-thumb :cardId="Number(eventNormalCard.cardId)"></card-thumb>
-            {{charaMap[eventNormalCard.characterId].characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
-          </span>
-        </div>
-        <card-modal ref="cMnormal" :cardInfo="eventNormalCard"
-          :characterInfo="charaMap[eventNormalCard.characterId]"
-          :skillInfo="skillMap[eventNormalCard.cardId]"></card-modal>
-        <div class="card-small"
-          @click="$refs.cMspecial.open()">
-          <span class="row justify-center items-center">
-            <card-thumb :cardId="Number(eventSpecialCard.cardId)"></card-thumb>
-            {{charaMap[eventSpecialCard.characterId].characterName}} <q-btn flat round small class="text-pink"><q-icon name="launch" /></q-btn>
-          </span>
-        </div>
-        <card-modal ref="cMspecial" :cardInfo="eventSpecialCard"
-          :characterInfo="charaMap[eventSpecialCard.characterId]"
-          :skillInfo="skillMap[eventSpecialCard.cardId]"></card-modal> -->
-        <div class="row sm-column">
-          <div class="col-lg-6"><card-thumb :cardId="Number(eventNormalCardId)"></card-thumb></div>
-          <div class="col-lg-6"><card-thumb :cardId="Number(eventSpecialCardId)"></card-thumb></div>
+        <div class="row">
+          <div class="col-6"><card-thumb :cardId="Number(eventNormalCardId)"></card-thumb></div>
+          <div class="col-6"><card-thumb :cardId="Number(eventSpecialCardId)"></card-thumb></div>
         </div>
         <p>{{$t('event-reward-stamp')}}</p>
         <img v-if="eventRewardStamp" v-lazy="`/assets/stamp/01_${eventRewardStamp.imageName}.png`"></img>
@@ -55,14 +35,18 @@
         <p>{{$t('event-degrees')}}</p>
         <div v-if="isDegreeReady" class="event-degree" :style="{ 'background-image': `url(/assets/thumb/degree_event_point_icon_1.png), url(/assets/thumb/degree_event_point_1.png), url(/assets/thumb/degree_${degreeMap[currentEvent.rankingRewards[0].rewardId].imageName}.png)` }" />
         <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
-        <span v-if="currentEvent.eventType === 'challenge'">
-          <div class="event-degree" v-for="eventMusic in currentEvent.detail.eventMusic" :key="eventMusic.seq"
+        <span class="row justify-center" v-if="currentEvent.eventType === 'challenge'">
+          <div class="event-degree" v-for="eventMusic in currentEvent.detail.eventMusic" :key="eventMusic.seq" v-if="degreeMap[eventMusic.musicRankingRewards[0].rewardId]"
           :style="{ 'background-image': `url(/assets/thumb/degree_opening_1_1.png), url(/assets/thumb/degree_score_ranking_1.png), url(/assets/thumb/degree_${degreeMap[eventMusic.musicRankingRewards[0].rewardId].imageName}.png)` }" />
+          <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         </span>
-        <span v-if="currentEvent.eventType === 'challenge'">
+        <span class="column items-center" v-if="currentEvent.eventType === 'challenge'">
           <p>{{$t('event-musics')}}</p>
-          <img v-for="eventMusic in currentEvent.detail.eventMusic" :key="eventMusic.seq" v-lazy="`/assets/musicjacket/${musicList.find(elem => elem.id === eventMusic.musicId).jacketImage}_thumb.png`"
-            style="margin: 0 5px; cursor: pointer;" @click="$router.push({ name: 'musicDetail', params: { musicId: eventMusic.musicId } })">
+          <div class="row">
+            <img v-for="eventMusic in currentEvent.detail.eventMusic" :key="eventMusic.seq" v-if="musicMap[eventMusic.musicId]" v-lazy="`/assets/musicjacket/${musicMap[eventMusic.musicId].jacketImage}_thumb.png`"
+              style="margin: 0 5px; cursor: pointer; width: 90px; height: 90px;" @click="$router.push({ name: 'musicDetail', params: { musicId: eventMusic.musicId } })">
+            <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
+          </div>
         </span>
       </q-card-main>
     </q-card>
@@ -192,10 +176,20 @@ export default {
         .then(res => {
           this.isBadgeReady = true
         })
-      this.getDegreeById(this.currentEvent.rankingRewards[0].rewardId)
-        .then(res => {
-          this.isDegreeReady = true
-        })
+      if (this.currentEvent.eventType === 'challenge') {
+        await this.getDegreeById(this.currentEvent.rankingRewards[0].rewardId)
+        for (let eM of this.currentEvent.detail.eventMusic) {
+          await this.getDegreeById(eM.musicRankingRewards[0].rewardId)
+          await this.getMusicById(eM.musicId)
+        }
+        this.isDegreeReady = true
+      }
+      else {
+        this.getDegreeById(this.currentEvent.rankingRewards[0].rewardId)
+          .then(res => {
+            this.isDegreeReady = true
+          })
+      }
     })
   },
   computed: {
@@ -213,6 +207,9 @@ export default {
     ]),
     ...mapState('stamp', [
       'stampMap'
+    ]),
+    ...mapState('music', [
+      'musicMap'
     ]),
     eventMusic () {
       const arr = this.currentEvent.bgmAssetBundleName.split('/')
@@ -239,6 +236,9 @@ export default {
     ]),
     ...mapActions('chara', [
       'getCharaById'
+    ]),
+    ...mapActions('music', [
+      'getMusicById'
     ])
   },
   beforeDestroy () {
