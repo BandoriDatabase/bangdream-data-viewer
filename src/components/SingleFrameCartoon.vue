@@ -2,7 +2,7 @@
   <div>
     <p>{{$t('hint[0]')}} <span class="desktop-only">{{$t('hint[1]')}}</span><span class="mobile-only">{{$t('hint[2]')}}</span>{{$t('hint[3]')}}</p>
     <div class="row sm-column md-column" v-if="isReady">
-      <div class="col-lg-4 col-xl-3 col-md-6 col-12" v-for="(singleFrame, idx) in sfcList" :key="idx">
+      <div class="col-lg-4 col-xl-3 col-md-6 col-12" v-for="(singleFrame, idx) in sfcList[server]" :key="idx">
         <q-card>
           <q-card-media>
             <img v-lazy="singleFrame.assetAddress" class="single-frame-img preview-img"
@@ -76,8 +76,8 @@ export default {
   },
   mounted () {
     this.$nextTick(async () => {
-      await this.getSFCList()
-      this.previewGallery = this.sfcList.map(elem => ({
+      await this.getSFCList(this.server)
+      this.previewGallery = this.sfcList[this.server].map(elem => ({
         src: elem.assetAddress,
         title: elem.title,
         w: 800,
@@ -89,7 +89,25 @@ export default {
   computed: {
     ...mapState('sfc', [
       'sfcList'
-    ])
+    ]),
+    server () {
+      return this.$route.params.server
+    }
+  },
+  watch: {
+    '$route.params.server': function () {
+      this.isReady = false
+      this.$nextTick(async () => {
+        await this.getSFCList(this.server)
+        this.previewGallery = this.sfcList[this.server].map(elem => ({
+          src: elem.assetAddress,
+          title: elem.title,
+          w: 800,
+          h: 640
+        }))
+        this.isReady = true
+      })
+    }
   },
   methods: {
     ...mapActions('sfc', [

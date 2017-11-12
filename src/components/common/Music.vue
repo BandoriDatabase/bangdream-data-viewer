@@ -28,15 +28,16 @@
         <span v-if="Number(data.bandId) > 5">{{data.bandName}}</span>
         <img height="60px" width="100px" v-if="Number(data.bandId) <= 5" v-lazy="`/assets/band/logo/00${data.bandId}_logoL.png`">
       </p>
+      <p>{{$t('combo')}}: {{data.combo}}</p>
       <p>{{$t('howtoget')}}: {{data.howToGet}}</p>
       <!-- <p>{{$t('difficulty')}}: {{getDifficulty(data.id)[0].level}} /
           {{getDifficulty(data.id)[3].level}} /
           {{getDifficulty(data.id)[2].level}} /
           {{getDifficulty(data.id)[1].level}}</p> -->
-      <q-collapsible id="achievements" icon="move_to_inbox" label="Live achievement reward">
+      <q-collapsible id="achievements" icon="move_to_inbox" :label="$t('achieve')">
         <div class="row">
-          <div class="row items-center col-xs-12 col-lg-6 col-md-6">
-            <p class="col-3 col-xs-12">Combo</p>
+          <div class="row items-center col-xl-6 col-12">
+            <p class="col-12">Combo</p>
             <span class="row">
               <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
                 <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('combo_easy'))}.png`">
@@ -60,7 +61,7 @@
               </span>
             </span>
           </div>
-          <div class="row items-center col-xs-12 col-lg-6 col-md-6">
+          <div class="row items-center col-xl-6 col-12">
             <p class="col-3 col-xs-12">Full combo</p>
             <span class="row">
               <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
@@ -85,7 +86,7 @@
               </span>
             </span>
           </div>
-          <div class="row items-center col-xs-12 col-lg-6 col-md-6">
+          <div class="row items-center col-xl-6 col-12">
             <p class="col-3 col-xs-12">Score rank</p>
             <span class="row">
               <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
@@ -124,7 +125,9 @@
     "arranger": "Arranger",
     "howtoget": "How to get",
     "difficulty": "Difficulty",
-    "band": "Band"
+    "band": "Band",
+    "achieve": "Live achievement reward",
+    "combo": "Total notes"
   },
   "zh-CN": {
     "composer": "作曲",
@@ -132,7 +135,9 @@
     "arranger": "编曲",
     "howtoget": "获得方式",
     "difficulty": "难度",
-    "band": "演奏者"
+    "band": "演奏者",
+    "achieve": "歌曲成就",
+    "combo": "音符数"
   },
   "zh-TW": {
     "composer": "作曲",
@@ -140,7 +145,9 @@
     "arranger": "編曲",
     "howtoget": "獲得方式",
     "difficulty": "難度",
-    "band": "演奏者"
+    "band": "演奏者",
+    "achieve": "歌曲成就",
+    "combo": "音符數"
   }
 }
 </i18n>
@@ -195,7 +202,7 @@ export default {
 .jacket-img
   width: 100%
   height: 500px
-  background-size: auto 100%
+  background-size: contain
   background-repeat: no-repeat
   background-position: center
 

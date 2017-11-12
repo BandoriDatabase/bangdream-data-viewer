@@ -25,11 +25,11 @@ export default new VueRouter({
       component: load('Index'),
       children: [
         { path: '/', component: load('Home') },
-        { name: 'cardOverview', path: '/card/overview', component: load('cards/CardOverview') },
-        { name: 'cardDetail', path: '/card/:cardId(\\d+)', component: load('CardDetail') },
-        { path: '/sfcs', component: load('SingleFrameCartoon') },
-        { path: '/music', component: load('Musics') },
-        { name: 'musicDetail', path: '/music/:musicId', component: load('MusicDetail') },
+        { name: 'cardOverview', path: '/card/overview/:server(\\S{2})', component: load('cards/CardOverview') },
+        { name: 'cardDetail', path: '/card/:server(\\S{2})/:cardId(\\d+)', component: load('CardDetail') },
+        { name: 'singleFrame', path: '/sfcs/:server(\\S{2})', component: load('SingleFrameCartoon') },
+        { name: 'musicOverview', path: '/music/:server(\\S{2})', component: load('Musics') },
+        { name: 'musicDetail', path: '/music/:server(\\S{2})/:musicId(\\d+)', component: load('MusicDetail') },
         { path: '/currevent', component: load('EventInfo') },
         // { path: '/live2d', component: load('Live2D') },
         { path: '/about', component: load('About') }

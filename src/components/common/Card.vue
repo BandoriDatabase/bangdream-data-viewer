@@ -78,7 +78,7 @@
                 v-model="level"
                 type="number"
                 :min="1"
-                :max="Number(cardInfo.parameterMap[cardInfo.maxLevel].level)"
+                :max="cardResType === 'normal' ? cardInfo.levelLimit : cardInfo.maxLv"
               ></q-input>
             </div>
             <!-- <div class="row col-xl-9 col-lg-9 col-md-6"> -->
@@ -155,11 +155,11 @@
                 v-model="skillLv"
                 type="number"
                 :min="1"
-                :max="skillInfo.skillEffect.length || skillInfo.judgeEffect.length"
+                :max="skillInfo.skillDetail.length || skillInfo.activateEffect.length || skillInfo.onceEffect.length"
               ></q-input>
               <p>{{skillInfo.skillName}}</p>
               <p>{{(skillInfo.skillDetail[skillLv] || skillInfo.skillDetail[Math.floor((skillLv - 1)/2)]).simpleDescription}}</p>
-              <p>{{getSkillDesc((skillInfo.skillDetail[skillLv] || skillInfo.skillDetail[Math.floor((skillLv - 1)/2)]).description, skillInfo.skillEffect, skillInfo.judgeEffect, skillLv)}}</p>
+              <p>{{getSkillDesc((skillInfo.skillDetail[skillLv] || skillInfo.skillDetail[Math.floor((skillLv - 1)/2)]).description, skillInfo.activateEffect, skillInfo.onceEffect, skillLv)}}</p>
             </div>
           </q-collapsible>
           <q-collapsible icon="highlight" :label="$t('training.title')">
@@ -313,7 +313,7 @@ export default {
   },
   mounted () {
     this.level = Number(this.cardInfo.maxLevel) - 10
-    this.skillLv = this.skillInfo.skillEffect.length || this.skillInfo.judgeEffect.length
+    this.skillLv = this.skillInfo.skillDetail.length || this.skillInfo.activateEffect.length || this.skillInfo.onceEffect.length
   },
   computed: {
     cardGroup () {
@@ -355,29 +355,30 @@ export default {
     },
     getCardFrame () {
       switch (this.cardInfo.rarity) {
-        case '4':
+        case 4:
           return 'rainbow'
-        case '3':
+        case 3:
           return 'gold'
-        case '2':
+        case 2:
           return 'silver'
         default:
           return this.cardInfo.attr
       }
     },
-    getSkillDesc (skillDesc, skillEffects, judgeLists, skillLv) {
-      const skillEffect = skillEffects[skillLv - 1]
-      if (judgeLists.length && skillEffect) {
-        const judgeEffect = judgeLists[skillLv - 1]
-        return skillDesc.replace(/\{0\}/, judgeEffect.judgeName).replace(/\{1\}/, skillEffect.valueDescription)
+    getSkillDesc (skillDesc, activateEffects, judgeLists, skillLv) {
+      const activateEffect = activateEffects ? activateEffects[skillLv - 1] : this.skillInfo.skillDetail[skillLv - 1]
+      if (judgeLists && judgeLists.length && activateEffect) {
+        const onceEffect = judgeLists[skillLv - 1]
+        return skillDesc.replace(/\{0\}/, onceEffect.judgeName).replace(/\{1\}/, activateEffect.valueDescription)
       }
-      else if (skillEffect) {
-        return skillDesc.replace(/\{0\}/, skillEffect.valueDescription)
+      else if (activateEffect) {
+        return skillDesc.replace(/\{0\}/, activateEffect.valueDescription || activateEffect.duration)
       }
-      else if (judgeLists.length) {
-        const judgeEffect = judgeLists[skillLv - 1]
-        return skillDesc.replace(/\{0\}/, `${judgeEffect.judgeName}(${judgeEffect.judgeEffectValue})`)
+      else if (judgeLists && judgeLists.length) {
+        const onceEffect = judgeLists[skillLv - 1]
+        return skillDesc.replace(/\{0\}/, `${onceEffect.judgeName}(${onceEffect.onceEffectValue})`)
       }
+      return ''
     }
   }
 }
@@ -522,7 +523,7 @@ img
   background-size 100% 100%
 
 .card-img-frame-rainbow
-  position: absolute
+  position absolute
   width 100%
   height 280px
   max-width 420px
@@ -533,7 +534,7 @@ img
   top 0
 
 .card-img-frame-gold
-  position: absolute
+  position absolute
   width 100%
   height 280px
   max-width 420px
@@ -544,7 +545,7 @@ img
   top 0
 
 .card-img-frame-silver
-  position: absolute
+  position absolute
   width 100%
   height 280px
   max-width 420px
@@ -554,7 +555,7 @@ img
   top 0
 
 .card-img-frame-pure
-  position: absolute
+  position absolute
   width 100%
   height 280px
   max-width 420px
@@ -565,7 +566,7 @@ img
   top 0
 
 .card-img-frame-powerful
-  position: absolute
+  position absolute
   width 100%
   height 280px
   max-width 420px
@@ -576,7 +577,7 @@ img
   top 0
 
 .card-img-frame-happy
-  position: absolute
+  position absolute
   width 100%
   height 280px
   max-width 420px
@@ -587,7 +588,7 @@ img
   top 0
 
 .card-img-frame-cool
-  position: absolute
+  position absolute
   width 100%
   height 280px
   max-width 420px
@@ -598,45 +599,45 @@ img
   top 0
 
 div.row
-  padding: 5px
+  padding 5px
 
 .card-img-band-1
-  position: absolute
-  top: 2%
-  left: 1%
-  width: 50px
-  height: 50px
-  background: url('/statics/band_icon_1.png') no-repeat
+  position absolute
+  top 2%
+  left 1%
+  width 50px
+  height 50px
+  background url('/statics/band_icon_1.png') no-repeat
 
 .card-img-band-2
-  position: absolute
-  top: 2%
-  left: 1%
-  width: 50px
-  height: 50px
-  background: url('/statics/band_icon_2.png') no-repeat
+  position absolute
+  top 2%
+  left 1%
+  width 50px
+  height 50px
+  background url('/statics/band_icon_2.png') no-repeat
 
 .card-img-band-3
-  position: absolute
-  top: 2%
-  left: 1%
-  width: 50px
-  height: 50px
-  background: url('/statics/band_icon_3.png') no-repeat
+  position absolute
+  top 2%
+  left 1%
+  width 50px
+  height 50px
+  background url('/statics/band_icon_3.png') no-repeat
 
 .card-img-band-4
-  position: absolute
-  top: 2%
-  left: 1%
-  width: 50px
-  height: 50px
-  background: url('/statics/band_icon_4.png') no-repeat
+  position absolute
+  top 2%
+  left 1%
+  width 50px
+  height 50px
+  background url('/statics/band_icon_4.png') no-repeat
 
 .card-img-band-5
-  position: absolute
-  top: 2%
-  left: 1%
-  width: 50px
-  height: 50px
-  background: url('/statics/band_icon_5.png') no-repeat
+  position absolute
+  top 2%
+  left 1%
+  width 50px
+  height 50px
+  background url('/statics/band_icon_5.png') no-repeat
 </style>

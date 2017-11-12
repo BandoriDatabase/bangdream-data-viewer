@@ -1,14 +1,16 @@
 <template>
-  <div class="card-img-parent" v-if="isReady" @click="$router.push({ name: 'cardDetail', params: { cardId: cardMap[cardId].cardId } })">
-    <div class="thumb-table" v-lazy:background-image="`/assets/thumb/chara/card0000${Math.trunc(Number(cardMap[cardId].cardId) / 50)}_${cardMap[cardId].cardRes}_normal.png`"></div>
-    <div :class="`thumb-frame-${getThumbFrame(Number(cardMap[cardId].rarity), cardMap[cardId].attr)}`"></div>
-    <div :class="`thumb-attr-${cardMap[cardId].attr}`"></div>
-  </div>
-  <div class="card-img-parent" v-else>
-    <q-inner-loading :visible="!isReady">
-      <q-spinner-facebook color="pink" size="48px"></q-spinner-facebook>
-    </q-inner-loading>
-  </div>
+  <lazy-component @show="loadData">
+    <div class="card-img-parent" v-if="isReady" @click="$router.push({ name: 'cardDetail', params: { cardId: cardMap[server][cardId].cardId, server } })">
+      <div class="thumb-table" v-lazy:background-image="`/assets/thumb/chara/card0000${Math.trunc(Number(cardMap[server][cardId].cardId) / 50)}_${cardMap[server][cardId].cardRes}_normal.png`"></div>
+      <div :class="`thumb-frame-${getThumbFrame(Number(cardMap[server][cardId].rarity), cardMap[server][cardId].attr)}`"></div>
+      <div :class="`thumb-attr-${cardMap[server][cardId].attr}`"></div>
+    </div>
+    <div class="card-img-parent" v-else>
+      <q-inner-loading :visible="!isReady">
+        <q-spinner-facebook color="pink" size="48px"></q-spinner-facebook>
+      </q-inner-loading>
+    </div>
+  </lazy-component>
 </template>
 
 <script>
@@ -23,6 +25,10 @@ export default {
   props: {
     cardId: {
       type: Number
+    },
+    server: {
+      type: String,
+      required: true
     }
   },
   data () {
@@ -39,12 +45,6 @@ export default {
       'cardMap'
     ])
   },
-  mounted () {
-    this.$nextTick(async () => {
-      await this.getCardById(this.cardId)
-      this.isReady = true
-    })
-  },
   methods: {
     ...mapActions('card', [
       'getCardById'
@@ -60,6 +60,15 @@ export default {
         case 4:
           return 'ssr'
       }
+    },
+    loadData () {
+      this.$nextTick(async () => {
+        await this.getCardById({
+          cardId: this.cardId,
+          server: this.server
+        })
+        this.isReady = true
+      })
     }
   }
 }
@@ -81,102 +90,63 @@ export default {
   left 4px
   top 4px
 
-.thumb-frame-normal-happy
-  position: absolute
+thumb-frame(uri)
   width 80px
   height 80px
-  background url('/statics/thumb_frame_happy.png') no-repeat
+  background url(uri) no-repeat
   background-size cover
   left 0
   top 0
+
+.thumb-frame-normal-happy
+  position: absolute
+  thumb-frame('/statics/thumb_frame_happy.png')
 
 .thumb-frame-normal-pure
   position: absolute
-  width 80px
-  height 80px
-  background url('/statics/thumb_frame_pure.png') no-repeat
-  background-size cover
-  left 0
-  top 0
+  thumb-frame('/statics/thumb_frame_pure.png')
 
 .thumb-frame-normal-cool
   position: absolute
-  width 80px
-  height 80px
-  background url('/statics/thumb_frame_cool.png') no-repeat
-  background-size cover
-  left 0
-  top 0
+  thumb-frame('/statics/thumb_frame_cool.png')
 
 .thumb-frame-normal-powerful
   position: absolute
-  width 80px
-  height 80px
-  background url('/statics/thumb_frame_powerful.png') no-repeat
-  background-size cover
-  left 0
-  top 0
+  thumb-frame('/statics/thumb_frame_powerful.png')
 
 .thumb-frame-rare
   position: absolute
-  width 80px
-  height 80px
-  background url('/statics/thumb_frame_silver.png') no-repeat
-  background-size cover
-  left 0
-  top 0
+  thumb-frame('/statics/thumb_frame_silver.png')
 
 .thumb-frame-sr
   position: absolute
-  width 80px
-  height 80px
-  background url('/statics/thumb_frame_gold.png') no-repeat
-  background-size cover
-  left 0
-  top 0
+  thumb-frame('/statics/thumb_frame_gold.png')
 
 .thumb-frame-ssr
   position: absolute
-  width 80px
-  height 80px
-  background url('/statics/thumb_frame_rainbow.png') no-repeat
+  thumb-frame('/statics/thumb_frame_rainbow.png')
+
+thumd-attr(uri)
+  top 1%
+  right 1%
+  width 20px
+  height 20px
+  background url(uri) no-repeat
   background-size cover
-  left 0
-  top 0
 
 .thumb-attr-powerful
   position: absolute
-  top 1%
-  right 1%
-  width 20px
-  height 20px
-  background url('/statics/icon_powerful.png') no-repeat
-  background-size cover
+  thumd-attr('/statics/icon_powerful.png')
 
 .thumb-attr-cool
   position: absolute
-  top 1%
-  right 1%
-  width 20px
-  height 20px
-  background url('/statics/icon_cool.png') no-repeat
-  background-size cover
+  thumd-attr('/statics/icon_cool.png')
 
 .thumb-attr-happy
   position: absolute
-  top 1%
-  right 1%
-  width 20px
-  height 20px
-  background url('/statics/icon_happy.png') no-repeat
-  background-size cover
+  thumd-attr('/statics/icon_happy.png')
 
 .thumb-attr-pure
   position: absolute
-  top 1%
-  right 1%
-  width 20px
-  height 20px
-  background url('/statics/icon_pure.png') no-repeat
-  background-size cover
+  thumd-attr('/statics/icon_pure.png')
 </style>

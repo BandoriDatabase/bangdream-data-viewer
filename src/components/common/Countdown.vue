@@ -18,22 +18,18 @@
         <h6 class="no-margin">Seconds</h6>
       </div>
     </div>
-    <div class="row items-center" v-else>
-      <div class="column items-center cd-elem col-3">
-        <h5 class="no-margin">{{days}}</h5>
-        <p class="no-margin">Days</p>
+    <div class="row items-center justify-center" v-else>
+      <div class="column items-center cd-elem col-5 col-xl-3">
+        <h5 class="no-margin">{{days}}<small>d</small></h5>
       </div>
-      <div class="column items-center cd-elem col-3">
-        <h5 class="no-margin">{{hours}}</h5>
-        <p class="no-margin">Hours</p>
+      <div class="column items-center cd-elem col-5 col-xl-3">
+        <h5 class="no-margin">{{hours}}<small>h</small></h5>
       </div>
-      <div class="column items-center cd-elem col-3">
-        <h5 class="no-margin">{{minutes}}</h5>
-        <p class="no-margin">Minutes</p>
+      <div class="column items-center cd-elem col-5 col-xl-3">
+        <h5 class="no-margin">{{minutes}}<small>m</small></h5>
       </div>
-      <div class="column items-center cd-elem col-3">
-        <h5 class="no-margin">{{seconds}}</h5>
-        <p class="no-margin">Seconds</p>
+      <div class="column items-center cd-elem col-5 col-xl-3">
+        <h5 class="no-margin">{{seconds}}<small>s</small></h5>
       </div>
     </div>
   </div>

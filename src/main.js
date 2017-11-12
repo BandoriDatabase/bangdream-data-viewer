@@ -7,7 +7,7 @@ require(`quasar/dist/quasar.${__THEME}.css`)
 // ==============================
 
 import Vue from 'vue'
-import Quasar, { LocalStorage } from 'quasar'
+import Quasar, { LocalStorage, AddressbarColor } from 'quasar'
 import VueResource from 'vue-resource'
 import VueLazyload from 'vue-lazyload'
 import VuePreview from 'vue-preview'
@@ -23,7 +23,9 @@ import store from './store'
 Vue.use(Quasar) // Install Quasar Framework
 Vue.use(VueResource)
 Vue.use(VueLazyload, {
-  loading: 'statics/loading.gif'
+  loading: 'statics/loading.gif',
+  lazyComponent: true,
+  observer: true
 })
 Vue.use(VuePreview)
 if (process.env.NODE_ENV === 'production') {
@@ -36,6 +38,7 @@ if (process.env.NODE_ENV === 'production') {
   }
 }
 Vue.use(VueI18n)
+AddressbarColor.set('#e91e63')
 
 let locale = LocalStorage.get.item('useLocale')
 if (!locale) {

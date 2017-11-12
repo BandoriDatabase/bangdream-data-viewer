@@ -1,9 +1,18 @@
 import apiDBInfo from 'api/dbinfo'
 
 const initState = {
-  currentEvent: {},
-  eventBadgeMap: {},
-  degreeMap: {}
+  currentEvent: {
+    jp: {},
+    tw: {}
+  },
+  eventBadgeMap: {
+    jp: {},
+    tw: {}
+  },
+  degreeMap: {
+    jp: {},
+    tw: {}
+  }
 }
 
 const state = Object.assign({}, initState)
@@ -12,35 +21,36 @@ const getters = {
 }
 
 const actions = {
-  async getCurrentEvent ({commit, state}) {
-    if (state.currentEvent.eventId) return state.currentEvent
-    const event = await apiDBInfo.getEvent()
-    commit('SET_CURR_EVENT', event)
+  async getCurrentEvent ({commit, state}, server) {
+    if (state.currentEvent[server].eventId) return state.currentEvent[server]
+    const event = await apiDBInfo.getEvent(server)
+    commit('SET_CURR_EVENT', { event, server })
     return event
   },
-  async getEventBadgeById ({commit, state}, eventId) {
-    if (state.eventBadgeMap[eventId]) return state.eventBadgeMap[eventId]
-    const eventBadge = await apiDBInfo.getEventBadgeById(eventId)
-    commit('ADD_EVENT_BADGE_MAP_ENTRY', {id: eventId, value: eventBadge})
+  async getEventBadgeById ({commit, state}, { server, eventId }) {
+    if (state.eventBadgeMap[server][eventId]) return state.eventBadgeMap[server][eventId]
+    const eventBadge = await apiDBInfo.getEventBadgeById(eventId, server)
+    commit('ADD_EVENT_BADGE_MAP_ENTRY', {server, id: eventId, value: eventBadge})
     return eventBadge
   },
-  async getDegreeById ({commit, state}, id) {
+  async getDegreeById ({commit, state}, { server, id }) {
+    console.log(server, id)
     if (state.degreeMap[id]) return state.degreeMap[id]
-    const degree = await apiDBInfo.getDegreeById(id)
-    commit('ADD_DEGREE_MAP_ENTRY', {id, value: degree})
+    const degree = await apiDBInfo.getDegreeById(id, server)
+    commit('ADD_DEGREE_MAP_ENTRY', {server, id, value: degree})
     return degree
   }
 }
 
 const mutations = {
-  SET_CURR_EVENT (state, event) {
-    state.currentEvent = event
+  SET_CURR_EVENT (state, { event, server }) {
+    state.currentEvent[server] = event
   },
-  ADD_EVENT_BADGE_MAP_ENTRY (state, obj) {
-    state.eventBadgeMap[obj.id] = obj.value
+  ADD_EVENT_BADGE_MAP_ENTRY (state, { server, id, value }) {
+    state.eventBadgeMap[server][id] = value
   },
-  ADD_DEGREE_MAP_ENTRY (state, obj) {
-    state.degreeMap[obj.id] = obj.value
+  ADD_DEGREE_MAP_ENTRY (state, { server, id, value }) {
+    state.degreeMap[server][id] = value
   }
 }
 

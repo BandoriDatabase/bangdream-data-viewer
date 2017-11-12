@@ -1,6 +1,6 @@
 <template>
   <div>
-    <music v-if="isReady" :data="musicMap[$route.params.musicId]"></music>
+    <music v-if="isReady" :data="musicMap[server][$route.params.musicId]"></music>
     <q-spinner v-else color="pink" size="48px"></q-spinner>
   </div>
 </template>
@@ -26,14 +26,17 @@ export default {
   },
   mounted () {
     this.$nextTick(async () => {
-      await this.getMusicById(this.$route.params.musicId)
+      await this.getMusicById({musicId: this.$route.params.musicId, server: this.server})
       this.isReady = true
     })
   },
   computed: {
     ...mapState('music', [
       'musicMap'
-    ])
+    ]),
+    server () {
+      return this.$route.params.server
+    }
   },
   methods: {
     ...mapActions('music', [

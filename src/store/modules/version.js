@@ -1,7 +1,10 @@
 import apiDBInfo from 'api/dbinfo'
 
 const initState = {
-  resVer: '',
+  resVer: {
+    jp: '',
+    tw: ''
+  },
   masterVer: ''
 }
 
@@ -12,9 +15,11 @@ const getters = {
 
 const actions = {
   async getResourceVersion ({commit, state}) {
-    if (state.resVer) return state.resVer
-    const res = await apiDBInfo.getResVer()
-    commit('SET_RES_VER', res.body)
+    if (state.resVer.jp && state.resVer.tw) return state.resVer
+    const res = await apiDBInfo.getResVer('jp')
+    commit('SET_RES_VER', {ver: res.body, server: 'jp'})
+    const res2 = await apiDBInfo.getResVer('tw')
+    commit('SET_RES_VER', {ver: res2.body, server: 'tw'})
     return res.body
   },
   async getMasterVersion ({commit, state}) {
@@ -26,8 +31,8 @@ const actions = {
 }
 
 const mutations = {
-  SET_RES_VER (state, ver) {
-    state.resVer = ver
+  SET_RES_VER (state, {ver, server}) {
+    state.resVer[server] = ver
   },
   SET_MASTER_VER (state, ver) {
     state.masterVer = ver

@@ -1,10 +1,22 @@
 import apiDBInfo from 'api/dbinfo'
 
 const initState = {
-  bandList: [],
-  bandCharaList: [],
-  charaList: [],
-  charaMap: {}
+  bandList: {
+    jp: [],
+    tw: []
+  },
+  bandCharaList: {
+    jp: [],
+    tw: []
+  },
+  charaList: {
+    jp: [],
+    tw: []
+  },
+  charaMap: {
+    jp: {},
+    tw: {}
+  }
 }
 
 const state = Object.assign({}, initState)
@@ -13,35 +25,35 @@ const getters = {
 }
 
 const actions = {
-  async getCharaList ({commit, state}) {
-    if (state.charaList.length) return state.charaList
-    const charas = await apiDBInfo.getChara()
-    commit('SET_CHARA_LIST', charas.data)
+  async getCharaList ({commit, state}, server) {
+    if (state.charaList[server].length) return state.charaList[server]
+    const charas = await apiDBInfo.getChara(server)
+    commit('SET_CHARA_LIST', {data: charas.data, server})
     return charas.data
   },
-  async getBandCharaList ({commit, state}) {
-    if (state.bandCharaList.length) return state.bandCharaList
-    const charas = await apiDBInfo.getBandChara()
-    commit('SET_BAND_CHARA_LIST', charas)
+  async getBandCharaList ({commit, state}, server) {
+    if (state.bandCharaList[server].length) return state.bandCharaList[server]
+    const charas = await apiDBInfo.getBandChara(server)
+    commit('SET_BAND_CHARA_LIST', {data: charas, server})
     return charas
   },
-  async getCharaById ({commit, state}, charaId) {
-    if (state.charaMap[charaId]) return state.charaMap[charaId]
-    const chara = await apiDBInfo.getCharaById(charaId)
-    commit('ADD_CHARA_MAP_ENTRY', {id: charaId, value: chara})
+  async getCharaById ({commit, state}, {charaId, server}) {
+    if (state.charaMap[server][charaId]) return state.charaMap[server][charaId]
+    const chara = await apiDBInfo.getCharaById(charaId, server)
+    commit('ADD_CHARA_MAP_ENTRY', {id: charaId, value: chara, server})
     return chara
   }
 }
 
 const mutations = {
-  SET_CHARA_LIST (state, charas) {
-    state.charaList = charas
+  SET_CHARA_LIST (state, {data, server}) {
+    state.charaList[server] = data
   },
-  SET_BAND_CHARA_LIST (state, charas) {
-    state.bandCharaList = charas
+  SET_BAND_CHARA_LIST (state, {data, server}) {
+    state.bandCharaList[server] = data
   },
   ADD_CHARA_MAP_ENTRY (state, obj) {
-    state.charaMap[obj.id] = obj.value
+    state.charaMap[obj.server][obj.id] = obj.value
   }
 }
 

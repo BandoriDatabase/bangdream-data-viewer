@@ -52,10 +52,18 @@ module.exports = {
       // },
       '/assets': {
         target: 'https://res.bangdream.ga',
-        changeOrigin: true,
+        changeOrigin: true
+      },
+      '/assets-jp': {
+        target: 'https://res.bangdream.ga',
+        changeOrigin: true
+      },
+      '/assets-tw': {
+        target: 'https://res.bangdream.ga',
+        changeOrigin: true
       },
       '/api': {
-        target: 'https://api.bangdream.ga',
+        target: 'http://localhost:8180',
         changeOrigin: true,
         pathRewrite: {
           '^/api/v1': '/v1'

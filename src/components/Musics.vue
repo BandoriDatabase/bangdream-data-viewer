@@ -5,16 +5,36 @@
         <p>{{$t('hint[0]')}}<span class="desktop-only">{{$t('hint[1]')}}</span><span class="mobile-only">{{$t('hint[2]')}}</span>{{$t('hint[3]')}}</p>
       </div>
       <q-infinite-scroll ref="musicScroll" v-if="isReady" :handler="loadMore">
-        <div class="row">
-          <div v-for="music in musicList" :key="music.cardId" class="col-6 col-xl-3 col-lg-4 full-height">
-            <q-card style="height: 500px; cursor: pointer;" @click="$router.push({ name: 'musicDetail', params: { musicId: music.id } })">
+        <div class="row gt-sm">
+          <div v-for="music in musicList[server]" :key="music.cardId" class="col-12 col-md-6 col-xl-3 col-lg-4 full-height">
+            <q-card style="height: 500px; cursor: pointer;" @click="$router.push({ name: 'musicDetail', params: { musicId: music.musicId, server } })">
               <q-card-media class="full-height" style="position: relative;">
                 <span :class="`music-img-band-${music.bandId}`"></span>
                 <div v-lazy:background-image="music.jacket" class="full-height one-img-full" />
                 <q-card-title slot="overlay">
-                  {{music.title}}
+                  {{music.title}}<br>
+                  {{music.bandName}}
                 </q-card-title>
               </q-card-media>
+            </q-card>
+          </div>
+        </div>
+        <div class="row lt-md">
+          <div v-for="music in musicList[server]" :key="music.cardId" class="col-12 col-md-6 col-xl-3 col-lg-4 full-height">
+            <q-card style="height: 100px;" @click="$router.push({ name: 'musicDetail', params: { musicId: music.musicId, server } })">
+              <!-- <q-card-media class="full-height" style="position: relative;">
+                <span :class="`music-img-band-${music.bandId}`"></span>
+                <div v-lazy:background-image="music.jacket" class="full-height one-img-full" />
+              </q-card-media> -->
+              <q-card-main class="no-padding">
+                <div class="row full-height items-center">
+                  <div v-lazy:background-image="music.jacket" class="col-3 one-img-thumb"></div>
+                  <div class="col-8">
+                    {{music.title}}<br>
+                    {{music.bandName}}
+                  </div>
+                </div>
+              </q-card-main>
             </q-card>
           </div>
         </div>
@@ -179,7 +199,7 @@ export default {
   },
   mounted () {
     this.$nextTick(async () => {
-      await this.getMusicList({ limit: 12, page: 1 })
+      await this.getMusicList({ params: {limit: 12, page: 1}, server: this.server })
       // this.doFilter()
       this.isReady = true
     })
@@ -187,7 +207,19 @@ export default {
   computed: {
     ...mapState('music', [
       'musicList'
-    ])
+    ]),
+    server () {
+      return this.$route.params.server
+    }
+  },
+  watch: {
+    '$route.params.server': function () {
+      this.isReady = false
+      this.$nextTick(async () => {
+        await this.getMusicList({ params: {limit: 12, page: 1}, server: this.server })
+        this.isReady = true
+      })
+    }
   },
   methods: {
     ...mapActions('music', [
@@ -195,7 +227,7 @@ export default {
     ]),
     async loadMore (index, done) {
       try {
-        await this.getMusicList({ limit: 12, page: index + 1 })
+        await this.getMusicList({ params: {limit: 12, page: index + 1}, server: this.server })
         // this.doFilter()
       }
       catch (error) {
@@ -212,6 +244,13 @@ export default {
 
 <style lang="stylus" scoped>
 .one-img-full
+  background-size: auto 100%
+  background-repeat: no-repeat
+  background-position: center
+
+.one-img-thumb
+  height: 90px
+  margin: 5px
   background-size: auto 100%
   background-repeat: no-repeat
   background-position: center

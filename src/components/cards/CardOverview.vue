@@ -14,7 +14,7 @@
           <q-card style="height: 500px; cursor: pointer;" @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId } })">
             <q-card-media class="full-height" style="position: relative;">
               <span :class="`card-img-attr-${card.attr}`"></span>
-              <span :class="`card-img-band-${bandCharaList[Number(card.characterId) - 1].bandId}`"></span>
+              <span :class="`card-img-band-${bandCharaList[server][Number(card.characterId) - 1].bandId}`"></span>
               <img v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity < 3" class="one-img-full full-height">
               <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3" class="two-img-split full-height gt-md"
                 :ref="`splitL${card.cardId}`" @mouseover="handleMouseOver(`splitL${card.cardId}`)" @mouseout="handleMouseOut(card.cardId)">
@@ -29,8 +29,9 @@
                 style="height: 50%;">
               </div>
               <q-card-title slot="overlay">
-                [{{card.title}}] {{displayName ? capitalizeFirstLetter(toRomaji(bandCharaList[Number(card.characterId) - 1].ruby)) : bandCharaList[Number(card.characterId) - 1].characterName}}
+                [{{card.title}}] {{displayName ? capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) : bandCharaList[server][Number(card.characterId) - 1].characterName}}
                 <span v-for="i in Number(card.rarity)" :key="i">&#x2605;</span><br>
+                {{skillList[server][card.skill.skillId - 1].simpleDescription}}<br>
                 Lv {{card.maxLevel}}: {{card.maxPerformance}}/{{card.maxTechnique}}/{{card.maxVisual}}/{{card.totalMaxParam}}
               </q-card-title>
             </q-card-media>
@@ -201,9 +202,9 @@ export default {
   },
   mounted () {
     this.$nextTick(async () => {
-      await this.getCardList({ limit: 12, page: 1 })
-      await this.getBandCharaList()
-      await this.getSkillList()
+      await this.getCardList({ params: {limit: 12, page: 1}, server: this.server })
+      await this.getBandCharaList(this.server)
+      await this.getSkillList(this.server)
       this.doFilter()
       this.isReady = true
     })
@@ -215,7 +216,22 @@ export default {
     ]),
     ...mapState('chara', [
       'bandCharaList'
-    ])
+    ]),
+    server () {
+      return this.$route.params.server
+    }
+  },
+  watch: {
+    '$route.params.server': function () {
+      this.isReady = false
+      this.$nextTick(async () => {
+        await this.getCardList({ params: {limit: 12, page: 1}, server: this.server })
+        await this.getBandCharaList(this.server)
+        await this.getSkillList(this.server)
+        this.doFilter()
+        this.isReady = true
+      })
+    }
   },
   methods: {
     ...mapActions('card', [
@@ -244,7 +260,7 @@ export default {
         .join(' ')
     },
     async doFilter () {
-      let ret = this.cardList.slice()
+      let ret = this.cardList[this.server].slice()
       if (this.selectCharacters.length) {
         ret = ret.filter(elem => this.selectCharacters.indexOf(elem.characterId) !== -1)
       }
@@ -275,16 +291,16 @@ export default {
             model: this.selectRarity,
             items: [{
               label: '\u2605\u2605\u2605\u2605',
-              value: '4'
+              value: 4
             }, {
               label: '\u2605\u2605\u2605',
-              value: '3'
+              value: 3
             }, {
               label: '\u2605\u2605',
-              value: '2'
+              value: 2
             }, {
               label: '\u2605',
-              value: '1'
+              value: 1
             }]
           },
           header1: {
@@ -294,11 +310,11 @@ export default {
           characters: {
             type: 'checkbox',
             model: this.selectCharacters,
-            items: Object.keys(this.bandCharaList).filter(key => Number(key) <= 25).map(key => ({
+            items: Object.keys(this.bandCharaList[this.server]).filter(key => Number(key) <= 25).map(key => ({
               label: this.displayName
-                ? this.capitalizeFirstLetter(toRomaji(this.bandCharaList[key].ruby))
-                : this.bandCharaList[key].characterName,
-              value: this.bandCharaList[key].characterId
+                ? this.capitalizeFirstLetter(toRomaji(this.bandCharaList[this.server][key].ruby))
+                : this.bandCharaList[this.server][key].characterName,
+              value: this.bandCharaList[this.server][key].characterId
             }))
           },
           header2: {
@@ -308,7 +324,7 @@ export default {
           skills: {
             type: 'checkbox',
             model: this.selectSkills,
-            items: this.skillList.map(elem => ({
+            items: this.skillList[this.server].map(elem => ({
               label: elem.simpleDescription,
               value: elem.skillId
             }))
@@ -328,7 +344,7 @@ export default {
     },
     async loadMore (index, done) {
       try {
-        await this.getCardList({ limit: 12, page: index + 1 })
+        await this.getCardList({ params: {limit: 12, page: index + 1}, server: this.server })
         this.doFilter()
       }
       catch (error) {

@@ -1,89 +1,89 @@
 import Vue from 'vue'
 
 export default {
-  getMasterDB () {
-    return Vue.http.get('static/MasterDB.json')
-  },
-  getLive2DDB () {
-    return Vue.http.get('static/live2d.json')
-  },
-  getEvent () {
-    return Vue.http.get('/api/v1/event')
+  // getMasterDB () {
+  //   return Vue.http.get('static/MasterDB.json')
+  // },
+  // getLive2DDB () {
+  //   return Vue.http.get('static/live2d.json')
+  // },
+  getEvent (server) {
+    return Vue.http.get(`/api/v1/${server}/event`)
       .then(res => res.json())
   },
-  getCardById (id) {
-    return Vue.http.get(`/api/v1/card/${id}`)
+  getCardById (id, server) {
+    return Vue.http.get(`/api/v1/${server}/card/${id}`)
       .then(res => res.json())
   },
-  getSkillByCardId (id) {
-    return Vue.http.get(`/api/v1/skill/cardId/${id}`)
+  getSkillByCardId (id, server) {
+    return Vue.http.get(`/api/v1/${server}/skill/cardId/${id}`)
       .then(res => res.json())
   },
-  getCard (params) {
-    return Vue.http.get('/api/v1/card', { params })
+  getCard (params, server) {
+    return Vue.http.get(`/api/v1/${server}/card`, { params })
       .then(res => res.json())
   },
-  getChara (params) {
-    return Vue.http.get('/api/v1/chara', { params })
+  getChara (params, server) {
+    return Vue.http.get(`/api/v1/${server}/chara`, { params })
       .then(res => res.json())
   },
-  getBandChara () {
-    return Vue.http.get('/api/v1/chara/band')
+  getBandChara (server) {
+    return Vue.http.get(`/api/v1/${server}/chara/band`)
       .then(res => res.json())
   },
-  getCharaById (id) {
-    return Vue.http.get(`/api/v1/chara/${id}`)
+  getCharaById (id, server) {
+    return Vue.http.get(`/api/v1/${server}/chara/${id}`)
       .then(res => res.json())
   },
-  getStamp () {
-    return Vue.http.get(`/api/v1/stamp`)
+  getStamp (server) {
+    return Vue.http.get(`/api/v1/${server}/stamp`)
       .then(res => res.json())
   },
-  getStampById (id) {
-    return Vue.http.get(`/api/v1/stamp/${id}`)
+  getStampById (id, server) {
+    return Vue.http.get(`/api/v1/${server}/stamp/${id}`)
       .then(res => res.json())
   },
-  getGacha () {
-    return Vue.http.get(`/api/v1/gacha`)
+  getGacha (server) {
+    return Vue.http.get(`/api/v1/${server}/gacha`)
       .then(res => res.json())
   },
-  getGachaById (id) {
-    return Vue.http.get(`/api/v1/gacha/${id}`)
+  getGachaById (id, server) {
+    return Vue.http.get(`/api/v1/${server}/gacha/${id}`)
       .then(res => res.json())
   },
-  getGachaCurrent () {
-    return Vue.http.get(`/api/v1/gacha/current`)
+  getGachaCurrent (server) {
+    return Vue.http.get(`/api/v1/${server}/gacha/current`)
       .then(res => res.json())
   },
-  getResVer () {
-    return Vue.http.get(`/api/v1/version/res`)
+  getResVer (server) {
+    return Vue.http.get(`/api/v1/${server}/version/res`)
   },
-  getSkill () {
-    return Vue.http.get(`/api/v1/skill`)
+  getSkill (server) {
+    return Vue.http.get(`/api/v1/${server}/skill`)
       .then(res => res.json())
   },
-  getCardsBySkillId (id) {
-    return Vue.http.get(`/api/v1/skill/${id}`)
+  getCardsBySkillId (id, server) {
+    return Vue.http.get(`/api/v1/${server}/skill/${id}`)
       .then(res => res.json())
   },
-  getSingleFrameCartoon () {
-    return Vue.http.get(`/api/v1/sfc`)
+  getSingleFrameCartoon (server) {
+    return Vue.http.get(`/api/v1/${server}/sfc`)
       .then(res => res.json())
   },
-  getEventBadgeById (id) {
-    return Vue.http.get(`/api/v1/event/badge/${id}`)
+  getEventBadgeById (id, server) {
+    return Vue.http.get(`/api/v1/${server}/event/badge/${id}`)
       .then(res => res.json())
   },
-  getDegreeById (id) {
-    return Vue.http.get(`/api/v1/degree/${id}`)
+  getDegreeById (id, server) {
+    return Vue.http.get(`/api/v1/${server}/degree/${id}`)
       .then(res => res.json())
   },
-  getMusic (params) {
-    return Vue.http.get('/api/v1/music', { params })
+  getMusic (params, server) {
+    return Vue.http.get(`/api/v1/${server}/music`, { params })
       .then(res => res.json())
   },
-  getMusicById (id) {
-    return Vue.http.get(`/api/v1/music/${id}`)
+  getMusicById (id, server) {
+    return Vue.http.get(`/api/v1/${server}/music/${id}`)
       .then(res => res.json())
   }
 }

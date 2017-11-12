@@ -94,15 +94,7 @@ module.exports = merge(baseWebpackConfig, {
           handler: 'staleWhileRevalidate'
         },
         {
-          urlPattern: new RegExp('https://api.bangdream.ga'),
-          handler: 'staleWhileRevalidate'
-        },
-        {
           urlPattern: new RegExp('/assets'),
-          handler: 'cacheFirst'
-        },
-        {
-          urlPattern: new RegExp('https://res.bangdream.ga/assets'),
           handler: 'cacheFirst'
         }
       ]

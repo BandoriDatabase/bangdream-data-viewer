@@ -1,8 +1,8 @@
 <template>
   <div>
     <p>Hint: <span class="desktop-only">Click</span><span class="mobile-only">Touch</span> card image to show full screen image.</p>
-    <card v-if="isReady" :cardInfo="cardMap[$route.params.cardId]" :characterInfo="charaInfo"
-      :skillInfo="skillMap[$route.params.cardId]"></card>
+    <card v-if="isReady" :cardInfo="cardMap[$route.params.server][$route.params.cardId]" :characterInfo="charaInfo"
+      :skillInfo="skillMap[$route.params.server][$route.params.cardId]"></card>
     <q-card v-else>
       <q-card-title class="bg-pink text-white">
         {{$t('fetch-card-data')}}
@@ -56,9 +56,9 @@ export default {
   },
   mounted () {
     this.$nextTick(async () => {
-      const card = await this.getCardById(this.$route.params.cardId)
-      await this.getSkillById(card.cardId)
-      this.charaInfo = await this.getCharaById(card.characterId)
+      const card = await this.getCardById({cardId: this.$route.params.cardId, server: this.$route.params.server})
+      await this.getSkillById({cardId: card.cardId, server: this.$route.params.server})
+      this.charaInfo = await this.getCharaById({charaId: card.characterId, server: this.$route.params.server})
       this.isReady = true
     })
   },

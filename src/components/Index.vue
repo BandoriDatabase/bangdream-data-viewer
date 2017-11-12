@@ -5,7 +5,7 @@
         <q-icon name="menu" />
       </q-btn>
       <q-toolbar-title :padding="0">
-        Bandori {{$t('toolbar.title')}} v{{resVer ? resVer : '0.0.0.0'}}
+        Bandori {{$t('toolbar.title')}} v{{appVer}}
       </q-toolbar-title>
     </q-toolbar>
 
@@ -16,30 +16,54 @@
           <q-item-side icon="home" />
           <q-item-main :label="$t('left.home')" />
         </q-side-link>
-        <!-- <q-collapsible icon="picture_in_picture" :label="$t('left.card')">
-          <q-side-link item to="/card/overview">
-            <q-item-side icon="image" />
-            <q-item-main :label="$t('left.gallery')" />
+        <q-collapsible icon="picture_in_picture" :label="$t('left.card')">
+          <q-side-link item to="/card/overview/jp">
+            <!-- <q-item-side icon="image" /> -->
+            <q-item-main :label="$t('left.jp-srv')" />
           </q-side-link>
-          <q-side-link item to="/card/table">
+          <q-side-link item to="/card/overview/tw">
+            <!-- <q-item-side icon="image" /> -->
+            <q-item-main :label="$t('left.tw-srv')" />
+          </q-side-link>
+          <!-- <q-side-link item to="/card/table">
             <q-item-side>
               <table-large-icon />
             </q-item-side>
             <q-item-main :label="$t('left.table')" />
-          </q-side-link>
-        </q-collapsible> -->
-        <q-side-link item to="/card/overview">
+          </q-side-link> -->
+        </q-collapsible>
+        <!-- <q-side-link item to="/card/overview">
           <q-item-side icon="image" />
           <q-item-main :label="$t('left.card')" />
-        </q-side-link>
-        <q-side-link item to="/music">
+        </q-side-link> -->
+        <q-collapsible icon="library_music" :label="$t('left.music')">
+          <q-side-link item to="/music/jp">
+            <!-- <q-item-side icon="image" /> -->
+            <q-item-main :label="$t('left.jp-srv')" />
+          </q-side-link>
+          <q-side-link item to="/music/tw">
+            <!-- <q-item-side icon="image" /> -->
+            <q-item-main :label="$t('left.tw-srv')" />
+          </q-side-link>
+        </q-collapsible>
+        <!-- <q-side-link item to="/music">
           <q-item-side icon="library_music" />
           <q-item-main :label="$t('left.music')" />
-        </q-side-link>
-        <q-side-link item to="/sfcs">
+        </q-side-link> -->
+        <q-collapsible icon="photo_library" :label="$t('left.SFC')">
+          <q-side-link item to="/sfcs/jp">
+            <!-- <q-item-side icon="image" /> -->
+            <q-item-main :label="$t('left.jp-srv')" />
+          </q-side-link>
+          <q-side-link item to="/sfcs/tw">
+            <!-- <q-item-side icon="image" /> -->
+            <q-item-main :label="$t('left.tw-srv')" />
+          </q-side-link>
+        </q-collapsible>
+        <!-- <q-side-link item to="/sfcs">
           <q-item-side icon="photo_library" />
           <q-item-main :label="$t('left.SFC')" />
-        </q-side-link>
+        </q-side-link> -->
         <q-side-link item to="/currevent">
           <q-item-side icon="schedule" />
           <q-item-main :label="$t('left.current-event')" />
@@ -51,10 +75,13 @@
         <q-item-separator />
         <q-list-header>{{$t('left.secTitle')}}</q-list-header>
         <q-item>
-          <q-item-main :label="`Data Ver: v${resVer ? resVer : '0.0.0.0'}`"></q-item-main>
+          <q-item-main :label="`JP Data Ver: v${resVer.jp || '0.0.0.0'}`"></q-item-main>
+        </q-item>
+        <q-item>
+          <q-item-main :label="`TW Data Ver: v${resVer.tw || '0.0.0.0'}`"></q-item-main>
         </q-item>
         <q-item :highlight="false">
-          <q-item-main label="App Ver: v0.3.1" />
+          <q-item-main :label="`App Ver: v${appVer}`" />
         </q-item>
       </q-list>
     </div>
@@ -91,6 +118,8 @@
       "card": "Cards",
       "table": "Table",
       "gallery": "Gallery",
+      "jp-srv": "Japan Server",
+      "tw-srv": "Taiwan Server",
       "music": "Musics",
       "SFC": "Loading Cartoons",
       "about": "About",
@@ -108,6 +137,8 @@
       "card": "卡牌",
       "table": "表格模式",
       "gallery": "大图模式",
+      "jp-srv": "日服",
+      "tw-srv": "台服",
       "music": "歌曲",
       "SFC": "加载界面漫画",
       "about": "关于我们",
@@ -125,6 +156,8 @@
       "card": "卡牌",
       "table": "表格模式",
       "gallery": "大圖模式",
+      "jp-srv": "日服",
+      "tw-srv": "台服",
       "music": "歌曲",
       "SFC": "加載界面漫畫",
       "about": "關於我們",
@@ -175,6 +208,11 @@ export default {
   },
   directives: {
     BackToTop
+  },
+  data () {
+    return {
+      appVer: '0.4.0'
+    }
   },
   computed: {
     ...mapState('version', [
