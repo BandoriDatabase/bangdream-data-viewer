@@ -68,6 +68,10 @@
           <q-item-side icon="schedule" />
           <q-item-main :label="$t('left.current-event')" />
         </q-side-link>
+        <q-side-link item to="/setting">
+          <q-item-side icon="settings" />
+          <q-item-main :label="$t('left.settings')" />
+        </q-side-link>
         <q-side-link item to="/about">
           <q-item-side icon="info" />
           <q-item-main :label="$t('left.about')" />
@@ -124,10 +128,11 @@
       "SFC": "Loading Cartoons",
       "about": "About",
       "secTitle": "Building info",
-      "current-event": "Current Event"
+      "current-event": "Current Event",
+      "settings": "Settings"
     }
   },
-  "zh-CN": {
+  "zh-cn": {
     "toolbar": {
       "title": "数据库"
     },
@@ -143,10 +148,11 @@
       "SFC": "加载界面漫画",
       "about": "关于我们",
       "secTitle": "版本",
-      "current-event": "当前活动"
+      "current-event": "当前活动",
+      "settings": "设置"
     }
   },
-  "zh-TW": {
+  "zh-tw": {
     "toolbar": {
       "title": "數據庫"
     },
@@ -162,7 +168,28 @@
       "SFC": "加載界面漫畫",
       "about": "關於我們",
       "secTitle": "版本",
-      "current-event": "當前活動"
+      "current-event": "當前活動",
+      "settings": "設置"
+    }
+  },
+  "ja": {
+    "toolbar": {
+      "title": "データベース"
+    },
+    "left": {
+      "title": "工具一式",
+      "home": "ホーム",
+      "card": "カード",
+      "table": "詳細表示",
+      "gallery": "画像表示",
+      "jp-srv": "日本サーバー",
+      "tw-srv": "台湾サーバー",
+      "music": "楽曲",
+      "SFC": "読み込みマンガ",
+      "about": "このサイトについて",
+      "secTitle": "バージョン情報",
+      "current-event": "開催中のイベント",
+      "settings": "設定"
     }
   }
 }
@@ -211,7 +238,7 @@ export default {
   },
   data () {
     return {
-      appVer: '0.4.0'
+      appVer: '0.4.3'
     }
   },
   computed: {

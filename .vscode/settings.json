@@ -5,13 +5,5 @@
         "javascriptreact",
         "vue"
     ],
-    "editor.tabSize": 2,
-    "emmet.syntaxProfiles": {
-        "vue-html": "html",
-        "vue": "html"
-    },
-    "emmet.includeLanguages": {
-        "vue-html": "html",
-        "vue": "html"
-    }
+    "editor.tabSize": 2
 }

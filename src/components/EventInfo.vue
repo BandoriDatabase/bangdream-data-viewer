@@ -11,11 +11,14 @@
   "en": {
     "scroll-hint": "Scroll down for TW event"
   },
-  "zh-CN": {
+  "zh-cn": {
     "scroll-hint": "台服活动向下滑可见"
   },
-  "zh-TW": {
+  "zh-tw": {
     "scroll-hint": "台服活動向下滑可見"
+  },
+  "ja": {
+    "scroll-hint": "台湾サーバーイベントのためにスクロールダウン"
   }
 }
 </i18n>

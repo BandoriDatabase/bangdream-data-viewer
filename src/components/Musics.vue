@@ -73,7 +73,7 @@
     "normal": "Normal",
     "anime": "Anime"
   },
-  "zh-CN": {
+  "zh-cn": {
     "hint": [
       "提示: ",
       "点击",
@@ -85,7 +85,7 @@
       "jacket": "封面",
       "coltitle": "标题",
       "type": "类型",
-      "band": "乐队",
+      "band": "演奏者",
       "how-to-get": "获得方式",
       "diffi": "难度",
       "columns": "选择列"
@@ -93,7 +93,7 @@
     "normal": "原创",
     "anime": "动画翻唱"
   },
-  "zh-TW": {
+  "zh-tw": {
     "hint": [
       "提示: ",
       "點擊",
@@ -105,10 +105,28 @@
       "jacket": "封面",
       "coltitle": "標題",
       "type": "類型",
-      "band": "樂隊",
+      "band": "演奏者",
       "how-to-get": "獲得方式",
       "diffi": "難度",
       "columns": "選擇列"
+    }
+  },
+  "ja": {
+    "hint": [
+      "ヒント: ジャケット写真を",
+      "クリックする",
+      "タップする",
+      "と詳細情報が表示されます"
+    ],
+    "table": {
+      "title": "楽曲情報一覧",
+      "jacket": "ジャケット写真",
+      "coltitle": "曲名",
+      "type": "種類",
+      "band": "出演者",
+      "how-to-get": "入手方法",
+      "diffi": "難易度",
+      "columns": "表示列"
     }
   }
 }

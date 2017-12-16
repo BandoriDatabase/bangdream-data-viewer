@@ -54,10 +54,10 @@ export default {
     live2dSprite.adjustTranslate(0.4, 0)
     live2dSprite.startRandomMotion('idle')
 
-    // live2dSprite.on('mousemove', (evt) => {
-    //   const point = evt.data.global
-    //   live2dSprite.setViewPoint(point.x, point.y)
-    // })
+    live2dSprite.on('mousemove', (evt) => {
+      const point = evt.data.global
+      live2dSprite.setViewPoint(point.x, point.y)
+    })
 
     this.animate = () => {
       requestAnimationFrame(this.animate)

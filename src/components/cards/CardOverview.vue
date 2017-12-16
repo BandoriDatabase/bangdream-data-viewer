@@ -64,7 +64,6 @@
     ],
     "table": {
       "title": "Card Database",
-      "columns": "Columns",
       "label": {
         "thumb": "Thumb",
         "name": "Name",
@@ -86,7 +85,7 @@
       "heading3": "Rarity"
     }
   },
-  "zh-CN": {
+  "zh-cn": {
     "hint": [
       "提示: ",
       "点击",
@@ -98,7 +97,6 @@
     ],
     "table": {
       "title": "卡牌数据库",
-      "columns": "选择列",
       "label": {
         "thumb": "头像",
         "name": "角色名",
@@ -120,7 +118,7 @@
       "heading3": "稀有度"
     }
   },
-  "zh-TW": {
+  "zh-tw": {
     "hint": [
       "提示: ",
       "點擊",
@@ -132,7 +130,6 @@
     ],
     "table": {
       "title": "卡牌數據庫",
-      "columns": "選擇列",
       "label": {
         "thumb": "頭像",
         "name": "角色名",
@@ -152,6 +149,39 @@
       "heading1": "角色名",
       "heading2": "技能",
       "heading3": "稀有度"
+    }
+  },
+  "ja": {
+    "hint": [
+      "ヒント: ジャケット写真を",
+      "クリックする",
+      "タップする",
+      "と詳細情報が表示されます",
+      "名前表示方法",
+      "ローマ字",
+      "日本語"
+    ],
+    "table": {
+      "title": "カード情報一覧",
+      "label": {
+        "thumb": "アイコン",
+        "name": "名前",
+        "title": "カード名",
+        "perform": "パフォーマンス",
+        "technic": "テクニック",
+        "visual": "ビジュアル",
+        "skill": "スキル"
+      }
+    },
+    "toolbar": {
+      "filter": "フィルター"
+    },
+    "filter": {
+      "title": "フィルター設定",
+      "messgae": "これらの項目で「キャラクター、スキル、リアリティ」をフィルタすることができます",
+      "heading1": "キャラクター",
+      "heading2": "スキル",
+      "heading3": "リアリティ"
     }
   }
 }

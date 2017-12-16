@@ -4,19 +4,16 @@
       <span v-html="$t('update')"></span>
     </div>
 
-    <div class="row gutter">
-      <div class="col-lg-4 col-xl-4 col-12 card">
-        <event-card server="jp"></event-card>
-        <event-card server="tw"></event-card>
+    <div class="column gutter items-center">
+      <div class="row gutter">
+        <event-card class="col-lg-5 col-sm-12 col-xs-12" server="jp"></event-card>
+        <event-card class="col-lg-5 col-sm-12 col-xs-12" server="tw"></event-card>
       </div>
 
-      <div class="col-lg-4 col-xl-4 col-12">
-        <gacha-card server="jp"></gacha-card>
-        <gacha-card server="tw"></gacha-card>
-      </div>
-
-      <div class="col-lg-4 col-xl-4 col-12">
-        <q-card>
+      <div class="row gutter">
+        <gacha-card class="col-lg-4 col-md-5 col-sm-12 col-xs-12" server="jp"></gacha-card>
+        <gacha-card class="col-lg-4 col-md-5 col-sm-12 col-xs-12" server="tw"></gacha-card>
+        <q-card class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
           <q-card-title class="bg-pink text-white">
             {{$t('info-links')}}
           </q-card-title>
@@ -115,25 +112,20 @@
 <i18n>
 {
   "en": {
-    "title": ["Welcome to", "Database!"],
-    "info-list": "Infos and links",
-    "info-update": "Recent update",
     "info-links": "External links",
-    "update": "All news now on <a href='https://dnaroma.site' target='_blank'>my blog</a>. If you don't see updated data, please keep it open for several seconds and then refresh"
+    "update": "All news now on <a href='https://dnaroma.site' target='_blank'>my blog</a>. If you don't see updated data, please keep it open for several seconds and then refresh."
   },
-  "zh-CN": {
-    "title": ["欢迎访问", "数据库!"],
-    "info-list": "公告及友链",
-    "info-update": "最近更新",
+  "zh-cn": {
     "info-links": "友情链接",
     "update": "更新资讯均在<a href='https://dnaroma.site' target='_blank'>我的博客</a>。 如果你仍然看到的是旧数据请保持本页打开数秒然后刷新即可。"
   },
-  "zh-TW": {
-    "title": ["歡迎訪問", "數據庫!"],
-    "info-list": "公告及友鏈",
-    "info-update": "最近更新",
+  "zh-tw": {
     "info-links": "友情鏈接",
     "update": "更新資訊均在<a href='https://dnaroma.site' target='_blank'>我的博客</a>。如果你仍然看到的是舊數據請保持本頁打開數秒然後刷新即可。"
+  },
+  "ja": {
+    "info-links": "リンク集",
+    "update": "すべての更新は現在<a href='https://dnaroma.site' target='_blank'>私のブログ</a>にあります。 更新されたデータが表示されない場合は、数秒間開いたままにしてから更新してください。"
   }
 }
 </i18n>

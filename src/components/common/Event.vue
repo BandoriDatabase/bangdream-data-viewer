@@ -34,11 +34,14 @@
         <img v-if="isBadgeReady" class="badge" v-lazy="`/assets/thumb/common_${eventBadgeMap[server][currentEvent[server].eventId].badgeAssetBundleName}.png`">
         <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         <p>{{$t('event-degrees')}}</p>
-        <div v-if="isDegreeReady" class="event-degree" :style="{ 'background-image': `url(/assets/thumb/degree_event_point_icon_1.png), url(/assets/thumb/degree_event_point_1.png), url(/assets/thumb/degree_${degreeMap[server][currentEvent[server].rankingRewards[0].rewardId].imageName}.png)` }" />
+        <div v-if="isDegreeReady && server === 'jp'" class="event-degree" :style="{ 'background-image': `url(/assets/thumb/degree_event_point_icon_1.png), url(/assets/thumb/degree_event_point_1.png), url(/assets/thumb/degree_${degreeMap[server][currentEvent[server].rankingRewards[0].rewardId].imageName}.png)` }" />
+        <div v-else-if="isDegreeReady && server === 'tw'" class="event-degree" :style="{ 'background-image': `url(/assets/thumb/degree_${degreeMap[server][currentEvent[server].rankingRewards[0].rewardId].imageName}.png)` }" />
         <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         <span class="row justify-center" v-if="currentEvent[server].eventType === 'challenge'">
-          <div class="event-degree" v-for="eventMusic in currentEvent[server].detail.musics" :key="eventMusic.seq" v-if="degreeMap[server][eventMusic.musicRankingRewards[0].resourceId]"
+          <div class="event-degree" v-for="eventMusic in currentEvent[server].detail.musics" :key="eventMusic.seq" v-if="degreeMap[server][eventMusic.musicRankingRewards[0].resourceId] && server === 'jp'"
           :style="{ 'background-image': `url(/assets/thumb/degree_opening_1_1.png), url(/assets/thumb/degree_score_ranking_1.png), url(/assets/thumb/degree_${degreeMap[server][eventMusic.musicRankingRewards[0].resourceId].imageName}.png)` }" />
+          <div class="event-degree" v-for="eventMusic in currentEvent[server].detail.musics" :key="eventMusic.seq" v-else-if="degreeMap[server][eventMusic.musicRankingRewards[0].resourceId] && server === 'tw'"
+          :style="{ 'background-image': `url(/assets/thumb/degree_${degreeMap[server][eventMusic.musicRankingRewards[0].resourceId].imageName}.png)` }" />
           <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         </span>
         <span class="column items-center" v-if="currentEvent[server].eventType === 'challenge'">
@@ -70,7 +73,7 @@
     "event-tw": "Event TW",
     "event-type": "Event type:",
     "event-end-cd": "Event ending countdown",
-    "event-dist-cd": "Event distribution countdown",
+    "event-dist-cd": "Event award distribution countdown",
     "next-event-cd": "Next event countdown",
     "event-reward-card": "Reward cards",
     "event-reward-stamp": "Reward stamp",
@@ -80,7 +83,7 @@
     "event-musics": "Event musics",
     "fetch-event-data": "Fetching Event Data..."
   },
-  "zh-CN": {
+  "zh-cn": {
     "event-jp": "日服活动",
     "event-tw": "台服活动",
     "event-type": "活动类型：",
@@ -95,7 +98,7 @@
     "event-musics": "活动曲",
     "fetch-event-data": "获取活动数据中"
   },
-  "zh-TW": {
+  "zh-tw": {
     "event-jp": "日服活動",
     "event-tw": "台服活動",
     "event-type": "活動類型：",
@@ -109,6 +112,21 @@
     "event-degrees": "活動頭銜",
     "event-musics": "活動曲",
     "fetch-event-data": "獲取活動數據中"
+  },
+  "ja": {
+    "event-jp": "日本サーバー開催中のイベント",
+    "event-tw": "台湾サーバー開催中のイベント",
+    "event-type": "イベントタイプ：",
+    "event-end-cd": "イベント終了まで残り",
+    "event-dist-cd": "イベント結果発表まで残り",
+    "next-event-cd": "次のイベントまで残り",
+    "event-reward-card": "報酬カード",
+    "event-reward-stamp": "報酬スタンプ",
+    "event-bonus-attr-card": "ボーナスカード",
+    "event-badge": "イベントメダル",
+    "event-degrees": "限定称号",
+    "event-musics": "イベント楽曲",
+    "fetch-event-data": "イベントデータを取得中..."
   }
 }
 </i18n>

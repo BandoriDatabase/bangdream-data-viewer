@@ -48,7 +48,7 @@
     "gacha-pickup": "Pickup gacha cards",
     "gacha-normal": "Other gacha cards"
   },
-  "zh-CN": {
+  "zh-cn": {
     "gacha-start-at": "开始于:",
     "gacha-end-at": "结束于:",
     "gacha-desc": "扭蛋详情",
@@ -57,7 +57,7 @@
     "gacha-pickup": "概率提升卡片",
     "gacha-normal": "其他扭蛋池卡片"
   },
-  "zh-TW": {
+  "zh-tw": {
     "gacha-start-at": "開始於:",
     "gacha-end-at": "結束於:",
     "gacha-desc": "扭蛋詳情",

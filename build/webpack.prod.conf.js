@@ -92,10 +92,6 @@ module.exports = merge(baseWebpackConfig, {
         {
           urlPattern: new RegExp('/api'),
           handler: 'staleWhileRevalidate'
-        },
-        {
-          urlPattern: new RegExp('/assets'),
-          handler: 'cacheFirst'
         }
       ]
     })

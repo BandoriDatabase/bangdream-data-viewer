@@ -1,11 +1,11 @@
 <template>
-  <lazy-component @show="loadData">
+  <!-- <lazy-component @show=""> -->
     <q-card v-if="isReady">
       <q-card-title class="bg-pink text-white">
         {{currentEvent[server].eventName}}
         <span slot="subtitle" class="text-white">{{$t('event-' + server)}} {{currentEvent[server].eventType}}</span>
       </q-card-title>
-      <q-card-media>
+      <q-card-media style="cursor: pointer;" @click="$router.push({ name: 'currEvent' })">
         <img v-if="server === 'jp'" class="responsive" v-lazy="`/assets-jp/homebanner_banner_event${currentEvent[server].eventId}.png`"/>
         <img v-if="server === 'tw'" class="responsive" v-lazy="`/assets-tw/homebanner_banner_event${padEventId(currentEvent[server].eventId)}_open.png`"/>
       </q-card-media>
@@ -26,7 +26,7 @@
         <q-spinner color="pink" size="48px"></q-spinner>
       </q-card-main>
     </q-card>
-  </lazy-component>
+  <!-- </lazy-component> -->
 </template>
 
 <i18n>
@@ -36,15 +36,20 @@
     "event-tw": "Event TW",
     "fetch-event-data": "Fetching Event Data..."
   },
-  "zh-CN": {
+  "zh-cn": {
     "event-jp": "日服活动",
     "event-tw": "台服活动",
     "fetch-event-data": "获取活动数据中"
   },
-  "zh-TW": {
+  "zh-tw": {
     "event-jp": "日服活動",
     "event-tw": "台服活動",
     "fetch-event-data": "獲取活動數據中"
+  },
+  "ja": {
+    "event-jp": "日本サーバー開催中のイベント",
+    "event-tw": "台湾サーバー開催中のイベント",
+    "fetch-event-data": "イベントデータを取得中..."
   }
 }
 </i18n>
@@ -88,6 +93,9 @@ export default {
     ...mapState('event', [
       'currentEvent'
     ])
+  },
+  mounted () {
+    this.loadData()
   },
   methods: {
     ...mapActions('event', [

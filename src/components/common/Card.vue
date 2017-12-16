@@ -158,7 +158,7 @@
                 :max="skillInfo.skillDetail.length || skillInfo.activateEffect.length || skillInfo.onceEffect.length"
               ></q-input>
               <p>{{skillInfo.skillName}}</p>
-              <p>{{(skillInfo.skillDetail[skillLv] || skillInfo.skillDetail[Math.floor((skillLv - 1)/2)]).simpleDescription}}</p>
+              <p>{{skillInfo.skillDetail.find(sd => sd.skillLevel === skillLv).simpleDescription}}</p>
               <p>{{getSkillDesc((skillInfo.skillDetail[skillLv] || skillInfo.skillDetail[Math.floor((skillLv - 1)/2)]).description, skillInfo.activateEffect, skillInfo.onceEffect, skillLv)}}</p>
             </div>
           </q-collapsible>
@@ -220,7 +220,7 @@
     "story-max-level": "Max Level Story: ",
     "story-none": "No story avaliable"
   },
-  "zh-CN": {
+  "zh-cn": {
     "un-trained": "切换觉醒",
     "cut-in-normal": "切换有/无背景",
     "live-chara": "Live角色图",
@@ -240,7 +240,7 @@
     "story-max-level": "满级剧情：",
     "story-none": "该卡牌没有剧情"
   },
-  "zh-TW": {
+  "zh-tw": {
     "un-trained": "切換覺醒",
     "cut-in-normal": "切換有/無背景",
     "live-chara": "Live角色圖",
@@ -259,6 +259,26 @@
     "story-to-unlock": "解鎖材料",
     "story-max-level": "滿級劇情：",
     "story-none": "該卡牌沒有劇情"
+  },
+  "ja": {
+    "un-trained": "特訓前後切替",
+    "cut-in-normal": "背景有無切替",
+    "live-chara": "SDキャラクター",
+    "self-intro-unlock-reward": "エピソード達成ボーナス",
+    "max-lv-unlock-reward": "メモリアルエピソード達成ボーナス",
+    "skill": {
+      "title": "スキル情報",
+      "level": "スキルレベル"
+    },
+    "training": {
+      "title": "特訓素材"
+    },
+    "no-train-ava": "このカードは特訓できません",
+    "story": "カードエピソード",
+    "story-self-intro": "エピソード：",
+    "story-to-unlock": "解放に必要なアイテム",
+    "story-max-level": "メモリアルエピソード：",
+    "story-none": "このカードにエピソードはありません"
   }
 }
 </i18n>
@@ -365,18 +385,18 @@ export default {
           return this.cardInfo.attr
       }
     },
-    getSkillDesc (skillDesc, activateEffects, judgeLists, skillLv) {
-      const activateEffect = activateEffects ? activateEffects[skillLv - 1] : this.skillInfo.skillDetail[skillLv - 1]
-      if (judgeLists && judgeLists.length && activateEffect) {
-        const onceEffect = judgeLists[skillLv - 1]
-        return skillDesc.replace(/\{0\}/, onceEffect.judgeName).replace(/\{1\}/, activateEffect.valueDescription)
+    getSkillDesc (skillDesc, activateEffects, onceEffectList, skillLv) {
+      const activateEffect = activateEffects ? activateEffects.find(af => af.skillLevel === skillLv) : this.skillInfo.skillDetail.find(sd => sd.skillLevel === skillLv)
+      if (onceEffectList && onceEffectList.length && activateEffect) {
+        const onceEffect = onceEffectList.find(oe => oe.skillLv === skillLv)
+        return skillDesc.replace(/\{0\}/, onceEffect.onceEffectValue).replace(/\{1\}/, activateEffect.valueDescription)
       }
       else if (activateEffect) {
         return skillDesc.replace(/\{0\}/, activateEffect.valueDescription || activateEffect.duration)
       }
-      else if (judgeLists && judgeLists.length) {
-        const onceEffect = judgeLists[skillLv - 1]
-        return skillDesc.replace(/\{0\}/, `${onceEffect.judgeName}(${onceEffect.onceEffectValue})`)
+      else if (onceEffectList && onceEffectList.length) {
+        const onceEffect = onceEffectList.find(oe => oe.skillLv === skillLv)
+        return skillDesc.replace(/\{0\}/, `${onceEffect.onceEffectValue}`)
       }
       return ''
     }

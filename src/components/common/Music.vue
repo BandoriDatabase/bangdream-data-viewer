@@ -28,8 +28,9 @@
         <span v-if="Number(data.bandId) > 5">{{data.bandName}}</span>
         <img height="60px" width="100px" v-if="Number(data.bandId) <= 5" v-lazy="`/assets/band/logo/00${data.bandId}_logoL.png`">
       </p>
-      <p>{{$t('combo')}}: {{data.combo}}</p>
+      <!-- <p>{{$t('combo')}}: {{data.combo}}</p> -->
       <p>{{$t('howtoget')}}: {{data.howToGet}}</p>
+      <q-btn @click="$router.push({ name: 'musicScore', params: { musicId: data.musicId } })">{{$t('check-beatmap')}}</q-btn>
       <!-- <p>{{$t('difficulty')}}: {{getDifficulty(data.id)[0].level}} /
           {{getDifficulty(data.id)[3].level}} /
           {{getDifficulty(data.id)[2].level}} /
@@ -127,9 +128,10 @@
     "difficulty": "Difficulty",
     "band": "Band",
     "achieve": "Live achievement reward",
-    "combo": "Total notes"
+    "combo": "Total notes",
+    "check-beatmap": "Open beatmap player"
   },
-  "zh-CN": {
+  "zh-cn": {
     "composer": "作曲",
     "lyricist": "作词",
     "arranger": "编曲",
@@ -137,9 +139,10 @@
     "difficulty": "难度",
     "band": "演奏者",
     "achieve": "歌曲成就",
-    "combo": "音符数"
+    "combo": "音符数",
+    "check-beatmap": "打开谱面播放器"
   },
-  "zh-TW": {
+  "zh-tw": {
     "composer": "作曲",
     "lyricist": "作詞",
     "arranger": "編曲",
@@ -147,7 +150,19 @@
     "difficulty": "難度",
     "band": "演奏者",
     "achieve": "歌曲成就",
-    "combo": "音符數"
+    "combo": "音符數",
+    "check-beatmap": "打開譜面播放器"
+  },
+  "ja": {
+    "composer": "作曲",
+    "lyricist": "作詞",
+    "arranger": "編曲",
+    "howtoget": "入手方法",
+    "difficulty": "難易度",
+    "band": "出演者",
+    "achieve": "達成報酬",
+    "combo": "トータルノート",
+    "check-beatmap": "ビートマッププレイヤーを開く"
   }
 }
 </i18n>
@@ -158,7 +173,8 @@ import {
   QCardTitle,
   QCardMedia,
   QCardMain,
-  QCollapsible
+  QCollapsible,
+  QBtn
 } from 'quasar'
 import VueAplayer from 'vue-aplayer'
 
@@ -171,7 +187,8 @@ export default {
     QCardMedia,
     QCardMain,
     QCollapsible,
-    aPlayer: VueAplayer
+    aPlayer: VueAplayer,
+    QBtn
   },
   beforeDestroy () {
     let aplayer = this.$refs.player.control
@@ -193,6 +210,131 @@ export default {
     },
     getDifficulty (musicId) {
       return this.musicDifficultyList.filter(elem => elem.musicId === musicId)
+    },
+    startRhythm () {
+      this.$http.get(`/api/v1/jp/music/chart/${this.data.musicId}/expert`)
+        .then(res => res.json())
+        .then(res => {
+          const baseTime = this.audioContext.currentTime + 0.1
+          res.forEach(note => {
+            switch (note.type) {
+              case 'Music':
+                this.playSound(this.bufferLoader.bufferList[0], baseTime + note.timing)
+                break
+              default:
+                this.playSound(this.bufferLoader.bufferList[1], baseTime + note.timing)
+                if (note.endTiming) this.playSound(this.bufferLoader.bufferList[1], baseTime + note.endTiming)
+                break
+            }
+          })
+
+          this.draw(res, baseTime, this.bufferLoader.bufferList[0].duration)
+        })
+    },
+    drawBackground () {
+      const canvas = this.$refs.game.getContext('2d')
+      canvas.clearRect(100, 10, 280, 750)
+      canvas.fillStyle = '#1088d0'
+      canvas.fillRect(100, 10, 38, 700)
+      canvas.fillRect(140, 10, 38, 700)
+      canvas.fillRect(180, 10, 38, 700)
+      canvas.fillRect(220, 10, 38, 700)
+      canvas.fillRect(260, 10, 38, 700)
+      canvas.fillRect(300, 10, 38, 700)
+      canvas.fillRect(340, 10, 38, 700)
+
+      canvas.fillStyle = '#000000'
+      canvas.fillRect(138, 10, 2, 700)
+      canvas.fillRect(178, 10, 2, 700)
+      canvas.fillRect(218, 10, 2, 700)
+      canvas.fillRect(258, 10, 2, 700)
+      canvas.fillRect(298, 10, 2, 700)
+      canvas.fillRect(338, 10, 2, 700)
+    },
+    draw (noteArr, baseTime, maxLength) {
+      const canvas = this.$refs.game.getContext('2d')
+      const drawingNotes = noteArr.filter(note => {
+        const noteTime = note.timing - (this.audioContext.currentTime - baseTime)
+        const noteEndTime = note.endTiming - (this.audioContext.currentTime - baseTime)
+        return (noteTime > 0 && noteTime < 1) || (noteEndTime > 0)
+      })
+
+      this.drawBackground()
+      const noteColorMap = {
+        'Flick': '#e317f1fa',
+        'Slide_End_Flick_A': '#e317f1fa',
+        'Slide_End_Flick_B': '#e317f1fa'
+      }
+
+      drawingNotes.forEach(note => {
+        const noteTime = note.timing - (this.audioContext.currentTime - baseTime)
+        const noteEndTime = note.endTiming - (this.audioContext.currentTime - baseTime)
+        canvas.fillStyle = noteColorMap[note.type] || '#3619d2'
+        let height = 690 * (1 - noteTime)
+        let noteHeight = 20
+        if (height > 700) height = 700
+        // draw note as animation
+        switch (note.column) {
+          case 'SC':
+            canvas.fillRect(100, 10 + height, 38, noteHeight)
+            if (noteEndTime) {
+              canvas.fillRect(100, 700 * (1 - noteEndTime), 38, 20)
+              canvas.fillStyle = '#18ff15bd'
+              canvas.fillRect(100, 10 + height, 38, 710 * (1 - noteEndTime) - height)
+            }
+            break
+          case '1':
+            canvas.fillRect(140, 10 + height, 38, noteHeight)
+            if (noteEndTime) {
+              canvas.fillRect(140, 700 * (1 - noteEndTime), 38, 20)
+              canvas.fillStyle = '#18ff15bd'
+              canvas.fillRect(140, 10 + height, 38, 710 * (1 - noteEndTime) - height)
+            }
+            break
+          case '2':
+            canvas.fillRect(180, 10 + height, 38, noteHeight)
+            if (noteEndTime) {
+              canvas.fillRect(180, 700 * (1 - noteEndTime), 38, 20)
+              canvas.fillStyle = '#18ff15bd'
+              canvas.fillRect(180, 10 + height, 38, 710 * (1 - noteEndTime) - height)
+            }
+            break
+          case '3':
+            canvas.fillRect(220, 10 + height, 38, noteHeight)
+            if (noteEndTime) {
+              canvas.fillRect(220, 700 * (1 - noteEndTime), 38, 20)
+              canvas.fillStyle = '#18ff15bd'
+              canvas.fillRect(220, 10 + height, 38, 710 * (1 - noteEndTime) - height)
+            }
+            break
+          case '4':
+            canvas.fillRect(260, 10 + height, 38, noteHeight)
+            if (noteEndTime) {
+              canvas.fillRect(260, 700 * (1 - noteEndTime), 38, 20)
+              canvas.fillStyle = '#18ff15bd'
+              canvas.fillRect(260, 10 + height, 38, 710 * (1 - noteEndTime) - height)
+            }
+            break
+          case '5':
+            canvas.fillRect(300, 10 + height, 38, noteHeight)
+            if (noteEndTime) {
+              canvas.fillRect(300, 700 * (1 - noteEndTime), 38, 20)
+              canvas.fillStyle = '#18ff15bd'
+              canvas.fillRect(300, 10 + height, 38, 710 * (1 - noteEndTime) - height)
+            }
+            break
+          case '6':
+            canvas.fillRect(340, 10 + height, 38, noteHeight)
+            if (noteEndTime) {
+              canvas.fillRect(340, 700 * (1 - noteEndTime), 38, 20)
+              canvas.fillStyle = '#18ff15bd'
+              canvas.fillRect(340, 10 + height, 38, 710 * (1 - noteEndTime) - height)
+            }
+            break
+        }
+      })
+
+      if (this.audioContext.currentTime - baseTime <= maxLength) requestAnimationFrame(this.draw.bind(this, noteArr, baseTime, maxLength))
     }
   }
 }

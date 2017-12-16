@@ -30,7 +30,9 @@ export default new VueRouter({
         { name: 'singleFrame', path: '/sfcs/:server(\\S{2})', component: load('SingleFrameCartoon') },
         { name: 'musicOverview', path: '/music/:server(\\S{2})', component: load('Musics') },
         { name: 'musicDetail', path: '/music/:server(\\S{2})/:musicId(\\d+)', component: load('MusicDetail') },
-        { path: '/currevent', component: load('EventInfo') },
+        { name: 'currEvent', path: '/currevent', component: load('EventInfo') },
+        { path: '/setting', component: load('Settings') },
+        { name: 'musicScore', path: '/musicscore/:musicId(\\d+)', component: load('MusicScore') },
         // { path: '/live2d', component: load('Live2D') },
         { path: '/about', component: load('About') }
       ]}, // Default

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Hint: <span class="desktop-only">Click</span><span class="mobile-only">Touch</span> card image to show full screen image.</p>
+    <p>{{$t('hint[0]')}}<span class="desktop-only">{{$t('hint[1]')}}</span><span class="mobile-only">{{$t('hint[2]')}}</span> {{$t('hint[3]')}}</p>
     <card v-if="isReady" :cardInfo="cardMap[$route.params.server][$route.params.cardId]" :characterInfo="charaInfo"
       :skillInfo="skillMap[$route.params.server][$route.params.cardId]"></card>
     <q-card v-else>
@@ -18,13 +18,40 @@
 <i18n>
 {
   "en": {
+    "hint": [
+      "Hint: ",
+      "Click",
+      "Touch",
+      "card image to show full screen image."
+    ],
     "fetch-card-data": "Fetching Card Data..."
   },
-  "zh-CN": {
+  "zh-cn": {
+    "hint": [
+      "提示: ",
+      "点击",
+      "触摸",
+      "卡牌图片可放大显示"
+    ],
     "fetch-card-data": "获取卡牌数据中"
   },
-  "zh-TW": {
+  "zh-tw": {
+    "hint": [
+      "提示: ",
+      "點擊",
+      "觸摸",
+      "卡牌圖片可放大顯示"
+    ],
     "fetch-card-data": "獲取卡牌數據中"
+  },
+  "ja": {
+    "hint": [
+      "ヒント: ジャケット写真を",
+      "クリックする",
+      "タップする",
+      "と全画面イメージが表示されます"
+    ],
+    "fetch-card-data": "カードデータを取得中..."
   }
 }
 </i18n>

@@ -1,5 +1,5 @@
 <template>
-  <lazy-component @show="loadData">
+  <!-- <lazy-component @show=""> -->
     <q-card v-if="isGcahaReady">
       <q-card-title class="bg-pink text-white">
         {{$t(`gache-list-${server}`)}}
@@ -23,7 +23,7 @@
         <q-spinner color="pink" size="48px"></q-spinner>
       </q-card-main>
     </q-card>
-  </lazy-component>
+  <!-- </lazy-component> -->
 </template>
 
 <i18n>
@@ -35,19 +35,26 @@
     "gacha-list-count": "Counts",
     "fetch-gacha-data": "Fetching Gacha Data..."
   },
-  "zh-CN": {
+  "zh-cn": {
     "gacha-end-cd": "抽卡倒计时",
     "gache-list-jp": "日服当前开放扭蛋池",
     "gache-list-tw": "台服当前开放扭蛋池",
     "gacha-list-count": "数量",
     "fetch-gacha-data": "获取扭蛋池数据中"
   },
-  "zh-TW": {
+  "zh-tw": {
     "gacha-end-cd": "抽卡倒計時",
     "gache-list-jp": "日服當前開放扭蛋池",
     "gache-list-tw": "臺服當前開放扭蛋池",
     "gacha-list-count": "數量",
     "fetch-gacha-data": "獲取扭蛋池數據中"
+  },
+  "ja": {
+    "gacha-end-cd": "ガチャカウントダウン",
+    "gache-list-jp": "日本サーバー開催中のガチャ",
+    "gache-list-tw": "台湾サーバー開催中のガチャ",
+    "gacha-list-count": "総数",
+    "fetch-gacha-data": "ガチャデータを取得中..."
   }
 }
 </i18n>
@@ -89,6 +96,9 @@ export default {
     ...mapState('gacha', [
       'currentGachaList'
     ])
+  },
+  mounted () {
+    this.loadData()
   },
   methods: {
     ...mapActions('gacha', [

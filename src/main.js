@@ -13,7 +13,7 @@ import VueLazyload from 'vue-lazyload'
 import VuePreview from 'vue-preview'
 import VueAnalytics from 'vue-analytics'
 import VueI18n from 'vue-i18n'
-// import 'pixi.js'
+import 'pixi.js'
 // import 'statics/live2d.min.js'
 // import 'pixi-live2d'
 
@@ -41,14 +41,15 @@ Vue.use(VueI18n)
 AddressbarColor.set('#e91e63')
 
 let locale = LocalStorage.get.item('useLocale')
-if (!locale) {
+if (!locale || locale !== locale.toLowerCase()) {
   locale = window.navigator.userLanguage || window.navigator.language
+  locale = locale.toLowerCase()
   LocalStorage.set('useLocale', locale)
 }
 const i18n = new VueI18n({
   locale,
-  // locale: 'en',
-  // locale: 'zh-TW',
+  // locale: 'ja',
+  // locale: 'zh-tw',
   fallbackLocale: 'en'
 })
 

@@ -37,7 +37,7 @@
     }, {
       "title": "Translation",
       "contents": [
-        "Any translation for new language and any translation improvement are welcomed. You can send your translation through <a href=''>email</a> (currently unavaliable) or open a issue on the <a href='https://github.com/BandoriDatabase/bangdream-data-viewer'>repo</a>."
+        "Any translation for new language and any translation improvement are welcomed. You can send your translation through <a href='mailto:dev@bangdream.ga'>email</a> (currently unavaliable) or open a issue on the <a href='https://github.com/BandoriDatabase/bangdream-data-viewer'>repo</a>."
       ]
     }, {
       "title": "Donation",
@@ -48,7 +48,7 @@
       ]
     }]
   },
-  "zh-CN": {
+  "zh-cn": {
     "title": "帮助和支持我们",
     "paras": [{
       "title": "开发",
@@ -58,7 +58,7 @@
     }, {
       "title": "翻译",
       "contents": [
-        "我们欢迎任何新语言的翻译或者对于现有翻译的改进，您可以把您的翻译发送到<a href=''>Email</a>（还没做好）或者在<a href='https://github.com/BandoriDatabase/bangdream-data-viewer'>代码仓库</a>里开一个Issue。"
+        "我们欢迎任何新语言的翻译或者对于现有翻译的改进，您可以把您的翻译发送到<a href='mailto:dev@bangdream.ga'>Email</a>或者在<a href='https://github.com/BandoriDatabase/bangdream-data-viewer'>代码仓库</a>里开一个Issue。"
       ]
     }, {
       "title": "捐赠",
@@ -69,7 +69,7 @@
       ]
     }]
   },
-  "zh-TW": {
+  "zh-tw": {
     "title": "幫助和支持我們",
     "paras": [{
       "title": "開發",
@@ -79,7 +79,7 @@
     }, {
       "title": "翻譯",
       "contents": [
-        "我們歡迎任何新語言的翻譯或者對於現有翻譯的改進，您可以把您的翻譯發送到<a href=''>Email</a>（還沒做好）或者在<a href='https ://github.com/BandoriDatabase/bangdream-data-viewer'>代碼倉庫</a>裡開一個Issue。"
+        "我們歡迎任何新語言的翻譯或者對於現有翻譯的改進，您可以把您的翻譯發送到<a href='mailto:dev@bangdream.ga'>Email</a>或者在<a href='https ://github.com/BandoriDatabase/bangdream-data-viewer'>代碼倉庫</a>裡開一個Issue。"
       ]
     }, {
       "title": "捐贈",
@@ -87,6 +87,27 @@
         "開發和維護這個網站有很小的花費。如果您認為這個網站對您有幫助，您可以考慮提供小小的支持來幫助開發者把網站做得更好。",
         "您可以通過以下方式支持我：",
         "您的幫助會讓我們不斷把網站做得更好！"
+      ]
+    }]
+  },
+  "ja": {
+    "title": "私たちの改善に役立てる",
+    "paras": [{
+      "title": "開発",
+      "contents": [
+        "Bandori Databaseはオープンソースプロジェクトです（ゲームデータなし），<a href='https://github.com/BandoriDatabase/bangdream-data-viewer'>レポ</a>にアクセスしたり、問題を開いたり、プルリクエストを作成したりすることができます。 あなたのコラボレーションは高く評価されます！"
+      ]
+    }, {
+      "title": "翻訳",
+      "contents": [
+        "新しい言語の翻訳や翻訳の改善が歓迎されます。<a href='mailto:dev@bangdream.ga'>メール</a>で翻訳を送信したり、<a href='https://github.com/BandoriDatabase/bangdream-data-viewer'>レポ</a>で問題を開くことができます。"
+      ]
+    }, {
+      "title": "寄付",
+      "contents": [
+        "このサイトの開発とホスティングにはコストがかかります。 このサイトが有用であると考えるならば、開発作業を続けるためのサポートを提供することができます。",
+        "サポートする方法の1つを選択してください：",
+        "あなたのサポートは、このサイトを常により良くするために私たちを押し進めます！"
       ]
     }]
   }
