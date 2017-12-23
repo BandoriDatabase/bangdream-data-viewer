@@ -281,6 +281,7 @@ export default {
       const lastAppVer = LocalStorage.get.item('appVer')
       if (!lastAppVer || semver.gt(this.appVer, lastAppVer)) {
         this.$refs['update-note'].$refs.modal.open()
+        LocalStorage.set('appVer', this.appVer)
       }
     })
   }
