@@ -9,14 +9,14 @@
       :data="showCardInfoList"
       :config="cardTableConfig"
       :columns="cardColumns">
-      <template slot="col-thumb" scope="cell">
+      <template slot="col-thumb" slot-scope="cell">
         <!-- <div class="shadow-1 shadow-transition hoverable-3" :class="`thumb-${getCardThumbFrame(cell.row)}`">
           <img class="thumb-table" v-lazy:background-image="`/assets/thumb/chara/card0000${Math.trunc(Number(cell.row.cardId) / 50)}_${cell.row.cardRes}_normal.png`"
           @click="$router.push({ name: 'cardDetail', params: { cardId: cell.row.cardId } })">
         </div> -->
         <card-thumb :cardInfo="cell.row"></card-thumb>
       </template>
-      <template slot="col-name" scope="cell">
+      <template slot="col-name" slot-scope="cell">
         <div @click="$router.push({ name: 'cardDetail', params: { cardId: cell.row.cardId } })"
           style="cursor: pointer" :class="`text-${getPalette(cell.row.attr)}`">
           {{displayName ? 
@@ -24,31 +24,31 @@
             getCharacter(cell.row.characterId).characterName}}
         </div>
       </template>
-      <template slot="col-title" scope="cell">
+      <template slot="col-title" slot-scope="cell">
         <div @click="$router.push({ name: 'cardDetail', params: { cardId: cell.row.cardId } })"
           style="cursor: pointer" :class="`text-${getPalette(cell.row.attr)}`">
           {{cell.data}}
         </div>
       </template>
-      <template slot="col-characterId" scope="cell">
+      <template slot="col-characterId" slot-scope="cell">
         <!-- <div v-if="Number(getCharacter(cell.data).bandId) > 5">{{bandMap[getCharacter(cell.data).bandId].bandName}}</div> -->
         <img height="60px" width="90px" v-if="Number(getCharacter(cell.data).bandId) <= 5" v-lazy="`/assets/band/logo/00${getCharacter(cell.data).bandId}_logoL.png`" :alt="bandMap[getCharacter(cell.data).bandId].bandName">
       </template>
-      <!-- <template slot="col-maxPerformance" scope="cell">
+      <!-- <template slot="col-maxPerformance" slot-scope="cell">
         {{getMaxAttr(cell.row).performance}}
       </template>
-      <template slot="col-maxTechnique" scope="cell">
+      <template slot="col-maxTechnique" slot-scope="cell">
         {{getMaxAttr(cell.row).technique}}
       </template>
-      <template slot="col-maxVisual" scope="cell">
+      <template slot="col-maxVisual" slot-scope="cell">
         {{getMaxAttr(cell.row).visual}}
       </template> -->
-      <!-- <template slot="col-totalAttr" scope="cell">
+      <!-- <template slot="col-totalAttr" slot-scope="cell">
         {{Number(getMaxAttr(cell.row).performance) +
           Number(getMaxAttr(cell.row).technique) +
           Number(getMaxAttr(cell.row).visual)}}
       </template> -->
-      <template slot="col-skillId" scope="cell">
+      <template slot="col-skillId" slot-scope="cell">
         {{skillMap[cell.data].skillName}}
       </template>
     </q-data-table>

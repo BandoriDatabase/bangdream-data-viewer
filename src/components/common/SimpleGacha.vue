@@ -1,5 +1,5 @@
 <template>
-  <!-- <lazy-component @show=""> -->
+  <div>
     <q-card v-if="isGcahaReady">
       <q-card-title class="bg-pink text-white">
         {{$t(`gache-list-${server}`)}}
@@ -23,7 +23,7 @@
         <q-spinner color="pink" size="48px"></q-spinner>
       </q-card-main>
     </q-card>
-  <!-- </lazy-component> -->
+  </div>
 </template>
 
 <i18n>

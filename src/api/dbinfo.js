@@ -85,5 +85,9 @@ export default {
   getMusicById (id, server) {
     return Vue.http.get(`/api/v1/${server}/music/${id}`)
       .then(res => res.json())
+  },
+  getBand (server) {
+    return Vue.http.get(`/api/v1/${server}/band`)
+      .then(res => res.json())
   }
 }

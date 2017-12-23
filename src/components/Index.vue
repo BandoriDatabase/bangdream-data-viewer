@@ -7,6 +7,19 @@
       <q-toolbar-title :padding="0">
         Bandori {{$t('toolbar.title')}} v{{appVer}}
       </q-toolbar-title>
+      <q-btn flat>
+        <q-icon name="more_vert" />
+        <q-popover ref="moremenu" anchor="top left" self="top left">
+          <q-list link style="min-width: 100px">
+            <q-item
+              @click="$refs.settings.open(), $refs.moremenu.close()"
+            >
+              <q-item-side icon="settings" />
+              <q-item-main label="Settings" />
+            </q-item>
+          </q-list>
+        </q-popover>
+      </q-btn>
     </q-toolbar>
 
     <div slot="left">
@@ -68,10 +81,10 @@
           <q-item-side icon="schedule" />
           <q-item-main :label="$t('left.current-event')" />
         </q-side-link>
-        <q-side-link item to="/setting">
+        <!-- <q-side-link item to="/setting">
           <q-item-side icon="settings" />
           <q-item-main :label="$t('left.settings')" />
-        </q-side-link>
+        </q-side-link> -->
         <q-side-link item to="/about">
           <q-item-side icon="info" />
           <q-item-main :label="$t('left.about')" />
@@ -107,6 +120,9 @@
         <q-icon name="keyboard_arrow_up" />
       </q-btn>
     </div>
+
+    <settings-modal ref="settings"></settings-modal>
+    <update-notes-modal ref="update-note"></update-notes-modal>
   </q-layout>
 </template>
 
@@ -210,11 +226,16 @@ import {
   QItem,
   BackToTop,
   QItemSeparator,
-  QCollapsible
+  QCollapsible,
+  QPopover,
+  LocalStorage
 } from 'quasar'
 import { mapActions, mapState } from 'vuex'
+import semver from 'semver'
 
 import tableLargeIcon from 'icons/table-large'
+import SettingsModal from './modals/Settings'
+import UpdateNotesModal from './modals/UpdateNotes'
 
 export default {
   components: {
@@ -231,14 +252,17 @@ export default {
     QItem,
     QItemSeparator,
     QCollapsible,
-    tableLargeIcon
+    tableLargeIcon,
+    QPopover,
+    SettingsModal,
+    UpdateNotesModal
   },
   directives: {
     BackToTop
   },
   data () {
     return {
-      appVer: '0.4.3'
+      appVer: '0.4.5'
     }
   },
   computed: {
@@ -254,6 +278,10 @@ export default {
   mounted () {
     this.$nextTick(async () => {
       await this.getResourceVersion()
+      const lastAppVer = LocalStorage.get.item('appVer')
+      if (!lastAppVer || semver.gt(this.appVer, lastAppVer)) {
+        this.$refs['update-note'].$refs.modal.open()
+      }
     })
   }
 }

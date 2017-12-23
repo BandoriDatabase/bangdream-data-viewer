@@ -3,10 +3,34 @@
     <section v-if="$route.params.musicId === undefined">
       <div class="block">
         <p>{{$t('hint[0]')}}<span class="desktop-only">{{$t('hint[1]')}}</span><span class="mobile-only">{{$t('hint[2]')}}</span>{{$t('hint[3]')}}</p>
+        <q-btn color="pink" @click="isFilterVisible = !isFilterVisible">{{$t('toolbar.filter')}}</q-btn>
+        <q-slide-transition>
+          <div class="shadow-3" style="padding: 1%;" v-show="isFilterVisible">
+            <p>{{$t('filter.title')}}</p>
+            <div class="row gutter">
+              <q-select class="col-12" multiple chips v-model="selectBandId" :float-label="$t('filter.bandId')"
+                :options="bandOption" color="pink"></q-select>
+            </div>
+            <p>{{$t('sort.title')}}</p>
+            <div class="row gutter">
+              <q-radio color="pink" v-model="sortParam" val="asc" :label="$t('sort.asc')" />
+              <q-radio color="pink" v-model="sortParam" val="desc" :label="$t('sort.desc')" />
+            </div>
+            <br>
+            <div class="row gutter">
+              <q-radio color="pink" v-model="orderKey" val="musicId" label="ID" />
+              <q-radio color="pink" v-model="orderKey" val="bandId" :label="$t('filter.bandId')" />
+            </div>
+            <br>
+            <div>
+              <q-btn color="pink" @click="doFilter(), saveFilter()">{{$t('filter.apply-save')}}</q-btn>
+            </div>
+          </div>
+        </q-slide-transition>
       </div>
       <q-infinite-scroll ref="musicScroll" v-if="isReady" :handler="loadMore">
         <div class="row gt-sm">
-          <div v-for="music in musicList[server]" :key="music.cardId" class="col-12 col-md-6 col-xl-3 col-lg-4 full-height">
+          <div v-for="music in musicList" :key="music.cardId" class="col-12 col-md-6 col-xl-3 col-lg-4 full-height">
             <q-card style="height: 500px; cursor: pointer;" @click="$router.push({ name: 'musicDetail', params: { musicId: music.musicId, server } })">
               <q-card-media class="full-height" style="position: relative;">
                 <span :class="`music-img-band-${music.bandId}`"></span>
@@ -20,7 +44,7 @@
           </div>
         </div>
         <div class="row lt-md">
-          <div v-for="music in musicList[server]" :key="music.cardId" class="col-12 col-md-6 col-xl-3 col-lg-4 full-height">
+          <div v-for="music in musicList" :key="music.cardId" class="col-12 col-md-6 col-xl-3 col-lg-4 full-height">
             <q-card style="height: 100px;" @click="$router.push({ name: 'musicDetail', params: { musicId: music.musicId, server } })">
               <!-- <q-card-media class="full-height" style="position: relative;">
                 <span :class="`music-img-band-${music.bandId}`"></span>
@@ -60,18 +84,19 @@
       "Touch",
       " jacket image to see detail infos."
     ],
-    "table": {
-      "title": "Music Database",
-      "jacket": "Jacket",
-      "coltitle": "Title",
-      "type": "Type",
-      "band": "Band",
-      "how-to-get": "How to get",
-      "diffi": "Difficulty",
-      "columns": "Columns"
+    "toolbar": {
+      "filter": "Open/Close filter"
     },
-    "normal": "Normal",
-    "anime": "Anime"
+    "filter": {
+      "title": "Filter options",
+      "apply-save": "Save & Apply",
+      "bandId": "Band"
+    },
+    "sort": {
+      "title": "Sort options",
+      "asc": "Forward",
+      "desc": "Backward"
+    }
   },
   "zh-cn": {
     "hint": [
@@ -80,18 +105,19 @@
       "触摸",
       "歌曲封面来查看详细信息"
     ],
-    "table": {
-      "title": "歌曲数据库",
-      "jacket": "封面",
-      "coltitle": "标题",
-      "type": "类型",
-      "band": "演奏者",
-      "how-to-get": "获得方式",
-      "diffi": "难度",
-      "columns": "选择列"
+    "toolbar": {
+      "filter": "打开/关闭过滤"
     },
-    "normal": "原创",
-    "anime": "动画翻唱"
+    "filter": {
+      "title": "过滤选项",
+      "apply-save": "应用和保存过滤选项",
+      "bandId": "乐队/演奏者"
+    },
+    "sort": {
+      "title": "排序选项",
+      "asc": "正序",
+      "desc": "倒序"
+    }
   },
   "zh-tw": {
     "hint": [
@@ -100,15 +126,19 @@
       "觸摸",
       "歌曲封面來查看詳細信息"
     ],
-    "table": {
-      "title": "歌曲數據庫",
-      "jacket": "封面",
-      "coltitle": "標題",
-      "type": "類型",
-      "band": "演奏者",
-      "how-to-get": "獲得方式",
-      "diffi": "難度",
-      "columns": "選擇列"
+    "toolbar": {
+      "filter": "打開/關閉過濾"
+    },
+    "filter": {
+      "title": "過濾選項",
+      "apply-save": "應用和保存過濾選項",
+      "bandId": "樂隊/演奏者"
+    },
+    "sort": {
+      "title": "排序選項",
+      "asc": "正序",
+      "desc": "倒序",
+      "total": "屬性之和"
     }
   },
   "ja": {
@@ -117,93 +147,41 @@
       "クリックする",
       "タップする",
       "と詳細情報が表示されます"
-    ],
-    "table": {
-      "title": "楽曲情報一覧",
-      "jacket": "ジャケット写真",
-      "coltitle": "曲名",
-      "type": "種類",
-      "band": "出演者",
-      "how-to-get": "入手方法",
-      "diffi": "難易度",
-      "columns": "表示列"
-    }
+    ]
   }
 }
 </i18n>
 
 <script>
 import {
-  Platform,
   QInfiniteScroll,
   QSpinner,
   QCard,
   QCardTitle,
   QCardMedia,
   QCardMain,
-  QInnerLoading
+  QInnerLoading,
+  QBtn,
+  QSlideTransition,
+  QSelect,
+  LocalStorage,
+  QRadio
 } from 'quasar'
+import apiDBInfo from 'api/dbinfo'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'musicList',
   data () {
     return {
-      musicTableConfig: {
-        pagination: {
-          rowsPerPage: 10,
-          options: [10, 20]
-        },
-        responsive: true,
-        bodyStyle: {
-          maxHeight: Platform.is.mobile ? '60vh' : '70vh'
-        },
-        columnPicker: true,
-        title: this.$t('table.title'),
-        messages: {
-          noData: '<i>warning</i> No data available to show.',
-          noDataAfterFiltering: '<i>warning</i> No results. Please refine your search terms.'
-        },
-        labels: {
-          columns: this.$t('table.columns')
-        }
-      },
-      musicColumns: [{
-        label: 'id',
-        field: 'id',
-        width: '4px',
-        sort (a, b) {
-          return Number(b) - Number(a)
-        }
-      }, {
-        label: this.$t('table.jacket'),
-        field: 'jacketImage',
-        width: '10px'
-      }, {
-        label: this.$t('table.coltitle'),
-        field: 'title',
-        width: '15px',
-        sort: true
-      }, {
-        label: this.$t('table.type'),
-        field: 'tag',
-        width: '5px',
-        sort: true
-      }, {
-        label: this.$t('table.band'),
-        field: 'bandId',
-        width: '10px',
-        sort: true
-      }, {
-        label: this.$t('table.how-to-get'),
-        field: 'howToGet',
-        width: '20px'
-      }, {
-        label: this.$t('table.diffi'),
-        field: 'diff',
-        width: '10px'
-      }],
-      isReady: false
+      isReady: false,
+      isFilterVisible: false,
+      selectBandId: [],
+      bandOption: [],
+      musicList: [],
+      queryParams: {limit: 12, page: 1},
+      orderKey: 'musicId',
+      sortParam: 'desc'
     }
   },
   components: {
@@ -213,18 +191,33 @@ export default {
     QCardTitle,
     QCardMedia,
     QCardMain,
-    QInnerLoading
+    QInnerLoading,
+    QBtn,
+    QSlideTransition,
+    QSelect,
+    LocalStorage,
+    QRadio
   },
   mounted () {
+    if (!LocalStorage.get.item(`musicfilter.${this.server}`)) LocalStorage.set(`musicfilter.${this.server}`, {})
+    this.selectBandId = LocalStorage.get.item(`musicfilter.${this.server}`).bands || []
+    this.sortParam = LocalStorage.get.item(`musicfilter.${this.server}`).sort || 'desc'
+    this.orderKey = LocalStorage.get.item(`musicfilter.${this.server}`).orderKey || 'musicId'
+
     this.$nextTick(async () => {
-      await this.getMusicList({ params: {limit: 12, page: 1}, server: this.server })
-      // this.doFilter()
+      // await this.getMusicList(this.queryParams, this.server)
+      await this.doFilter()
+      await this.getBandList(this.server)
+      this.bandOption = this.bandList[this.server].map(elem => ({
+        label: elem.bandName,
+        value: elem.bandId
+      }))
       this.isReady = true
     })
   },
   computed: {
-    ...mapState('music', [
-      'musicList'
+    ...mapState('band', [
+      'bandList'
     ]),
     server () {
       return this.$route.params.server
@@ -233,19 +226,59 @@ export default {
   watch: {
     '$route.params.server': function () {
       this.isReady = false
+      if (!LocalStorage.get.item(`musicfilter.${this.server}`)) LocalStorage.set(`musicfilter.${this.server}`, {})
+      this.selectBandId = LocalStorage.get.item(`musicfilter.${this.server}`).bandId || []
+      this.sortParam = LocalStorage.get.item(`musicfilter.${this.server}`).sort || 'desc'
+      this.orderKey = LocalStorage.get.item(`musicfilter.${this.server}`).orderKey || 'musicId'
       this.$nextTick(async () => {
-        await this.getMusicList({ params: {limit: 12, page: 1}, server: this.server })
+        // await this.getMusicList(this.queryParams, this.server)
+        await this.doFilter()
+        await this.getBandList(this.server)
+        this.bandOption = this.bandList[this.server].map(elem => ({
+          label: elem.bandName,
+          value: elem.bandId
+        }))
         this.isReady = true
       })
     }
   },
   methods: {
-    ...mapActions('music', [
-      'getMusicList'
+    ...mapActions('band', [
+      'getBandList'
     ]),
+    async getMusicList (params, server) {
+      // console.log(params)
+      this.musicList = this.musicList.concat((await apiDBInfo.getMusic(params, server)).data)
+    },
+    async doFilter () {
+      this.isReady = false
+      this.queryParams = {
+        limit: 12,
+        page: 1,
+        bandId: this.selectBandId,
+        sort: this.sortParam,
+        orderKey: this.orderKey
+      }
+      if (this.$refs.musicScroll) this.$refs.musicScroll.reset()
+      try {
+        this.musicList = (await apiDBInfo.getMusic(this.queryParams, this.server)).data
+      }
+      catch (e) {
+        this.musicList = []
+      }
+      this.isReady = true
+    },
+    saveFilter () {
+      LocalStorage.set(`musicfilter.${this.server}`, {
+        bandId: this.selectBandId,
+        sort: this.sortParam,
+        orderKey: this.orderKey
+      })
+    },
     async loadMore (index, done) {
       try {
-        await this.getMusicList({ params: {limit: 12, page: index + 1}, server: this.server })
+        this.queryParams.page += 1
+        await this.getMusicList(this.queryParams, this.server)
         // this.doFilter()
       }
       catch (error) {

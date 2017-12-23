@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 function load (component) {
-  return () => System.import(`components/${component}.vue`)
+  return () => import(`components/${component}.vue`)
 }
 
 export default new VueRouter({
@@ -31,7 +31,7 @@ export default new VueRouter({
         { name: 'musicOverview', path: '/music/:server(\\S{2})', component: load('Musics') },
         { name: 'musicDetail', path: '/music/:server(\\S{2})/:musicId(\\d+)', component: load('MusicDetail') },
         { name: 'currEvent', path: '/currevent', component: load('EventInfo') },
-        { path: '/setting', component: load('Settings') },
+        // { path: '/setting', component: load('Settings') },
         { name: 'musicScore', path: '/musicscore/:musicId(\\d+)', component: load('MusicScore') },
         // { path: '/live2d', component: load('Live2D') },
         { path: '/about', component: load('About') }

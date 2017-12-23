@@ -91,7 +91,7 @@ module.exports = merge(baseWebpackConfig, {
       runtimeCaching: [
         {
           urlPattern: new RegExp('/api'),
-          handler: 'staleWhileRevalidate'
+          handler: 'networkFirst'
         }
       ]
     })

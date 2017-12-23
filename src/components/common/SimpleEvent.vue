@@ -1,5 +1,5 @@
 <template>
-  <!-- <lazy-component @show=""> -->
+  <div>
     <q-card v-if="isReady">
       <q-card-title class="bg-pink text-white">
         {{currentEvent[server].eventName}}
@@ -26,7 +26,7 @@
         <q-spinner color="pink" size="48px"></q-spinner>
       </q-card-main>
     </q-card>
-  <!-- </lazy-component> -->
+  </div>
 </template>
 
 <i18n>

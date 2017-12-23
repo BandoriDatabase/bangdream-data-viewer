@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 // import createLogger from 'vuex/dist/logger'
 import DB from './modules/db'
+import band from './modules/band'
 import card from './modules/card'
 import chara from './modules/chara'
 import event from './modules/event'
@@ -16,6 +17,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   modules: {
     DB,
+    band,
     card,
     chara,
     event,

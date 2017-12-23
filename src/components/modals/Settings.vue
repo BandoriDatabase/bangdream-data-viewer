@@ -1,21 +1,33 @@
 <template>
-  <div>
+  <q-modal ref="modal" :content-css="{minHeight: '415px', padding: '5px'}" @close="reloadPage">
     <q-select
       float-label="Language/语言/語言/言語"
       v-model="lang"
       :options="languages"
       @change="changeLang"
     />
-  </div>
+    <div class="action-buttons">
+      <q-btn color="pink" @click="$refs.modal.close()">Confirm</q-btn>
+    </div>
+  </q-modal>
 </template>
 
 <script>
-import { QSelect, LocalStorage } from 'quasar'
+import {
+  QModal,
+  QSelect,
+  QBtn,
+  QIcon,
+  LocalStorage
+} from 'quasar'
 
 export default {
   name: 'settings',
   components: {
-    QSelect
+    QModal,
+    QSelect,
+    QBtn,
+    QIcon
   },
   data () {
     return {
@@ -42,6 +54,12 @@ export default {
     changeLang (value) {
       this.$i18n.locale = value
       LocalStorage.set('useLocale', value)
+    },
+    open () {
+      this.$refs.modal.open()
+    },
+    reloadPage () {
+      window.location.reload()
     }
   }
 }

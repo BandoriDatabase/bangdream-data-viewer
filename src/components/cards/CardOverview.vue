@@ -2,34 +2,67 @@
   <div>
     <div class="block">
       <p>{{$t('hint[0]')}}<span class="desktop-only">{{$t('hint[1]')}}</span><span class="mobile-only">{{$t('hint[2]')}}</span>{{$t('hint[3]')}}</p>
-      <p>{{$t('hint[4]')}}<label><q-toggle v-model="displayName"></q-toggle>{{displayName ? $t('hint[5]'):$t('hint[6]')}}</label></p>
-    </div>
-    <div>
-      <q-btn color="pink" @click="showFilter">{{$t('toolbar.filter')}}</q-btn>
-      <!-- <q-btn color="pink" @click="showFilter">{{$t('toolbar.next-page')}}</q-btn> -->
+      <div>
+        {{$t('hint[4]')}}<label><q-toggle v-model="displayName"></q-toggle>{{displayName ? $t('hint[5]'):$t('hint[6]')}}</label>
+        <q-btn color="pink" @click="isFilterVisible = !isFilterVisible">{{$t('toolbar.filter')}}</q-btn>
+      </div>
+      <q-slide-transition>
+        <div class="shadow-3" style="padding: 1%;" v-show="isFilterVisible">
+          <p>{{$t('filter.title')}}</p>
+          <div class="row gutter">
+            <q-select class="col-12" multiple chips v-model="selectRarity" :float-label="$t('filter.rarity')"
+              :options="rarityOption" color="pink"></q-select>
+            <q-select class="col-12" multiple chips v-model="selectAttrs" :float-label="$t('filter.attr')"
+              :options="attrOption" color="pink"></q-select>
+            <q-select class="col-12" multiple chips v-model="selectCharacters" :float-label="$t('filter.character')"
+              :options="charaOption" color="pink"></q-select>
+            <q-select class="col-12" multiple chips v-model="selectSkills" :float-label="$t('filter.skill')"
+              :options="skillOption" color="pink"></q-select>
+          </div>
+          <p>{{$t('sort.title')}}</p>
+          <div class="row gutter">
+            <q-radio color="pink" v-model="sortParam" val="asc" :label="$t('sort.asc')" />
+            <q-radio color="pink" v-model="sortParam" val="desc" :label="$t('sort.desc')" />
+          </div>
+          <br>
+          <div class="row gutter">
+            <q-radio color="pink" v-model="orderKey" val="cardId" label="ID" />
+            <q-radio color="pink" v-model="orderKey" val="rarity" :label="$t('filter.rarity')" />
+            <q-radio color="pink" v-model="orderKey" val="maxPerformance" :label="$t('table.label.perform')" />
+            <q-radio color="pink" v-model="orderKey" val="maxTechnique" :label="$t('table.label.technic')" />
+            <q-radio color="pink" v-model="orderKey" val="maxVisual" :label="$t('table.label.visual')" />
+            <q-radio color="pink" v-model="orderKey" val="totalMaxParam" :label="$t('sort.total')" />
+          </div>
+          <br>
+          <div>
+            <q-btn color="pink" @click="doFilter(), saveFilter()">{{$t('filter.apply-save')}}</q-btn>
+          </div>
+        </div>
+      </q-slide-transition>
     </div>
     <q-infinite-scroll ref="cardScroll" v-if="isReady" :handler="loadMore">
       <div class="row">
-        <div v-for="card in showCardInfoList" :key="card.cardId" class="col-12 col-xl-4 col-lg-6 full-height">
+        <div v-for="card in cardList" :key="card.cardId" class="col-12 col-xl-4 col-lg-6 full-height">
           <q-card style="height: 500px; cursor: pointer;" @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId } })">
             <q-card-media class="full-height" style="position: relative;">
               <span :class="`card-img-attr-${card.attr}`"></span>
               <span :class="`card-img-band-${bandCharaList[server][Number(card.characterId) - 1].bandId}`"></span>
               <img v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity < 3" class="one-img-full full-height">
-              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3" class="two-img-split full-height gt-md"
+              <img v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.title === 'ガルパ杯'" class="one-img-full full-height">
+              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-split full-height gt-md"
                 :ref="`splitL${card.cardId}`" @mouseover="handleMouseOver(`splitL${card.cardId}`)" @mouseout="handleMouseOut(card.cardId)">
               </div>
-              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.rarity >= 3" class="two-img-split full-height gt-md"
+              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-split full-height gt-md"
                 :ref="`splitR${card.cardId}`" @mouseover="handleMouseOver(`splitR${card.cardId}`)" @mouseout="handleMouseOut(card.cardId)">
               </div>
-              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3" class="two-img-full full-width lt-md"
+              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-full full-width lt-md"
                 style="height: 50%;">
               </div>
-              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.rarity >= 3" class="two-img-full full-width lt-md"
+              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-full full-width lt-md"
                 style="height: 50%;">
               </div>
               <q-card-title slot="overlay">
-                [{{card.title}}] {{displayName ? capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) : bandCharaList[server][Number(card.characterId) - 1].characterName}}
+                [{{$t(card.title)}}] {{displayName ? capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) : bandCharaList[server][Number(card.characterId) - 1].characterName}}
                 <span v-for="i in Number(card.rarity)" :key="i">&#x2605;</span><br>
                 {{skillList[server][card.skill.skillId - 1].simpleDescription}}<br>
                 Lv {{card.maxLevel}}: {{card.maxPerformance}}/{{card.maxTechnique}}/{{card.maxVisual}}/{{card.totalMaxParam}}
@@ -75,14 +108,28 @@
       }
     },
     "toolbar": {
-      "filter": "Filter"
+      "filter": "Open/Close filter"
     },
     "filter": {
       "title": "Filter options",
-      "messgae": "Folling filters are avaliable: Characters, Skills, Rarity",
-      "heading1": "Characters",
-      "heading2": "Skills",
-      "heading3": "Rarity"
+      "message": "Following filters are avaliable: Characters, Skills, Rarity",
+      "character": "Characters",
+      "skill": "Skills",
+      "rarity": "Rarity",
+      "apply-save": "Save & Apply",
+      "attr": "Attribute"
+    },
+    "attr": {
+      "powerful": "Powerful (Red)",
+      "pure": "Pure (Green)",
+      "cool": "Cool (Blue)",
+      "happy": "Happy (Yellow)"
+    },
+    "sort": {
+      "title": "Sort options",
+      "asc": "Forward",
+      "desc": "Backward",
+      "total": "Total"
     }
   },
   "zh-cn": {
@@ -108,14 +155,28 @@
       }
     },
     "toolbar": {
-      "filter": "过滤"
+      "filter": "打开/关闭过滤"
     },
     "filter": {
       "title": "过滤选项",
-      "messgae": "可以按照下列条件过滤：角色名，技能，稀有度",
-      "heading1": "角色名",
-      "heading2": "技能",
-      "heading3": "稀有度"
+      "message": "可以按照下列条件过滤：角色名，技能，稀有度",
+      "character": "角色名",
+      "skill": "技能",
+      "rarity": "稀有度",
+      "apply-save": "应用和保存过滤选项",
+      "attr": "属性"
+    },
+    "attr": {
+      "powerful": "Powerful (红)",
+      "pure": "Pure (绿)",
+      "cool": "Cool (蓝)",
+      "happy": "Happy (黄)"
+    },
+    "sort": {
+      "title": "排序选项",
+      "asc": "正序",
+      "desc": "倒序",
+      "total": "属性之和"
     }
   },
   "zh-tw": {
@@ -141,14 +202,28 @@
       }
     },
     "toolbar": {
-      "filter": "過濾"
+      "filter": "打開/關閉過濾"
     },
     "filter": {
       "title": "過濾選項",
-      "messgae": "可以按照下列條件過濾：角色名，技能，稀有度",
-      "heading1": "角色名",
-      "heading2": "技能",
-      "heading3": "稀有度"
+      "message": "可以按照下列條件過濾：角色名，技能，稀有度",
+      "character": "角色名",
+      "skill": "技能",
+      "rarity": "稀有度",
+      "apply-save": "應用和保存過濾選項",
+      "attr": "屬性"
+    },
+    "attr": {
+      "powerful": "Powerful (紅)",
+      "pure": "Pure (綠)",
+      "cool": "Cool (藍)",
+      "happy": "Happy (黃)"
+    },
+    "sort": {
+      "title": "排序選項",
+      "asc": "正序",
+      "desc": "倒序",
+      "total": "屬性之和"
     }
   },
   "ja": {
@@ -178,10 +253,10 @@
     },
     "filter": {
       "title": "フィルター設定",
-      "messgae": "これらの項目で「キャラクター、スキル、リアリティ」をフィルタすることができます",
-      "heading1": "キャラクター",
-      "heading2": "スキル",
-      "heading3": "リアリティ"
+      "message": "これらの項目で「キャラクター、スキル、リアリティ」をフィルタすることができます",
+      "character": "キャラクター",
+      "skill": "スキル",
+      "rarity": "リアリティ"
     }
   }
 }
@@ -196,10 +271,13 @@ import {
   QIcon,
   QBtn,
   QToggle,
-  Dialog,
   QSpinner,
   QInnerLoading,
-  QInfiniteScroll
+  QInfiniteScroll,
+  QSlideTransition,
+  QSelect,
+  LocalStorage,
+  QRadio
 } from 'quasar'
 import { toRomaji } from 'wanakana'
 import { mapState, mapActions } from 'vuex'
@@ -217,31 +295,88 @@ export default {
     QToggle,
     QSpinner,
     QInnerLoading,
-    QInfiniteScroll
+    QInfiniteScroll,
+    QSlideTransition,
+    QSelect,
+    QRadio
   },
   data () {
     return {
       displayName: false,
       selectCharacters: [],
-      showCardInfoList: [],
       selectSkills: [],
       selectRarity: [],
+      selectAttrs: [],
+      rarityOption: [{
+        label: '\u2605\u2605\u2605\u2605',
+        value: 4
+      }, {
+        label: '\u2605\u2605\u2605',
+        value: 3
+      }, {
+        label: '\u2605\u2605',
+        value: 2
+      }, {
+        label: '\u2605',
+        value: 1
+      }],
+      charaOption: [],
+      skillOption: [],
+      attrOption: [{
+        label: this.$t('attr.powerful'),
+        value: 'powerful',
+        leftImage: 'statics/icon_powerful.png'
+      }, {
+        label: this.$t('attr.cool'),
+        value: 'cool',
+        leftColor: 'indigo-6'
+      }, {
+        label: this.$t('attr.pure'),
+        value: 'pure',
+        leftColor: 'green-8'
+      }, {
+        label: this.$t('attr.happy'),
+        value: 'happy',
+        color: 'orange-6'
+      }],
+      cardList: [],
+      queryParams: {limit: 12, page: 1},
       toRomaji,
-      isReady: false
+      isReady: false,
+      isFilterVisible: false,
+      sortParam: 'desc',
+      orderKey: 'cardId'
     }
   },
   mounted () {
+    if (!LocalStorage.get.item(`cardfilter.${this.server}`)) LocalStorage.set(`cardfilter.${this.server}`, {})
+    this.selectCharacters = LocalStorage.get.item(`cardfilter.${this.server}`).charas || []
+    this.selectSkills = LocalStorage.get.item(`cardfilter.${this.server}`).skills || []
+    this.selectRarity = LocalStorage.get.item(`cardfilter.${this.server}`).rarity || []
+    this.selectAttrs = LocalStorage.get.item(`cardfilter.${this.server}`).attrs || []
+    this.sortParam = LocalStorage.get.item(`cardfilter.${this.server}`).sort || 'desc'
+    this.orderKey = LocalStorage.get.item(`cardfilter.${this.server}`).orderKey || 'cardId'
+
     this.$nextTick(async () => {
-      await this.getCardList({ params: {limit: 12, page: 1}, server: this.server })
+      // await this.getCardList(this.queryParams, this.server)
+      await this.doFilter()
       await this.getBandCharaList(this.server)
       await this.getSkillList(this.server)
-      this.doFilter()
+      this.charaOption = Object.keys(this.bandCharaList[this.server]).filter(key => Number(key) <= 25).map(key => ({
+        label: this.displayName
+          ? this.capitalizeFirstLetter(toRomaji(this.bandCharaList[this.server][key].ruby))
+          : this.bandCharaList[this.server][key].characterName,
+        value: this.bandCharaList[this.server][key].characterId
+      }))
+      this.skillOption = this.skillList[this.server].map(elem => ({
+        label: elem.simpleDescription,
+        value: elem.skillId
+      }))
       this.isReady = true
     })
   },
   computed: {
     ...mapState('card', [
-      'cardList',
       'skillList'
     ]),
     ...mapState('chara', [
@@ -254,18 +389,34 @@ export default {
   watch: {
     '$route.params.server': function () {
       this.isReady = false
+      if (!LocalStorage.get.item(`cardfilter.${this.server}`)) LocalStorage.set(`cardfilter.${this.server}`, {})
+      this.selectCharacters = LocalStorage.get.item(`cardfilter.${this.server}`).charas || []
+      this.selectSkills = LocalStorage.get.item(`cardfilter.${this.server}`).skills || []
+      this.selectRarity = LocalStorage.get.item(`cardfilter.${this.server}`).rarity || []
+      this.selectAttrs = LocalStorage.get.item(`cardfilter.${this.server}`).attrs || []
+      this.sortParam = LocalStorage.get.item(`cardfilter.${this.server}`).sort || 'desc'
+      this.orderKey = LocalStorage.get.item(`cardfilter.${this.server}`).orderKey || 'cardId'
       this.$nextTick(async () => {
-        await this.getCardList({ params: {limit: 12, page: 1}, server: this.server })
+        // await this.getCardList(this.queryParams, this.server)
+        await this.doFilter()
         await this.getBandCharaList(this.server)
         await this.getSkillList(this.server)
-        this.doFilter()
+        this.charaOption = Object.keys(this.bandCharaList[this.server]).filter(key => Number(key) <= 25).map(key => ({
+          label: this.displayName
+            ? this.capitalizeFirstLetter(toRomaji(this.bandCharaList[this.server][key].ruby))
+            : this.bandCharaList[this.server][key].characterName,
+          value: this.bandCharaList[this.server][key].characterId
+        }))
+        this.skillOption = this.skillList[this.server].map(elem => ({
+          label: elem.simpleDescription,
+          value: elem.skillId
+        }))
         this.isReady = true
       })
     }
   },
   methods: {
     ...mapActions('card', [
-      'getCardList',
       'getSkillList'
     ]),
     ...mapActions('chara', [
@@ -289,93 +440,44 @@ export default {
         .map(elem => elem.charAt(0).toUpperCase() + elem.slice(1))
         .join(' ')
     },
-    async doFilter () {
-      let ret = this.cardList[this.server].slice()
-      if (this.selectCharacters.length) {
-        ret = ret.filter(elem => this.selectCharacters.indexOf(elem.characterId) !== -1)
-      }
-      if (this.selectSkills.length) {
-        let tempRet = []
-        for (let skillId of this.selectSkills) {
-          const cardOfSkills = await apiDBInfo.getCardsBySkillId(skillId)
-          tempRet = tempRet.concat(ret.filter(elem => cardOfSkills.indexOf(elem.cardId) !== -1))
-        }
-        ret = tempRet
-      }
-      if (this.selectRarity.length) {
-        ret = ret.filter(elem => this.selectRarity.indexOf(elem.rarity) !== -1)
-      }
-      this.showCardInfoList = ret
+    async getCardList (params, server) {
+      this.cardList = this.cardList.concat((await apiDBInfo.getCard(params, server)).data)
     },
-    showFilter () {
-      Dialog.create({
-        title: this.$t('filter.title'),
-        message: this.$t('filter.messgae'),
-        form: {
-          header3: {
-            type: 'heading',
-            label: this.$t('filter.heading3')
-          },
-          rarity: {
-            type: 'checkbox',
-            model: this.selectRarity,
-            items: [{
-              label: '\u2605\u2605\u2605\u2605',
-              value: 4
-            }, {
-              label: '\u2605\u2605\u2605',
-              value: 3
-            }, {
-              label: '\u2605\u2605',
-              value: 2
-            }, {
-              label: '\u2605',
-              value: 1
-            }]
-          },
-          header1: {
-            type: 'heading',
-            label: this.$t('filter.heading1')
-          },
-          characters: {
-            type: 'checkbox',
-            model: this.selectCharacters,
-            items: Object.keys(this.bandCharaList[this.server]).filter(key => Number(key) <= 25).map(key => ({
-              label: this.displayName
-                ? this.capitalizeFirstLetter(toRomaji(this.bandCharaList[this.server][key].ruby))
-                : this.bandCharaList[this.server][key].characterName,
-              value: this.bandCharaList[this.server][key].characterId
-            }))
-          },
-          header2: {
-            type: 'heading',
-            label: this.$t('filter.heading2')
-          },
-          skills: {
-            type: 'checkbox',
-            model: this.selectSkills,
-            items: this.skillList[this.server].map(elem => ({
-              label: elem.simpleDescription,
-              value: elem.skillId
-            }))
-          }
-        },
-        buttons: [
-          'Cancel',
-          {
-            label: 'OK',
-            handler: (data) => {
-              // console.log(data)
-              this.doFilter()
-            }
-          }
-        ]
+    async doFilter () {
+      this.isReady = false
+      this.queryParams = {
+        limit: 12,
+        page: 1,
+        rarity: this.selectRarity,
+        charaId: this.selectCharacters,
+        attr: this.selectAttrs,
+        skill: this.selectSkills,
+        sort: this.sortParam,
+        orderKey: this.orderKey
+      }
+      if (this.$refs.cardScroll) this.$refs.cardScroll.reset()
+      try {
+        this.cardList = (await apiDBInfo.getCard(this.queryParams, this.server)).data
+      }
+      catch (e) {
+        this.cardList = []
+      }
+      this.isReady = true
+    },
+    saveFilter () {
+      LocalStorage.set(`cardfilter.${this.server}`, {
+        rarity: this.selectRarity,
+        charas: this.selectCharacters,
+        attrs: this.selectAttrs,
+        skills: this.selectSkills,
+        sort: this.sortParam,
+        orderKey: this.orderKey
       })
     },
     async loadMore (index, done) {
       try {
-        await this.getCardList({ params: {limit: 12, page: index + 1}, server: this.server })
-        this.doFilter()
+        this.queryParams.page += 1
+        await this.getCardList(this.queryParams, this.server)
       }
       catch (error) {
         console.log('no more cards')
