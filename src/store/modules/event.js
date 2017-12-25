@@ -34,7 +34,6 @@ const actions = {
     return eventBadge
   },
   async getDegreeById ({commit, state}, { server, id }) {
-    console.log(server, id)
     if (state.degreeMap[id]) return state.degreeMap[id]
     const degree = await apiDBInfo.getDegreeById(id, server)
     commit('ADD_DEGREE_MAP_ENTRY', {server, id, value: degree})

@@ -2,14 +2,14 @@
   <div>
     <p>{{$t('hint[0]')}}<span class="desktop-only">{{$t('hint[1]')}}</span><span class="mobile-only">{{$t('hint[2]')}}</span> {{$t('hint[3]')}}</p>
     <card v-if="isReady" :cardInfo="cardMap[$route.params.server][$route.params.cardId]" :characterInfo="charaInfo"
-      :skillInfo="skillMap[$route.params.server][$route.params.cardId]"></card>
+      :skillInfo="skillMap[$route.params.server][$route.params.cardId]" :isTrained="Boolean(Number($route.params.isTrained))"></card>
     <q-card v-else>
-      <q-card-title class="bg-pink text-white">
+      <q-card-title class="bg-grey text-white">
         {{$t('fetch-card-data')}}
         <!-- <span slot="subtitle" class="text-white">{{$t('fetch-card-data')}}</span> -->
       </q-card-title>
       <q-card-main>
-        <q-spinner color="pink" size="48px"></q-spinner>
+        <q-spinner color="pink-6" size="48px"></q-spinner>
       </q-card-main>
     </q-card>
   </div>

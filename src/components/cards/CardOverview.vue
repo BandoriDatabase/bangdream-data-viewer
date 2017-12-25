@@ -4,7 +4,7 @@
       <p>{{$t('hint[0]')}}<span class="desktop-only">{{$t('hint[1]')}}</span><span class="mobile-only">{{$t('hint[2]')}}</span>{{$t('hint[3]')}}</p>
       <div>
         {{$t('hint[4]')}}<label><q-toggle v-model="displayName"></q-toggle>{{displayName ? $t('hint[5]'):$t('hint[6]')}}</label>
-        <q-btn color="pink" @click="isFilterVisible = !isFilterVisible">{{$t('toolbar.filter')}}</q-btn>
+        <q-btn color="pink" @click="isFilterVisible = !isFilterVisible, $ga.event('card-overview', 'filter', `open-close`, Number(isFilterVisible))">{{$t('toolbar.filter')}}</q-btn>
       </div>
       <q-slide-transition>
         <div class="shadow-3" style="padding: 1%;" v-show="isFilterVisible">
@@ -35,7 +35,7 @@
           </div>
           <br>
           <div>
-            <q-btn color="pink" @click="doFilter(), saveFilter()">{{$t('filter.apply-save')}}</q-btn>
+            <q-btn color="pink" @click="doFilter(), saveFilter(), $ga.event('card-overview', 'filter', `apply-save`)">{{$t('filter.apply-save')}}</q-btn>
           </div>
         </div>
       </q-slide-transition>
@@ -43,26 +43,38 @@
     <q-infinite-scroll ref="cardScroll" v-if="isReady" :handler="loadMore">
       <div class="row">
         <div v-for="card in cardList" :key="card.cardId" class="col-12 col-xl-4 col-lg-6 full-height">
-          <q-card style="height: 500px; cursor: pointer;" @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId } })">
+          <q-card style="height: 500px; cursor: pointer;">
             <q-card-media class="full-height" style="position: relative;">
               <span :class="`card-img-attr-${card.attr}`"></span>
               <span :class="`card-img-band-${bandCharaList[server][Number(card.characterId) - 1].bandId}`"></span>
-              <img v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity < 3" class="one-img-full full-height">
-              <img v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.title === 'ガルパ杯'" class="one-img-full full-height">
-              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-split full-height gt-md"
+              <img v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`"
+                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 0 } }), $ga.event('card-overview', 'jump', `normal-detail`, card.cardId)"
+                v-if="card.rarity < 3" class="one-img-full full-height">
+              <img v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`"
+                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 1 } }), $ga.event('card-overview', 'jump', `trained-detail`, card.cardId)"
+                v-if="card.title === 'ガルパ杯'" class="one-img-full full-height">
+              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`"
+                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 0 } }), $ga.event('card-overview', 'jump', `normal-detail`, card.cardId)"
+                v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-split full-height gt-md"
                 :ref="`splitL${card.cardId}`" @mouseover="handleMouseOver(`splitL${card.cardId}`)" @mouseout="handleMouseOut(card.cardId)">
               </div>
-              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-split full-height gt-md"
+              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`"
+                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 1 } }), $ga.event('card-overview', 'jump', `trained-detail`, card.cardId)"
+                v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-split full-height gt-md"
                 :ref="`splitR${card.cardId}`" @mouseover="handleMouseOver(`splitR${card.cardId}`)" @mouseout="handleMouseOut(card.cardId)">
               </div>
-              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`" v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-full full-width lt-md"
+              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`"
+                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 0 } }), $ga.event('card-overview', 'jump', `normal-detail`, card.cardId)"
+                v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-full full-width lt-md"
                 style="height: 50%;">
               </div>
-              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`" v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-full full-width lt-md"
+              <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`"
+                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 1 } }), $ga.event('card-overview', 'jump', `trained-detail`, card.cardId)"
+                v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-full full-width lt-md"
                 style="height: 50%;">
               </div>
               <q-card-title slot="overlay">
-                [{{$t(card.title)}}] {{displayName ? capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) : bandCharaList[server][Number(card.characterId) - 1].characterName}}
+                [{{card.title}}] {{displayName ? capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) : bandCharaList[server][Number(card.characterId) - 1].characterName}}
                 <span v-for="i in Number(card.rarity)" :key="i">&#x2605;</span><br>
                 {{skillList[server][card.skill.skillId - 1].simpleDescription}}<br>
                 Lv {{card.maxLevel}}: {{card.maxPerformance}}/{{card.maxTechnique}}/{{card.maxVisual}}/{{card.totalMaxParam}}

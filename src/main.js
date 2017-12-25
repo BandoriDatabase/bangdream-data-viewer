@@ -14,8 +14,8 @@ import VuePreview from 'vue-preview'
 import VueAnalytics from 'vue-analytics'
 import VueI18n from 'vue-i18n'
 import 'pixi.js'
-// import 'statics/live2d.min.js'
-// import 'pixi-live2d'
+import 'statics/live2d.min.js'
+import 'pixi-live2d'
 
 import router from './router'
 import store from './store'
@@ -31,7 +31,10 @@ Vue.use(VuePreview)
 if (process.env.NODE_ENV === 'production') {
   Vue.use(VueAnalytics, {
     id: 'UA-96644570-1',
-    router
+    router,
+    autoTracking: {
+      exception: true
+    }
   })
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js')

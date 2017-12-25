@@ -6,9 +6,9 @@
         <div class="col-lg-6 col-xs-12">
           <q-progress indeterminate v-if="audioDisable" />
           <div class="row gutter justify-center items-center">
-            <q-btn class="col-3" @click="startRhythm" :disable="(audioDisable) || (audioStarted && !audioPaused)">Start</q-btn>
-            <q-btn class="col-3" @click="pauseRhythm" :disable="!audioStarted">Pause</q-btn>
-            <q-btn class="col-3" @click="stopRhythm" :disable="!audioStarted">Stop</q-btn>
+            <q-btn class="col-3" @click="startRhythm(), $ga.event('music-score', 'start', 'view', data.musicId)" :disable="(audioDisable) || (audioStarted && !audioPaused)">Start</q-btn>
+            <q-btn class="col-3" @click="pauseRhythm(), $ga.event('music-score', 'pause', 'view', data.musicId)" :disable="!audioStarted">Pause</q-btn>
+            <q-btn class="col-3" @click="stopRhythm(), $ga.event('music-score', 'stop', 'view', data.musicId)" :disable="!audioStarted">Stop</q-btn>
             <q-select class="col-3" float-label="Difficulty" v-model="difficulty" :options="difficultyOptions"></q-select>
           </div>
           <canvas ref="game"></canvas>
@@ -24,7 +24,7 @@
           </p>
           <p>{{$t('combo')}}: {{data.combo}}</p>
         </div>
-      </div class="row">
+      </div>
     </div>
     <q-spinner v-else color="pink" size="48px"></q-spinner>
   </div>
@@ -77,7 +77,7 @@ import {
   QSelect
 } from 'quasar'
 import { mapState, mapActions } from 'vuex'
-import BufferLoader from '../assets/bufferLoader'
+import BufferLoader from 'assets/bufferLoader'
 
 export default {
   name: 'music-score-modal',
@@ -318,7 +318,7 @@ export default {
                 this.playSound(this.bufferLoader.bufferList[0], baseTime + note.timing)
                 break
               default:
-                if (note.type.indexOf('Flick') !== -1) this.playSound(this.bufferLoader.bufferList[2], baseTime + note.timing - 0.1)
+                if (note.type.indexOf('Flick') !== -1) this.playSound(this.bufferLoader.bufferList[2], baseTime + note.timing)
                 else this.playSound(this.bufferLoader.bufferList[1], baseTime + note.timing)
                 if (note.endTiming) this.playSound(this.bufferLoader.bufferList[1], baseTime + note.endTiming)
                 break

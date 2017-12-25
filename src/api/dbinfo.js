@@ -89,5 +89,17 @@ export default {
   getBand (server) {
     return Vue.http.get(`/api/v1/${server}/band`)
       .then(res => res.json())
+  },
+  getCharaLive2d (server, charaId) {
+    return Vue.http.get(`/api/v1/${server}/live2d/chara/${charaId}`)
+      .then(res => res.json())
+  },
+  getLive2dModel (server, id) {
+    return Vue.http.get(`/api/v1/${server}/live2d/model/${id}`)
+      .then(res => res.json())
+  },
+  getScenarioInfo (server, type, name) {
+    return Vue.http.get(`/api/v1/${server}/scenario/${type}/${name}`)
+      .then(res => res.json())
   }
 }

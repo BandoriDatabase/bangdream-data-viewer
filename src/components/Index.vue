@@ -64,11 +64,21 @@
           <q-item-main :label="$t('left.music')" />
         </q-side-link> -->
         <q-collapsible icon="photo_library" :label="$t('left.SFC')">
-          <q-side-link item to="/sfcs/jp">
+          <q-side-link item to="/live2d/jp">
             <!-- <q-item-side icon="image" /> -->
             <q-item-main :label="$t('left.jp-srv')" />
           </q-side-link>
           <q-side-link item to="/sfcs/tw">
+            <!-- <q-item-side icon="image" /> -->
+            <q-item-main :label="$t('left.tw-srv')" />
+          </q-side-link>
+        </q-collapsible>
+        <q-collapsible icon="record_voice_over" :label="$t('left.Live2d')">
+          <q-side-link item to="/live2d/jp">
+            <!-- <q-item-side icon="image" /> -->
+            <q-item-main :label="$t('left.jp-srv')" />
+          </q-side-link>
+          <q-side-link item to="/live2d/tw">
             <!-- <q-item-side icon="image" /> -->
             <q-item-main :label="$t('left.tw-srv')" />
           </q-side-link>
@@ -145,7 +155,8 @@
       "about": "About",
       "secTitle": "Building info",
       "current-event": "Current Event",
-      "settings": "Settings"
+      "settings": "Settings",
+      "Live2d": "Live2D"
     }
   },
   "zh-cn": {
@@ -165,7 +176,8 @@
       "about": "关于我们",
       "secTitle": "版本",
       "current-event": "当前活动",
-      "settings": "设置"
+      "settings": "设置",
+      "Live2d": "Live2D"
     }
   },
   "zh-tw": {
@@ -185,7 +197,8 @@
       "about": "關於我們",
       "secTitle": "版本",
       "current-event": "當前活動",
-      "settings": "設置"
+      "settings": "設置",
+      "Live2d": "Live2D"
     }
   },
   "ja": {
@@ -205,7 +218,8 @@
       "about": "このサイトについて",
       "secTitle": "バージョン情報",
       "current-event": "開催中のイベント",
-      "settings": "設定"
+      "settings": "設定",
+      "Live2d": "Live2D"
     }
   }
 }
@@ -262,7 +276,7 @@ export default {
   },
   data () {
     return {
-      appVer: '0.4.5'
+      appVer: '0.4.8'
     }
   },
   computed: {

@@ -1,6 +1,6 @@
 <template>
   <q-modal ref="modal" :content-css="{maxWidth: '800px', padding: '10px'}">
-    <h4 class="uppercase">{{$t('title')}} <small>0.4.5</small></h4>
+    <h4 class="uppercase">{{$t('title')}} <small>0.4.8</small></h4>
     <p>{{$t('subtitle')}}</p>
     <h5 class="uppercase">{{$t('features')}}</h5>
     <ul>
@@ -9,15 +9,15 @@
       <li>{{$t('feature-detail[2]')}}</li>
       <li>{{$t('feature-detail[3]')}}</li>
       <li>{{$t('feature-detail[4]')}}</li>
-      <li>{{$t('feature-detail[5]')}}</li>
+      <!-- <li>{{$t('feature-detail[5]')}}</li>
       <li>{{$t('feature-detail[6]')}}</li>
-      <li>{{$t('feature-detail[7]')}}</li>
+      <li>{{$t('feature-detail[7]')}}</li> -->
     </ul>
     <h5 class="uppercase">{{$t('bugs')}}</h5>
     <ul>
       <li>{{$t('bug-detail[0]')}}</li>
-      <li>{{$t('bug-detail[1]')}}</li>
-      <li>{{$t('bug-detail[2]')}}</li>
+      <!-- <li>{{$t('bug-detail[1]')}}</li>
+      <li>{{$t('bug-detail[2]')}}</li> -->
     </ul>
     <p v-html="$t('welcome-bug-report')"></p>
     <div class="action-buttons">
@@ -33,20 +33,15 @@
     "subtitle": "Bandori Database WebApp has been updated, some new features are introduced and some bugs are fixed.",
     "features": "New features",
     "feature-detail": [
-      "This update note will show in every new version from now",
-      "Settings move to the right top menu",
-      "Add music chart viewer (beta) in Music detail page",
-      "Click event image on Home page can jump to Event Detail page",
-      "Add filter option to Music page",
-      "Add sort option to Card and Music page",
-      "More friendly filter and sort design",
-      "Save and auto load the filter and sort option setting"
+      "Live2D Viewer comes back, please click HOW TO USE button for instruction",
+      "Click trained card image will directly jump to the after-training card detail",
+      "Card detail page url has a part for featuring the card training state, you can share the link for the trained card now",
+      "Card story episodes can be read now, click the button next to the episode name to preview",
+      "Display card story read reward"
     ],
     "bugs": "Fixed bugs",
     "bug-detail": [
-      "Fix a problem that caused skill filter unusable",
-      "Fix a style issue causing the Home page not displaying right on mobile phone",
-      "Always fetch fresh data first rather than show old data first and update in the background"
+      "Fix the flick sound offset in the music chart viewer"
     ],
     "welcome-bug-report": "If you find any problem affecting you use this web app, please report it to me per <a href='mailto:dev@bangdream.ga'>Email</a>, on <a href='https://dnaroma.site/2017/12/23/bug-report/'>Bug report page</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
   },
@@ -55,44 +50,34 @@
     "subtitle": "Bandori Database WebApp 版本已经更新，一些问题得到解决，一些新的特性被引入。",
     "features": "新特性",
     "feature-detail": [
-      "往后的每次版本更新都会出现这个更新说明",
-      "设置页面移动到右上角的菜单来激活",
-      "在音乐详情界面可以访问音乐谱面查看器(Beta)",
-      "点击首页的活动图标可以跳转到活动详情页面",
-      "为音乐界面增加了过滤选项",
-      "为卡片和音乐节目都增加了排序选项",
-      "重新设计的过滤器，界面更加友好",
-      "可以保存和自动加载之前的过滤设置"
+      "Live2D查看器回归，点击页面内的 如何使用 按钮查看帮助",
+      "点击特训后的卡牌图片可以直接跳转到训练过的卡牌详情页",
+      "卡牌详情页的地址里现在会附带卡牌特训信息，现在可以直接分享特训后的卡牌链接",
+      "增加了卡牌故事浏览器，点击卡牌故事名称旁边的按钮来浏览",
+      "展示卡牌故事阅读奖励"
     ],
     "bugs": "修复的问题",
     "bug-detail": [
-      "修正了一个导致技能过滤不可用的问题",
-      "修正了首页在移动设备显示不正确的样式问题",
-      "总是先加载最新的数据，而不是先显示旧数据并在后台更新新的数据"
+      "Flick（滑动）音效延后的问题已经修正"
     ],
     "welcome-bug-report": "如果你在使用本网站的过程中遇到任何问题, 欢迎通过<a href='mailto:dev@bangdream.ga'>Email</a>, <a href='https://dnaroma.site/2017/12/23/bug-report/'>问题反馈页面</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反馈问题。"
   },
   "zh-tw": {
     "title": "更新說明",
-    "subtitle": "Bandori Database WebApp 版本已經更新，壹些問題得到解決，壹些新的特性被引入。",
+    "subtitle": "Bandori Database WebApp 版本已經更新，一些問題得到解決，一些新的特性被引入。",
     "features": "新特性",
     "feature-detail": [
-      "往後的每次版本更新都會出現這個更新說明",
-      "設置頁面移動到右上角的菜單來激活",
-      "在音樂詳情界面可以訪問音樂譜面查看器(Beta)",
-      "點擊首頁的活動圖標可以跳轉到活動詳情頁面",
-      "為音樂界面增加了過濾選項",
-      "為卡片和音樂節目都增加了排序選項",
-      "重新設計的過濾器，界面更加友好",
-      "可以保存和自動加載之前的過濾設置"
+      "Live2D查看器回歸，點擊頁面內的 如何使用 按鈕查看幫助",
+      "點擊特訓後的卡牌圖片可以直接跳轉到訓練過的卡牌詳情頁",
+      "卡牌詳情頁的地址裏現在會附帶卡牌特訓信息，現在可以直接分享特訓後的卡牌鏈接",
+      "增加了卡牌故事瀏覽器，點擊卡牌故事名稱旁邊的按鈕來瀏覽",
+      "展示卡牌故事閱讀獎勵"
     ],
     "bugs": "修復的問題",
     "bug-detail": [
-      "修正了壹個導致技能過濾不可用的問題",
-      "修正了首頁在移動設備顯示不正確的樣式問題",
-      "總是先加載最新的數據，而不是先顯示舊數據並在後臺更新新的數據"
+      "Flick（滑動）音效延後的問題已經修正"
     ],
-    "welcome-bug-report": "如果妳在使用本網站的過程中遇到任何問題, 歡迎通過<a href='mailto:dev@bangdream.ga'>Email</a>, <a href='https://dnaroma.site/2017/12/23/bug-report/'>問題反饋頁面</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反饋問題。"
+    "welcome-bug-report": "如果妳在使用本網站的過程中遇到任何問題, 歡迎透過<a href='mailto:dev@bangdream.ga'>Email</a>, <a href='https://dnaroma.site/2017/12/23/bug-report/'>問題反饋頁面</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反饋問題。"
   }
 }
 </i18n>

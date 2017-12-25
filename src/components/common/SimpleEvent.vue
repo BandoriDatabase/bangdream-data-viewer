@@ -5,14 +5,14 @@
         {{currentEvent[server].eventName}}
         <span slot="subtitle" class="text-white">{{$t('event-' + server)}} {{currentEvent[server].eventType}}</span>
       </q-card-title>
-      <q-card-media style="cursor: pointer;" @click="$router.push({ name: 'currEvent' })">
+      <q-card-media style="cursor: pointer;" @click="$router.push({ name: 'currEvent' }), $ga.event('event-detail', 'jump', server)">
         <img v-if="server === 'jp'" class="responsive" v-lazy="`/assets-jp/homebanner_banner_event${currentEvent[server].eventId}.png`"/>
         <img v-if="server === 'tw'" class="responsive" v-lazy="`/assets-tw/homebanner_banner_event${padEventId(currentEvent[server].eventId)}_open.png`"/>
       </q-card-media>
       <q-card-main>
         <div class="row items-center justify-center">
-          <div class="col-3"><card-thumb :cardId="Number(eventNormalCardId)" :server="server"></card-thumb></div>
-          <div class="col-3"><card-thumb :cardId="Number(eventSpecialCardId)" :server="server"></card-thumb></div>
+          <div class="col-3" @click="$ga.event('event-card', 'jump', `normal-${server}`)"><card-thumb :cardId="Number(eventNormalCardId)" :server="server"></card-thumb></div>
+          <div class="col-3" @click="$ga.event('event-card', 'jump', `sr-${server}`)"><card-thumb :cardId="Number(eventSpecialCardId)" :server="server"></card-thumb></div>
           <count-down class="col-6" :target-time="Number(currentEvent[server].endAt)" v-if="Number(currentEvent[server].endAt) > Date.now()" small></count-down>
         </div>
       </q-card-main>

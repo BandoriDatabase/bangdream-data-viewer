@@ -43,7 +43,8 @@
             <div class="preview-img card-img-main" v-lazy:background-image="`/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`" />
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3" @click="switchCardResType()">{{$t('un-trained')}}</q-btn>
+            <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3 || cardInfo.title !== 'ガルパ杯'"
+              @click="$router.push({ name: 'cardDetail', params: { cardId: cardInfo.cardId, isTrained: Number(!isTrained) } })">{{$t('un-trained')}}</q-btn>
             <q-btn class="light" style="margin: 5px;" @click="switchCardImgType()">{{$t('cut-in-normal')}}</q-btn>
             <q-btn class="light" style="margin: 5px;" @click="$preview.open(0, [{
                 src: `/assets/characters/livesd/${cardInfo.live2dRes}_sdchara.png`,
@@ -174,8 +175,13 @@
             </div>
           </q-collapsible>
           <q-collapsible icon="insert comment" :label="$t('story')" v-if="cardInfo.episodes">
-            <div v-for="episode in cardInfo.episodes.entries" :key="episode.episodeid">
-              <p>{{$t('story-self-intro')}}{{episode.title}} <q-btn small color="pink" round flat disabled><q-icon name="launch"></q-icon></q-btn></p>
+            <div v-for="(episode, idx) in cardInfo.episodes.entries" :key="episode.episodeId">
+              <p><span v-if="idx">{{$t('story-max-level')}}</span><span v-else>{{$t('story-self-intro')}}</span>{{episode.title}}
+                <q-btn small color="pink" round flat
+                  @click="$router.push({name: 'scenario', params: {server: $route.params.server, scenarioType: 'chara', scenarioName: episode.scenarioId}}), $ga.event('card-detail', 'jump', `scenario`, episode.episodeId)">
+                  <q-icon name="launch"></q-icon>
+                </q-btn>
+              </p>
               <p>{{$t('story-to-unlock')}}</p>
               <div class="row">
                 <div v-for="entry in episode.costs.entries" class="column col-4 items-center" :key="entry.resourceId">
@@ -183,15 +189,15 @@
                   <span>{{entry.quantity}}</span>
                 </div>
               </div>
+              <p>{{$t('story-reward')}}</p>
+              <div class="row">
+                <div v-for="entry in episode.rewards.entries" class="column col-4 items-center" :key="entry.resourceId">
+                  <img class="thumb-training" v-lazy="`/assets/thumb/common_${entry.resourceType}.png`">
+                  <span>{{entry.quantity}}</span>
+                </div>
+              </div>
             </div>
           </q-collapsible>
-          <p></p>
-          <div class="row sm-column md-column" v-if="cardInfo.episodes">
-            
-          </div>
-          <div class="row sm-column md-column" v-else>
-            {{$t('story-none')}}
-          </div>
         </div>
       </q-card-main>
     </q-card>
@@ -218,7 +224,8 @@
     "story-self-intro": "Self intro: ",
     "story-to-unlock": "To unlock:",
     "story-max-level": "Max Level Story: ",
-    "story-none": "No story avaliable"
+    "story-none": "No story avaliable",
+    "story-reward": "Story read reward"
   },
   "zh-cn": {
     "un-trained": "切换觉醒",
@@ -238,7 +245,8 @@
     "story-self-intro": "自我介绍：",
     "story-to-unlock": "解锁材料",
     "story-max-level": "满级剧情：",
-    "story-none": "该卡牌没有剧情"
+    "story-none": "该卡牌没有剧情",
+    "story-reward": "剧情阅读奖励"
   },
   "zh-tw": {
     "un-trained": "切換覺醒",
@@ -258,7 +266,8 @@
     "story-self-intro": "自我介紹：",
     "story-to-unlock": "解鎖材料",
     "story-max-level": "滿級劇情：",
-    "story-none": "該卡牌沒有劇情"
+    "story-none": "該卡牌沒有劇情",
+    "story-reward": "劇情閱讀獎勵"
   },
   "ja": {
     "un-trained": "特訓前後切替",
@@ -309,6 +318,10 @@ export default {
     skillInfo: {
       type: Object,
       required: true
+    },
+    isTrained: {
+      type: Boolean,
+      required: true
     }
   },
   data () {
@@ -331,6 +344,11 @@ export default {
     QToggle,
     QCollapsible
   },
+  created () {
+    if (this.isTrained) {
+      this.switchCardResType()
+    }
+  },
   mounted () {
     this.level = Number(this.cardInfo.maxLevel) - 10
     this.skillLv = this.skillInfo.skillDetail.length || this.skillInfo.activateEffect.length || this.skillInfo.onceEffect.length
@@ -338,6 +356,12 @@ export default {
   computed: {
     cardGroup () {
       return Math.trunc(this.cardInfo.cardId / 50)
+    }
+  },
+  watch: {
+    isTrained (newVal) {
+      console.log(newVal)
+      this.switchCardResType()
     }
   },
   methods: {
