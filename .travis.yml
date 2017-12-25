@@ -7,9 +7,6 @@ before_script:
 script:
 - quasar lint
 - quasar build
-cache:
-  directories:
-  - node_modules
 addons:
   ssh_known_hosts:
   - 45.32.20.82
