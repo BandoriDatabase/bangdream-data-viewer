@@ -15,7 +15,7 @@ import VueAnalytics from 'vue-analytics'
 import VueI18n from 'vue-i18n'
 import 'pixi.js'
 import 'statics/live2d.min.js'
-import 'pixi-live2d'
+import 'bandori-pixi-live2d'
 
 import router from './router'
 import store from './store'
