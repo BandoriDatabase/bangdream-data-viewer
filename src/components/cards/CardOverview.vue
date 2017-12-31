@@ -76,7 +76,7 @@
               <q-card-title slot="overlay">
                 [{{card.title}}] {{displayName ? capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) : bandCharaList[server][Number(card.characterId) - 1].characterName}}
                 <span v-for="i in Number(card.rarity)" :key="i">&#x2605;</span><br>
-                {{skillList[server][card.skill.skillId - 1].simpleDescription}}<br>
+                {{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}<br>
                 Lv {{card.maxLevel}}: {{card.maxPerformance}}/{{card.maxTechnique}}/{{card.maxVisual}}/{{card.totalMaxParam}}
               </q-card-title>
             </q-card-media>
