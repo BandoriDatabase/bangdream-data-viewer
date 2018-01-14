@@ -64,7 +64,7 @@
           <q-item-main :label="$t('left.music')" />
         </q-side-link> -->
         <q-collapsible icon="photo_library" :label="$t('left.SFC')">
-          <q-side-link item to="/live2d/jp">
+          <q-side-link item to="/sfcs/jp">
             <!-- <q-item-side icon="image" /> -->
             <q-item-main :label="$t('left.jp-srv')" />
           </q-side-link>
