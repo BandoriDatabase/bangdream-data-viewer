@@ -1,13 +1,12 @@
 <template>
-  <q-modal ref="modal" :content-css="{minHeight: '415px', padding: '5px'}" @close="reloadPage">
+  <q-modal ref="modal" :content-css="{minHeight: '415px', padding: '5px'}">
     <q-select
       float-label="Language/语言/語言/言語"
       v-model="lang"
       :options="languages"
-      @change="changeLang"
     />
     <div class="action-buttons">
-      <q-btn color="pink" @click="$refs.modal.close()">Confirm</q-btn>
+      <q-btn color="pink" @click="changeLang()">Confirm</q-btn>
     </div>
   </q-modal>
 </template>
@@ -51,15 +50,19 @@ export default {
     this.lang = LocalStorage.get.item('useLocale')
   },
   methods: {
-    changeLang (value) {
-      this.$i18n.locale = value
-      LocalStorage.set('useLocale', value)
+    changeLang () {
+      this.$i18n.locale = this.lang
+      LocalStorage.set('useLocale', this.lang)
+      this.reloadPage()
     },
     open () {
       this.$refs.modal.open()
     },
     reloadPage () {
-      window.location.reload()
+      this.$refs.modal.close()
+      setTimeout(() => {
+        window.location.reload()
+      }, 500)
     }
   }
 }

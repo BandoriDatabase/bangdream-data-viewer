@@ -107,9 +107,10 @@
         <q-item>
           <q-item-main :label="`TW Data Ver: v${resVer.tw || '0.0.0.0'}`"></q-item-main>
         </q-item>
-        <q-item :highlight="false">
+        <q-item>
           <q-item-main :label="`App Ver: v${appVer}`" />
         </q-item>
+        <q-btn @click="$refs['update-note'].$refs.modal.open()">{{$t('left.update-note')}}</q-btn>
       </q-list>
     </div>
 
@@ -156,7 +157,8 @@
       "secTitle": "Building info",
       "current-event": "Current Event",
       "settings": "Settings",
-      "Live2d": "Live2D"
+      "Live2d": "Live2D",
+      "update-note": "Update Note"
     }
   },
   "zh-cn": {
@@ -177,7 +179,8 @@
       "secTitle": "版本",
       "current-event": "当前活动",
       "settings": "设置",
-      "Live2d": "Live2D"
+      "Live2d": "Live2D",
+      "update-note": "更新说明"
     }
   },
   "zh-tw": {
@@ -198,7 +201,8 @@
       "secTitle": "版本",
       "current-event": "當前活動",
       "settings": "設置",
-      "Live2d": "Live2D"
+      "Live2d": "Live2D",
+      "update-note": "更新说明"
     }
   },
   "ja": {
@@ -276,7 +280,7 @@ export default {
   },
   data () {
     return {
-      appVer: '0.4.8'
+      appVer: '0.4.9'
     }
   },
   computed: {

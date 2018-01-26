@@ -20,6 +20,7 @@
             <div class="row gutter">
               <q-radio color="pink" v-model="orderKey" val="musicId" label="ID" />
               <q-radio color="pink" v-model="orderKey" val="bandId" :label="$t('filter.bandId')" />
+              <q-radio color="pink" v-model="orderKey" val="maxDifficilty" :label="$t('sort.difficulty')" />
             </div>
             <br>
             <div>
@@ -37,7 +38,11 @@
                 <div v-lazy:background-image="music.jacket" class="full-height one-img-full" />
                 <q-card-title slot="overlay">
                   {{music.title}}<br>
-                  {{music.bandName}}
+                  {{music.bandName}}<br>
+                  {{music.difficulty[0]}} /
+                  {{music.difficulty[3]}} /
+                  {{music.difficulty[2]}} /
+                  {{music.difficulty[1]}}
                 </q-card-title>
               </q-card-media>
             </q-card>
@@ -95,7 +100,8 @@
     "sort": {
       "title": "Sort options",
       "asc": "Forward",
-      "desc": "Backward"
+      "desc": "Backward",
+      "difficulty": "Difficulty"
     }
   },
   "zh-cn": {
@@ -116,7 +122,8 @@
     "sort": {
       "title": "排序选项",
       "asc": "正序",
-      "desc": "倒序"
+      "desc": "倒序",
+      "difficulty": "难度"
     }
   },
   "zh-tw": {
@@ -138,7 +145,7 @@
       "title": "排序選項",
       "asc": "正序",
       "desc": "倒序",
-      "total": "屬性之和"
+      "difficulty": "難度"
     }
   },
   "ja": {

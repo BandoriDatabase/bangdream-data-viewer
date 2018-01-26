@@ -62,6 +62,13 @@ module.exports = {
         target: 'https://res.bangdream.ga',
         changeOrigin: true
       },
+      '/live2d': {
+        target: 'https://res.bangdream.ga/assets/live2d/chara',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/live2d': ''
+        }
+      },
       '/api': {
         target: 'http://localhost:8180',
         changeOrigin: true,

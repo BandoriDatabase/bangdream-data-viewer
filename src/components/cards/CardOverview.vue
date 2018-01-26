@@ -4,7 +4,7 @@
       <p>{{$t('hint[0]')}}<span class="desktop-only">{{$t('hint[1]')}}</span><span class="mobile-only">{{$t('hint[2]')}}</span>{{$t('hint[3]')}}</p>
       <div>
         {{$t('hint[4]')}}<label><q-toggle v-model="displayName"></q-toggle>{{displayName ? $t('hint[5]'):$t('hint[6]')}}</label>
-        <q-btn color="pink" @click="isFilterVisible = !isFilterVisible, $ga.event('card-overview', 'filter', `open-close`, Number(isFilterVisible))">{{$t('toolbar.filter')}}</q-btn>
+        <q-btn color="pink" @click="isFilterVisible = !isFilterVisible, $ga.event('card-overview', 'filter', `open-close`)">{{$t('toolbar.filter')}}</q-btn>
       </div>
       <q-slide-transition>
         <div class="shadow-3" style="padding: 1%;" v-show="isFilterVisible">
@@ -48,28 +48,28 @@
               <span :class="`card-img-attr-${card.attr}`"></span>
               <span :class="`card-img-band-${bandCharaList[server][Number(card.characterId) - 1].bandId}`"></span>
               <img v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`"
-                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 0 } }), $ga.event('card-overview', 'jump', `normal-detail`, card.cardId)"
+                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 0 } }), $ga.event('card-overview', 'jump', `normal-detail`)"
                 v-if="card.rarity < 3" class="one-img-full full-height">
               <img v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`"
-                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 1 } }), $ga.event('card-overview', 'jump', `trained-detail`, card.cardId)"
+                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 1 } }), $ga.event('card-overview', 'jump', `trained-detail`)"
                 v-if="card.title === 'ガルパ杯'" class="one-img-full full-height">
               <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`"
-                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 0 } }), $ga.event('card-overview', 'jump', `normal-detail`, card.cardId)"
+                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 0 } }), $ga.event('card-overview', 'jump', `normal-detail`)"
                 v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-split full-height gt-md"
                 :ref="`splitL${card.cardId}`" @mouseover="handleMouseOver(`splitL${card.cardId}`)" @mouseout="handleMouseOut(card.cardId)">
               </div>
               <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`"
-                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 1 } }), $ga.event('card-overview', 'jump', `trained-detail`, card.cardId)"
+                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 1 } }), $ga.event('card-overview', 'jump', `trained-detail`)"
                 v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-split full-height gt-md"
                 :ref="`splitR${card.cardId}`" @mouseover="handleMouseOver(`splitR${card.cardId}`)" @mouseout="handleMouseOut(card.cardId)">
               </div>
               <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_normal.png`"
-                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 0 } }), $ga.event('card-overview', 'jump', `normal-detail`, card.cardId)"
+                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 0 } }), $ga.event('card-overview', 'jump', `normal-detail`)"
                 v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-full full-width lt-md"
                 style="height: 50%;">
               </div>
               <div v-lazy:background-image="`/assets/characters/resourceset/${card.cardRes}_card_after_training.png`"
-                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 1 } }), $ga.event('card-overview', 'jump', `trained-detail`, card.cardId)"
+                @click="$router.push({ name: 'cardDetail', params: { cardId: card.cardId, isTrained: 1 } }), $ga.event('card-overview', 'jump', `trained-detail`)"
                 v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-full full-width lt-md"
                 style="height: 50%;">
               </div>

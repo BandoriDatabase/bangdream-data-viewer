@@ -178,7 +178,7 @@
             <div v-for="(episode, idx) in cardInfo.episodes.entries" :key="episode.episodeId">
               <p><span v-if="idx">{{$t('story-max-level')}}</span><span v-else>{{$t('story-self-intro')}}</span>{{episode.title}}
                 <q-btn small color="pink" round flat
-                  @click="$router.push({name: 'scenario', params: {server: $route.params.server, scenarioType: 'chara', scenarioName: episode.scenarioId}}), $ga.event('card-detail', 'jump', `scenario`, episode.episodeId)">
+                  @click="$router.push({name: 'scenario', params: {server: $route.params.server, scenarioType: 'chara', scenarioName: episode.scenarioId}}), $ga.event('card-detail', 'jump', `scenario`)">
                   <q-icon name="launch"></q-icon>
                 </q-btn>
               </p>

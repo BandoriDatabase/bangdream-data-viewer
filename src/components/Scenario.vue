@@ -51,7 +51,7 @@
       "avatar": "Avatar",
       "chara": "Character",
       "voice-text": "Voice text",
-      "voice-type": "Voice player"
+      "voice-play": "Voice player"
     }
   },
   "zh-cn": {
@@ -65,7 +65,7 @@
       "avatar": "头像",
       "chara": "角色",
       "voice-text": "语音文本",
-      "voice-type": "播放语音"
+      "voice-play": "播放语音"
     }
   },
   "zh-tw": {
@@ -79,7 +79,7 @@
       "avatar": "頭像",
       "chara": "角色",
       "voice-text": "語音文本",
-      "voice-type": "播放語音"
+      "voice-play": "播放語音"
     }
   }
 }

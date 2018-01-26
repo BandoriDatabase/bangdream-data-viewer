@@ -30,11 +30,11 @@
       </p>
       <!-- <p>{{$t('combo')}}: {{data.combo}}</p> -->
       <p>{{$t('howtoget')}}: {{data.howToGet}}</p>
+      <p>{{$t('difficulty')}}: {{data.difficulty[0].level}} /
+          {{data.difficulty[3].level}} /
+          {{data.difficulty[2].level}} /
+          {{data.difficulty[1].level}}</p>
       <q-btn @click="$router.push({ name: 'musicScore', params: { musicId: data.musicId } })">{{$t('check-beatmap')}}</q-btn>
-      <!-- <p>{{$t('difficulty')}}: {{getDifficulty(data.id)[0].level}} /
-          {{getDifficulty(data.id)[3].level}} /
-          {{getDifficulty(data.id)[2].level}} /
-          {{getDifficulty(data.id)[1].level}}</p> -->
       <q-collapsible id="achievements" icon="move_to_inbox" :label="$t('achieve')">
         <div class="row">
           <div class="row items-center col-xl-6 col-12">
@@ -208,9 +208,9 @@ export default {
         return achievement.rewardType
       }
     },
-    getDifficulty (musicId) {
-      return this.musicDifficultyList.filter(elem => elem.musicId === musicId)
-    },
+    // getDifficulty (musicId) {
+    //   return this.musicDifficultyList.filter(elem => elem.musicId === musicId)
+    // },
     startRhythm () {
       this.$http.get(`/api/v1/jp/music/chart/${this.data.musicId}/expert`)
         .then(res => res.json())

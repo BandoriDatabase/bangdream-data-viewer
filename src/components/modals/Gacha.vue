@@ -24,12 +24,12 @@
         </p>
         <h6>{{$t('gacha-pickup')}}</h6>
         <div class="center" v-for="gc in gacha.details" :key="gc.situationId" style="display: inline-block; margin: 3px 3px;" v-if="gc.pickup">
-          <card-thumb :cardId="Number(gc.situationId)" :server="server"></card-thumb>
+          <card-thumb :cardId="Number(gc.situationId)" :server="server" @close="$refs.gModal.close()"></card-thumb>
           <q-tooltip v-show="gc.weight != 1">Rate: {{Number(gc.weight)/10000}}%</q-tooltip>
         </div>
         <h6>{{$t('gacha-normal')}}</h6>
         <div class="center" v-for="gc in gacha.details" :key="gc.situationId" style="display: inline-block; margin: 3px 3px;" v-if="!gc.pickup">
-          <card-thumb :cardId="Number(gc.situationId)" :server="server"></card-thumb>
+          <card-thumb :cardId="Number(gc.situationId)" :server="server" @close="$refs.gModal.close()"></card-thumb>
           <q-tooltip v-show="gc.weight != 1">Rate: {{Number(gc.weight)/10000}}%</q-tooltip>
         </div>
       </q-card-main>

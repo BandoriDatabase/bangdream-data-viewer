@@ -1,6 +1,9 @@
 <template>
   <lazy-component @show="loadData">
-    <div class="card-img-parent" v-if="isReady" @click="$router.push({ name: 'cardDetail', params: { cardId: cardMap[server][cardId].cardId, server, isTrained: 0 } })">
+    <div class="card-img-parent" v-if="isReady" @click="() => {
+        $emit('close');
+        $router.push({ name: 'cardDetail', params: { cardId: cardMap[server][cardId].cardId, server, isTrained: 0 } });
+      }">
       <div class="thumb-table" v-lazy:background-image="`/assets/thumb/chara/card0000${Math.trunc(Number(cardMap[server][cardId].cardId) / 50)}_${cardMap[server][cardId].cardRes}_normal.png`"></div>
       <div :class="`thumb-frame-${getThumbFrame(Number(cardMap[server][cardId].rarity), cardMap[server][cardId].attr)}`"></div>
       <div :class="`thumb-attr-${cardMap[server][cardId].attr}`"></div>
