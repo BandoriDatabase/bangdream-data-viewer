@@ -12,7 +12,7 @@
       </q-card-media>
       <q-card-main class="column items-center">
         <img v-if="server === 'jp'" class="responsive" v-lazy="`/assets/homebanner_banner_event${currentEvent[server].eventId}.png`"/>
-        <img v-if="server === 'tw'" class="responsive" v-lazy="`/assets-tw/homebanner_banner_event${padEventId(currentEvent[server].eventId)}_open.png`"/>
+        <img v-if="server === 'tw'" class="responsive" v-lazy="`/assets-tw/homebanner_banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`"/>
         <a-player :music="eventBGM" ref="player" mode="single" class="col-12"></a-player>
         <p v-if="Number(currentEvent[server].endAt) > Date.now()">{{$t('event-end-cd')}}</p>
         <count-down :target-time="Number(currentEvent[server].endAt)" v-if="Number(currentEvent[server].endAt) > Date.now()"></count-down>
@@ -26,16 +26,17 @@
           <div class="col-6"><card-thumb :cardId="Number(eventSpecialCardId)" :server="server"></card-thumb></div>
         </div>
         <p>{{$t('event-reward-stamp')}}</p>
-        <img v-if="eventRewardStamp" v-lazy="`/assets-${server}/stamp/01_${eventRewardStamp.imageName}.png`"></img>
+        <img v-if="eventRewardStamp" v-lazy="`/assets-${server}/stamp/01_${eventRewardStamp.imageName}.png`" />
         <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         <p>{{$t('event-bonus-attr-card')}}</p>
-        <img class="responsive" style="max-width: 100%;" v-lazy="`/assets/event/${currentEvent[server].assetBundleName}/images_event_point_banner.png`">
+        <img v-if="isDegreeReady && server === 'jp'" class="responsive" style="max-width: 100%;" v-lazy="`/assets/event/${currentEvent[server].assetBundleName}/images_event_point_banner.png`">
+        <img v-else-if="isDegreeReady && server === 'tw'" class="responsive" style="max-width: 100%;" v-lazy="`/assets-tw/event/${currentEvent[server].assetBundleName}/images_event_point_banner.png`">
         <p>{{$t('event-badge')}}</p>
         <img v-if="isBadgeReady" class="badge" v-lazy="`/assets/thumb/common_${eventBadgeMap[server][currentEvent[server].eventId].badgeAssetBundleName}.png`">
         <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         <p>{{$t('event-degrees')}}</p>
         <div v-if="isDegreeReady && server === 'jp'" class="event-degree" :style="{ 'background-image': `url(/assets/thumb/degree_event_point_icon_1.png), url(/assets/thumb/degree_event_point_1.png), url(/assets/thumb/degree_${degreeMap[server][currentEvent[server].rankingRewards[0].rewardId].imageName}.png)` }" />
-        <div v-else-if="isDegreeReady && server === 'tw'" class="event-degree" :style="{ 'background-image': `url(/assets-tw/thumb/degree_event_point_icon_1.png), url(/assets-tw/thumb/degree_event_point_1.png), url(/assets/thumb/degree_${degreeMap[server][currentEvent[server].rankingRewards[0].rewardId].imageName}.png)` }" />
+        <div v-else-if="isDegreeReady && server === 'tw'" class="event-degree" :style="{ 'background-image': `url(/assets-tw/thumb/degree_event_point_icon_1.png), url(/assets-tw/thumb/degree_event_point_1.png), url(/assets-tw/thumb/degree_${degreeMap[server][currentEvent[server].rankingRewards[0].rewardId].imageName}.png)` }" />
         <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         <span v-if="currentEvent[server].eventType === 'challenge'">
           <div class="row justify-center" v-if="server === 'jp'">

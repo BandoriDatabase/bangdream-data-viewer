@@ -7,7 +7,7 @@
       </q-card-title>
       <q-card-media style="cursor: pointer;" @click="$router.push({ name: 'currEvent' }), $ga.event('event-detail', 'jump', server)">
         <img v-if="server === 'jp'" class="responsive" v-lazy="`/assets-jp/homebanner_banner_event${currentEvent[server].eventId}.png`"/>
-        <img v-if="server === 'tw'" class="responsive" v-lazy="`/assets-tw/homebanner_banner_event${padEventId(currentEvent[server].eventId)}_open.png`"/>
+        <img v-if="server === 'tw'" class="responsive" v-lazy="`/assets-tw/homebanner_banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`"/>
       </q-card-media>
       <q-card-main>
         <div class="row items-center justify-center">
