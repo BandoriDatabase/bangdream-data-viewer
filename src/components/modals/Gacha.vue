@@ -131,7 +131,10 @@ export default {
       }, 3500)
     },
     stopMultiPickupSlideShow () {
-      if (this.multiPickupImgInterval) clearInterval(this.multiPickupImgInterval)
+      if (this.multiPickupImgInterval) {
+        this.multiPickupImg = false
+        clearInterval(this.multiPickupImgInterval)
+      }
     }
   }
 }
