@@ -64,7 +64,11 @@
     "costum-avaliable-from": "Avaliable from:",
     "voice-appear": "Voice appearance:",
     "voice-type": "Voice type:",
-    "voice-motion": "Live2D motion:"
+    "voice-motion": "Live2D motion:",
+    "dialog-how-to-use": {
+      "title": "How to use",
+      "msg": "At first choose a Character, then a costum, you can click SHOW button now to load live2d model.<br>Select one of the voice and touch/click the live2d model, it will respond to you."
+    }
   },
   "zh-cn": {
     "chara": "角色",
@@ -77,7 +81,11 @@
     "costum-avaliable-from": "从该时间起可见：",
     "voice-appear": "语音出现场所：",
     "voice-type": "语音类别：",
-    "voice-motion": "Live2D动作："
+    "voice-motion": "Live2D动作：",
+    "dialog-how-to-use": {
+      "title": "如何使用",
+      "msg": "首先选择角色，再选择服装，就可以点击“显示”按钮展示Live2D模型了（需要加载）。<br>选择一个语音再点击/触摸Live2D模型，就会播放语音并附带动作。"
+    }
   },
   "zh-tw": {
     "chara": "角色",
@@ -90,7 +98,11 @@
     "costum-avaliable-from": "從該時間起可見：",
     "voice-appear": "語音出現場所：",
     "voice-type": "語音類別：",
-    "voice-motion": "Live2D動作："
+    "voice-motion": "Live2D動作：",
+    "dialog-how-to-use": {
+      "title": "如何使用",
+      "msg": "首先選擇角色，再選擇服裝，就可以點擊“顯示”按鈕展示Live2D模型了（需要加載）。<br>選擇壹個語音再點擊/觸摸Live2D模型，就會播放語音並附帶動作。"
+    }
   }
 }
 </i18n>
@@ -291,8 +303,8 @@ export default {
     },
     showHelp () {
       Dialog.create({
-        title: 'How to use',
-        message: 'At first choose a Character, then a costum, you can click SHOW button now to load live2d model.<br>Select one of the voice and touch/click the live2d model, it will respond to you.'
+        title: this.$t('dialog-how-to-use.title'),
+        message: this.$t('dialog-how-to-use.msg')
       })
     }
   },

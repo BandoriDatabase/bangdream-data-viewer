@@ -1,8 +1,12 @@
 <template>
-  <q-modal ref="gModal">
+  <q-modal ref="gModal" @close="stopMultiPickupSlideShow">
     <q-card class="no-margin" v-if="gacha" style="max-width: 600px;">
       <q-card-media>
-        <img v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_pickup${gacha.gachaId === 106 ? '_kasumi' : ''}.png`" alt="" class="gacha-banner" />
+        <img v-if="!multiPickupImg" v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_pickup${gacha.gachaId === 106 ? '_kasumi' : ''}.png`" alt="" class="gacha-banner" />
+        <div v-if="multiPickupImg" class="multiPickup">
+          <img :class="{active: isActive}" v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_pickup1.png`" class="gacha-banner" />
+          <img :class="{active: !isActive}" v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_pickup2.png`" class="gacha-banner" />
+        </div>
         <q-card-title slot="overlay">
           <p>{{gacha.gachaName}}
             <q-btn class="float-right" flat small @click="$refs.gModal.close()"><q-icon name="close" /></q-btn>
@@ -19,7 +23,7 @@
         <h6 v-if="gacha.information && gacha.information.newMemberInfo">{{$t('gacha-new-members')}}</h6>
         <p v-if="gacha.information && gacha.information.newMemberInfo" v-html="gacha.information.newMemberInfo.replace(/\n/g, '<br>')"></p>
         <h6>{{$t('gacha-rates')}}</h6>
-        <p v-for="rate in gacha.rates" :key="rate.rarityIndex" v-if="rate.rate">
+        <p v-for="(rate, idx) in gacha.rates" :key="idx" v-if="rate.rate">
           {{'\u2605'.repeat(Number(rate.rarityIndex))}} {{rate.rate}}%
         </p>
         <h6>{{$t('gacha-pickup')}}</h6>
@@ -89,8 +93,19 @@ export default {
   props: ['server'],
   data () {
     return {
-      gacha: null
+      gacha: null,
+      multiPickupImg: false,
+      multiPickupImgInterval: null,
+      isActive: true
     }
+  },
+  mounted () {
+    this.$Lazyload.$on('error', (el) => {
+      if (el.src.indexOf('pickup') !== -1 && !this.multiPickupImg) {
+        this.multiPickupImg = true
+        this.startMultiPickupSlideShow()
+      }
+    })
   },
   components: {
     QModal,
@@ -109,6 +124,14 @@ export default {
     open (data) {
       this.gacha = data
       this.$refs.gModal.open()
+    },
+    startMultiPickupSlideShow () {
+      this.multiPickupImgInterval = setInterval(() => {
+        this.isActive = !this.isActive
+      }, 3500)
+    },
+    stopMultiPickupSlideShow () {
+      if (this.multiPickupImgInterval) clearInterval(this.multiPickupImgInterval)
     }
   }
 }
@@ -120,4 +143,20 @@ export default {
   background-size: auto 100%
   background-repeat: no-repeat
   background-position: center
+
+.multiPickup
+  height: 600px
+  width: auto
+  position: relative
+
+.multiPickup img
+  position: absolute
+  width: 600px
+  top: 0
+  right: 0
+  transition: opacity 0.5s linear
+  opacity: 0
+
+.multiPickup img.active
+  opacity: 1
 </style>

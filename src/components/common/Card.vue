@@ -5,14 +5,14 @@
         <!-- <q-btn round small flat @click="$router.go(-1)" :class="getPalette(cardInfo.attr)">
           <q-icon name="reply"></q-icon>
         </q-btn> -->
-        <img class="avatar" style="width: 48px" v-lazy="`/assets/thumb/chara/card0000${cardGroup}_${cardInfo.cardRes}_${cardResType}.png`" />
+        <img class="avatar" style="width: 48px" v-lazy="`/assets-${server}/thumb/chara/card${cardGroup}_${cardInfo.cardRes}_${cardResType}.png`" />
         <span class="text-white">[{{cardInfo.title}}] {{characterInfo.characterName}}</span>
       </q-card-title>
       <q-card-main class="card-content column gutter">
         <div class="row gutter">
           <div class="card-img-parent col-xl-6 col-lg-6 col-md-6 col-12" v-if="cardImgType === 'card'"
             @click="$preview.open(0, [{
-              src: `/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
+              src: `/assets-${server}/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
               title: `[${cardInfo.title}] ${characterInfo.characterName}`,
               w: cardImgType === 'card' ? 1334 : 1120,
               h: cardImgType === 'card' ? 1002 : 1120
@@ -22,7 +22,7 @@
               shareEl: true,
               history: false
             })">
-            <div class="preview-img card-img-main" v-lazy:background-image="`/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`" />
+            <div class="preview-img card-img-main" v-lazy:background-image="`/assets-${server}/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`" />
             <div :class="`card-img-frame-${getCardFrame()}`" />
             <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" :key="i"></div>
             <div :class="`card-img-band-${characterInfo.bandId}`"></div>
@@ -30,7 +30,7 @@
           </div>
           <div v-else class="card-img-parent col-xl-6 col-lg-6 col-md-6 col-12"
             @click="$preview.open(0, [{
-              src: `/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
+              src: `/assets-${server}/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`,
               title: `[${cardInfo.title}] ${characterInfo.characterName}`,
               w: cardImgType === 'card' ? 1334 : 1120,
               h: cardImgType === 'card' ? 1002 : 1120
@@ -40,14 +40,14 @@
               shareEl: true,
               history: false
             })">
-            <div class="preview-img card-img-main" v-lazy:background-image="`/assets/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`" />
+            <div class="preview-img card-img-main" v-lazy:background-image="`/assets-${server}/characters/resourceset/${cardInfo.cardRes}_${cardImgType}_${cardResType}.png`" />
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3 || cardInfo.title !== 'ガルパ杯'"
               @click="$router.push({ name: 'cardDetail', params: { cardId: cardInfo.cardId, isTrained: Number(!isTrained) } })">{{$t('un-trained')}}</q-btn>
             <q-btn class="light" style="margin: 5px;" @click="switchCardImgType()">{{$t('cut-in-normal')}}</q-btn>
             <q-btn class="light" style="margin: 5px;" @click="$preview.open(0, [{
-                src: `/assets/characters/livesd/${cardInfo.live2dRes}_sdchara.png`,
+                src: `/assets-${server}/characters/livesd/${cardInfo.live2dRes}_sdchara.png`,
                 w: 507,
                 h: 507
               }], {
@@ -178,7 +178,7 @@
             <div v-for="(episode, idx) in cardInfo.episodes.entries" :key="episode.episodeId">
               <p><span v-if="idx">{{$t('story-max-level')}}</span><span v-else>{{$t('story-self-intro')}}</span>{{episode.title}}
                 <q-btn small color="pink" round flat
-                  @click="$router.push({name: 'scenario', params: {server: $route.params.server, scenarioType: 'chara', scenarioName: episode.scenarioId}}), $ga.event('card-detail', 'jump', `scenario`)">
+                  @click="$router.push({name: 'scenario', params: {server: server, scenarioType: 'chara', scenarioName: episode.scenarioId}}), $ga.event('card-detail', 'jump', `scenario`)">
                   <q-icon name="launch"></q-icon>
                 </q-btn>
               </p>
@@ -355,7 +355,11 @@ export default {
   },
   computed: {
     cardGroup () {
-      return Math.trunc(this.cardInfo.cardId / 50)
+      const groupId = Math.trunc(this.cardInfo.cardId / 50).toString()
+      return `${'0'.repeat(5 - groupId.length)}${groupId}`
+    },
+    server () {
+      return this.$route.params.server
     }
   },
   watch: {

@@ -280,7 +280,7 @@ export default {
   },
   data () {
     return {
-      appVer: '0.4.9'
+      appVer: '0.4.10'
     }
   },
   computed: {

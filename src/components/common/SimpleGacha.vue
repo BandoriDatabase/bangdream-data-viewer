@@ -6,7 +6,7 @@
         <span slot="subtitle" class="text-white">{{$t('gacha-list-count')}}: {{currentGachaList[server].length}}</span>
       </q-card-title>
       <q-card-main>
-        <div v-for="gacha in currentGachaList[server]" :key="gacha.gachaId" style="width: 100%; margin: 10px 0; text-align: center;">
+        <div v-for="gacha in currentGachaList[server]" :key="gacha.seq" style="width: 100%; margin: 10px 0; text-align: center;">
           <img v-lazy="`/assets-${server}/gacha/screen/${gacha.resourceName}_logo.png`" alt="" class="gacha-banner" />
           <p>{{gacha.gachaName}}<q-btn flat round small class="text-pink" @click="$refs.gachaModal.open(gacha)"><q-icon name="launch" /></q-btn></p>
           <count-down :target-time="Number(gacha.closedAt)"></count-down>

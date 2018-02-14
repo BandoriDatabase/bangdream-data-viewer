@@ -70,7 +70,7 @@ module.exports = {
         }
       },
       '/api': {
-        target: 'http://localhost:8180',
+        target: 'http://api.bangdream.ga',
         changeOrigin: true,
         pathRewrite: {
           '^/api/v1': '/v1'

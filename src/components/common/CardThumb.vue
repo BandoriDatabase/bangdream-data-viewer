@@ -4,7 +4,7 @@
         $emit('close');
         $router.push({ name: 'cardDetail', params: { cardId: cardMap[server][cardId].cardId, server, isTrained: 0 } });
       }">
-      <div class="thumb-table" v-lazy:background-image="`/assets/thumb/chara/card0000${Math.trunc(Number(cardMap[server][cardId].cardId) / 50)}_${cardMap[server][cardId].cardRes}_normal.png`"></div>
+      <div class="thumb-table" v-lazy:background-image="`/assets-${server}/thumb/chara/card${cardGroup}_${cardMap[server][cardId].cardRes}_normal.png`"></div>
       <div :class="`thumb-frame-${getThumbFrame(Number(cardMap[server][cardId].rarity), cardMap[server][cardId].attr)}`"></div>
       <div :class="`thumb-attr-${cardMap[server][cardId].attr}`"></div>
     </div>
@@ -44,6 +44,10 @@ export default {
     QInnerLoading
   },
   computed: {
+    cardGroup () {
+      const groupId = Math.trunc(this.cardId / 50).toString()
+      return `${'0'.repeat(5 - groupId.length)}${groupId}`
+    },
     ...mapState('card', [
       'cardMap'
     ])
