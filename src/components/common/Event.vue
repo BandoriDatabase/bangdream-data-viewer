@@ -14,12 +14,22 @@
         <img v-if="server === 'jp'" class="responsive" v-lazy="`/assets/homebanner_banner_event${currentEvent[server].eventId}.png`"/>
         <img v-if="server === 'tw'" class="responsive" v-lazy="`/assets-tw/homebanner_banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`"/>
         <a-player :music="eventBGM" ref="player" mode="single" class="col-12"></a-player>
-        <p v-if="Number(currentEvent[server].endAt) > Date.now()">{{$t('event-end-cd')}}</p>
-        <count-down :target-time="Number(currentEvent[server].endAt)" v-if="Number(currentEvent[server].endAt) > Date.now()"></count-down>
-        <p v-if="Number(currentEvent[server].endAt) < Date.now() && Number(currentEvent[server].distributionStartAt) > Date.now()">{{$t('event-dist-cd')}}</p>
-        <count-down :target-time="Number(currentEvent[server].distributionStartAt)" v-if="Number(currentEvent[server].endAt) < Date.now() && Number(currentEvent[server].distributionStartAt) > Date.now()"></count-down>
-        <p v-if="Number(currentEvent[server].distributionStartAt) < Date.now() && Number(currentEvent[server].publicEndAt) > Date.now()">{{$t('next-event-cd')}}</p>
-        <count-down :target-time="Number(currentEvent[server].publicEndAt)" v-if="Number(currentEvent[server].distributionStartAt) < Date.now() && Number(currentEvent[server].publicEndAt) > Date.now()"></count-down>
+        <div class="full-width column items-center" v-if="Number(currentEvent[server].startAt) > Date.now()">
+          <p>{{$t('event-start-cd')}}</p>
+          <count-down :target-time="Number(currentEvent[server].startAt)"></count-down>
+        </div>
+        <div class="full-width column items-center" v-else-if="Number(currentEvent[server].endAt) > Date.now()">
+          <p>{{$t('event-end-cd')}}</p>
+          <count-down :target-time="Number(currentEvent[server].endAt)"></count-down>
+        </div>
+        <div class="full-width column items-center" v-else-if="Number(currentEvent[server].endAt) < Date.now() && Number(currentEvent[server].distributionStartAt) > Date.now()">
+          <p>{{$t('event-dist-cd')}}</p>
+          <count-down :target-time="Number(currentEvent[server].distributionStartAt)"></count-down>
+        </div>
+        <div class="full-width column items-center" v-else-if="Number(currentEvent[server].distributionStartAt) < Date.now() && Number(currentEvent[server].publicEndAt) > Date.now()">
+          <p>{{$t('next-event-cd')}}</p>
+          <count-down :target-time="Number(currentEvent[server].publicEndAt)"></count-down>
+        </div>
         <p>{{$t('event-reward-card')}}</p>
         <div class="row">
           <div class="col-6"><card-thumb :cardId="Number(eventNormalCardId)" :server="server"></card-thumb></div>
@@ -39,16 +49,26 @@
         <div v-else-if="isDegreeReady && server === 'tw'" class="event-degree" :style="{ 'background-image': `url(/assets-tw/thumb/degree_event_point_icon_1.png), url(/assets-tw/thumb/degree_event_point_1.png), url(/assets-tw/thumb/degree_${degreeMap[server][currentEvent[server].rankingRewards[0].rewardId].imageName}.png)` }" />
         <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         <span v-if="currentEvent[server].eventType === 'challenge'">
-          <div class="row justify-center" v-if="server === 'jp'">
-            <div class="event-degree" v-for="eventMusic in currentEvent[server].detail.musics" :key="eventMusic.seq" v-if="degreeMap[server][eventMusic.musicRankingRewards[0].resourceId]"
-            :style="{ 'background-image': `url(/assets/thumb/degree_opening_1_1.png), url(/assets/thumb/degree_score_ranking_1.png), url(/assets/thumb/degree_${degreeMap[server][eventMusic.musicRankingRewards[0].resourceId].imageName}.png)` }" />
-            <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
+          <div class="row justify-center" v-if="isDegreeReady && server === 'jp'">
+            <div class="event-degree" v-for="eventMusic in currentEvent[server].detail.musics" :key="eventMusic.seq"
+            :style="{ 'background-image': `url(/assets/thumb/degree_score_ranking_1.png), url(/assets/thumb/degree_${degreeMap[server][eventMusic.musicRankingRewards[0].resourceId].imageName}.png)` }" />
           </div>
-          <div class="row justify-center" v-else-if="server === 'tw'">
-            <div class="event-degree" v-for="eventMusic in currentEvent[server].detail.musics" :key="eventMusic.seq" v-if="degreeMap[server][eventMusic.musicRankingRewards[0].resourceId]"
-            :style="{ 'background-image': `url(/assets-tw/thumb/degree_opening_1_1.png), url(/assets-tw/thumb/degree_score_ranking_1.png), url(/assets-tw/thumb/degree_${degreeMap[server][eventMusic.musicRankingRewards[0].resourceId].imageName}.png)` }" />
-            <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
+          <div class="row justify-center" v-else-if="isDegreeReady && server === 'tw'">
+            <div class="event-degree" v-for="eventMusic in currentEvent[server].detail.musics" :key="eventMusic.seq"
+            :style="{ 'background-image': `url(/assets-tw/thumb/degree_score_ranking_1.png), url(/assets-tw/thumb/degree_${degreeMap[server][eventMusic.musicRankingRewards[0].resourceId].imageName}.png)` }" />
           </div>
+          <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
+        </span>
+        <span v-if="currentEvent[server].eventType === 'live_try'">
+          <div class="row justify-center" v-if="isDegreeReady && server === 'jp'">
+            <div class="event-degree" :style="{ 'background-image': `url(/assets/thumb/degree_try_clear_normal.png), url(/assets/thumb/degree_${degreeMap[server][currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.normal.entries[10].resourceId].imageName}.png)` }" />
+            <div class="event-degree" :style="{ 'background-image': `url(/assets/thumb/degree_try_clear_extra.png), url(/assets/thumb/degree_${degreeMap[server][currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.extra.entries[5].resourceId].imageName}.png)` }" />
+          </div>
+          <div class="row justify-center" v-else-if="isDegreeReady && server === 'tw'">
+            <div class="event-degree" :style="{ 'background-image': `url(/assets-tw/thumb/degree_try_clear_normal.png), url(/assets-tw/thumb/degree_${degreeMap[server][currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.normal.entries[10].resourceId].imageName}.png)` }" />
+            <div class="event-degree" :style="{ 'background-image': `url(/assets-tw/thumb/degree_try_clear_extra.png), url(/assets-tw/thumb/degree_${degreeMap[server][currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.extra.entries[5].resourceId].imageName}.png)` }" />
+          </div>
+          <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         </span>
         <span class="column items-center" v-if="currentEvent[server].eventType === 'challenge'">
           <p>{{$t('event-musics')}}</p>
@@ -78,6 +98,7 @@
     "event-jp": "Event JP",
     "event-tw": "Event TW",
     "event-type": "Event type:",
+    "event-start-cd": "Event starting countdown",
     "event-end-cd": "Event ending countdown",
     "event-dist-cd": "Event award distribution countdown",
     "next-event-cd": "Next event countdown",
@@ -93,6 +114,7 @@
     "event-jp": "日服活动",
     "event-tw": "台服活动",
     "event-type": "活动类型：",
+    "event-start-cd": "离活动开始还有",
     "event-end-cd": "离活动结束还有",
     "event-dist-cd": "离活动结果发表还有",
     "next-event-cd": "离下次活动还有",
@@ -108,6 +130,7 @@
     "event-jp": "日服活動",
     "event-tw": "台服活動",
     "event-type": "活動類型：",
+    "event-start-cd": "離活動開始還有",
     "event-end-cd": "離活動結束還有",
     "event-dist-cd": "離活動結果發表還有",
     "next-event-cd": "離下次活動還有",
@@ -210,10 +233,6 @@ export default {
           this.isBadgeReady = true
         })
       if (this.currentEvent[this.server].eventType === 'challenge') {
-        await this.getDegreeById({
-          id: this.currentEvent[this.server].rankingRewards[0].rewardId,
-          server: this.server
-        })
         for (let eM of this.currentEvent[this.server].detail.musics) {
           await this.getDegreeById({
             id: eM.musicRankingRewards[0].resourceId,
@@ -224,17 +243,24 @@ export default {
             server: this.server
           })
         }
-        this.isDegreeReady = true
       }
-      else {
-        this.getDegreeById({
-          id: this.currentEvent[this.server].rankingRewards[0].rewardId,
+      else if (this.currentEvent[this.server].eventType === 'live_try') {
+        await this.getDegreeById({
+          id: this.currentEvent[this.server].detail.liveTryLevelRewardDifficultyMap.entries.normal.entries[10].resourceId,
           server: this.server
         })
-          .then(res => {
-            this.isDegreeReady = true
-          })
+        await this.getDegreeById({
+          id: this.currentEvent[this.server].detail.liveTryLevelRewardDifficultyMap.entries.extra.entries[5].resourceId,
+          server: this.server
+        })
       }
+      this.getDegreeById({
+        id: this.currentEvent[this.server].rankingRewards[0].rewardId,
+        server: this.server
+      })
+        .then(res => {
+          this.isDegreeReady = true
+        })
     })
   },
   computed: {

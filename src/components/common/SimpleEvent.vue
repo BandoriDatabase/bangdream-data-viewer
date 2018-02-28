@@ -13,7 +13,11 @@
         <div class="row items-center justify-center">
           <div class="col-3" @click="$ga.event('event-card', 'jump', `normal-${server}`)"><card-thumb :cardId="Number(eventNormalCardId)" :server="server"></card-thumb></div>
           <div class="col-3" @click="$ga.event('event-card', 'jump', `sr-${server}`)"><card-thumb :cardId="Number(eventSpecialCardId)" :server="server"></card-thumb></div>
-          <count-down class="col-6" :target-time="Number(currentEvent[server].endAt)" v-if="Number(currentEvent[server].endAt) > Date.now()" small></count-down>
+          <div class="col-6" v-if="Number(currentEvent[server].startAt) > Date.now()">
+            <p>{{$t('event-not-started')}}</p>
+            <p>{{(new Date(Number(currentEvent[server].startAt))).toLocaleString()}}</p>
+          </div>
+          <count-down class="col-6" :target-time="Number(currentEvent[server].endAt)" v-else-if="Number(currentEvent[server].endAt) > Date.now()" small></count-down>
         </div>
       </q-card-main>
     </q-card>
@@ -34,17 +38,20 @@
   "en": {
     "event-jp": "Event JP",
     "event-tw": "Event TW",
-    "fetch-event-data": "Fetching Event Data..."
+    "fetch-event-data": "Fetching Event Data...",
+    "event-not-started": "Not started until"
   },
   "zh-cn": {
     "event-jp": "日服活动",
     "event-tw": "台服活动",
-    "fetch-event-data": "获取活动数据中"
+    "fetch-event-data": "获取活动数据中",
+    "event-not-started": "活动将开始于"
   },
   "zh-tw": {
     "event-jp": "日服活動",
     "event-tw": "台服活動",
-    "fetch-event-data": "獲取活動數據中"
+    "fetch-event-data": "獲取活動數據中",
+    "event-not-started": "活動將開始於"
   },
   "ja": {
     "event-jp": "日本サーバー開催中のイベント",

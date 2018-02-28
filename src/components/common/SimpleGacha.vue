@@ -9,7 +9,9 @@
         <div v-for="gacha in currentGachaList[server]" :key="gacha.seq" style="width: 100%; margin: 10px 0; text-align: center;">
           <img v-lazy="`/assets-${server}/gacha/screen/${gacha.resourceName}_logo.png`" alt="" class="gacha-banner" />
           <p>{{gacha.gachaName}}<q-btn flat round small class="text-pink" @click="$refs.gachaModal.open(gacha)"><q-icon name="launch" /></q-btn></p>
-          <count-down :target-time="Number(gacha.closedAt)"></count-down>
+          <p v-if="Number(gacha.publishedAt) > Date.now()">{{$t('gacha-not-started')}}</p>
+          <h5 v-if="Number(gacha.publishedAt) > Date.now()">{{(new Date(Number(gacha.publishedAt))).toLocaleString()}}</h5>
+          <count-down :target-time="Number(gacha.closedAt)" v-else></count-down>
         </div>
         <gacha-modal ref="gachaModal" :server="server"></gacha-modal>
       </q-card-main>
@@ -33,21 +35,24 @@
     "gache-list-jp": "JP scouts list",
     "gache-list-tw": "TW scouts list",
     "gacha-list-count": "Counts",
-    "fetch-gacha-data": "Fetching Gacha Data..."
+    "fetch-gacha-data": "Fetching Gacha Data...",
+    "gacha-not-started": "Gacha will start at"
   },
   "zh-cn": {
     "gacha-end-cd": "抽卡倒计时",
     "gache-list-jp": "日服当前开放扭蛋池",
     "gache-list-tw": "台服当前开放扭蛋池",
     "gacha-list-count": "数量",
-    "fetch-gacha-data": "获取扭蛋池数据中"
+    "fetch-gacha-data": "获取扭蛋池数据中",
+    "gacha-not-started": "扭蛋将开始于"
   },
   "zh-tw": {
     "gacha-end-cd": "抽卡倒計時",
     "gache-list-jp": "日服當前開放扭蛋池",
     "gache-list-tw": "臺服當前開放扭蛋池",
     "gacha-list-count": "數量",
-    "fetch-gacha-data": "獲取扭蛋池數據中"
+    "fetch-gacha-data": "獲取扭蛋池數據中",
+    "gacha-not-started": "扭蛋將開始於"
   },
   "ja": {
     "gacha-end-cd": "ガチャカウントダウン",

@@ -18,7 +18,7 @@
       <q-card-main style="text-align: center">
         <h6>{{$t('gacha-desc')}}</h6>
         <p>{{gacha.description}}</p>
-        <p v-if="gacha.information" v-html="gacha.information.description.replace(/\n/g, '<br>')"></p>
+        <p v-if="gacha.information && gacha.information.description" v-html="gacha.information.description.replace(/\n/g, '<br>')"></p>
         <p v-else>{{gacha.description}}</p>
         <h6 v-if="gacha.information && gacha.information.newMemberInfo">{{$t('gacha-new-members')}}</h6>
         <p v-if="gacha.information && gacha.information.newMemberInfo" v-html="gacha.information.newMemberInfo.replace(/\n/g, '<br>')"></p>
@@ -101,8 +101,8 @@ export default {
   },
   mounted () {
     this.$Lazyload.$on('error', (el) => {
-      if (el.src.indexOf('pickup') !== -1 && !this.multiPickupImg) {
-        this.multiPickupImg = true
+      this.multiPickupImg = !this.multiPickupImg
+      if (el.src.indexOf('pickup') !== -1 && this.multiPickupImg) {
         this.startMultiPickupSlideShow()
       }
     })
@@ -154,7 +154,7 @@ export default {
 
 .multiPickup img
   position: absolute
-  width: 600px
+  width: 100%
   top: 0
   right: 0
   transition: opacity 0.5s linear
