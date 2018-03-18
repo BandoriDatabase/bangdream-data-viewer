@@ -75,9 +75,9 @@
         </span>
         <span class="column items-center" v-if="currentEvent[server].eventType === 'challenge'">
           <p>{{$t('event.musics')}}</p>
-          <div class="row">
+          <div class="row justify-center">
             <img v-for="eventMusic in currentEvent[server].detail.musics" :key="eventMusic.seq" v-if="musicMap[server][eventMusic.musicId]" v-lazy="`/assets/musicjacket/${musicMap[server][eventMusic.musicId].jacketImage}_thumb.png`"
-              style="margin: 0 4px; cursor: pointer; width: 120px; height: 120px;" @click="$router.push(`/music/${server}/${eventMusic.musicId}`)">
+              style="margin: 4px; cursor: pointer; width: 150px; height: 150px;" @click="$router.push(`/music/${server}/${eventMusic.musicId}`)">
             <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
           </div>
         </span>

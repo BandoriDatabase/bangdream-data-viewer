@@ -26,7 +26,7 @@
                 title: `[${cardInfo.title}] ${charaInfo.characterName}`,
                 titleBG: paletteMap[cardInfo.attr]
               })">
-              <div v-lazy:background-image :src="getCardImage()" class="card-img-main" />
+              <div v-lazy:background-image="getCardImage()" class="card-img-main" />
             </div>
             <div>
               <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3 || cardInfo.title !== 'ガルパ杯'"
