@@ -6,7 +6,7 @@ before_script:
 - npm install -g quasar-cli
 script:
 - quasar lint
-- quasar build
+- quasar build -m pwa
 before_deploy:
 - openssl aes-256-cbc -K $encrypted_6471c10cdc2d_key -iv $encrypted_6471c10cdc2d_iv
   -in deploy_rsa.enc -out /tmp/deploy_rsa -d
