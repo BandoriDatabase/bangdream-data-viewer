@@ -67,13 +67,16 @@ export default {
       charaOptions: [],
       costumOptions: [],
       voiceOptions: [],
-      audioContext: new AudioContext(),
+      AudioContext: window.AudioContext || window.webkitAudioContext || false,
       lipSyncValue: 0,
       voicePlaying: false
     }
   },
   mounted () {
+    const { AudioContext } = this
+    if (!AudioContext) return
     if (this.forceReload) window.location.reload()
+    this.audioContext = new AudioContext()
     this.updateData(this.server)
   },
   computed: {

@@ -42,7 +42,7 @@ export default {
       audioDisable: true,
       audioStarted: false,
       audioPaused: false,
-      audioContext: new AudioContext(),
+      AudioContext: window.AudioContext || window.webkitAudioContext || false,
       noteStartPoint: [
         {
           x: 50,
@@ -135,32 +135,33 @@ export default {
       noteArr: []
     }
   },
-  mounted () {
-    this.$nextTick(async () => {
-      await this.getMusicById({musicId: this.$route.params.musicId, server: 'jp'})
-      this.data = this.musicMap.jp[this.$route.params.musicId]
-      this.isReady = true
-      this.difficultyOptions = [
-        {
-          label: `Expert (${this.data.difficulty[1].level})`,
-          value: 'expert'
-        },
-        {
-          label: `Hard (${this.data.difficulty[2].level})`,
-          value: 'hard'
-        },
-        {
-          label: `Normal (${this.data.difficulty[3].level})`,
-          value: 'normal'
-        },
-        {
-          label: `Easy (${this.data.difficulty[0].level})`,
-          value: 'easy'
-        }
-      ]
+  async mounted () {
+    const { AudioContext } = this
+    if (!AudioContext) return
+    this.audioContext = new AudioContext()
+    await this.getMusicById({musicId: this.$route.params.musicId, server: 'jp'})
+    this.data = this.musicMap.jp[this.$route.params.musicId]
+    this.isReady = true
+    this.difficultyOptions = [
+      {
+        label: `Expert (${this.data.difficulty[1].level})`,
+        value: 'expert'
+      },
+      {
+        label: `Hard (${this.data.difficulty[2].level})`,
+        value: 'hard'
+      },
+      {
+        label: `Normal (${this.data.difficulty[3].level})`,
+        value: 'normal'
+      },
+      {
+        label: `Easy (${this.data.difficulty[0].level})`,
+        value: 'easy'
+      }
+    ]
 
-      this.loadRes()
-    })
+    this.loadRes()
   },
   computed: {
     ...mapState('music', [
@@ -544,6 +545,7 @@ export default {
       return ret
     },
     stopRhythm () {
+      const { AudioContext } = this
       this.tmpDeltaTime = 0
       this.currBaseTime = 0
       this.audioContext.close()

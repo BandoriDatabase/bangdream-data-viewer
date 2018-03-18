@@ -1,6 +1,6 @@
 <template>
   <q-page padding class="column gutter-sm">
-    <p v-if="!$q.platform.is.desktop">{{$t('mobile.click-collapsible')}}</p>
+    <p style="text-align: center;" v-if="!$q.platform.is.desktop">{{$t('mobile.click-collapsible')}}</p>
     <q-collapsible :label="$t('common.jp')" v-model="isOpen.jp">
       <div class="row col-12 gutter-sm">
         <event-card class="col-lg-4 col-12" server="jp"></event-card>

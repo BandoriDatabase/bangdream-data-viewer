@@ -4,7 +4,7 @@
       {{$t('gacha.list-title', { srv: $t(`common.${server}`) })}}
       {{$t('gacha.list-count')}}: {{currentGachaList[server].length}}
     </div> -->
-    <div class="col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList[server]" :key="gacha.seq">
+    <div class="col-xl-4 col-md-6 col-12" v-for="gacha in currentGachaList[server]" :key="gacha.seq">
       <q-card inline>
         <q-card-title class="bg-pink text-white">
           {{gacha.gachaName}}
