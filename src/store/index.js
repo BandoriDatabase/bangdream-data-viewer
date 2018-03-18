@@ -1,35 +1,32 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import createLogger from 'vuex/dist/logger'
-// import DB from './modules/db'
-import band from './modules/band'
-import card from './modules/card'
-import chara from './modules/chara'
-import event from './modules/event'
-import stamp from './modules/stamp'
-import gacha from './modules/gacha'
-import version from './modules/version'
-import sfc from './modules/sfc'
-import music from './modules/music'
-import live2d from './modules/live2d'
+
+import version from './version'
+import event from './event'
+import card from './card'
+import gacha from './gacha'
+import chara from './chara'
+import sfc from './sfc'
+import band from './band'
+import music from './music'
+import live2d from './live2d'
+import stamp from './stamp'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   modules: {
-    // DB,
-    band,
-    card,
-    chara,
-    event,
-    stamp,
-    gacha,
     version,
+    event,
+    card,
+    gacha,
+    chara,
     sfc,
+    band,
     music,
-    live2d
+    live2d,
+    stamp
   }
-  // plugins: [
-  //   createLogger()
-  // ]
 })
+
+export default store

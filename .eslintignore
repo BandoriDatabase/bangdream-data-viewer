@@ -1,4 +1,1 @@
-build/*.js
-config/*.js
-dist/*.js
-src/live2d/**/*.js
+/dist
