@@ -20,21 +20,12 @@ export default {
     'desc': 'Bandori Database WebApp has a major update, many improvements are made to help you use the WebApp better.',
     'new-features': 'New Features',
     'feature-detail': [
-      'Single Frame Cartoon Viewer for Japan server is removed as it is already in the game',
-      'Redesigned home page layout to make infos of different server more clear',
-      'External links move to left drawer',
-      'Change language will not lead to refresh page (thanks to framework update)',
-      'Redunant hint texts are removed',
-      'New card detail layout to be more space efficient',
-      'Large image viewer is replaced by a modal',
-      'It is possible to open the full image on new tab in large image viewer',
-      'Current event info page is splited by different server',
-      'Story player use new data table to show story script',
-      'Show expected open time of a event or gacha which is not open yet'
+      'Add entries for Korean and Internaltional (a.k.a. English) server',
+      'Redesign card detail page'
     ],
     'fixed-bugs': 'Fixed Bugs',
     'bug-detail': [
-      'It is a refactored version so bug fix will appear since next version.'
+      'Fixed a problem causing some page unable to display on Safari'
     ],
     'welcome-bug-report': "If you find any problem affecting you use this web app, please report it to me per <a href='mailto:dev@bangdream.ga'>Email</a>, on <a href='https://dnaroma.site/2017/12/23/bug-report/'>Bug report page</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
   },
