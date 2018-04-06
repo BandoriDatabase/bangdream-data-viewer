@@ -1,10 +1,14 @@
 export default {
   bandList: {
     jp: [],
-    tw: []
+    tw: [],
+    kr: [],
+    en: []
   },
   bandMap: {
     jp: {},
-    tw: {}
+    tw: {},
+    kr: {},
+    en: {}
   }
 }

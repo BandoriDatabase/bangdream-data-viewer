@@ -1,136 +1,135 @@
 <template>
   <q-page padding>
-    <q-card v-if="isReady">
-      <q-card-title :class="`bg-${paletteMap[cardInfo.attr]}`">
+    <div v-if="isReady">
+      <div :class="`bg-${paletteMap[cardInfo.attr]}`" style="padding: 7px;">
         <img class="avatar" style="width: 48px" v-lazy="getCardThumb()" />
         <span class="text-white">[{{cardInfo.title}}] {{charaInfo.characterName}}</span>
-      </q-card-title>
-      <q-card-main>
-        <div class="row">
-          <div class="column col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="card-img-parent" v-if="cardImgType === 'card'"
-              @click="$preview.open({
-                src: getCardImage(),
-                title: `[${cardInfo.title}] ${charaInfo.characterName}`,
-                titleBG: paletteMap[cardInfo.attr]
-              })">
-              <div v-lazy:background-image="getCardImage()" class="card-img-main" />
-              <div :class="`card-img-frame-${frameMap[cardInfo.rarity] || cardInfo.attr}`" />
-              <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" :key="i"></div>
-              <div :class="`card-img-band-${charaInfo.bandId}`"></div>
-              <div :class="`card-img-attr-${cardInfo.attr}`"></div>
-            </div>
-            <div v-else class="card-img-parent"
-              @click="$preview.open({
-                src: getCardImage(),
-                title: `[${cardInfo.title}] ${charaInfo.characterName}`,
-                titleBG: paletteMap[cardInfo.attr]
-              })">
-              <div v-lazy:background-image="getCardImage()" class="card-img-main" />
-            </div>
-            <div>
-              <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3 || cardInfo.title !== 'ガルパ杯'"
-                @click="$router.push(`/card/${server}/${cardId}/${Number(!isTrained)}`)">{{$t('card.un-trained')}}</q-btn>
-              <q-btn class="light" style="margin: 5px;" @click="switchCardImgType()">{{$t('card.cut-in-normal')}}</q-btn>
-              <q-btn class="light" style="margin: 5px;"
-                @click="$preview.open({
-                  title: `[${cardInfo.title}] ${charaInfo.characterName}`,
-                  titleBG: paletteMap[cardInfo.attr],
-                  src: getCardLivesd()
-                })">{{$t('card.live-chara')}}</q-btn>
-              <div class="column" v-if="cardInfo.episodes">
-                <label>
-                  <q-toggle
-                    v-model="isSelfInfoReward"
-                  ></q-toggle>
-                  {{$t('card.self-intro-unlock-reward')}}
-                </label>
-                <label>
-                  <q-toggle
-                    v-model="isMaxLvReward"
-                  ></q-toggle>
-                  {{$t('card.max-lv-unlock-reward')}}
-                </label>
-              </div>
-            </div>
+      </div>
+      <br>
+      <div class="row gutter-sm">
+        <div class="column col-xl-4 col-lg-6 col-md-6 col-12">
+          <div class="card-img-parent" v-if="cardImgType === 'card'"
+            @click="$preview.open({
+              src: getCardImage(),
+              title: `[${cardInfo.title}] ${charaInfo.characterName}`,
+              titleBG: paletteMap[cardInfo.attr]
+            })">
+            <div v-lazy:background-image="getCardImage()" class="card-img-main" />
+            <div :class="`card-img-frame-${frameMap[cardInfo.rarity] || cardInfo.attr}`" />
+            <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" :key="i"></div>
+            <div :class="`card-img-band-${charaInfo.bandId}`"></div>
+            <div :class="`card-img-attr-${cardInfo.attr}`"></div>
           </div>
-          <div class="row col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="col-6">
-              <h5>Level</h5>
-              <q-input
-                style="display: inline-block"
-                v-model="level"
-                type="number"
-                :min="1"
-                :max="cardResType === 'normal' ? cardInfo.levelLimit : cardInfo.maxLv"
-              ></q-input>
-            </div>
-            <div class="col-6">
-              Total
-              <h5>
-                {{Number(cardInfo.parameterMap[level].performance) +
-                Number(cardInfo.parameterMap[level].technique) +
-                Number(cardInfo.parameterMap[level].visual) +
-                (cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) +
-                Number(cardInfo.training.trainingTechnic) +
-                Number(cardInfo.training.trainingVisual) : 0) +
-                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) +
-                Number(cardInfo.episodes.entries[0].appendTechnique) +
-                Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
-                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) +
-                Number(cardInfo.episodes.entries[1].appendTechnique) +
-                Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}
-                <br><small>+{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) +
-                Number(cardInfo.training.trainingTechnic) +
-                Number(cardInfo.training.trainingVisual) : 0) +
-                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) +
-                Number(cardInfo.episodes.entries[0].appendTechnique) +
-                Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
-                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) +
-                Number(cardInfo.episodes.entries[1].appendTechnique) +
-                Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}</small>
-              </h5>
-            </div>
-            <div class="col-lg-3 col-md-3 col-4 text-pink-6">
-              {{$t('common.perform')}}
-              <h5>
-                {{Number(cardInfo.parameterMap[level].performance) +
-                (cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) : 0) +
-                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) : 0) +
-                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) : 0)}}
-                <br><small>+{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) : 0) +
-                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) : 0) +
-                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) : 0)}}</small>
-              </h5>
-            </div>
-            <div class="col-lg-3 col-md-3 col-4 text-indigo-6">
-              {{$t('common.technic')}}
-              <h5>
-                {{Number(cardInfo.parameterMap[level].technique) +
-                (cardResType === 'after_training' ? Number(cardInfo.training.trainingTechnic) : 0) +
-                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendTechnique) : 0) +
-                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendTechnique) : 0)}}
-                <br><small>+{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingTechnic) : 0) +
-                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendTechnique) : 0) +
-                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendTechnique) : 0)}}</small>
-              </h5>
-            </div>
-            <div class="col-lg-3 col-md-3 col-4 text-orange-8">
-              {{$t('common.visual')}}
-              <h5>
-                {{Number(cardInfo.parameterMap[level].visual) +
-                (cardResType === 'after_training' ? Number(cardInfo.training.trainingVisual) : 0) +
-                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
-                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}
-                <br><small>+{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingVisual) : 0) +
-                (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
-                (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}</small>
-              </h5>
+          <div v-else class="card-img-parent"
+            @click="$preview.open({
+              src: getCardImage(),
+              title: `[${cardInfo.title}] ${charaInfo.characterName}`,
+              titleBG: paletteMap[cardInfo.attr]
+            })">
+            <div v-lazy:background-image="getCardImage()" class="card-img-main" />
+          </div>
+          <div>
+            <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3 || cardInfo.title !== 'ガルパ杯'"
+              @click="$router.push(`/card/${server}/${cardId}/${Number(!isTrained)}`)">{{$t('card.un-trained')}}</q-btn>
+            <q-btn class="light" style="margin: 5px;" @click="switchCardImgType()">{{$t('card.cut-in-normal')}}</q-btn>
+            <q-btn class="light" style="margin: 5px;"
+              @click="$preview.open({
+                title: `[${cardInfo.title}] ${charaInfo.characterName}`,
+                titleBG: paletteMap[cardInfo.attr],
+                src: getCardLivesd()
+              })">{{$t('card.live-chara')}}</q-btn>
+            <div class="column" v-if="cardInfo.episodes">
+              <label>
+                <q-toggle
+                  v-model="isSelfInfoReward"
+                ></q-toggle>
+                {{$t('card.self-intro-unlock-reward')}}
+              </label>
+              <label>
+                <q-toggle
+                  v-model="isMaxLvReward"
+                ></q-toggle>
+                {{$t('card.max-lv-unlock-reward')}}
+              </label>
             </div>
           </div>
         </div>
-        <div v-if="cardInfo.parameterMap" class="row gutter-sm">
-          <div class="col-md-6 col-12">
+        <div class="row col-xl-4 col-lg-6 col-md-6 col-12">
+          <div class="col-8">
+            <h5>Level</h5>
+            <q-input
+              style="display: inline-block"
+              v-model="level"
+              type="number"
+              :min="1"
+              :max="cardResType === 'normal' ? cardInfo.levelLimit : cardInfo.maxLv"
+            ></q-input>
+          </div>
+          <div class="col-4">
+            Total
+            <h5>
+              {{Number(cardInfo.parameterMap[level].performance) +
+              Number(cardInfo.parameterMap[level].technique) +
+              Number(cardInfo.parameterMap[level].visual) +
+              (cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) +
+              Number(cardInfo.training.trainingTechnic) +
+              Number(cardInfo.training.trainingVisual) : 0) +
+              (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) +
+              Number(cardInfo.episodes.entries[0].appendTechnique) +
+              Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
+              (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) +
+              Number(cardInfo.episodes.entries[1].appendTechnique) +
+              Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}
+              <br><small>+{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) +
+              Number(cardInfo.training.trainingTechnic) +
+              Number(cardInfo.training.trainingVisual) : 0) +
+              (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) +
+              Number(cardInfo.episodes.entries[0].appendTechnique) +
+              Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
+              (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) +
+              Number(cardInfo.episodes.entries[1].appendTechnique) +
+              Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}</small>
+            </h5>
+          </div>
+          <div class="col-4 text-pink-6">
+            {{$t('common.perform')}}
+            <h5>
+              {{Number(cardInfo.parameterMap[level].performance) +
+              (cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) : 0) +
+              (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) : 0) +
+              (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) : 0)}}
+              <br><small>+{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) : 0) +
+              (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) : 0) +
+              (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) : 0)}}</small>
+            </h5>
+          </div>
+          <div class="col-4 text-indigo-6">
+            {{$t('common.technic')}}
+            <h5>
+              {{Number(cardInfo.parameterMap[level].technique) +
+              (cardResType === 'after_training' ? Number(cardInfo.training.trainingTechnic) : 0) +
+              (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendTechnique) : 0) +
+              (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendTechnique) : 0)}}
+              <br><small>+{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingTechnic) : 0) +
+              (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendTechnique) : 0) +
+              (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendTechnique) : 0)}}</small>
+            </h5>
+          </div>
+          <div class="col-4 text-orange-8">
+            {{$t('common.visual')}}
+            <h5>
+              {{Number(cardInfo.parameterMap[level].visual) +
+              (cardResType === 'after_training' ? Number(cardInfo.training.trainingVisual) : 0) +
+              (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
+              (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}
+              <br><small>+{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingVisual) : 0) +
+              (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
+              (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}</small>
+            </h5>
+          </div>
+        </div>
+        <div v-if="cardInfo.parameterMap" class="row col-xl-4 col-12">
+          <div class="col-xl-12 col-md-6 col-12">
             <p style="font-size: 18px;">
               <q-icon name="trending up" />
               {{$t('card.skill-title')}}
@@ -149,7 +148,8 @@
               skillInfo.skillDetail[Math.floor((skillLv - 1)/2)]).description,
               skillInfo.activateEffect, skillInfo.onceEffect, skillLv)}}</p>
           </div>
-          <div class="col-md-6 col-12">
+          <br>
+          <div class="col-xl-12 col-md-6 col-12">
             <p style="font-size: 18px;">
               <q-icon name="highlight" />
               {{$t('card.training-title')}}
@@ -162,41 +162,43 @@
             </div>
             <div v-else>{{$t('card.no-train-ava')}}</div>
           </div>
-          <div class="col-12" v-if="cardInfo.episodes">
-            <p style="font-size: 18px;">
-              <q-icon name="insert comment" />
-              {{$t('card.story')}}
-            </p>
-            <div class="row">
-              <div v-for="(episode, idx) in cardInfo.episodes.entries" :key="episode.episodeId"
-                class="col-md-6 col-12"
-              >
-                <p><span v-if="idx">{{$t('card.story-max-level')}}</span><span v-else>{{$t('card.story-self-intro')}}</span>{{episode.title}}
-                  <q-btn small color="pink" round flat
-                    @click="$router.push(`/scenario/${server}/chara/${episode.scenarioId}`), $ga.event('card-detail', 'jump', `scenario`)">
-                    <q-icon name="launch"></q-icon>
-                  </q-btn>
-                </p>
-                <p>{{$t('card.story-to-unlock')}}</p>
-                <div class="row">
-                  <div v-for="entry in episode.costs.entries" class="column col-4 items-center" :key="entry.resourceId">
-                    <img class="thumb-training" v-lazy="`/assets/thumb/material_material0${String(entry.resourceId).length === 1 ? `0${entry.resourceId}` : entry.resourceId}.png`">
-                    <span>{{entry.quantity}}</span>
-                  </div>
+        </div>
+      </div>
+      <div v-if="cardInfo.parameterMap" class="row gutter-sm">
+        <div class="col-12" v-if="cardInfo.episodes">
+          <p style="font-size: 18px;">
+            <q-icon name="insert comment" />
+            {{$t('card.story')}}
+          </p>
+          <div class="row">
+            <div v-for="(episode, idx) in cardInfo.episodes.entries" :key="episode.episodeId"
+              class="col-md-6 col-12"
+            >
+              <p><span v-if="idx">{{$t('card.story-max-level')}}</span><span v-else>{{$t('card.story-self-intro')}}</span>{{episode.title}}
+                <q-btn small color="pink" round flat
+                  @click="$router.push(`/scenario/${server}/chara/${episode.scenarioId}`), $ga.event('card-detail', 'jump', `scenario`)">
+                  <q-icon name="launch"></q-icon>
+                </q-btn>
+              </p>
+              <p>{{$t('card.story-to-unlock')}}</p>
+              <div class="row">
+                <div v-for="entry in episode.costs.entries" class="column col-4 items-center" :key="entry.resourceId">
+                  <img class="thumb-training" v-lazy="`/assets/thumb/material_material0${String(entry.resourceId).length === 1 ? `0${entry.resourceId}` : entry.resourceId}.png`">
+                  <span>{{entry.quantity}}</span>
                 </div>
-                <p>{{$t('card.story-reward')}}</p>
-                <div class="row">
-                  <div v-for="entry in episode.rewards.entries" class="column col-4 items-center" :key="entry.resourceId">
-                    <img class="thumb-training" v-lazy="`/assets/thumb/common_${entry.resourceType}.png`">
-                    <span>{{entry.quantity}}</span>
-                  </div>
+              </div>
+              <p>{{$t('card.story-reward')}}</p>
+              <div class="row">
+                <div v-for="entry in episode.rewards.entries" class="column col-4 items-center" :key="entry.resourceId">
+                  <img class="thumb-training" v-lazy="`/assets/thumb/common_${entry.resourceType}.png`">
+                  <span>{{entry.quantity}}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </q-card-main>
-    </q-card>
+      </div>
+    </div>
     <q-card v-else>
       <q-card-title class="bg-grey text-white">
         {{$t('card.fetch-card-data')}}
@@ -242,6 +244,8 @@ export default {
       await this.getSkillById({cardId: card.cardId, server: this.$route.params.server})
       this.charaInfo = await this.getCharaById({charaId: card.characterId, server: this.$route.params.server})
       this.isReady = true
+      this.level = Number(this.cardInfo.maxLevel)
+      this.skillLv = this.skillInfo.skillDetail.slice(-1)[0].skillLevel
 
       if (this.isTrained) this.switchCardResType()
     })

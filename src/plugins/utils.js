@@ -38,6 +38,8 @@ export default ({ app, router, Vue }) => {
 
   Vue.specialCardList = Vue.prototype.$specialCardList = {
     jp: [],
-    tw: [5001]
+    tw: [5001],
+    kr: [],
+    en: []
   }
 }

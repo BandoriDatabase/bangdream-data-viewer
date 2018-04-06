@@ -1,10 +1,14 @@
 export default {
   musicList: {
     jp: [],
-    tw: []
+    tw: [],
+    kr: [],
+    en: []
   },
   musicMap: {
     jp: {},
-    tw: {}
+    tw: {},
+    kr: {},
+    en: {}
   }
 }

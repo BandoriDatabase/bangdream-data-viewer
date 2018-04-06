@@ -1,18 +1,26 @@
 export default {
   cardList: {
     jp: [],
-    tw: []
+    tw: [],
+    kr: [],
+    en: []
   },
   cardMap: {
     jp: {},
-    tw: {}
+    tw: {},
+    kr: {},
+    en: {}
   },
   skillList: {
     jp: [],
-    tw: []
+    tw: [],
+    kr: [],
+    en: []
   },
   skillMap: {
     jp: {},
-    tw: {}
+    tw: {},
+    kr: {},
+    en: {}
   }
 }

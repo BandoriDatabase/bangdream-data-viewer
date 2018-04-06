@@ -1,14 +1,20 @@
 export default {
   gachaList: {
     jp: [],
-    tw: []
+    tw: [],
+    kr: [],
+    en: []
   },
   gachaMap: {
     jp: {},
-    tw: {}
+    tw: {},
+    kr: {},
+    en: {}
   },
   currentGachaList: {
     jp: [],
-    tw: []
+    tw: [],
+    kr: [],
+    en: []
   }
 }

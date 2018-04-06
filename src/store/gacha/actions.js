@@ -1,16 +1,16 @@
 import Vue from 'vue'
 
-export const getGachaList = async ({commit, state}) => {
-  if (state.gachaList.length) return state.gachaList
+export const getGachaList = async ({commit, state}, server) => {
+  if (state.gachaList[server].length) return state.gachaList[server]
   const gachas = await Vue.apiClient.getGacha()
-  commit('SET_GACHA_LIST', gachas.data)
+  commit('SET_GACHA_LIST', {gachas: gachas.data, server})
   return gachas
 }
 
-export const getGachaById = async ({commit, state}, id) => {
-  if (state.gachaMap[id]) return state.gachaMap[id]
-  const gacha = await Vue.apiClient.getGachaById(id)
-  commit('ADD_GACHA_ENTRY', {id: id, value: gacha})
+export const getGachaById = async ({commit, state}, {server, id}) => {
+  if (state.gachaMap[server][id]) return state.gachaMap[server][id]
+  const gacha = await Vue.apiClient.getGachaById(id, server)
+  commit('ADD_GACHA_ENTRY', {obj: {id: id, value: gacha}, server})
   return gacha
 }
 

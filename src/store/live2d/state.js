@@ -1,11 +1,15 @@
 export default {
   voiceMap: {
     jp: {},
-    tw: {}
+    tw: {},
+    kr: {},
+    en: {}
   },
   costumMap: {
     jp: {},
-    tw: {}
+    tw: {},
+    kr: {},
+    en: {}
   },
   forceReload: false
 }

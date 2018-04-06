@@ -15,7 +15,7 @@ export const getEventBadgeById = async ({commit, state}, { server, eventId }) =>
 }
 
 export const getDegreeById = async ({commit, state}, { server, id }) => {
-  if (state.degreeMap[id]) return state.degreeMap[id]
+  if (state.degreeMap[server][id]) return state.degreeMap[server][id]
   const degree = await Vue.apiClient.getDegreeById(id, server)
   commit('ADD_DEGREE_MAP_ENTRY', {server, id, value: degree})
   return degree

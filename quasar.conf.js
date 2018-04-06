@@ -58,6 +58,14 @@ module.exports = function (ctx) {
           target: 'https://res.bangdream.ga',
           changeOrigin: true
         },
+        '/assets-kr': {
+          target: 'https://res.bangdream.ga',
+          changeOrigin: true
+        },
+        '/assets-en': {
+          target: 'https://res.bangdream.ga',
+          changeOrigin: true
+        },
         '/live2d': {
           target: 'https://res.bangdream.ga/assets/live2d/chara',
           changeOrigin: true,

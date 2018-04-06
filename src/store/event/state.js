@@ -1,14 +1,20 @@
 export default {
   currentEvent: {
     jp: {},
-    tw: {}
+    tw: {},
+    kr: {},
+    en: {}
   },
   eventBadgeMap: {
     jp: {},
-    tw: {}
+    tw: {},
+    kr: {},
+    en: {}
   },
   degreeMap: {
     jp: {},
-    tw: {}
+    tw: {},
+    kr: {},
+    en: {}
   }
 }

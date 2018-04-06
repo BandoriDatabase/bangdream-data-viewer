@@ -58,6 +58,12 @@
             <q-item @click.native="$router.push('/card/overview/tw')" v-ripple>
               <q-item-main :label="$t('common.tw')" />
             </q-item>
+            <q-item @click.native="$router.push('/card/overview/kr')" v-ripple>
+              <q-item-main :label="$t('common.kr')" />
+            </q-item>
+            <q-item @click.native="$router.push('/card/overview/en')" v-ripple>
+              <q-item-main :label="$t('common.en')" />
+            </q-item>
           </q-list>
         </q-collapsible>
         <q-collapsible icon="library_music" :label="$t('left.music')">
@@ -70,6 +76,12 @@
             </q-item>
             <q-item @click.native="$router.push('/music/tw')" v-ripple>
               <q-item-main :label="$t('common.tw')" />
+            </q-item>
+            <q-item @click.native="$router.push('/music/kr')" v-ripple>
+              <q-item-main :label="$t('common.kr')" />
+            </q-item>
+            <q-item @click.native="$router.push('/music/en')" v-ripple>
+              <q-item-main :label="$t('common.en')" />
             </q-item>
           </q-list>
         </q-collapsible>
@@ -84,6 +96,12 @@
             <q-item @click.native="$router.push('/sfcs/tw')" v-ripple>
               <q-item-main :label="$t('common.tw')" />
             </q-item>
+            <q-item @click.native="$router.push('/sfcs/kr')" v-ripple>
+              <q-item-main :label="$t('common.kr')" />
+            </q-item>
+            <q-item @click.native="$router.push('/sfcs/en')" v-ripple>
+              <q-item-main :label="$t('common.en')" />
+            </q-item>
           </q-list>
         </q-collapsible>
         <q-collapsible icon="record_voice_over" :label="$t('left.Live2d')">
@@ -96,6 +114,12 @@
             </q-item>
             <q-item @click.native="$router.push('/l2d/tw')" v-ripple>
               <q-item-main :label="$t('common.tw')" />
+            </q-item>
+            <q-item @click.native="$router.push('/l2d/kr')" v-ripple>
+              <q-item-main :label="$t('common.kr')" />
+            </q-item>
+            <q-item @click.native="$router.push('/l2d/en')" v-ripple>
+              <q-item-main :label="$t('common.en')" />
             </q-item>
           </q-list>
         </q-collapsible>
@@ -110,6 +134,12 @@
             <q-item @click.native="$router.push('/currevent/tw')" v-ripple>
               <q-item-main :label="$t('common.tw')" />
             </q-item>
+            <q-item @click.native="$router.push('/currevent/kr')" v-ripple>
+              <q-item-main :label="$t('common.kr')" />
+            </q-item>
+            <q-item @click.native="$router.push('/currevent/en')" v-ripple>
+              <q-item-main :label="$t('common.en')" />
+            </q-item>
           </q-list>
         </q-collapsible>
         <q-item @click.native="$router.push('/about')" v-ripple>
@@ -119,13 +149,19 @@
         <q-item-separator />
         <q-list-header>{{$t('left.secTitle')}}</q-list-header>
         <q-item>
-          <q-item-main :label="`JP Data Ver: v${resVer.jp || '0.0.0.0'}`"></q-item-main>
+          <q-item-main :label="`${$t('common.jp')} ${$t('common.data-ver')}: v${resVer.jp || '0.0.0.0'}`"></q-item-main>
         </q-item>
         <q-item>
-          <q-item-main :label="`TW Data Ver: v${resVer.tw || '0.0.0.0'}`"></q-item-main>
+          <q-item-main :label="`${$t('common.tw')} ${$t('common.data-ver')}: v${resVer.tw || '0.0.0.0'}`"></q-item-main>
         </q-item>
         <q-item>
-          <q-item-main :label="`App Ver: v${appVer}`" />
+          <q-item-main :label="`${$t('common.kr')} ${$t('common.data-ver')}: v${resVer.kr || '0.0.0.0'}`"></q-item-main>
+        </q-item>
+        <q-item>
+          <q-item-main :label="`${$t('common.en')} ${$t('common.data-ver')}: v${resVer.en || '0.0.0.0'}`"></q-item-main>
+        </q-item>
+        <q-item>
+          <q-item-main :label="`${$t('common.app-ver')}: v${appVer}`" />
         </q-item>
         <q-item @click.native="$refs['update-note'].open()">
           <q-item-main :label="$t('left.update-note')" />

@@ -1,10 +1,14 @@
 export default {
   stampList: {
     jp: [],
-    tw: []
+    tw: [],
+    kr: [],
+    en: []
   },
   stampMap: {
     jp: {},
-    tw: {}
+    tw: {},
+    kr: {},
+    en: {}
   }
 }

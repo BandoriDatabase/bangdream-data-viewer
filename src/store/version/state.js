@@ -1,7 +1,9 @@
 export default {
   resVer: {
     jp: '',
-    tw: ''
+    tw: '',
+    kr: '',
+    en: ''
   },
   masterVer: ''
 }

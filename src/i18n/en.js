@@ -46,6 +46,8 @@ export default {
     'gacha': 'Gacha',
     'jp': 'Japan Server',
     'tw': 'Taiwan Server',
+    'kr': 'Korean Server',
+    'en': 'Intl. Server',
     'perform': 'Perform',
     'technic': 'Technique',
     'visual': 'Visual',
@@ -63,7 +65,9 @@ export default {
     },
     'band': 'Band',
     'difficulty': 'Difficulty',
-    'apply-save': 'Save & Apply'
+    'apply-save': 'Save & Apply',
+    'data-ver': 'Data Ver',
+    'app-ver': 'App Ver'
   },
   'gacha': {
     'list-title': '{srv} Scouts List',

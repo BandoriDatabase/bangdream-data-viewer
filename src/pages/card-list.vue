@@ -2,7 +2,7 @@
   <q-page padding>
     <div>
       <div class="block">
-        <div>
+        <div v-if="server === 'jp' || server === 'tw'">
           {{$t('card.name-display[0]')}}<label><q-toggle v-model="displayName" color="pink"></q-toggle>
           {{displayName ? $t('card.name-display[1]'):$t('card.name-display[2]')}}</label>
         </div>

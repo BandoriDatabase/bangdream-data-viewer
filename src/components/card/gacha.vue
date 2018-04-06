@@ -4,13 +4,13 @@
       {{$t('gacha.list-title', { srv: $t(`common.${server}`) })}}
       {{$t('gacha.list-count')}}: {{currentGachaList[server].length}}
     </div> -->
-    <div class="col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList[server]" :key="gacha.seq">
+    <div class="col-xl-4 col-md-6 col-12" v-for="gacha in currentGachaList[server]" :key="gacha.seq">
       <q-card inline>
         <q-card-title class="bg-pink text-white">
           {{gacha.gachaName}}
         </q-card-title>
         <q-card-media>
-          <img v-lazy="`/assets-${server}/gacha/screen/${gacha.resourceName}_logo.png`" class="responsive" />
+          <img v-lazy="`/assets-${server}/gacha/screen/${gacha.resourceName}_logo.png`" class="responsive" style="max-height: 140px;" />
         </q-card-media>
         <q-card-main>
           <h5 class="q-my-sm" v-if="Number(gacha.publishedAt) > Date.now()">{{$t('not-started')}}<br>{{(new Date(Number(gacha.publishedAt))).toLocaleString()}}</h5>

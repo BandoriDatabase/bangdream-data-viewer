@@ -13,6 +13,18 @@
         <gacha-card server="tw" class="col-lg-8 col-12" @open-modal="evt => $refs.gachaModal.open(evt, 'tw')"></gacha-card>
       </div>
     </q-collapsible>
+    <q-collapsible :label="$t('common.kr')" v-model="isOpen.kr">
+      <div class="row col-12 gutter-sm">
+        <event-card class="col-lg-4 col-12" server="kr"></event-card>
+        <gacha-card server="kr" class="col-lg-8 col-12" @open-modal="evt => $refs.gachaModal.open(evt, 'kr')"></gacha-card>
+      </div>
+    </q-collapsible>
+    <q-collapsible :label="$t('common.en')" v-model="isOpen.en">
+      <div class="row col-12 gutter-sm">
+        <event-card class="col-lg-4 col-12" server="en"></event-card>
+        <gacha-card server="en" class="col-lg-8 col-12" @open-modal="evt => $refs.gachaModal.open(evt, 'en')"></gacha-card>
+      </div>
+    </q-collapsible>
     <gacha-modal ref="gachaModal"></gacha-modal>
   </q-page>
 </template>
@@ -36,7 +48,9 @@ export default {
     return {
       isOpen: {
         jp: this.$q.platform.is.desktop,
-        tw: this.$q.platform.is.desktop
+        tw: this.$q.platform.is.desktop,
+        kr: this.$q.platform.is.desktop,
+        en: this.$q.platform.is.desktop
       }
     }
   }

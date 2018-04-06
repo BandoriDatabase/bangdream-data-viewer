@@ -46,6 +46,8 @@ export default {
     'gacha': '扭蛋',
     'jp': '日服',
     'tw': '台服',
+    'kr': '韩服',
+    'en': '国际服',
     'perform': '表演力',
     'technic': '技术',
     'visual': '视觉',
@@ -63,7 +65,9 @@ export default {
     },
     'band': '乐队/演奏者',
     'difficulty': '难度',
-    'apply-save': '应用和保存'
+    'apply-save': '应用和保存',
+    'data-ver': '数据版本',
+    'app-ver': '应用版本'
   },
   'gacha': {
     'list-title': '{srv}当前扭蛋池',

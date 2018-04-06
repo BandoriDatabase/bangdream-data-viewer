@@ -5,11 +5,10 @@ import Vue from 'vue'
 
 export const getResourceVersion = async ({ commit, state }) => {
   if (state.resVer.jp && state.resVer.tw) return state.resVer
-  const res = await Vue.apiClient.getResVer('jp')
-  commit('SET_RES_VER', {ver: res.body, server: 'jp'})
-  const res2 = await Vue.apiClient.getResVer('tw')
-  commit('SET_RES_VER', {ver: res2.body, server: 'tw'})
-  return res.body
+  Vue.apiClient.getResVer('jp').then(res => commit('SET_RES_VER', {ver: res.body, server: 'jp'}))
+  Vue.apiClient.getResVer('tw').then(res => commit('SET_RES_VER', {ver: res.body, server: 'tw'}))
+  Vue.apiClient.getResVer('kr').then(res => commit('SET_RES_VER', {ver: res.body, server: 'kr'}))
+  Vue.apiClient.getResVer('en').then(res => commit('SET_RES_VER', {ver: res.body, server: 'en'}))
 }
 
 export const getMasterVersion = async ({commit, state}) => {

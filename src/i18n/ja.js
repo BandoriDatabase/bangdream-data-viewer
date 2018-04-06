@@ -20,6 +20,8 @@ export default {
     'gacha': 'ガチャ',
     'jp': '日本サーバー',
     'tw': '台湾サーバー',
+    'kr': '韓国サーバー',
+    'en': '国際サーバー',
     'perform': 'パフォーマンス',
     'technic': 'テクニック',
     'visual': 'ビジュアル',
@@ -27,7 +29,9 @@ export default {
     'character': 'キャラクター',
     'attr': 'アトリビュート',
     'rarity': 'リアリティ',
-    'filter': 'フィルター'
+    'filter': 'フィルター',
+    'data-ver': 'データバージョン',
+    'app-ver': 'アプリのバージョン'
   },
   'gacha': {
     'list-title': '{srv}開催中のガチャ',

@@ -1,18 +1,26 @@
 export default {
   bandList: {
     jp: [],
-    tw: []
+    tw: [],
+    kr: [],
+    en: []
   },
   bandCharaList: {
     jp: [],
-    tw: []
+    tw: [],
+    kr: [],
+    en: []
   },
   charaList: {
     jp: [],
-    tw: []
+    tw: [],
+    kr: [],
+    en: []
   },
   charaMap: {
     jp: {},
-    tw: {}
+    tw: {},
+    kr: {},
+    en: {}
   }
 }
