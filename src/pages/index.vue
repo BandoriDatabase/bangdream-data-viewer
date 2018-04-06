@@ -1,6 +1,12 @@
 <template>
   <q-page padding class="column gutter-sm">
     <p v-if="!$q.platform.is.desktop">{{$t('mobile.click-collapsible')}}</p>
+    <div v-if="birthdayInfo" class="row items-center gutter-sm">
+      <div v-if="birthdayInfo.today">{{$t('common.birthday.today')}}</div>
+      <div v-if="birthdayInfo.today"><img :src="`statics/chara_icon_${birthdayInfo.today.chara.characterId}.png`"></div>
+      <div>{{$t('common.birthday.next')}} {{`${birthdayInfo.next.birthday.month}/${birthdayInfo.next.birthday.day}`}}</div>
+      <div><img :src="`statics/chara_icon_${birthdayInfo.next.chara.characterId}.png`"></div>
+    </div>
     <q-collapsible :label="$t('common.jp')" v-model="isOpen.jp">
       <div class="row col-12 gutter-sm">
         <event-card class="col-lg-4 col-12" server="jp"></event-card>
@@ -44,6 +50,12 @@ export default {
     GachaCard,
     GachaModal
   },
+  mounted () {
+    this.$api.getBirthday('jp')
+      .then(res => {
+        this.birthdayInfo = res
+      })
+  },
   data () {
     return {
       isOpen: {
@@ -51,7 +63,8 @@ export default {
         tw: this.$q.platform.is.desktop,
         kr: this.$q.platform.is.desktop,
         en: this.$q.platform.is.desktop
-      }
+      },
+      birthdayInfo: null
     }
   }
 }

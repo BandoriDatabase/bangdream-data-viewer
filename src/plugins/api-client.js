@@ -98,6 +98,10 @@ export default ({ app, router, Vue }) => {
     getScenarioInfo (server, type, name) {
       return Vue.http.get(`/api/v1/${server}/scenario/${type}/${name}`)
         .then(res => res.json())
+    },
+    getBirthday (server) {
+      return Vue.http.get(`/api/v1/${server}/chara/birthday`)
+        .then(res => res.json())
     }
   }
 }

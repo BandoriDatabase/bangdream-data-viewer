@@ -67,7 +67,11 @@ export default {
     'difficulty': '难度',
     'apply-save': '应用和保存',
     'data-ver': '数据版本',
-    'app-ver': '应用版本'
+    'app-ver': '应用版本',
+    'birthday': {
+      'today': '今天过生日的是',
+      'next': '下次过生日的是'
+    }
   },
   'gacha': {
     'list-title': '{srv}当前扭蛋池',

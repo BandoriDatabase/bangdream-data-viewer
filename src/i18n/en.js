@@ -67,7 +67,11 @@ export default {
     'difficulty': 'Difficulty',
     'apply-save': 'Save & Apply',
     'data-ver': 'Data Ver',
-    'app-ver': 'App Ver'
+    'app-ver': 'App Ver',
+    'birthday': {
+      'today': 'Today is birthday of',
+      'next': 'Next birthday on'
+    }
   },
   'gacha': {
     'list-title': '{srv} Scouts List',
