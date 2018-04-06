@@ -69,7 +69,7 @@ export default {
         field: 'voice',
         width: '30px'
       }],
-      audioContext: new AudioContext(),
+      AudioContext: window.AudioContext || window.webkitAudioContext || false,
       isLoading: false,
       isPlaying: false,
       isStopping: false,
@@ -91,6 +91,9 @@ export default {
   },
   async mounted () {
     this.isLoading = true
+    const { AudioContext } = this
+    if (!AudioContext) return
+    this.audioContext = new AudioContext()
     const ret = await this.$api.getScenarioInfo(this.server, this.scenarioType, this.scenarioName)
     this.env = ret.env
     this.talk = ret.talk

@@ -74,7 +74,8 @@ module.exports = function (ctx) {
           }
         },
         '/api': {
-          target: 'http://localhost:8180',
+          target: 'https://api.bangdream.ga',
+          // target: 'http://localhost:8180',
           changeOrigin: true,
           pathRewrite: {
             '^/api/v1': '/v1'

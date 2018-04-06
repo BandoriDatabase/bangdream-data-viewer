@@ -15,17 +15,17 @@
       </q-card-media>
       <q-card-main>
         <div class="row gutter-md items-center justify-center">
-          <div class="col-3" @click="$ga.event('event-card', 'jump', `normal-${server}`)">
+          <div class="col-xl-3 col-6" @click="$ga.event('event-card', 'jump', `normal-${server}`)">
             <card-thumb :cardId="Number(eventNormalCardId)" :server="server" />
           </div>
-          <div class="col-3" @click="$ga.event('event-card', 'jump', `sr-${server}`)">
+          <div class="col-xl-3 col-6" @click="$ga.event('event-card', 'jump', `sr-${server}`)">
             <card-thumb :cardId="Number(eventSpecialCardId)" :server="server" />
           </div>
-          <div class="col-6" v-if="Number(currentEvent[server].startAt) > Date.now()">
+          <div class="col-xl-6 col-12" v-if="Number(currentEvent[server].startAt) > Date.now()">
             <p>{{$t('not-started')}}</p>
             <p>{{(new Date(Number(currentEvent[server].startAt))).toLocaleString()}}</p>
           </div>
-          <count-down class="col-6" :target-time="Number(currentEvent[server].endAt)" v-else-if="Number(currentEvent[server].endAt) > Date.now()" small></count-down>
+          <count-down class="col-xl-6 col-12" :target-time="Number(currentEvent[server].endAt)" v-else-if="Number(currentEvent[server].endAt) > Date.now()" small></count-down>
         </div>
       </q-card-main>
     </q-card>

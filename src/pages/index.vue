@@ -1,6 +1,6 @@
 <template>
   <q-page padding class="column gutter-sm">
-    <p v-if="!$q.platform.is.desktop">{{$t('mobile.click-collapsible')}}</p>
+    <p style="text-align: center;" v-if="!$q.platform.is.desktop">{{$t('mobile.click-collapsible')}}</p>
     <div v-if="birthdayInfo" class="row items-center gutter-sm">
       <div v-if="birthdayInfo.today">{{$t('common.birthday.today')}}</div>
       <div v-if="birthdayInfo.today"><img :src="`statics/chara_icon_${birthdayInfo.today.chara.characterId}.png`"></div>
