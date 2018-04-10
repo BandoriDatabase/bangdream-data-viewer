@@ -1,0 +1,168 @@
+export default {
+  'left': {
+    'title': '메뉴',
+    'home': '홈',
+    'card': '카드',
+    'table': '테이블',
+    'gallery': '갤러리',
+    'music': '노래',
+    'SFC': '로딩 만화',
+    'about': '정보',
+    'secTitle': 'Building info',
+    'current-event': '진행중인 이벤트',
+    'settings': '설정',
+    'Live2d': 'Live2D',
+    'update-note': '업데이트 노트',
+    'useful-link': '링크'
+  },
+  'update': {
+    'title': "What's new",
+    'desc': 'Bandori Database WebApp has a major update, many improvements are made to help you use the WebApp better.',
+    'new-features': 'New Features',
+    'feature-detail': [
+      'Single Frame Cartoon Viewer for Japan server is removed as it is already in the game',
+      'Redesigned home page layout to make infos of different server more clear',
+      'External links move to left drawer',
+      'Change language will not lead to refresh page (thanks to framework update)',
+      'Redunant hint texts are removed',
+      'New card detail layout to be more space efficient',
+      'Large image viewer is replaced by a modal',
+      'It is possible to open the full image on new tab in large image viewer',
+      'Current event info page is splited by different server',
+      'Story player use new data table to show story script',
+      'Show expected open time of a event or gacha which is not open yet'
+    ],
+    'fixed-bugs': 'Fixed Bugs',
+    'bug-detail': [
+      'It is a refactored version so bug fix will appear since next version.'
+    ],
+    'welcome-bug-report': "If you find any problem affecting you use this web app, please report it to me per <a href='mailto:dev@bangdream.ga'>Email</a>, on <a href='https://dnaroma.site/2017/12/23/bug-report/'>Bug report page</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
+  },
+  'event-srv': 'Event {srv}',
+  'fetch-data': '{type} 데이터 가져오는중...',
+  'not-started': 'Not started until',
+  'common': {
+    'event': '이벤트',
+    'gacha': '가챠',
+    'jp': '일본 서버',
+    'tw': '대만 서버',
+    'kr': '한국 서버',
+    'en': '미국 서버',
+    'perform': '퍼포먼스',
+    'technic': '테크닉',
+    'visual': '비쥬얼',
+    'total': '총합력',
+    'skill': '스킬',
+    'avatar': '아바타',
+    'character': '캐릭터',
+    'attr': '속성',
+    'rarity': '레어도',
+    'filter': '찾기',
+    'sort': {
+      'title': '정렬 설정',
+      'asc': '낮은 순 정렬',
+      'desc': '높은 순 정렬'
+    },
+    'band': '밴드',
+    'difficulty': '난이도',
+    'apply-save': '저장 & 적용',
+    'data-ver': 'Data Ver',
+    'app-ver': 'App Ver'
+  },
+  'gacha': {
+    'list-title': '{srv} Scouts List',
+    'list-count': 'Counts',
+    'start-at': 'Start at:',
+    'end-at': 'Close at:"',
+    'desc': 'Description',
+    'new-members': 'New members',
+    'rates': '뽑기 확률',
+    'pickup': '출현율UP 카드 목록',
+    'normal': '출현 카드 목록',
+    'open-detail': '자세한 정보 열기'
+  },
+  'mobile': {
+    'click-collapsible': 'Click one of the server name to expand'
+  },
+  'card': {
+    'name-display': [
+      '이름 표기법 바꾸기: ',
+      '영어',
+      '일본어'
+    ],
+    'attr': {
+      'powerful': '파워풀',
+      'pure': '퓨어',
+      'cool': '쿨',
+      'happy': '해피'
+    },
+    'fetch-card-data': '카드 데이터 불러오는 중...',
+    'un-trained': '특훈 전/후',
+    'cut-in-normal': '배경 포함/미포함',
+    'live-chara': 'SD 캐릭터',
+    'self-intro-unlock-reward': '에피소드 해금',
+    'max-lv-unlock-reward': '메모리얼 해금',
+    'skill-title': '스킬 정보',
+    'skill-level': '스킬 레벨',
+    'training-title': '특훈 필요 재료',
+    'no-train-ava': '특훈 불가능',
+    'story': '카드 스토리',
+    'story-self-intro': '에피소드: ',
+    'story-to-unlock': '필요 재료:',
+    'story-max-level': '메모리얼 에피소드: ',
+    'story-none': '스토리 없음',
+    'story-reward': '스토리 해금 보상'
+  },
+  'music': {
+    'select-band': '밴드 선택',
+    'composer': '작곡',
+    'lyricist': '작사',
+    'arranger': '편곡',
+    'howtoget': '해금 방법',
+    'difficulty': '난이도',
+    'achieve': '달성 보상',
+    'combo': '총 노트 수',
+    'check-beatmap': '채보 플레이어',
+    'declaration': "This is still a test version, and not fit for mobile view. If you find any problem, please contact me through <a href='mailto:dev@bangdream.ga'>email</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
+  },
+  'scenario': {
+    'voice-text': '대사',
+    'voice-play': '재생',
+    'auto-play': '자동 재생',
+    'auto-play-with-bgm': 'BGM과 함께 자동 재생',
+    'stop': '중지',
+    'show-bg-image': '배경 이미지',
+    'stop-hint-text': '재생이 끝날 때 까지 기다려주세요...',
+    'curr-voice': '재생중'
+  },
+  'live2d': {
+    'costum': '의상',
+    'voice': '대사',
+    'show': '보기',
+    'how-to-use': '사용법',
+    'costum-name': '의상:',
+    'costum-how-to-get': '해금 방법:',
+    'costum-avaliable-from': '출시일:',
+    'voice-appear': '대사 출처:',
+    'voice-type': '대사 타입:',
+    'voice-motion': 'Live2D 모션:',
+    'dialog-how-to-use': {
+      'title': '사용법',
+      'msg': '먼저 캐릭터를 선택하고 그 다음 의상을 선택해 주세요. 보기 버튼을 눌러서 LIVE2D를 불러옵니다. 대사를 선택 한 후 클릭하면 캐릭터가 반응합니다.'
+    }
+  },
+  'event': {
+    'title': '이벤트 {srv}',
+    'type': '이벤트 타입:',
+    'start-cd': 'Event starting countdown',
+    'end-cd': 'Event ending countdown',
+    'dist-cd': 'Event award distribution countdown',
+    'next-cd': 'Next event countdown',
+    'reward-card': 'Reward cards',
+    'reward-stamp': 'Reward stamp',
+    'bonus-attr-card': 'Bonus attribute and cards',
+    'badge': 'Event badge',
+    'degrees': 'Degrees preview',
+    'musics': 'Event musics'
+  }
+}
