@@ -3,14 +3,8 @@
     <div class="row gutter-sm" v-if="isReady">
       <div class="col-lg-4 col-xl-3 col-md-6 col-12" v-for="(singleFrame, idx) in sfcList[server]" :key="idx">
         <q-card style="cursor: pointer;">
-          <q-card-media>
-            <img v-lazy="singleFrame.assetAddress" class="single-frame-img preview-img"
-              @click="$preview.open({
-                src: singleFrame.assetAddress,
-                title: singleFrame.title,
-                w: '40vh',
-                h: '40vh'
-              })" />
+          <q-card-media v-viewer="{navbar: false, toolbar: false}">
+            <img v-lazy="singleFrame.assetAddress" class="single-frame-img" />
             <q-card-title slot="overlay">
               {{singleFrame.title}}
             </q-card-title>
@@ -63,5 +57,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped lang="stylus">
+.single-frame-img
+  height 350px
 </style>

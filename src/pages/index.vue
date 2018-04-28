@@ -7,29 +7,48 @@
       <div>{{$t('common.birthday.next')}} {{`${birthdayInfo.next.birthday.month}/${birthdayInfo.next.birthday.day}`}}</div>
       <div><img :src="`statics/chara_icon_${birthdayInfo.next.chara.characterId}.png`"></div>
     </div>
-    <q-collapsible :label="$t('common.jp')" v-model="isOpen.jp">
+    <q-collapsible :label="$t('common.event')" v-model="isEventOpen">
       <div class="row col-12 gutter-sm">
-        <event-card class="col-lg-4 col-12" server="jp"></event-card>
-        <gacha-card server="jp" class="col-lg-8 col-12" @open-modal="evt => $refs.gachaModal.open(evt, 'jp')"></gacha-card>
+        <event-card v-for="server in $servers" :key="server" class="col-xl-3 col-md-6 col-12" :server="server"></event-card>
       </div>
     </q-collapsible>
-    <q-collapsible :label="$t('common.tw')" v-model="isOpen.tw">
-      <div class="row col-12 gutter-sm">
-        <event-card class="col-lg-4 col-12" server="tw"></event-card>
-        <gacha-card server="tw" class="col-lg-8 col-12" @open-modal="evt => $refs.gachaModal.open(evt, 'tw')"></gacha-card>
-      </div>
-    </q-collapsible>
-    <q-collapsible :label="$t('common.kr')" v-model="isOpen.kr">
-      <div class="row col-12 gutter-sm">
-        <event-card class="col-lg-4 col-12" server="kr"></event-card>
-        <gacha-card server="kr" class="col-lg-8 col-12" @open-modal="evt => $refs.gachaModal.open(evt, 'kr')"></gacha-card>
-      </div>
-    </q-collapsible>
-    <q-collapsible :label="$t('common.en')" v-model="isOpen.en">
-      <div class="row col-12 gutter-sm">
-        <event-card class="col-lg-4 col-12" server="en"></event-card>
-        <gacha-card server="en" class="col-lg-8 col-12" @open-modal="evt => $refs.gachaModal.open(evt, 'en')"></gacha-card>
-      </div>
+    <q-collapsible :label="$t('common.gacha')" v-model="isGachaOpen">
+      <q-collapsible :label="$t('common.jp')" v-model="isOpen.jp">
+        <lazy-component @show="loadGachaData('jp')">
+          <div class="row col-12 gutter-sm">
+            <div v-if="isGcahaReady.jp" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.jp" :key="gacha.seq">
+              <gacha-card server="jp" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'jp')"></gacha-card>
+            </div>
+          </div>
+        </lazy-component>
+      </q-collapsible>
+      <q-collapsible :label="$t('common.tw')" v-model="isOpen.tw">
+        <lazy-component @show="loadGachaData('tw')">
+          <div class="row col-12 gutter-sm">
+            <div v-if="isGcahaReady.tw" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.tw" :key="gacha.seq">
+              <gacha-card server="tw" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'tw')"></gacha-card>
+            </div>
+          </div>
+        </lazy-component>
+      </q-collapsible>
+      <q-collapsible :label="$t('common.kr')" v-model="isOpen.kr">
+        <lazy-component @show="loadGachaData('kr')">
+          <div class="row col-12 gutter-sm">
+            <div v-if="isGcahaReady.kr" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.kr" :key="gacha.seq">
+              <gacha-card server="kr" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'kr')"></gacha-card>
+            </div>
+          </div>
+        </lazy-component>
+      </q-collapsible>
+      <q-collapsible :label="$t('common.en')" v-model="isOpen.en">
+        <lazy-component @show="loadGachaData('en')">
+          <div class="row col-12 gutter-sm">
+            <div v-if="isGcahaReady.en" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.en" :key="gacha.seq">
+              <gacha-card server="en" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'en')"></gacha-card>
+            </div>
+          </div>
+        </lazy-component>
+      </q-collapsible>
     </q-collapsible>
     <gacha-modal ref="gachaModal"></gacha-modal>
   </q-page>
@@ -39,6 +58,8 @@
 </style>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 import EventCard from 'components/card/event'
 import GachaCard from 'components/card/gacha'
 import GachaModal from 'components/modals/gacha'
@@ -58,13 +79,33 @@ export default {
   },
   data () {
     return {
-      isOpen: {
-        jp: this.$q.platform.is.desktop,
-        tw: this.$q.platform.is.desktop,
-        kr: this.$q.platform.is.desktop,
-        en: this.$q.platform.is.desktop
-      },
-      birthdayInfo: null
+      isOpen: this.$servers.reduce((sum, curr) => {
+        sum[curr] = false
+        return sum
+      }, {}),
+      isEventOpen: this.$q.platform.is.desktop,
+      isGachaOpen: false,
+      birthdayInfo: null,
+      isGcahaReady: this.$servers.reduce((sum, curr) => {
+        sum[curr] = false
+        return sum
+      }, {})
+    }
+  },
+  computed: {
+    ...mapState('gacha', [
+      'currentGachaList'
+    ])
+  },
+  methods: {
+    ...mapActions('gacha', [
+      'getGachaCurrent'
+    ]),
+    loadGachaData (server) {
+      this.$nextTick(async () => {
+        await this.getGachaCurrent(server)
+        this.isGcahaReady[server] = true
+      })
     }
   }
 }

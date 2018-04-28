@@ -290,6 +290,7 @@ export default {
       }
       this.$http.get(`/api/v1/jp/music/chart/${this.$route.params.musicId}/${this.difficulty}`)
         .then(res => res.json())
+        .then(res => res.notes)
         .then(res => {
           const baseTime = this.audioContext.currentTime + 0.1
           this.data.combo = res.reduce((sum, note) => {

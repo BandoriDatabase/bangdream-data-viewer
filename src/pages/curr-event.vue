@@ -15,9 +15,9 @@
       </q-card-media>
       <q-card-main class="column items-center">
         <a-player :music="eventBGM" ref="player" mode="order" class="col-12 full-width"></a-player>
-        <img v-if="server != 'en'" v-lazy="`/assets-${server}/homebanner_banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`"/>
-        <img v-else-if="server === 'en' && currentEvent[server].eventId >= 3" v-lazy="`/assets-${server}/homebanner_banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`">
-        <img v-else-if="server === 'en'" v-lazy="`/assets-${server}/homebanner_banner-0${14 + currentEvent[server].eventId * 2}.png`">
+        <img class="responsive" v-if="server != 'en'" v-lazy="`/assets-${server}/homebanner_banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`"/>
+        <img class="responsive" v-else-if="server === 'en' && currentEvent[server].eventId >= 3" v-lazy="`/assets-${server}/homebanner_banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`">
+        <img class="responsive" v-else-if="server === 'en'" v-lazy="`/assets-${server}/homebanner_banner-0${14 + currentEvent[server].eventId * 2}.png`">
         <div class="full-width column items-center" v-if="Number(currentEvent[server].startAt) > Date.now()">
           <p>{{$t('event.start-cd')}}</p>
           <count-down :target-time="Number(currentEvent[server].startAt)"></count-down>

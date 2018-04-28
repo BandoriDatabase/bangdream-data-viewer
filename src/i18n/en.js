@@ -20,12 +20,15 @@ export default {
     'desc': 'Bandori Database WebApp has a major update, many improvements are made to help you use the WebApp better.',
     'new-features': 'New Features',
     'feature-detail': [
-      'Add entries for Korean and Internaltional (a.k.a. English) server',
-      'Redesign card detail page'
+      'Add Korean language (thanks to Mau)',
+      'New image preview plugin',
+      'New card overview list for mobile devices',
+      'New index page design, event and gacha are grouped'
     ],
     'fixed-bugs': 'Fixed Bugs',
     'bug-detail': [
-      'Fixed a problem causing some page unable to display on Safari'
+      'Fixed overflowing event banner image of event detail page on mobile device',
+      'Fixed a problem causing missing card images of card overview list page on tablet'
     ],
     'welcome-bug-report': "If you find any problem affecting you use this web app, please report it to me per <a href='mailto:dev@bangdream.ga'>Email</a>, on <a href='https://dnaroma.site/2017/12/23/bug-report/'>Bug report page</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
   },
@@ -102,9 +105,9 @@ export default {
     'training-title': 'Training items',
     'no-train-ava': 'No training avaliable',
     'story': 'Story episodes',
-    'story-self-intro': 'Self intro: ',
-    'story-to-unlock': 'To unlock:',
-    'story-max-level': 'Max Level Story: ',
+    'story-self-intro': 'Self intro',
+    'story-to-unlock': 'To unlock',
+    'story-max-level': 'Max Level Story',
     'story-none': 'No story avaliable',
     'story-reward': 'Story read reward'
   },

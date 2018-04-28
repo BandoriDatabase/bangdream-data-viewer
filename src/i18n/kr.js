@@ -107,9 +107,9 @@ export default {
     'training-title': '특훈 필요 아이템',
     'no-train-ava': '특훈 불가능',
     'story': '카드 에피소드',
-    'story-self-intro': '에피소드: ',
-    'story-to-unlock': '필요 아이템:',
-    'story-max-level': '메모리얼 에피소드: ',
+    'story-self-intro': '에피소드',
+    'story-to-unlock': '필요 아이템',
+    'story-max-level': '메모리얼 에피소드',
     'story-none': '스토리 없음',
     'story-reward': '에피소드 달성 보너스 보상'
   },

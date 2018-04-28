@@ -30,8 +30,11 @@ export default {
         label: '繁體中文',
         value: 'zh-tw'
       }, {
-        label: '日本語',
+        label: '日本語 (by 石道 夜楓)',
         value: 'ja'
+      }, {
+        label: '한국 (by Mau)',
+        value: 'kr'
       }],
       isOpen: false
     }

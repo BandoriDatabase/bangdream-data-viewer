@@ -3,15 +3,12 @@
     <div v-if="isReady" class="row sm-column gutter-sm">
       <div class="col-lg-6 col-xs-12">
         <div
-          @click="$preview.open({
-            src: `/assets/musicjacket/${musicData.jacketImage}_jacket.png`,
-            title: musicData.title,
-            w: '40vh'
-          })"
-          v-lazy:background-image="`/assets/musicjacket/${musicData.jacketImage}_jacket.png`"
-          class="jacket-img preview-img"
+          class="jacket-img relative-position"
           style="cursor: pointer;"
-        ></div>
+          v-viewer="{navbar: false, toolbar: false}"
+        >
+          <img class="absolute-center" :src="`/assets/musicjacket/${musicData.jacketImage}_jacket.png`" />
+        </div>
         <a-player :music="{
           title: musicData.title,
           author: musicData.bandName,

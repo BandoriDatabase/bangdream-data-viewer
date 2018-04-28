@@ -20,12 +20,15 @@ export default {
     'desc': 'Bandori Database（少女乐团派对数据库）网页应用迎来重大更新，有多项改进优化您的使用体验。',
     'new-features': '新特性',
     'feature-detail': [
-      '为韩国服务器和国际服务器（即英文服务器）添加数据入口',
-      '重新设计了卡片详细信息页面'
+      '增加了韩语（感谢Mau）',
+      '使用新的图片预览插件',
+      '针对移动设备优化了卡片列表页面',
+      '优化了主页排版'
     ],
     'fixed-bugs': '修复的问题',
     'bug-detail': [
-      '修复了某些页面无法在Safari浏览器上打开的问题'
+      '修复了移动设备上活动详情页面活动旗帜超出页面宽度的问题',
+      '修复了平板上卡片列表页面可能显示空白图片的问题'
     ],
     'welcome-bug-report': "如果你在使用本网站的过程中遇到任何问题, 欢迎通过<a href='mailto:dev@bangdream.ga'>Email</a>, <a href='https://dnaroma.site/2017/12/23/bug-report/'>问题反馈页面</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反馈问题。"
   },
@@ -102,9 +105,9 @@ export default {
     'training-title': '觉醒材料',
     'no-train-ava': '无法觉醒',
     'story': '卡牌剧情',
-    'story-self-intro': '自我介绍：',
+    'story-self-intro': '自我介绍',
     'story-to-unlock': '解锁材料',
-    'story-max-level': '满级剧情：',
+    'story-max-level': '满级剧情',
     'story-none': '该卡牌没有剧情',
     'story-reward': '剧情阅读奖励'
   },

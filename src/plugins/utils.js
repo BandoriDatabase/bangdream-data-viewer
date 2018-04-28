@@ -3,6 +3,9 @@ import VueResource from 'vue-resource'
 import VueLazyload from 'vue-lazyload'
 import VueAnalytics from 'vue-analytics'
 
+import 'viewerjs/dist/viewer.css'
+import Viewer from 'v-viewer'
+
 import imgPreview from '../components/modals/img-preview'
 
 // leave the export, even if you don't use it
@@ -24,6 +27,8 @@ export default ({ app, router, Vue }) => {
     })
   }
 
+  Vue.use(Viewer)
+
   Vue.use((Vue) => {
     const ImgPreClass = Vue.extend(imgPreview)
     const imgVM = new ImgPreClass({el: document.createElement('div')})
@@ -35,6 +40,8 @@ export default ({ app, router, Vue }) => {
       }
     }
   })
+
+  Vue.serverList = Vue.prototype.$servers = ['jp', 'tw', 'kr', 'en']
 
   Vue.specialCardList = Vue.prototype.$specialCardList = {
     jp: [],

@@ -7,7 +7,7 @@
           {{displayName ? $t('card.name-display[1]'):$t('card.name-display[2]')}}</label>
         </div>
         <q-collapsible :label="$t('common.filter')" v-model="isFilterVisible">
-          <div class="shadow-3" style="padding: 1%;">
+          <q-card style="padding: 1%;">
             <div class="row gutter">
               <q-select class="col-12" multiple chips v-model="selectRarity" :float-label="$t('common.rarity')"
                 :options="rarityOption" color="pink"></q-select>
@@ -38,16 +38,17 @@
                 {{$t('common.apply-save')}}
               </q-btn>
             </div>
-          </div>
+          </q-card>
         </q-collapsible>
       </div>
       <q-infinite-scroll ref="cardScroll" v-if="isReady" :handler="loadMore">
-        <div class="row gutter-sm">
-          <div v-for="card in cardList" :key="card.cardId" class="col-12 col-xl-4 col-lg-6 full-height">
+        <div class="row gt-sm gutter-sm">
+          <div v-for="card in cardList" :key="card.cardId" class="col-12 col-xl-4 col-md-6 full-height">
             <q-card style="height: 500px; cursor: pointer;">
               <q-card-media class="full-height" style="position: relative;">
                 <span :class="`card-img-attr-${card.attr}`"></span>
                 <span :class="`card-img-band-${bandCharaList[server][Number(card.characterId) - 1].bandId}`"></span>
+                <div v-for="i in Number(card.rarity)" :class="`card-img-rarity-normal-${i}`" :key="i"></div>
                 <img v-lazy:background-image="getCardImg(card.cardId, card.cardRes, 'normal')"
                   @click="$router.push(`/card/${server}/${card.cardId}/0`), $ga.event('card-overview', 'jump', `normal-detail`)"
                   v-if="card.rarity < 3" class="one-img-full full-height">
@@ -66,23 +67,51 @@
                 </div>
                 <div v-lazy:background-image="getCardImg(card.cardId, card.cardRes, 'normal')"
                   @click="$router.push(`/card/${server}/${card.cardId}/0`), $ga.event('card-overview', 'jump', `normal-detail`)"
-                  v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-full full-width lt-md"
+                  v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-full full-width lt-lg"
                   style="height: 50%;">
                 </div>
                 <div v-lazy:background-image="getCardImg(card.cardId, card.cardRes, 'after_training')"
                   @click="$router.push(`/card/${server}/${card.cardId}/1`), $ga.event('card-overview', 'jump', `trained-detail`)"
-                  v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-full full-width lt-md"
+                  v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-full full-width lt-lg"
                   style="height: 50%;">
                 </div>
                 <q-card-title slot="overlay">
                   [{{card.title}}] {{displayName ?
                     capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) :
-                    bandCharaList[server][Number(card.characterId) - 1].characterName}}
-                  <span v-for="i in Number(card.rarity)" :key="i">&#x2605;</span><br>
-                  {{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}<br>
+                    bandCharaList[server][Number(card.characterId) - 1].characterName}}<br>
+                  [{{card.skill.skillName}}] {{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}<br>
                   Lv {{card.maxLevel}}: {{card.maxPerformance}}/{{card.maxTechnique}}/{{card.maxVisual}}/{{card.totalMaxParam}}
                 </q-card-title>
               </q-card-media>
+            </q-card>
+          </div>
+        </div>
+        <div class="row lt-md gutter-sm">
+          <div v-for="card in cardList" :key="card.cardId" class="col-12 full-height">
+            <q-card>
+              <q-card-main>
+                <div style="text-align: center;">
+                  <img style="height: 24px; width: 24px;" v-for="i in Number(card.rarity)" :key="i" src="~assets/star_untrained.png" />
+                </div>
+                <div style="text-align: center; padding-bottom: 10px;">
+                  <span :class="`text-${paletteMap[card.attr]}`">[{{card.title}}] {{displayName ?
+                    capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) :
+                    bandCharaList[server][Number(card.characterId) - 1].characterName}}</span>
+                </div>
+                <div class="row items-center justify-center" style="padding-bottom: 10px;">
+                  <img class="col-4" :src="getCardThumb(card, 'normal')" style="padding-right: 5px"
+                    @click="$router.push(`/card/${server}/${card.cardId}/0`), $ga.event('card-overview', 'jump', `normal-detail`)"
+                    v-if="card.title !== 'ガルパ杯'">
+                  <img class="col-4" :src="getCardThumb(card, 'after_training')" style="padding-right: 5px"
+                    @click="$router.push(`/card/${server}/${card.cardId}/1`), $ga.event('card-overview', 'jump', `trained-detail`)"
+                    v-if="(card.rarity >= 3 && card.title !== 'ガルパ杯') || card.title === 'ガルパ杯'">
+                </div>
+                <div style="text-align: center;">
+                  [ {{card.skill.skillName}} ]<br>
+                  {{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}<br><br>
+                  Lv {{card.maxLevel}}: {{card.maxPerformance}}/{{card.maxTechnique}}/{{card.maxVisual}}/{{card.totalMaxParam}}
+                </div>
+              </q-card-main>
             </q-card>
           </div>
         </div>
@@ -151,7 +180,13 @@ export default {
       isReady: false,
       isFilterVisible: false,
       sortParam: 'desc',
-      orderKey: 'cardId'
+      orderKey: 'cardId',
+      paletteMap: {
+        happy: 'orange-8',
+        cool: 'indigo-6',
+        pure: 'green-8',
+        powerful: 'pink-6'
+      }
     }
   },
   mounted () {
@@ -265,6 +300,14 @@ export default {
         return `/assets-${this.server}/characters/resourceset/${cardRes}_card_${type}.png`
       }
       return `/assets/characters/resourceset/${cardRes}_card_${type}.png`
+    },
+    getCardThumb (card, type) {
+      let groupId = Math.trunc(card.cardId / 50).toString()
+      groupId = `${'0'.repeat(5 - groupId.length)}${groupId}`
+      if (this.$specialCardList[this.server].indexOf(card.cardId) !== -1) {
+        return `/assets-${this.server}/thumb/chara/card${groupId}_${card.cardRes}_${type}.png`
+      }
+      return `/assets/thumb/chara/card${groupId}_${card.cardRes}_${type}.png`
     }
   },
   beforeRouteUpdate (to, from, next) {
@@ -303,7 +346,7 @@ export default {
   background-position: center
 
 .two-img-full
-  background-size: auto 120%
+  background-size: 100% auto
   background-repeat: no-repeat
   background-position: center
 
@@ -382,4 +425,40 @@ export default {
   width: 50px
   height: 50px
   background: url('~assets/band_icon_5.png') no-repeat
+
+.card-img-rarity-normal-1
+  position absolute
+  bottom 78%
+  right 6.5%
+  width 35px
+  height 35px
+  background url('~assets/star_untrained.png') no-repeat
+  background-size 100% 100%
+
+.card-img-rarity-normal-2
+  position absolute
+  bottom 71%
+  right 6.5%
+  width 35px
+  height 35px
+  background url('~assets/star_untrained.png') no-repeat
+  background-size 100% 100%
+
+.card-img-rarity-normal-3
+  position absolute
+  bottom 64%
+  right 6.5%
+  width 35px
+  height 35px
+  background url('~assets/star_untrained.png') no-repeat
+  background-size 100% 100%
+
+.card-img-rarity-normal-4
+  position absolute
+  bottom 57%
+  right 6.5%
+  width 35px
+  height 35px
+  background url('~assets/star_untrained.png') no-repeat
+  background-size 100% 100%
 </style>

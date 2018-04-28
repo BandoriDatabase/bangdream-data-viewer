@@ -60,9 +60,9 @@ export default {
     'training-title': '特訓素材',
     'no-train-ava': 'このカードは特訓できません',
     'story': 'カードエピソード',
-    'story-self-intro': 'エピソード：',
+    'story-self-intro': 'エピソード',
     'story-to-unlock': '解放に必要なアイテム',
-    'story-max-level': 'メモリアルエピソード：',
+    'story-max-level': 'メモリアルエピソード',
     'story-none': 'このカードにエピソードはありません'
   },
   'music': {

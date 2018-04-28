@@ -8,36 +8,26 @@
       <br>
       <div class="row gutter-sm">
         <div class="column col-xl-4 col-lg-6 col-md-6 col-12">
-          <div class="card-img-parent" v-if="cardImgType === 'card'"
-            @click="$preview.open({
-              src: getCardImage(),
-              title: `[${cardInfo.title}] ${charaInfo.characterName}`,
-              titleBG: paletteMap[cardInfo.attr]
-            })">
-            <div v-lazy:background-image="getCardImage()" class="card-img-main" />
-            <div :class="`card-img-frame-${frameMap[cardInfo.rarity] || cardInfo.attr}`" />
-            <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" :key="i"></div>
-            <div :class="`card-img-band-${charaInfo.bandId}`"></div>
-            <div :class="`card-img-attr-${cardInfo.attr}`"></div>
-          </div>
-          <div v-else class="card-img-parent"
-            @click="$preview.open({
-              src: getCardImage(),
-              title: `[${cardInfo.title}] ${charaInfo.characterName}`,
-              titleBG: paletteMap[cardInfo.attr]
-            })">
-            <div v-lazy:background-image="getCardImage()" class="card-img-main" />
-          </div>
+          <viewer @inited="handleInited" :options="{navbar: false, toolbar: false}">
+            <img :src="getCardImage()" alt="" style="display: none;">
+            <div class="card-img-parent" v-if="cardImgType === 'card'" @click="$viewer.show()">
+              <div v-lazy:background-image="getCardImage()" class="card-img-main" />
+              <div :class="`card-img-frame-${frameMap[cardInfo.rarity] || cardInfo.attr}`" />
+              <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" :key="i"></div>
+              <div :class="`card-img-band-${charaInfo.bandId}`"></div>
+              <div :class="`card-img-attr-${cardInfo.attr}`"></div>
+            </div>
+            <div v-else class="card-img-parent"
+              @click="$viewer.show()">
+              <div v-lazy:background-image="getCardImage()" class="card-img-main" />
+            </div>
+          </viewer>
           <div>
             <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3 || cardInfo.title !== 'ガルパ杯'"
               @click="$router.push(`/card/${server}/${cardId}/${Number(!isTrained)}`)">{{$t('card.un-trained')}}</q-btn>
             <q-btn class="light" style="margin: 5px;" @click="switchCardImgType()">{{$t('card.cut-in-normal')}}</q-btn>
             <q-btn class="light" style="margin: 5px;"
-              @click="$preview.open({
-                title: `[${cardInfo.title}] ${charaInfo.characterName}`,
-                titleBG: paletteMap[cardInfo.attr],
-                src: getCardLivesd()
-              })">{{$t('card.live-chara')}}</q-btn>
+              @click="openURL(getCardLivesd())">{{$t('card.live-chara')}}</q-btn>
             <div class="column" v-if="cardInfo.episodes">
               <label>
                 <q-toggle
@@ -170,30 +160,38 @@
             <q-icon name="insert comment" />
             {{$t('card.story')}}
           </p>
-          <div class="row">
+          <div class="row gutter-md">
             <div v-for="(episode, idx) in cardInfo.episodes.entries" :key="episode.episodeId"
               class="col-md-6 col-12"
             >
-              <p><span v-if="idx">{{$t('card.story-max-level')}}</span><span v-else>{{$t('card.story-self-intro')}}</span>{{episode.title}}
-                <q-btn small color="pink" round flat
-                  @click="$router.push(`/scenario/${server}/chara/${episode.scenarioId}`), $ga.event('card-detail', 'jump', `scenario`)">
-                  <q-icon name="launch"></q-icon>
-                </q-btn>
-              </p>
-              <p>{{$t('card.story-to-unlock')}}</p>
-              <div class="row">
-                <div v-for="entry in episode.costs.entries" class="column col-4 items-center" :key="entry.resourceId">
-                  <img class="thumb-training" v-lazy="`/assets/thumb/material_material0${String(entry.resourceId).length === 1 ? `0${entry.resourceId}` : entry.resourceId}.png`">
-                  <span>{{entry.quantity}}</span>
-                </div>
-              </div>
-              <p>{{$t('card.story-reward')}}</p>
-              <div class="row">
-                <div v-for="entry in episode.rewards.entries" class="column col-4 items-center" :key="entry.resourceId">
-                  <img class="thumb-training" v-lazy="`/assets/thumb/common_${entry.resourceType}.png`">
-                  <span>{{entry.quantity}}</span>
-                </div>
-              </div>
+              <q-card>
+                <q-card-title>
+                  {{episode.title}}
+                  <q-btn small color="pink" round flat
+                    @click="$router.push(`/scenario/${server}/chara/${episode.scenarioId}`), $ga.event('card-detail', 'jump', `scenario`)">
+                    <q-icon name="launch"></q-icon>
+                  </q-btn>
+                  <span v-if="idx" slot="subtitle">{{$t('card.story-max-level')}}</span>
+                  <span v-else slot="subtitle">{{$t('card.story-self-intro')}}</span>
+                </q-card-title>
+                <q-card-separator />
+                <q-card-main>
+                  <p>{{$t('card.story-to-unlock')}}</p>
+                  <div class="row">
+                    <div v-for="entry in episode.costs.entries" class="column col-4 items-center" :key="entry.resourceId">
+                      <img class="thumb-training" v-lazy="`/assets/thumb/material_material0${String(entry.resourceId).length === 1 ? `0${entry.resourceId}` : entry.resourceId}.png`">
+                      <span>{{entry.quantity}}</span>
+                    </div>
+                  </div>
+                  <p>{{$t('card.story-reward')}}</p>
+                  <div class="row">
+                    <div v-for="entry in episode.rewards.entries" class="column col-4 items-center" :key="entry.resourceId">
+                      <img class="thumb-training" v-lazy="`/assets/thumb/common_${entry.resourceType}.png`">
+                      <span>{{entry.quantity}}</span>
+                    </div>
+                  </div>
+                </q-card-main>
+              </q-card>
             </div>
           </div>
         </div>
@@ -211,6 +209,7 @@
 </template>
 
 <script>
+import { openURL } from 'quasar'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -293,6 +292,7 @@ export default {
     ...mapActions('chara', [
       'getCharaById'
     ]),
+    openURL,
     getCardThumb () {
       if (this.$specialCardList[this.server].indexOf(this.cardId) !== -1) {
         return `/assets-${this.server}/thumb/chara/card${this.cardGroup}_${this.cardInfo.cardRes}_${this.cardResType}.png`
@@ -339,6 +339,9 @@ export default {
         return skillDesc.replace(/\{0\}/, `${onceEffect.onceEffectValue}`)
       }
       return ''
+    },
+    handleInited (viewer) {
+      this.$viewer = viewer
     }
   }
 }

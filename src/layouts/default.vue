@@ -176,6 +176,10 @@
           <q-item-side icon="fab fa-reddit" />
           <q-item-main label="Reddit" sublabel="www.reddit.com/r/BanGDream/" />
         </q-item>
+        <q-item @click.native="openURL('https://twitter.com/bang_dream_gbp')">
+          <q-item-side icon="fab fa-twitter" />
+          <q-item-main label="Twitter @bang_dream_gbp" sublabel="twitter.com/bang_dream_gbp" />
+        </q-item>
         <q-item @click.native="openURL('https://twitter.com/BandoriD')">
           <q-item-side icon="fab fa-twitter" />
           <q-item-main label="Twitter @BandoriD" sublabel="twitter.com/BandoriD" />
@@ -207,10 +211,6 @@
         <q-item @click.native="openURL('https://bang-dream.bushimo.jp/')">
           <q-item-side icon="open_in_new" />
           <q-item-main label="Game offcial site" sublabel="bang-dream.bushimo.jp" />
-        </q-item>
-        <q-item @click.native="openURL('https://twitter.com/bang_dream_gbp')">
-          <q-item-side icon="fab fa-twitter" />
-          <q-item-main label="Twitter @bang_dream_gbp" sublabel="twitter.com/bang_dream_gbp" />
         </q-item>
       </q-list>
     </q-layout-drawer>
@@ -250,7 +250,7 @@ export default {
   data () {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
-      appVer: '0.6.0',
+      appVer: '0.6.1',
       moremenuOpen: false,
       isHeaderShow: true
     }

@@ -2,7 +2,7 @@
   <q-page padding>
     <div class="block">
       <q-collapsible :label="$t('common.filter')" v-model="isFilterVisible">
-        <div class="shadow-3" style="padding: 1%;">
+        <q-card style="padding: 1%;">
           <div class="row gutter">
             <q-select class="col-12" multiple chips v-model="selectBandId" :float-label="$t('music.select-band')"
               :options="bandOption" color="pink"></q-select>
@@ -22,7 +22,7 @@
           <div>
             <q-btn color="pink" @click="doFilter(server), saveFilter()">{{$t('common.apply-save')}}</q-btn>
           </div>
-        </div>
+        </q-card>
       </q-collapsible>
     </div>
     <q-infinite-scroll ref="musicScroll" v-if="isReady" :handler="loadMore">
