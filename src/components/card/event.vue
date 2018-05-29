@@ -9,7 +9,8 @@
         </span>
       </q-card-title>
       <q-card-media style="cursor: pointer;" @click.native="$router.push(`/currevent/${server}`), $ga.event('event-detail', 'jump', server)">
-        <img v-if="server != 'en'" v-lazy="`/assets-${server}/homebanner_banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`"/>
+        <img v-if="server === 'kr'" v-lazy="`/assets-${server}/homebanner_banner_event${padEventId(currentEvent[server].eventId)}.png`"/>
+        <img v-else-if="server !== 'en'" v-lazy="`/assets-${server}/homebanner_banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`"/>
         <img v-else-if="server === 'en' && currentEvent[server].eventId >= 3" v-lazy="`/assets-${server}/homebanner_banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`">
         <img v-else-if="server === 'en'" v-lazy="`/assets-${server}/homebanner_banner-0${14 + currentEvent[server].eventId * 2}.png`">
       </q-card-media>
