@@ -20,15 +20,14 @@ export default {
     'desc': 'Bandori Database（少女樂團派對數據庫）網頁應用迎來重大更新，有多項改進優化您的使用體驗。',
     'new-features': '新特性',
     'feature-detail': [
-      '增加了韓語（感謝Mau）',
-      '使用新的圖片預覽插件',
-      '針對移動設備優化了卡片列表頁面',
-      '優化了主頁排版'
+      '為譜面預覽增加BPM和Combo顯示',
+      '為譜面預覽增加BPM變化提示',
+      '在歌曲詳情頁面展示"分數等級SS"獎勵'
     ],
     'fixed-bugs': '修復的問題',
     'bug-detail': [
-      '修復了移動設備上活動詳情頁面活動旗幟超出頁面寬度的問題',
-      '修復了平板上卡片列表頁面可能顯示空白圖片的問題'
+      '修復譜面預覽中長條結尾是Flick音符（粉色）時顯示錯誤的問題',
+      '修復譜面預覽中滑動音符顯示錯誤的問題'
     ],
     'welcome-bug-report': "如果妳在使用本網站的過程中遇到任何問題, 歡迎通過<a href='mailto:dev@bangdream.ga'>Email</a>, <a href='https://dnaroma.site/2017/12/23/bug-report/'>問題反饋頁面</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反饋問題。"
   },

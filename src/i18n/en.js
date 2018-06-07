@@ -20,15 +20,14 @@ export default {
     'desc': 'Bandori Database WebApp has a major update, many improvements are made to help you use the WebApp better.',
     'new-features': 'New Features',
     'feature-detail': [
-      'Add Korean language (thanks to Mau)',
-      'New image preview plugin',
-      'New card overview list for mobile devices',
-      'New index page design, event and gacha are grouped'
+      'Add BPM and Combo display to beatmap viewer',
+      'Add BPM Change indication to beatmap viewer',
+      'Show "Score Rank SS" bonus on music detail page'
     ],
     'fixed-bugs': 'Fixed Bugs',
     'bug-detail': [
-      'Fixed overflowing event banner image of event detail page on mobile device',
-      'Fixed a problem causing missing card images of card overview list page on tablet'
+      'Fixed long object with flick end on beatmap viewer',
+      'Fixed wrong slide object display on beatmap viewer'
     ],
     'welcome-bug-report': "If you find any problem affecting you use this web app, please report it to me per <a href='mailto:dev@bangdream.ga'>Email</a>, on <a href='https://dnaroma.site/2017/12/23/bug-report/'>Bug report page</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
   },

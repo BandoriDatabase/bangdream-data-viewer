@@ -36,23 +36,23 @@
           <div class="row">
             <div class="row items-center col-xl-6 col-12">
               <p class="col-12">Combo</p>
-              <span class="row">
-                <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
+              <span class="row col-12">
+                <span class="col-md-2 col-xs-6 column items-center">
                   <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('combo_easy'))}.png`">
                   <p>{{getAchievement('combo_easy').quantity}}</p>
                   <p>Easy</p>
                 </span>
-                <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
+                <span class="col-md-2 col-xs-6 column items-center">
                   <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('combo_normal'))}.png`">
                   <p>{{getAchievement('combo_normal').quantity}}</p>
                   <p>Normal</p>
                 </span>
-                <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
+                <span class="col-md-2 col-xs-6 column items-center">
                   <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('combo_hard'))}.png`">
                   <p>{{getAchievement('combo_hard').quantity}}</p>
                   <p>Hard</p>
                 </span>
-                <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
+                <span class="col-md-2 col-xs-6 column items-center">
                   <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('combo_expert'))}.png`">
                   <p>{{getAchievement('combo_expert').quantity}}</p>
                   <p>Expert</p>
@@ -60,52 +60,57 @@
               </span>
             </div>
             <div class="row items-center col-xl-6 col-12">
-              <p class="col-3 col-xs-12">Full combo</p>
-              <span class="row">
-                <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
+              <p class="col-12">Full combo</p>
+              <span class="row col-12">
+                <span class="col-md-2 col-xs-6 column items-center">
                   <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_easy'))}.png`">
                   <p>{{getAchievement('full_combo_easy').quantity}}</p>
                   <p>Easy</p>
                 </span>
-                <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
+                <span class="col-md-2 col-xs-6 column items-center">
                   <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_normal'))}.png`">
                   <p>{{getAchievement('full_combo_normal').quantity}}</p>
                   <p>Normal</p>
                 </span>
-                <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
+                <span class="col-md-2 col-xs-6 column items-center">
                   <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_hard'))}.png`">
                   <p>{{getAchievement('full_combo_hard').quantity}}</p>
                   <p>Hard</p>
                 </span>
-                <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
+                <span class="col-md-2 col-xs-6 column items-center">
                   <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_expert'))}.png`">
                   <p>{{getAchievement('full_combo_expert').quantity}}</p>
                   <p>Expert</p>
                 </span>
               </span>
             </div>
-            <div class="row items-center col-xl-6 col-12">
-              <p class="col-3 col-xs-12">Score rank</p>
-              <span class="row">
-                <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
+            <div class="row items-center col-12">
+              <p class="col-12">Score rank</p>
+              <span class="row col-12">
+                <span class="col-md-2 col-xs-4 column items-center">
                   <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_c'))}.png`">
                   <p>{{getAchievement('score_rank_c').quantity}}</p>
                   <p>Rank C</p>
                 </span>
-                <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
+                <span class="col-md-2 col-xs-4 column items-center">
                   <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_b'))}.png`">
                   <p>{{getAchievement('score_rank_b').quantity}}</p>
                   <p>Rank B</p>
                 </span>
-                <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
+                <span class="col-md-2 col-xs-4 column items-center">
                   <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_a'))}.png`">
                   <p>{{getAchievement('score_rank_a').quantity}}</p>
                   <p>Rank A</p>
                 </span>
-                <span class="col-md-3 col-sm-6 col-xs-6 column items-center">
+                <span class="col-md-2 col-xs-4 column items-center">
                   <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_s'))}.png`">
                   <p>{{getAchievement('score_rank_s').quantity}}</p>
                   <p>Rank S</p>
+                </span>
+                <span class="col-md-2 col-xs-4 column items-center">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_s'))}.png`">
+                  <p>{{getAchievement('score_rank_ss').quantity}}</p>
+                  <p>Rank SS</p>
                 </span>
               </span>
             </div>
