@@ -16,38 +16,31 @@ export default {
     'useful-link': '링크'
   },
   'update': {
-    'title': "What's new",
+    'title': "업데이트 노트",
     'desc': 'Bandori Database WebApp has a major update, many improvements are made to help you use the WebApp better.',
-    'new-features': 'New Features',
+    'new-features': '새로운 기능',
     'feature-detail': [
-      'Single Frame Cartoon Viewer for Japan server is removed as it is already in the game',
-      'Redesigned home page layout to make infos of different server more clear',
-      'External links move to left drawer',
-      'Change language will not lead to refresh page (thanks to framework update)',
-      'Redunant hint texts are removed',
-      'New card detail layout to be more space efficient',
-      'Large image viewer is replaced by a modal',
-      'It is possible to open the full image on new tab in large image viewer',
-      'Current event info page is splited by different server',
-      'Story player use new data table to show story script',
-      'Show expected open time of a event or gacha which is not open yet'
+      '채보 플레이어에서 BPM과 콤보가 보여집니다',
+      '채보 플레이어에서 BPM이 변하는게 보여집니다',
+      '스코어 SS랭크 보상 보기가 추가되었습니다'
     ],
-    'fixed-bugs': 'Fixed Bugs',
+    'fixed-bugs': '버그 픽스',
     'bug-detail': [
-      'It is a refactored version so bug fix will appear since next version.'
+      '채보 플레이어에서 플릭이 있는 롱노트가 안보였던것',
+      '채보 플레이어에서 슬라이드가 비정상적으로 보여졌던것'
     ],
     'welcome-bug-report': "If you find any problem affecting you use this web app, please report it to me per <a href='mailto:dev@bangdream.ga'>Email</a>, on <a href='https://dnaroma.site/2017/12/23/bug-report/'>Bug report page</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
   },
   'event-srv': '{srv} 이벤트',
   'fetch-data': '{type} 데이터 가져오는중...',
-  'not-started': '이벤트 시작 시간',
+  'not-started': '시작 시간',
   'common': {
     'event': '이벤트',
     'gacha': '뽑기',
     'jp': '일본 서버',
     'tw': '대만 서버',
     'kr': '한국 서버',
-    'en': '미국 서버',
+    'en': '글로벌 서버',
     'perform': '퍼포먼스',
     'technic': '테크닉',
     'visual': '비쥬얼',
@@ -123,7 +116,7 @@ export default {
     'achieve': '달성 보상',
     'combo': '총 노트 수',
     'check-beatmap': '채보 플레이어',
-    'declaration': "This is still a test version, and not fit for mobile view. If you find any problem, please contact me through <a href='mailto:dev@bangdream.ga'>email</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
+    'declaration': "아직 테스트 중입니다. 모바일에서 작동하지않을 수 있습니다. If you find any problem, please contact me through <a href='mailto:dev@bangdream.ga'>email</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
   },
   'scenario': {
     'voice-text': '대사',
@@ -148,7 +141,7 @@ export default {
     'voice-motion': 'Live2D 모션:',
     'dialog-how-to-use': {
       'title': '사용법',
-      'msg': '먼저 캐릭터를 선택하고 그 다음 의상을 선택해 주세요. 보기 버튼을 눌러서 LIVE2D를 불러옵니다. 대사를 선택 한 후 클릭하면 캐릭터가 반응합니다.'
+      'msg': '먼저 캐릭터를 선택하고 그 다음 의상을 선택해 주세요. 적용 버튼을 눌러서 LIVE2D를 불러옵니다. 대사를 선택 한 후 클릭하면 캐릭터가 반응합니다.'
     }
   },
   'event': {
