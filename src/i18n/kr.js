@@ -16,7 +16,7 @@ export default {
     'useful-link': '링크'
   },
   'update': {
-    'title': "업데이트 노트",
+    'title': '업데이트 노트',
     'desc': 'Bandori Database WebApp has a major update, many improvements are made to help you use the WebApp better.',
     'new-features': '새로운 기능',
     'feature-detail': [
