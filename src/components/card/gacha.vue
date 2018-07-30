@@ -1,12 +1,10 @@
 <template>
   <div>
-    <q-card inline>
+    <q-card>
       <q-card-title class="bg-pink text-white">
         {{data.gachaName}}
       </q-card-title>
-      <q-card-media>
-        <img v-lazy="`/assets-${server}/gacha/screen/${data.resourceName}_logo.png`" class="responsive" style="max-height: 140px;" />
-      </q-card-media>
+      <q-card-media class="gacha-img" v-lazy:background-image="`/assets-${server}/gacha/screen/${data.resourceName}_logo.png`"></q-card-media>
       <q-card-main>
         <h5 class="q-my-sm" v-if="Number(data.publishedAt) > Date.now()">{{$t('not-started')}}<br>{{(new Date(Number(data.publishedAt))).toLocaleString()}}</h5>
         <count-down :target-time="Number(data.closedAt)" v-else></count-down>
@@ -40,4 +38,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.gacha-img
+  height 140px
+  background-size contain
+  background-repeat no-repeat
+  background-position center
 </style>
