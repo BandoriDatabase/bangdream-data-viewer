@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <div class="block">
+    <div class="block filter">
       <q-collapsible :label="$t('common.filter')" v-model="isFilterVisible">
         <q-card style="padding: 1%;">
           <div class="row gutter">
@@ -28,34 +28,30 @@
     <q-infinite-scroll ref="musicScroll" v-if="isReady" :handler="loadMore">
       <div class="row gt-sm gutter-sm">
         <div v-for="music in musicList" :key="music.cardId" class="col-12 col-md-6 col-xl-3 col-lg-4 full-height">
-          <q-card style="height: 500px; cursor: pointer;" @click.native="$router.push(`/music/${server}/${music.musicId}`)">
-            <q-card-media class="full-height" style="position: relative;">
-              <span :class="`music-img-band-${music.bandId}`"></span>
-              <div v-lazy:background-image="music.jacket" class="full-height one-img-full" />
-              <q-card-title slot="overlay">
-                {{music.title}}<br>
-                {{music.bandName}}<br>
-                {{music.difficulty[0]}} /
-                {{music.difficulty[3]}} /
-                {{music.difficulty[2]}} /
-                {{music.difficulty[1]}}
-              </q-card-title>
-            </q-card-media>
+          <q-card class="music-card" @click.native="$router.push(`/music/${server}/${music.musicId}`)" v-lazy:background-image="music.jacket">
+            <span :class="`music-img-band music-img-band-${music.bandId}`"></span>
+            <q-card-title class="music-title">
+              {{music.title}}<br>
+              {{music.bandName}}<br>
+              {{music.difficulty[0]}} /
+              {{music.difficulty[3]}} /
+              {{music.difficulty[2]}} /
+              {{music.difficulty[1]}}
+            </q-card-title>
           </q-card>
         </div>
       </div>
       <div class="row lt-md gutter-sm">
         <div v-for="music in musicList" :key="music.cardId" class="col-12 col-md-6 col-xl-3 col-lg-4 full-height">
-          <q-card style="height: 100px;" @click.native="$router.push(`/music/${server}/${music.musicId}`)">
-            <q-card-main class="no-padding">
-              <div class="row full-height items-center">
-                <div v-lazy:background-image="music.jacket" class="col-3 one-img-thumb"></div>
-                <div class="col-8">
-                  {{music.title}}<br>
-                  {{music.bandName}}
-                </div>
-              </div>
-            </q-card-main>
+          <q-card class="music-card-collapse" @click.native="$router.push(`/music/${server}/${music.musicId}`)" v-lazy:background-image="music.jacket">
+            <p>
+              {{music.title}}<br>
+              {{music.bandName}}<br>
+              {{music.difficulty[0]}} /
+              {{music.difficulty[3]}} /
+              {{music.difficulty[2]}} /
+              {{music.difficulty[1]}}
+            </p>
           </q-card>
         </div>
       </div>
@@ -167,6 +163,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.filter
+  margin-bottom 10px
+
 .one-img-full
   background-size: auto 100%
   background-repeat: no-repeat
@@ -179,53 +178,55 @@ export default {
   background-repeat: no-repeat
   background-position: center
 
-.music-img-band-1
+.music-img-band
   position: absolute
   top: 3%
-  left: 5%
-  width 90px
+  left: 3%
+  width 100%
   height 40px
+
+.music-img-band-1
   background: url('/statics/band_logo_1.png') no-repeat
-  background-size cover
-  background-position center
+  background-size contain
 
 .music-img-band-2
-  position: absolute
-  top: 3%
-  left: 5%
-  width 90px
-  height 60px
   background: url('/statics/band_logo_2.png') no-repeat
-  background-size cover
-  background-position center
+  background-size contain
 
 .music-img-band-3
-  position: absolute
-  top: 3%
-  left: 5%
-  width 90px
-  height 90px
   background: url('/statics/band_logo_3.png') no-repeat
-  background-size cover
-  background-position center
+  background-size contain
 
 .music-img-band-4
-  position: absolute
-  top: 3%
-  left: 5%
-  width 90px
-  height 80px
   background: url('/statics/band_logo_4.png') no-repeat
-  background-size cover
-  background-position center
+  background-size contain
 
 .music-img-band-5
-  position: absolute
-  top: 3%
-  left: 5%
-  width 90px
-  height 70px
   background: url('/statics/band_logo_5.png') no-repeat
-  background-size cover
-  background-position center
+  background-size contain
+
+.music-card
+  position relative
+  width 100%
+  padding-top 100%
+  cursor pointer
+  background-size contain
+  background-repeat no-repeat
+
+.music-title
+  position relative
+
+.music-card-collapse
+  position relative
+  height 100px
+  background-size contain
+  background-repeat no-repeat
+
+.music-card-collapse p
+  font-size: 80%
+  margin-left 120px
+  line-height 200%
+  position absolute
+  top 50%
+  transform translate(0, -50%)
 </style>
