@@ -70,7 +70,7 @@ export default {
     'list-title': '{srv} Scouts List',
     'list-count': 'Counts',
     'start-at': 'Start at:',
-    'end-at': 'Close at:"',
+    'end-at': 'Close at:',
     'desc': 'Description',
     'new-members': 'New members',
     'rates': 'Gacha rates',

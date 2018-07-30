@@ -19,7 +19,6 @@
         <h6>{{$t('gacha.desc')}}</h6>
         <p>{{gacha.description}}</p>
         <p v-if="gacha.information && gacha.information.description" v-html="gacha.information.description.replace(/\n/g, '<br>')"></p>
-        <p v-else>{{gacha.description}}</p>
         <h6 v-if="gacha.information && gacha.information.newMemberInfo">{{$t('gacha.new-members')}}</h6>
         <p v-if="gacha.information && gacha.information.newMemberInfo" v-html="gacha.information.newMemberInfo.replace(/\n/g, '<br>')"></p>
         <h6>{{$t('gacha.rates')}}</h6>
