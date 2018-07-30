@@ -167,43 +167,40 @@ export default {
   margin-bottom 10px
 
 .one-img-full
-  background-size: auto 100%
-  background-repeat: no-repeat
-  background-position: center
+  background-size auto 100%
+  background-repeat no-repeat
+  background-position center
 
 .one-img-thumb
-  height: 90px
-  margin: 5px
-  background-size: auto 100%
-  background-repeat: no-repeat
-  background-position: center
+  height 90px
+  margin 5px
+  background-size auto 100%
+  background-repeat no-repeat
+  background-position center
 
 .music-img-band
-  position: absolute
-  top: 3%
-  left: 3%
+  position absolute
+  top 3%
+  left 3%
   width 100%
   height 40px
+  background-size contain
+  background-repeat no-repeat
 
 .music-img-band-1
-  background: url('/statics/band_logo_1.png') no-repeat
-  background-size contain
+  background-image url('/statics/band_logo_1.png')
 
 .music-img-band-2
-  background: url('/statics/band_logo_2.png') no-repeat
-  background-size contain
+  background-image url('/statics/band_logo_2.png')
 
 .music-img-band-3
-  background: url('/statics/band_logo_3.png') no-repeat
-  background-size contain
+  background-image url('/statics/band_logo_3.png')
 
 .music-img-band-4
-  background: url('/statics/band_logo_4.png') no-repeat
-  background-size contain
+  background-image url('/statics/band_logo_4.png')
 
 .music-img-band-5
-  background: url('/statics/band_logo_5.png') no-repeat
-  background-size contain
+  background-image url('/statics/band_logo_5.png')
 
 .music-card
   position relative
@@ -223,7 +220,7 @@ export default {
   background-repeat no-repeat
 
 .music-card-collapse p
-  font-size: 80%
+  font-size 80%
   margin-left 120px
   line-height 200%
   position absolute
