@@ -47,34 +47,34 @@ module.exports = function (ctx) {
       open: true, // opens browser window automatically
       proxy: {
         '/assets': {
-          target: 'https://res.bangdream.ga',
+          target: 'https://res.bandori.ga',
           changeOrigin: true
         },
         '/assets-jp': {
-          target: 'https://res.bangdream.ga',
+          target: 'https://res.bandori.ga',
           changeOrigin: true
         },
         '/assets-tw': {
-          target: 'https://res.bangdream.ga',
+          target: 'https://res.bandori.ga',
           changeOrigin: true
         },
         '/assets-kr': {
-          target: 'https://res.bangdream.ga',
+          target: 'https://res.bandori.ga',
           changeOrigin: true
         },
         '/assets-en': {
-          target: 'https://res.bangdream.ga',
+          target: 'https://res.bandori.ga',
           changeOrigin: true
         },
         '/live2d': {
-          target: 'https://res.bangdream.ga/assets/live2d/chara',
+          target: 'https://res.bandori.ga/assets/live2d/chara',
           changeOrigin: true,
           pathRewrite: {
             '^/live2d': ''
           }
         },
         '/api': {
-          // target: 'https://api.bangdream.ga',
+          // target: 'https://api.bandori.ga',
           target: 'http://localhost:8180',
           changeOrigin: true,
           pathRewrite: {
