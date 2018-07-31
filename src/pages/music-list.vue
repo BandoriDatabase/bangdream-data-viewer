@@ -32,11 +32,13 @@
             <span :class="`music-img-band music-img-band-${music.bandId}`"></span>
             <q-card-title class="music-title">
               {{music.title}}<br>
-              {{music.bandName}}<br>
-              {{music.difficulty[0]}} /
-              {{music.difficulty[3]}} /
-              {{music.difficulty[2]}} /
-              {{music.difficulty[1]}}
+              <span slot="subtitle">
+                {{music.bandName}}<br>
+                {{music.difficulty[0]}} /
+                {{music.difficulty[3]}} /
+                {{music.difficulty[2]}} /
+                {{music.difficulty[1]}}
+              </span>
             </q-card-title>
           </q-card>
         </div>

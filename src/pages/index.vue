@@ -19,6 +19,9 @@
             <div v-if="isGcahaReady.jp" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.jp" :key="gacha.seq">
               <gacha-card server="jp" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'jp')"></gacha-card>
             </div>
+            <div v-if="!isGcahaReady.jp" class="col-12">
+              <q-spinner color="pink" size="48px"></q-spinner>
+            </div>
           </div>
         </lazy-component>
       </q-collapsible>
@@ -27,6 +30,9 @@
           <div class="row col-12 gutter-sm">
             <div v-if="isGcahaReady.tw" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.tw" :key="gacha.seq">
               <gacha-card server="tw" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'tw')"></gacha-card>
+            </div>
+            <div v-if="!isGcahaReady.tw" class="col-12">
+              <q-spinner color="pink" size="48px"></q-spinner>
             </div>
           </div>
         </lazy-component>
@@ -37,6 +43,9 @@
             <div v-if="isGcahaReady.kr" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.kr" :key="gacha.seq">
               <gacha-card server="kr" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'kr')"></gacha-card>
             </div>
+            <div v-if="!isGcahaReady.kr" class="col-12">
+              <q-spinner color="pink" size="48px"></q-spinner>
+            </div>
           </div>
         </lazy-component>
       </q-collapsible>
@@ -45,6 +54,9 @@
           <div class="row col-12 gutter-sm">
             <div v-if="isGcahaReady.en" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.en" :key="gacha.seq">
               <gacha-card server="en" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'en')"></gacha-card>
+            </div>
+            <div v-if="!isGcahaReady.en" class="col-12">
+              <q-spinner color="pink" size="48px"></q-spinner>
             </div>
           </div>
         </lazy-component>

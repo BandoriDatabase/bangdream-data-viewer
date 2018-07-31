@@ -20,14 +20,18 @@ export default {
     'desc': 'Bandori Database（少女乐团派对数据库）网页应用迎来重大更新，有多项改进优化您的使用体验。',
     'new-features': '新特性',
     'feature-detail': [
-      '为谱面预览增加BPM和Combo显示',
-      '为谱面预览增加BPM变化提示',
-      '在歌曲详情页面展示"分数等级SS"奖励'
+      '为卡片小图增加乐队图标和稀有度图示',
+      '重新设计卡片列表，不再加载大图以节省流量并加快速度',
+      '调整音乐列表的样式（感谢 @Cee）'
     ],
     'fixed-bugs': '修复的问题',
     'bug-detail': [
-      '修复谱面预览中长条结尾是Flick音符（粉色）时显示错误的问题',
-      '修复谱面预览中滑动音符显示错误的问题'
+      '修正部分韩语翻译（感谢 @thtl1999）',
+      '修复抽卡界面重复描述的问题（感谢 @Cee和@alxnr）',
+      '修复主页抽卡展示时错误拉伸的问题（感谢 @Cee和@alxnr）',
+      '优化抽卡详细信息中卡片列表展示逻辑',
+      '为一些需要长时间加载的地方添加加载指示器',
+      '移除歌曲详情页面歌曲封面的大图预览功能'
     ],
     'welcome-bug-report': "如果你在使用本网站的过程中遇到任何问题, 欢迎通过<a href='mailto:dev@bangdream.ga'>Email</a>, <a href='https://dnaroma.site/2017/12/23/bug-report/'>问题反馈页面</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反馈问题。"
   },

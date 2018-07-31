@@ -26,14 +26,20 @@
           {{'\u2605'.repeat(Number(rate.rarityIndex))}} {{rate.rate}}%
         </p>
         <h6>{{$t('gacha.pickup')}}</h6>
-        <div class="center" v-for="gc in gacha.details" :key="gc.situationId" style="display: inline-block; margin: 3px 3px;" v-if="gc.pickup">
+        <div class="center" v-for="gc in gacha.details.filter(gc => gc.pickup)" :key="gc.situationId" style="display: inline-block; margin: 3px 3px;" v-if="isPickupReady">
           <card-thumb :cardId="Number(gc.situationId)" :server="server" @click="isOpen = false"></card-thumb>
           <q-tooltip v-show="gc.weight != 1">Rate: {{Number(gc.weight)/10000}}%</q-tooltip>
         </div>
+        <div v-if="!isPickupReady">
+          <q-spinner color="pink" size="48px"></q-spinner>
+        </div>
         <h6>{{$t('gacha.normal')}}</h6>
-        <div class="center" v-for="gc in gacha.details" :key="gc.situationId" style="display: inline-block; margin: 3px 3px;" v-if="!gc.pickup">
-          <card-thumb :cardId="Number(gc.situationId)" :server="server" @click="isOpen = false"></card-thumb>
+        <div class="center" v-for="gc in gacha.details.filter(gc => !gc.pickup)" :key="gc.situationId" style="display: inline-block; margin: 3px 3px;" v-if="isNormalReady">
+          <card-thumb :card="cardMap[server][gc.situationId]" :server="server" @click="isOpen = false"></card-thumb>
           <q-tooltip v-show="gc.weight != 1">Rate: {{Number(gc.weight)/10000}}%</q-tooltip>
+        </div>
+        <div v-if="!isNormalReady">
+          <q-spinner color="pink" size="48px"></q-spinner>
         </div>
       </q-card-main>
     </q-card>
@@ -41,6 +47,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import CardThumb from 'components/common/card-thumb'
 
 export default {
@@ -52,7 +59,9 @@ export default {
       multiPickupImg: false,
       multiPickupImgInterval: null,
       isActive: true,
-      isOpen: false
+      isOpen: false,
+      isPickupReady: false,
+      isNormalReady: false
     }
   },
   mounted () {
@@ -66,11 +75,33 @@ export default {
   components: {
     CardThumb
   },
+  computed: {
+    ...mapState('card', [
+      'cardMap'
+    ])
+  },
   methods: {
+    ...mapActions('card', [
+      'getBatchCards'
+    ]),
     open (data, server) {
       this.gacha = data
       this.server = server
       this.isOpen = true
+      this.isPickupReady = false
+      this.isNormalReady = false
+      this.getBatchCards({
+        server,
+        cardIds: data.details.filter(gc => gc.pickup).map(gc => gc.situationId)
+      }).then(() => {
+        this.isPickupReady = true
+      })
+      this.getBatchCards({
+        server,
+        cardIds: data.details.filter(gc => !gc.pickup).map(gc => gc.situationId)
+      }).then(() => {
+        this.isNormalReady = true
+      })
     },
     startMultiPickupSlideShow () {
       this.multiPickupImgInterval = setInterval(() => {

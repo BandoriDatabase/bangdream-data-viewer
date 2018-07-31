@@ -20,14 +20,18 @@ export default {
     'desc': 'Bandori Database WebApp has a major update, many improvements are made to help you use the WebApp better.',
     'new-features': 'New Features',
     'feature-detail': [
-      'Add BPM and Combo display to beatmap viewer',
-      'Add BPM Change indication to beatmap viewer',
-      'Show "Score Rank SS" bonus on music detail page'
+      'Add band icon and rarity icon to card thumb',
+      'Redesigned card list, no loading full card image for less data consumption and better performance',
+      'Improve music list layout (thanks to @Cee)'
     ],
     'fixed-bugs': 'Fixed Bugs',
     'bug-detail': [
-      'Fixed long object with flick end on beatmap viewer',
-      'Fixed wrong slide object display on beatmap viewer'
+      'Correct some korean translation (thanks to @thtl1999)',
+      'Fix redundant description on gacha detail modal (thanks to @Cee and @alxnr)',
+      'Fix wrong stretch of gacha display card on index page (thanks to @Cee and @alxnr)',
+      'Fix slow loading of card list on gacha detail modal',
+      'Add loading indicator to the place that need some time for loading',
+      'Remove Big Picture Viewer on music detail page'
     ],
     'welcome-bug-report': "If you find any problem affecting you use this web app, please report it to me per <a href='mailto:dev@bangdream.ga'>Email</a>, on <a href='https://dnaroma.site/2017/12/23/bug-report/'>Bug report page</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
   },

@@ -5,7 +5,6 @@
         <div
           class="jacket-img relative-position"
           style="cursor: pointer;"
-          v-viewer="{navbar: false, toolbar: false}"
         >
           <img class="absolute-center" :src="`/assets/musicjacket/${musicData.jacketImage}_jacket.png`" />
         </div>

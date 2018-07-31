@@ -18,3 +18,7 @@ export const SET_SKILL_LIST = (state, {data, server}) => {
 export const ADD_SKILL_MAP_ENTRY = (state, obj) => {
   state.skillMap[obj.server][obj.id] = obj.value
 }
+
+export const ADD_MULTI_CARD_MAP = (state, obj) => {
+  Object.assign(state.cardMap[obj.server], obj.cardMap)
+}

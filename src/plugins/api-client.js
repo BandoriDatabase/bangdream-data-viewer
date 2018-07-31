@@ -102,6 +102,10 @@ export default ({ app, router, Vue }) => {
     getBirthday (server) {
       return Vue.http.get(`/api/v1/${server}/chara/birthday`)
         .then(res => res.json())
+    },
+    getCards (server, cardIds) {
+      return Vue.http.post(`/api/v1/${server}/card/batch`, cardIds)
+        .then(res => res.json())
     }
   }
 }

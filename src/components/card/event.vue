@@ -15,16 +15,15 @@
         <img v-else-if="server === 'en'" v-lazy="`/assets-${server}/homebanner_banner-0${14 + currentEvent[server].eventId * 2}.png`">
       </q-card-media>
       <q-card-main>
-        <div class="row gutter-md items-center justify-center">
-          <div class="col-xl-4 col-5" @click="$ga.event('event-card', 'jump', `normal-${server}`)">
+        <div class="row items-center justify-center">
+          <div class="col-6" @click="$ga.event('event-card', 'jump', `normal-${server}`)">
             <card-thumb :cardId="Number(eventNormalCardId)" :server="server" />
           </div>
-          <div class="col-xl-4 col-5" @click="$ga.event('event-card', 'jump', `sr-${server}`)">
+          <div class="col-6" @click="$ga.event('event-card', 'jump', `sr-${server}`)">
             <card-thumb :cardId="Number(eventSpecialCardId)" :server="server" />
           </div>
           <div class="col-12" v-if="Number(currentEvent[server].startAt) > Date.now()">
-            <p>{{$t('not-started')}}</p>
-            <p>{{(new Date(Number(currentEvent[server].startAt))).toLocaleString()}}</p>
+            <h5 class="q-my-sm">{{$t('not-started')}}<br>{{(new Date(Number(currentEvent[server].startAt))).toLocaleString()}}</h5>
           </div>
           <count-down class="col-12" :target-time="Number(currentEvent[server].endAt)" v-else-if="Number(currentEvent[server].endAt) > Date.now()" small></count-down>
         </div>

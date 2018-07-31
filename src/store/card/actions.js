@@ -29,3 +29,9 @@ export const getSkillById = async ({commit, state}, {cardId, server}) => {
   const skill = await Vue.apiClient.getSkillByCardId(cardId, server)
   commit('ADD_SKILL_MAP_ENTRY', {id: cardId, value: skill, server})
 }
+
+export const getBatchCards = async ({commit, state}, {cardIds, server}) => {
+  const reqCardIds = cardIds.filter(id => !state.cardMap[server][id])
+  const resCards = await Vue.apiClient.getCards(server, reqCardIds)
+  commit('ADD_MULTI_CARD_MAP', {cardMap: resCards, server})
+}

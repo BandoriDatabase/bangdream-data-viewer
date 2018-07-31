@@ -23,10 +23,10 @@
             </div>
           </viewer>
           <div>
-            <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3 || cardInfo.title !== 'ガルパ杯'"
+            <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3 && cardInfo.title !== 'ガルパ杯'"
               @click="$router.push(`/card/${server}/${cardId}/${Number(!isTrained)}`)">{{$t('card.un-trained')}}</q-btn>
             <q-btn class="light" style="margin: 5px;" @click="switchCardImgType()">{{$t('card.cut-in-normal')}}</q-btn>
-            <q-btn class="light" style="margin: 5px;"
+            <q-btn class="light" style="margin: 5px;" v-if="cardInfo.title !== 'ガルパ杯'"
               @click="openURL(getCardLivesd())">{{$t('card.live-chara')}}</q-btn>
             <div class="column" v-if="cardInfo.episodes">
               <label>

@@ -44,8 +44,8 @@
       <q-infinite-scroll ref="cardScroll" v-if="isReady" :handler="loadMore">
         <div class="row gt-sm gutter-sm">
           <div v-for="card in cardList" :key="card.cardId" class="col-12 col-xl-4 col-md-6 full-height">
-            <q-card style="height: 500px; cursor: pointer;">
-              <q-card-media class="full-height" style="position: relative;">
+            <q-card :class="`bg-${paletteMap[card.attr]}`">
+              <!-- <q-card-media class="full-height" style="position: relative;">
                 <span :class="`card-img-attr-${card.attr}`"></span>
                 <span :class="`card-img-band-${bandCharaList[server][Number(card.characterId) - 1].bandId}`"></span>
                 <div v-for="i in Number(card.rarity)" :class="`card-img-rarity-normal-${i}`" :key="i"></div>
@@ -82,7 +82,20 @@
                   [{{card.skill.skillName}}] {{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}<br>
                   Lv {{card.maxLevel}}: {{card.maxPerformance}}/{{card.maxTechnique}}/{{card.maxVisual}}/{{card.totalMaxParam}}
                 </q-card-title>
-              </q-card-media>
+              </q-card-media> -->
+              <q-card-main>
+                <div class="row items-center justify-center" style="padding-bottom: 10px;">
+                  <card-thumb :card="card" :server="server" :trained="false" v-if="card.title !== 'ガルパ杯'"></card-thumb>
+                  <card-thumb :card="card" :server="server" :trained="true" v-if="(card.rarity >= 3 && card.title !== 'ガルパ杯') || card.title === 'ガルパ杯'"></card-thumb>
+                </div>
+                <div style="text-align: center;">
+                  <p class="text-white q-title">[{{card.title}}] {{displayName ?
+                    capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) :
+                    bandCharaList[server][Number(card.characterId) - 1].characterName}}</p>
+                  <p class="text-white q-body-1">[{{card.skill.skillName}}] {{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}</p>
+                  <p class="text-white q-body-1">Lv {{card.maxLevel}}: {{card.maxPerformance}}/{{card.maxTechnique}}/{{card.maxVisual}}/{{card.totalMaxParam}}</p>
+                </div>
+              </q-card-main>
             </q-card>
           </div>
         </div>
@@ -132,6 +145,7 @@
 import { LocalStorage } from 'quasar'
 import { toRomaji } from 'wanakana'
 import { mapState, mapActions } from 'vuex'
+import CardThumb from 'components/common/card-thumb'
 
 export default {
   // name: 'PageName',
@@ -191,6 +205,9 @@ export default {
   },
   mounted () {
     this.updateData(this.server)
+  },
+  components: {
+    CardThumb
   },
   computed: {
     ...mapState('card', [
