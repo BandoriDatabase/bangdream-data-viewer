@@ -33,7 +33,7 @@ export default {
       'Add loading indicator to the place that need some time for loading',
       'Remove Big Picture Viewer on music detail page'
     ],
-    'welcome-bug-report': "If you find any problem affecting you use this web app, please report it to me per <a href='mailto:dev@bangdream.ga'>Email</a>, on <a href='https://dnaroma.site/2017/12/23/bug-report/'>Bug report page</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
+    'welcome-bug-report': "If you find any problem affecting you use this web app, please report it to me per <a href='mailto:dev@bandori.ga'>Email</a>, on <a href='https://dnaroma.site/2017/12/23/bug-report/'>Bug report page</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
   },
   'event-srv': 'Event {srv}',
   'fetch-data': 'Fetching {type} Data...',
@@ -124,7 +124,7 @@ export default {
     'achieve': 'Live achievement reward',
     'combo': 'Total notes',
     'check-beatmap': 'Open beatmap player',
-    'declaration': "This is still a test version, and not fit for mobile view. If you find any problem, please contact me through <a href='mailto:dev@bangdream.ga'>email</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
+    'declaration': "This is still a test version, and not fit for mobile view. If you find any problem, please contact me through <a href='mailto:dev@bandori.ga'>email</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
   },
   'scenario': {
     'voice-text': 'Voice text',

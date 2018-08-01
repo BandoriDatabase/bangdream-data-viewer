@@ -75,7 +75,7 @@ export default {
     'achieve': '達成報酬',
     'combo': 'トータルノート',
     'check-beatmap': 'ビートマッププレイヤーを開く',
-    'declaration': "これはまだテスト版です、モバイルビューに適合しない。問題が見つかった場合は、<a href='mailto:dev@bangdream.ga'>メール</a>または<a href='https://discord.gg/vGb3eHH'>Discord</a>で私に連絡してください。"
+    'declaration': "これはまだテスト版です、モバイルビューに適合しない。問題が見つかった場合は、<a href='mailto:dev@bandori.ga'>メール</a>または<a href='https://discord.gg/vGb3eHH'>Discord</a>で私に連絡してください。"
   },
   'event': {
     'title': '{srv}開催中のイベント',

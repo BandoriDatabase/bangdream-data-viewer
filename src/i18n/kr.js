@@ -29,7 +29,7 @@ export default {
       '채보 플레이어에서 플릭이 있는 롱노트가 안보였던것',
       '채보 플레이어에서 슬라이드가 비정상적으로 보여졌던것'
     ],
-    'welcome-bug-report': "If you find any problem affecting you use this web app, please report it to me per <a href='mailto:dev@bangdream.ga'>Email</a>, on <a href='https://dnaroma.site/2017/12/23/bug-report/'>Bug report page</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
+    'welcome-bug-report': "If you find any problem affecting you use this web app, please report it to me per <a href='mailto:dev@bandori.ga'>Email</a>, on <a href='https://dnaroma.site/2017/12/23/bug-report/'>Bug report page</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
   },
   'event-srv': '{srv} 이벤트',
   'fetch-data': '{type} 데이터 가져오는중...',
@@ -116,7 +116,7 @@ export default {
     'achieve': '달성 보상',
     'combo': '총 노트 수',
     'check-beatmap': '채보 플레이어',
-    'declaration': "아직 테스트 중입니다. 모바일에서 작동하지않을 수 있습니다. If you find any problem, please contact me through <a href='mailto:dev@bangdream.ga'>email</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
+    'declaration': "아직 테스트 중입니다. 모바일에서 작동하지않을 수 있습니다. If you find any problem, please contact me through <a href='mailto:dev@bandori.ga'>email</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
   },
   'scenario': {
     'voice-text': '대사',

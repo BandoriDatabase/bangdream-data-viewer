@@ -33,7 +33,7 @@ export default {
       '為一些需要長時間加載的地方添加加載指示器',
       '移除歌曲詳情頁面歌曲封面的大圖預覽功能'
     ],
-    'welcome-bug-report': "如果妳在使用本網站的過程中遇到任何問題, 歡迎通過<a href='mailto:dev@bangdream.ga'>Email</a>, <a href='https://dnaroma.site/2017/12/23/bug-report/'>問題反饋頁面</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反饋問題。"
+    'welcome-bug-report': "如果妳在使用本網站的過程中遇到任何問題, 歡迎通過<a href='mailto:dev@bandori.ga'>Email</a>, <a href='https://dnaroma.site/2017/12/23/bug-report/'>問題反饋頁面</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反饋問題。"
   },
   'event-srv': '{srv}活動',
   'fetch-data': '獲取{type}數據中',
@@ -125,7 +125,7 @@ export default {
     'achieve': '歌曲成就',
     'combo': '音符數',
     'check-beatmap': '打開譜面播放器',
-    'declaration': "仍在測試中，未適配行動設備，歡迎通過<a href='mailto:dev@bangdream.ga'>email</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我回報問題。"
+    'declaration': "仍在測試中，未適配行動設備，歡迎通過<a href='mailto:dev@bandori.ga'>email</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我回報問題。"
   },
   'scenario': {
     'voice-text': '語音文本',

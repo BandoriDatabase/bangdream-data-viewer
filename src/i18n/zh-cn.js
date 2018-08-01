@@ -33,7 +33,7 @@ export default {
       '为一些需要长时间加载的地方添加加载指示器',
       '移除歌曲详情页面歌曲封面的大图预览功能'
     ],
-    'welcome-bug-report': "如果你在使用本网站的过程中遇到任何问题, 欢迎通过<a href='mailto:dev@bangdream.ga'>Email</a>, <a href='https://dnaroma.site/2017/12/23/bug-report/'>问题反馈页面</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反馈问题。"
+    'welcome-bug-report': "如果你在使用本网站的过程中遇到任何问题, 欢迎通过<a href='mailto:dev@bandori.ga'>Email</a>, <a href='https://dnaroma.site/2017/12/23/bug-report/'>问题反馈页面</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反馈问题。"
   },
   'event-srv': '{srv}活动',
   'fetch-data': '获取{type}数据中',
@@ -125,7 +125,7 @@ export default {
     'achieve': '歌曲成就',
     'combo': '音符数',
     'check-beatmap': '打开谱面播放器',
-    'declaration': "仍在测试中，未适配移动设备，欢迎通过<a href='mailto:dev@bangdream.ga'>email</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反映问题。"
+    'declaration': "仍在测试中，未适配移动设备，欢迎通过<a href='mailto:dev@bandori.ga'>email</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反映问题。"
   },
   'scenario': {
     'voice-text': '语音文本',
