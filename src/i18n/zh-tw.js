@@ -13,7 +13,8 @@ export default {
     'settings': '設置',
     'Live2d': 'Live2D',
     'update-note': '更新說明',
-    'useful-link': '重要鏈接'
+    'useful-link': '重要鏈接',
+    'stamp': 'Stamps'
   },
   'update': {
     'title': '更新說明',

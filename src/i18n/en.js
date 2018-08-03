@@ -13,7 +13,8 @@ export default {
     'settings': 'Settings',
     'Live2d': 'Live2D',
     'update-note': 'Update Note',
-    'useful-link': 'Useful Links'
+    'useful-link': 'Useful Links',
+    'stamp': 'Stamps'
   },
   'update': {
     'title': "What's new",
