@@ -1,10 +1,10 @@
 import Vue from 'vue'
 
 export const getStampList = async ({commit, state}, server) => {
-  if (state.stampList[server].length) return state[server].stampList
+  if (state.stampList[server].length) return state.stampList[server]
   const stamps = await Vue.apiClient.getStamp(server)
   commit('SET_STAMP_LIST', {stamps: stamps.data, server})
-  return stamps
+  return stamps.data
 }
 
 export const getStampById = async ({commit, state}, {id, server}) => {

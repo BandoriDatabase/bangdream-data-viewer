@@ -14,6 +14,7 @@ export default [
       { path: 'music/:server(\\S{2})/:musicId(\\d+)/beatmap', component: () => import('pages/music-beatmap') },
       { path: 'l2d/:server(\\S{2})', component: () => import('pages/live2d') },
       { path: 'currevent/:server(\\S{2})', component: () => import('pages/curr-event') },
+      { path: 'stamp/:server(\\S{2})', component: () => import('pages/stamp-list') },
       { path: 'about', component: () => import('pages/about') }
     ]
   },

@@ -142,6 +142,25 @@
             </q-item>
           </q-list>
         </q-collapsible>
+        <q-collapsible icon="loyalty" :label="$t('left.stamp')">
+          <q-list
+            no-border
+            link
+          >
+            <q-item @click.native="$router.push('/stamp/jp')" v-ripple>
+              <q-item-main :label="$t('common.jp')" />
+            </q-item>
+            <q-item @click.native="$router.push('/stamp/tw')" v-ripple>
+              <q-item-main :label="$t('common.tw')" />
+            </q-item>
+            <q-item @click.native="$router.push('/stamp/kr')" v-ripple>
+              <q-item-main :label="$t('common.kr')" />
+            </q-item>
+            <q-item @click.native="$router.push('/stamp/en')" v-ripple>
+              <q-item-main :label="$t('common.en')" />
+            </q-item>
+          </q-list>
+        </q-collapsible>
         <q-item @click.native="$router.push('/about')" v-ripple>
           <q-item-side icon="info" />
           <q-item-main :label="$t('left.about')" />

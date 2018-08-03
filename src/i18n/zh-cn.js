@@ -13,7 +13,8 @@ export default {
     'settings': '设置',
     'Live2d': 'Live2D',
     'update-note': '更新说明',
-    'useful-link': '重要链接'
+    'useful-link': '重要链接',
+    'stamp': '贴纸'
   },
   'update': {
     'title': '更新说明',

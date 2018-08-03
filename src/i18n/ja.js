@@ -11,7 +11,8 @@ export default {
     'secTitle': 'バージョン情報',
     'current-event': '開催中のイベント',
     'settings': '設定',
-    'Live2d': 'Live2D'
+    'Live2d': 'Live2D',
+    'stamp': 'Stamps'
   },
   'event-srv': '{srv}開催中のイベント',
   'fetch-data': '{type}データを取得中...',
