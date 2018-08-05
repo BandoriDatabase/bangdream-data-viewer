@@ -12,7 +12,7 @@ export default {
     'current-event': '開催中のイベント',
     'settings': '設定',
     'Live2d': 'Live2D',
-    'stamp': 'Stamps'
+    'stamp': 'スタンプ'
   },
   'event-srv': '{srv}開催中のイベント',
   'fetch-data': '{type}データを取得中...',

@@ -14,7 +14,7 @@ export default {
     'Live2d': 'Live2D',
     'update-note': '업데이트 노트',
     'useful-link': '링크',
-    'stamp': 'Stamps'
+    'stamp': '레어 스탬프'
   },
   'update': {
     'title': '업데이트 노트',
