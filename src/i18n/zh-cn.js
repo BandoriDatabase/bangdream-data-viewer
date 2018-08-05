@@ -14,7 +14,7 @@ export default {
     'Live2d': 'Live2D',
     'update-note': '更新说明',
     'useful-link': '重要链接',
-    'stamp': '贴纸'
+    'stamp': '表情'
   },
   'update': {
     'title': '更新说明',
