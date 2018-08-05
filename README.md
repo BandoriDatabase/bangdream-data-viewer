@@ -2,9 +2,9 @@
 
 > A unified game data viewer of the rhythm game Bang Dream! Girls Band Party!
 
-[![Build Status](https://travis-ci.org/tangpei506/bangdream-data-viewer.svg?branch=master)](https://travis-ci.org/tangpei506/bangdream-data-viewer)
-[![dependencies Status](https://david-dm.org/tangpei506/bangdream-data-viewer/status.svg)](https://david-dm.org/tangpei506/bangdream-data-viewer)
-[![devDependencies Status](https://david-dm.org/tangpei506/bangdream-data-viewer/dev-status.svg)](https://david-dm.org/tangpei506/bangdream-data-viewer?type=dev)
+[![Build Status](https://travis-ci.org/dnaroma/bangdream-data-viewer.svg?branch=master)](https://travis-ci.org/dnaroma/bangdream-data-viewer)
+[![dependencies Status](https://david-dm.org/dnaroma/bangdream-data-viewer/status.svg)](https://david-dm.org/dnaroma/bangdream-data-viewer)
+[![devDependencies Status](https://david-dm.org/dnaroma/bangdream-data-viewer/dev-status.svg)](https://david-dm.org/dnaroma/bangdream-data-viewer?type=dev)
 
 ## Build Setup
 
