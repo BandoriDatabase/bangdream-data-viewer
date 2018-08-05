@@ -2,11 +2,11 @@
   "name": "bangdream_dataviewer",
   "version": "0.4.9",
   "description": "Game data viewer for BangDream! Girls' Band Party!",
-  "author": "DNARoma <dnaroma@gmail.com>",
+  "author": "DNARoma <tangpei506@gmail.com>",
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dnaroma/bangdream-data-viewer.git"
+    "url": "https://github.com/BandoriDatabase/bangdream-data-viewer.git"
   },
   "productName": "Bandori Database",
   "cordovaId": "org.bandoridb.app",
