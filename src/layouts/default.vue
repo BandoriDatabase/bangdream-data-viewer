@@ -269,7 +269,7 @@ export default {
   data () {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
-      appVer: '0.7.0',
+      appVer: '0.7.1',
       moremenuOpen: false,
       isHeaderShow: true
     }

@@ -23,7 +23,8 @@ export default {
     'feature-detail': [
       'Add band icon and rarity icon to card thumb',
       'Redesigned card list, no loading full card image for less data consumption and better performance',
-      'Improve music list layout (thanks to @Cee)'
+      'Improve music list layout (thanks to @Cee)',
+      'Add stamp list for each server (thanks to @Cee)'
     ],
     'fixed-bugs': 'Fixed Bugs',
     'bug-detail': [

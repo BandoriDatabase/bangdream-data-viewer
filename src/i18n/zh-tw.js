@@ -14,7 +14,7 @@ export default {
     'Live2d': 'Live2D',
     'update-note': '更新說明',
     'useful-link': '重要鏈接',
-    'stamp': '表情'
+    'stamp': '表情貼紙'
   },
   'update': {
     'title': '更新說明',
@@ -23,7 +23,8 @@ export default {
     'feature-detail': [
       '為卡片小圖增加樂隊圖標和稀有度圖示',
       '重新設計卡片列表，不再加載大圖以節省流量並加快速度',
-      '調整音樂列表的樣式（感謝 @Cee）'
+      '調整音樂列表的樣式（感謝 @Cee）',
+      '增加表情貼紙列表（感謝 @Cee）'
     ],
     'fixed-bugs': '修復的問題',
     'bug-detail': [
