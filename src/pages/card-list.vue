@@ -42,7 +42,7 @@
         </q-collapsible>
       </div>
       <q-infinite-scroll ref="cardScroll" v-if="isReady" :handler="loadMore">
-        <div class="row gt-sm gutter-sm">
+        <div class="row gutter-sm">
           <div v-for="card in cardList" :key="card.cardId" class="col-12 col-xl-4 col-md-6 full-height">
             <q-card :class="`bg-${paletteMap[card.attr]}`">
               <!-- <q-card-media class="full-height" style="position: relative;">
@@ -84,22 +84,25 @@
                 </q-card-title>
               </q-card-media> -->
               <q-card-main>
+                <div style="text-align: center;">
+                  <p class="text-white q-title">{{card.title}}</p>
+                </div>
                 <div class="row items-center justify-center" style="padding-bottom: 10px;">
                   <card-thumb :card="card" :server="server" :trained="false" v-if="card.title !== 'ガルパ杯'"></card-thumb>
                   <card-thumb :card="card" :server="server" :trained="true" v-if="(card.rarity >= 3 && card.title !== 'ガルパ杯') || card.title === 'ガルパ杯'"></card-thumb>
                 </div>
                 <div style="text-align: center;">
-                  <p class="text-white q-title">[{{card.title}}] {{displayName ?
+                  <p class="text-white q-title">{{displayName ?
                     capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) :
                     bandCharaList[server][Number(card.characterId) - 1].characterName}}</p>
-                  <p class="text-white q-body-1">[{{card.skill.skillName}}] {{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}</p>
+                  <p class="text-white q-body-1">[{{card.skill.skillName}}]<br>{{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}</p>
                   <p class="text-white q-body-1">Lv {{card.maxLevel}}: {{card.maxPerformance}}/{{card.maxTechnique}}/{{card.maxVisual}}/{{card.totalMaxParam}}</p>
                 </div>
               </q-card-main>
             </q-card>
           </div>
         </div>
-        <div class="row lt-md gutter-sm">
+        <!-- <div class="row lt-md gutter-sm">
           <div v-for="card in cardList" :key="card.cardId" class="col-12 full-height">
             <q-card>
               <q-card-main>
@@ -127,7 +130,7 @@
               </q-card-main>
             </q-card>
           </div>
-        </div>
+        </div> -->
 
         <div slot="message" class="row justify-center items-center" style="margin-bottom: 50px;">
           <q-spinner color="pink" size="48px"></q-spinner>
