@@ -26,10 +26,13 @@
         </p>
         <!-- <p>{{$t('combo')}}: {{musicData.combo}}</p> -->
         <p>{{$t('music.howtoget')}}: {{musicData.howToGet}}</p>
-        <p>{{$t('music.difficulty')}}: {{musicData.difficulty[0].level}} /
-            {{musicData.difficulty[3].level}} /
-            {{musicData.difficulty[2].level}} /
-            {{musicData.difficulty[1].level}}</p>
+        <p>{{$t('music.difficulty')}}:
+          <span style="color: RGB(67, 98, 241);">{{musicData.difficulty[0].level}}</span>
+           / <span style="color: RGB(76, 219, 95);">{{musicData.difficulty[3].level}}</span>
+           / <span style="color: RGB(216, 173, 96);">{{musicData.difficulty[2].level}}</span>
+           / <span style="color: RGB(244, 56, 56);">{{musicData.difficulty[1].level}}</span>
+          <span v-if="musicData.difficulty[4]"> / <span style="color: RGB(227, 41, 136);">{{musicData.difficulty[4].level}}</span></span>
+        </p>
         <q-btn @click="$router.push(`/music/${server}/${musicData.musicId}/beatmap`)">{{$t('music.check-beatmap')}}</q-btn>
         <q-collapsible id="achievements" icon="move_to_inbox" :label="$t('music.achieve')">
           <div class="row">

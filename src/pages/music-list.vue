@@ -34,10 +34,11 @@
               {{music.title}}<br>
               <span slot="subtitle">
                 {{music.bandName}}<br>
-                {{music.difficulty[0]}} /
-                {{music.difficulty[3]}} /
-                {{music.difficulty[2]}} /
-                {{music.difficulty[1]}}
+                <span style="color: RGB(67, 98, 241);">{{music.difficulty[0]}}</span>
+                 / <span style="color: RGB(76, 219, 95);">{{music.difficulty[3]}}</span>
+                 / <span style="color: RGB(216, 173, 96);">{{music.difficulty[2]}}</span>
+                 / <span style="color: RGB(244, 56, 56);">{{music.difficulty[1]}}</span>
+                <span v-if="music.difficulty[4]"> / <span style="color: RGB(227, 41, 136);">{{music.difficulty[4]}}</span></span>
               </span>
             </q-card-title>
           </q-card>
@@ -49,10 +50,11 @@
             <p>
               {{music.title}}<br>
               {{music.bandName}}<br>
-              {{music.difficulty[0]}} /
-              {{music.difficulty[3]}} /
-              {{music.difficulty[2]}} /
-              {{music.difficulty[1]}}
+              <span style="color: RGB(67, 98, 241);">{{music.difficulty[0]}}</span>
+               / <span style="color: RGB(76, 219, 95);">{{music.difficulty[3]}}</span>
+               / <span style="color: RGB(216, 173, 96);">{{music.difficulty[2]}}</span>
+               / <span style="color: RGB(244, 56, 56);">{{music.difficulty[1]}}</span>
+              <span v-if="music.difficulty[4]"> / <span style="color: RGB(227, 41, 136);">{{music.difficulty[4]}}</span></span>
             </p>
           </q-card>
         </div>
