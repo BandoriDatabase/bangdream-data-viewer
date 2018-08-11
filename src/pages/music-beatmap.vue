@@ -119,6 +119,10 @@ export default {
       currBaseTime: 0,
       difficultyOptions: [
         {
+          label: 'Special (0)',
+          value: 'special'
+        },
+        {
           label: 'Expert (0)',
           value: 'expert'
         },
@@ -168,6 +172,12 @@ export default {
         value: 'easy'
       }
     ]
+    if (this.data.difficulty[4]) {
+      this.difficultyOptions.unshift({
+        label: `Special (${this.data.difficulty[4].level})`,
+        value: 'special'
+      })
+    }
 
     this.loadRes()
   },
