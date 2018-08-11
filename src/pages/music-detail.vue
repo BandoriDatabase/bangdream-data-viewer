@@ -27,11 +27,11 @@
         <!-- <p>{{$t('combo')}}: {{musicData.combo}}</p> -->
         <p>{{$t('music.howtoget')}}: {{musicData.howToGet}}</p>
         <p>{{$t('music.difficulty')}}:
-          <span style="color: RGB(67, 98, 241);">{{musicData.difficulty[0].level}}</span>
-           / <span style="color: RGB(76, 219, 95);">{{musicData.difficulty[3].level}}</span>
-           / <span style="color: RGB(216, 173, 96);">{{musicData.difficulty[2].level}}</span>
-           / <span style="color: RGB(244, 56, 56);">{{musicData.difficulty[1].level}}</span>
-          <span v-if="musicData.difficulty[4]"> / <span style="color: RGB(227, 41, 136);">{{musicData.difficulty[4].level}}</span></span>
+          <span class="music-difficulty"><span class="music-level music-level-easy">{{musicData.difficulty[0].level}}</span>
+           / <span class="music-level music-level-normal">{{musicData.difficulty[3].level}}</span>
+           / <span class="music-level music-level-hard">{{musicData.difficulty[2].level}}</span>
+           / <span class="music-level music-level-expert">{{musicData.difficulty[1].level}}</span>
+          <span v-if="musicData.difficulty[4]"> / <span class="music-level music-level-special">{{musicData.difficulty[4].level}}</span></span></span>
         </p>
         <q-btn @click="$router.push(`/music/${server}/${musicData.musicId}/beatmap`)">{{$t('music.check-beatmap')}}</q-btn>
         <q-collapsible id="achievements" icon="move_to_inbox" :label="$t('music.achieve')">
@@ -190,4 +190,31 @@ export default {
 .thumb-item
   width 72px
   height 72px
+
+span.music-level
+  display inline-block
+  color white
+  font-size 85%
+  font-weight bold
+  width 25px
+  height 16px
+  border-radius 7px
+  background red
+  text-align center
+  line-height 16px
+
+span.music-level-easy
+  background RGB(67, 98, 241)
+
+span.music-level-normal
+  background RGB(76, 219, 95)
+
+span.music-level-hard
+  background RGB(249, 205, 94)
+
+span.music-level-expert
+  background RGB(244, 56, 56)
+
+span.music-level-special
+  background RGB(227, 41, 136)
 </style>
