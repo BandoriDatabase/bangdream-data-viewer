@@ -34,11 +34,11 @@
               {{music.title}}<br>
               <span slot="subtitle">
                 {{music.bandName}}<br>
-                <span style="color: RGB(67, 98, 241);">{{music.difficulty[0]}}</span>
-                 / <span style="color: RGB(76, 219, 95);">{{music.difficulty[3]}}</span>
-                 / <span style="color: RGB(216, 173, 96);">{{music.difficulty[2]}}</span>
-                 / <span style="color: RGB(244, 56, 56);">{{music.difficulty[1]}}</span>
-                <span v-if="music.difficulty[4]"> / <span style="color: RGB(227, 41, 136);">{{music.difficulty[4]}}</span></span>
+                <span class="music-difficulty"><span class="music-level music-level-easy">{{music.difficulty[0]}}</span>
+                 / <span class="music-level music-level-normal">{{music.difficulty[3]}}</span>
+                 / <span class="music-level music-level-hard">{{music.difficulty[2]}}</span>
+                 / <span class="music-level music-level-expert">{{music.difficulty[1]}}</span>
+                <span v-if="music.difficulty[4]"> / <span class="music-level music-level-special">{{music.difficulty[4]}}</span></span></span>
               </span>
             </q-card-title>
           </q-card>
@@ -50,11 +50,11 @@
             <p>
               {{music.title}}<br>
               {{music.bandName}}<br>
-              <span style="color: RGB(67, 98, 241);">{{music.difficulty[0]}}</span>
-               / <span style="color: RGB(76, 219, 95);">{{music.difficulty[3]}}</span>
-               / <span style="color: RGB(216, 173, 96);">{{music.difficulty[2]}}</span>
-               / <span style="color: RGB(244, 56, 56);">{{music.difficulty[1]}}</span>
-              <span v-if="music.difficulty[4]"> / <span style="color: RGB(227, 41, 136);">{{music.difficulty[4]}}</span></span>
+              <span class="music-difficulty"><span class="music-level music-level-easy">{{music.difficulty[0]}}</span>
+               / <span class="music-level music-level-normal">{{music.difficulty[3]}}</span>
+               / <span class="music-level music-level-hard">{{music.difficulty[2]}}</span>
+               / <span class="music-level music-level-expert">{{music.difficulty[1]}}</span>
+              <span v-if="music.difficulty[4]"> / <span class="music-level music-level-special">{{music.difficulty[4]}}</span></span></span>
             </p>
           </q-card>
         </div>
@@ -230,4 +230,37 @@ export default {
   position absolute
   top 50%
   transform translate(0, -50%)
+
+span.music-difficulty
+  display block
+
+.gt-sm span.music-difficulty
+  margin-top 5px
+
+span.music-level
+  display inline-block
+  color white
+  font-size 85%
+  font-weight bold
+  width 25px
+  height 16px
+  border-radius 7px
+  background red
+  text-align center
+  line-height 16px
+
+span.music-level-easy
+  background RGB(67, 98, 241)
+
+span.music-level-normal
+  background RGB(76, 219, 95)
+
+span.music-level-hard
+  background RGB(249, 205, 94)
+
+span.music-level-expert
+  background RGB(244, 56, 56)
+
+span.music-level-special
+  background RGB(227, 41, 136)
 </style>
