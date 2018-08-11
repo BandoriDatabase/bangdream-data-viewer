@@ -27,11 +27,13 @@
         <!-- <p>{{$t('combo')}}: {{musicData.combo}}</p> -->
         <p>{{$t('music.howtoget')}}: {{musicData.howToGet}}</p>
         <p>{{$t('music.difficulty')}}:
-          <span class="music-difficulty"><span class="music-level music-level-easy">{{musicData.difficulty[0].level}}</span>
-           / <span class="music-level music-level-normal">{{musicData.difficulty[3].level}}</span>
-           / <span class="music-level music-level-hard">{{musicData.difficulty[2].level}}</span>
-           / <span class="music-level music-level-expert">{{musicData.difficulty[1].level}}</span>
-          <span v-if="musicData.difficulty[4]"> / <span class="music-level music-level-special">{{musicData.difficulty[4].level}}</span></span></span>
+          <span class="music-difficulty">
+            <span class="music-level music-level-easy">{{musicData.difficulty[0].level}}</span>
+            <span class="music-level music-level-normal">{{musicData.difficulty[3].level}}</span>
+            <span class="music-level music-level-hard">{{musicData.difficulty[2].level}}</span>
+            <span class="music-level music-level-expert">{{musicData.difficulty[1].level}}</span>
+            <span v-if="musicData.difficulty[4]" class="music-level music-level-special">{{musicData.difficulty[4].level}}</span>
+          </span>
         </p>
         <q-btn @click="$router.push(`/music/${server}/${musicData.musicId}/beatmap`)">{{$t('music.check-beatmap')}}</q-btn>
         <q-collapsible id="achievements" icon="move_to_inbox" :label="$t('music.achieve')">
@@ -196,12 +198,13 @@ span.music-level
   color white
   font-size 85%
   font-weight bold
-  width 25px
-  height 16px
-  border-radius 7px
+  width 30px
+  height 18px
+  border-radius 8px
   background red
   text-align center
-  line-height 16px
+  line-height 18px
+  margin-right 5px
 
 span.music-level-easy
   background RGB(67, 98, 241)
