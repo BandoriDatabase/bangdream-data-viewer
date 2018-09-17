@@ -18,7 +18,7 @@ export default {
   },
   'update': {
     'title': "What's new",
-    'desc': 'Bandori Database WebApp has a major update, many improvements are made to help you use the WebApp better. For whole update note please visit <a href="https://dnaroma.site/update-notice-zhcn/">my blog</a>',
+    'desc': 'Bandori Database WebApp has a major update, many improvements are made to help you use the WebApp better. For whole update note please visit <a href="https://dnaroma.site/update-notice-en/">my blog</a>',
     'new-features': 'New Features',
     'feature-detail': [
       'Event card on home page use the same countdown layout as gacha card',
