@@ -6,13 +6,13 @@
           class="jacket-img relative-position"
           style="cursor: pointer;"
         >
-          <img class="absolute-center" :src="`/assets/musicjacket/${musicData.jacketImage}_jacket.png`" />
+          <img class="absolute-center" :src="musicData.jacket" />
         </div>
         <a-player :music="{
           title: musicData.title,
           author: musicData.bandName,
-          url: `/assets/sound/${musicData.bgmId}.mp3`,
-          pic: `/assets/musicjacket/${musicData.jacketImage}_thumb.png`
+          url: musicData.bgmFile,
+          pic: musicData.thumb
         }" ref="player" mode="order"></a-player>
       </div>
       <div class="col-lg-6 col-xs-12">
@@ -22,42 +22,43 @@
         <p>{{$t('music.arranger')}}: {{musicData.arranger}}</p>
         <p>{{$t('common.band')}}:
           <span v-if="Number(musicData.bandId) > 5">{{musicData.bandName}}</span>
-          <img height="60px" width="100px" v-if="Number(musicData.bandId) <= 5" v-lazy="`/assets/band/logo/00${musicData.bandId}_logoL.png`">
+          <img height="60px" width="100px" v-if="Number(musicData.bandId) <= 5" v-lazy="`/assets/band/logo/00${musicData.bandId}_rip/logoL.png`">
         </p>
         <!-- <p>{{$t('combo')}}: {{musicData.combo}}</p> -->
         <p>{{$t('music.howtoget')}}: {{musicData.howToGet}}</p>
         <p>{{$t('music.difficulty')}}:
           <span class="music-difficulty">
-            <span class="music-level music-level-easy">{{musicData.difficulty[0].level}}</span>
-            <span class="music-level music-level-normal">{{musicData.difficulty[3].level}}</span>
-            <span class="music-level music-level-hard">{{musicData.difficulty[2].level}}</span>
-            <span class="music-level music-level-expert">{{musicData.difficulty[1].level}}</span>
-            <span v-if="musicData.difficulty[4]" class="music-level music-level-special">{{musicData.difficulty[4].level}}</span>
+            <q-chip small color="indigo">{{musicData.difficulty[0].level}}</q-chip>
+            <q-chip small color="green">{{musicData.difficulty[3].level}}</q-chip>
+            <q-chip small color="amber">{{musicData.difficulty[2].level}}</q-chip>
+            <q-chip small color="red">{{musicData.difficulty[1].level}}</q-chip>
+            <q-chip v-if="musicData.difficulty[4]" small color="purple">{{musicData.difficulty[4].level}}</q-chip>
           </span>
         </p>
         <q-btn @click="$router.push(`/music/${server}/${musicData.musicId}/beatmap`)">{{$t('music.check-beatmap')}}</q-btn>
+        <q-btn @click="$router.push({ name: 'musicList', params: { server } })">{{$t('common.back-to-list')}}</q-btn>
         <q-collapsible id="achievements" icon="move_to_inbox" :label="$t('music.achieve')">
           <div class="row">
             <div class="row items-center col-xl-6 col-12">
               <p class="col-12">Combo</p>
               <span class="row col-12">
-                <span class="col-md-2 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('combo_easy'))}.png`">
+                <span class="col-md-3 col-xs-6 column items-center">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('combo_easy'))}.png`">
                   <p>{{getAchievement('combo_easy').quantity}}</p>
                   <p>Easy</p>
                 </span>
-                <span class="col-md-2 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('combo_normal'))}.png`">
+                <span class="col-md-3 col-xs-6 column items-center">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('combo_normal'))}.png`">
                   <p>{{getAchievement('combo_normal').quantity}}</p>
                   <p>Normal</p>
                 </span>
-                <span class="col-md-2 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('combo_hard'))}.png`">
+                <span class="col-md-3 col-xs-6 column items-center">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('combo_hard'))}.png`">
                   <p>{{getAchievement('combo_hard').quantity}}</p>
                   <p>Hard</p>
                 </span>
-                <span class="col-md-2 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('combo_expert'))}.png`">
+                <span class="col-md-3 col-xs-6 column items-center">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('combo_expert'))}.png`">
                   <p>{{getAchievement('combo_expert').quantity}}</p>
                   <p>Expert</p>
                 </span>
@@ -66,23 +67,23 @@
             <div class="row items-center col-xl-6 col-12">
               <p class="col-12">Full combo</p>
               <span class="row col-12">
-                <span class="col-md-2 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_easy'))}.png`">
+                <span class="col-md-3 col-xs-6 column items-center">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('full_combo_easy'))}.png`">
                   <p>{{getAchievement('full_combo_easy').quantity}}</p>
                   <p>Easy</p>
                 </span>
-                <span class="col-md-2 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_normal'))}.png`">
+                <span class="col-md-3 col-xs-6 column items-center">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('full_combo_normal'))}.png`">
                   <p>{{getAchievement('full_combo_normal').quantity}}</p>
                   <p>Normal</p>
                 </span>
-                <span class="col-md-2 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_hard'))}.png`">
+                <span class="col-md-3 col-xs-6 column items-center">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('full_combo_hard'))}.png`">
                   <p>{{getAchievement('full_combo_hard').quantity}}</p>
                   <p>Hard</p>
                 </span>
-                <span class="col-md-2 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('full_combo_expert'))}.png`">
+                <span class="col-md-3 col-xs-6 column items-center">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('full_combo_expert'))}.png`">
                   <p>{{getAchievement('full_combo_expert').quantity}}</p>
                   <p>Expert</p>
                 </span>
@@ -92,27 +93,27 @@
               <p class="col-12">Score rank</p>
               <span class="row col-12">
                 <span class="col-md-2 col-xs-4 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_c'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('score_rank_c'))}.png`">
                   <p>{{getAchievement('score_rank_c').quantity}}</p>
                   <p>Rank C</p>
                 </span>
                 <span class="col-md-2 col-xs-4 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_b'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('score_rank_b'))}.png`">
                   <p>{{getAchievement('score_rank_b').quantity}}</p>
                   <p>Rank B</p>
                 </span>
                 <span class="col-md-2 col-xs-4 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_a'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('score_rank_a'))}.png`">
                   <p>{{getAchievement('score_rank_a').quantity}}</p>
                   <p>Rank A</p>
                 </span>
                 <span class="col-md-2 col-xs-4 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_s'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('score_rank_s'))}.png`">
                   <p>{{getAchievement('score_rank_s').quantity}}</p>
                   <p>Rank S</p>
                 </span>
                 <span class="col-md-2 col-xs-4 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_${getRwardFileName(getAchievement('score_rank_s'))}.png`">
+                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('score_rank_s'))}.png`">
                   <p>{{getAchievement('score_rank_ss').quantity}}</p>
                   <p>Rank SS</p>
                 </span>
@@ -122,7 +123,13 @@
         </q-collapsible>
       </div>
     </div>
-    <q-spinner v-else color="pink" size="48px"></q-spinner>
+    <div v-else-if="isError">
+      {{$t('music.not-exist', { server: $t(`common.${server}`), musicId })}}
+    </div>
+    <div v-else>
+      {{$t('music.fetch-music-data')}}
+      <q-spinner color="pink-6" size="48px"></q-spinner>
+    </div>
   </q-page>
 </template>
 
@@ -134,7 +141,8 @@ export default {
   // name: 'PageName',
   data () {
     return {
-      isReady: false
+      isReady: false,
+      isError: false
     }
   },
   components: {
@@ -142,8 +150,12 @@ export default {
   },
   mounted () {
     this.$nextTick(async () => {
-      await this.getMusicById({musicId: this.$route.params.musicId, server: this.server})
-      this.isReady = true
+      try {
+        await this.getMusicById({musicId: this.musicId, server: this.server})
+        this.isReady = true
+      } catch (error) {
+        this.isError = true
+      }
     })
   },
   beforeDestroy () {
@@ -157,8 +169,11 @@ export default {
     server () {
       return this.$route.params.server
     },
+    musicId () {
+      return this.$route.params.musicId
+    },
     musicData () {
-      return this.musicMap[this.server][this.$route.params.musicId]
+      return this.musicMap[this.server][this.musicId]
     }
   },
   methods: {
@@ -177,6 +192,19 @@ export default {
         return achievement.rewardType
       }
     }
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.isReady = false
+    this.isError = false
+    this.$nextTick(async () => {
+      try {
+        await this.getMusicById({musicId: this.musicId, server: this.server})
+        this.isReady = true
+      } catch (error) {
+        this.isError = true
+      }
+    })
+    next()
   }
 }
 </script>
@@ -193,31 +221,15 @@ export default {
   width 72px
   height 72px
 
-span.music-level
-  display inline-block
-  color white
-  font-size 85%
-  font-weight bold
-  width 30px
-  height 18px
-  border-radius 8px
-  background red
-  text-align center
-  line-height 18px
-  margin-right 5px
-
-span.music-level-easy
-  background RGB(67, 98, 241)
-
-span.music-level-normal
-  background RGB(76, 219, 95)
-
-span.music-level-hard
-  background RGB(249, 205, 94)
-
-span.music-level-expert
-  background RGB(244, 56, 56)
-
-span.music-level-special
-  background RGB(227, 41, 136)
+span.music-difficulty span
+    display inline-block
+    font-size 85%
+    font-weight bold
+    width 30px
+    height 18px
+    border-radius 8px
+    background red
+    text-align center
+    line-height 18px
+    margin-right 5px
 </style>

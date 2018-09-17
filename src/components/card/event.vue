@@ -9,10 +9,10 @@
         </span>
       </q-card-title>
       <q-card-media style="cursor: pointer;" @click.native="$router.push(`/currevent/${server}`), $ga.event('event-detail', 'jump', server)">
-        <img v-if="server === 'kr'" v-lazy="`/assets-${server}/homebanner_banner_event${padEventId(currentEvent[server].eventId)}.png`"/>
-        <img v-else-if="server !== 'en'" v-lazy="`/assets-${server}/homebanner_banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.png`"/>
-        <img v-else-if="server === 'en' && currentEvent[server].eventId >= 3" v-lazy="`/assets-${server}/homebanner_banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.png`">
-        <img v-else-if="server === 'en'" v-lazy="`/assets-${server}/homebanner_banner-0${14 + currentEvent[server].eventId * 2}.png`">
+        <img v-if="server === 'kr'" v-lazy="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}.png`"/>
+        <img v-else-if="server !== 'en'" v-lazy="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.png`"/>
+        <img v-else-if="server === 'en' && currentEvent[server].eventId >= 3" v-lazy="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.png`">
+        <img v-else-if="server === 'en'" v-lazy="`/assets-${server}/homebanner_rip/banner-0${14 + currentEvent[server].eventId * 2}.png`">
       </q-card-media>
       <q-card-main>
         <div class="row items-center justify-center">
@@ -25,7 +25,7 @@
           <div class="col-12" v-if="Number(currentEvent[server].startAt) > Date.now()">
             <h5 class="q-my-sm">{{$t('not-started')}}<br>{{(new Date(Number(currentEvent[server].startAt))).toLocaleString()}}</h5>
           </div>
-          <count-down class="col-12" :target-time="Number(currentEvent[server].endAt)" v-else-if="Number(currentEvent[server].endAt) > Date.now()" small></count-down>
+          <count-down class="col-12" :target-time="Number(currentEvent[server].endAt)" v-else-if="Number(currentEvent[server].endAt) > Date.now()"></count-down>
         </div>
       </q-card-main>
     </q-card>

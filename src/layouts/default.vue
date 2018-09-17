@@ -16,18 +16,7 @@
           <div slot="subtitle">Version {{ appVer }}</div>
         </q-toolbar-title>
 
-        <q-btn flat dense>
-          <q-icon name="more_vert" />
-          <q-popover ref="moremenu" anchor="top left" self="top left" v-model="moremenuOpen">
-            <q-list link style="min-width: 100px">
-              <q-item
-                @click.native="$refs.settings.open(), moremenuOpen = false"
-              >
-                <q-item-side icon="settings" />
-                <q-item-main label="Settings" />
-              </q-item>
-            </q-list>
-          </q-popover>
+        <q-btn flat label="Settings" @click="$refs.settings.open()" icon="settings">
         </q-btn>
       </q-toolbar>
     </q-layout-header>
@@ -47,8 +36,8 @@
           <q-item-side icon="home" />
           <q-item-main :label="$t('left.home')" />
         </q-item>
-        <q-collapsible icon="picture_in_picture" :label="$t('left.card')">
-          <q-list
+        <q-item @click.native="$router.push(`/card/overview/${$dataLang}`)" v-ripple>
+          <!-- <q-list
             no-border
             link
           >
@@ -64,10 +53,12 @@
             <q-item @click.native="$router.push('/card/overview/en')" v-ripple>
               <q-item-main :label="$t('common.en')" />
             </q-item>
-          </q-list>
-        </q-collapsible>
-        <q-collapsible icon="library_music" :label="$t('left.music')">
-          <q-list
+          </q-list> -->
+          <q-item-side icon="picture_in_picture" />
+          <q-item-main :label="$t('left.card')" />
+        </q-item>
+        <q-item @click.native="$router.push(`/music/${$dataLang}`)" v-ripple>
+          <!-- <q-list
             no-border
             link
           >
@@ -83,16 +74,15 @@
             <q-item @click.native="$router.push('/music/en')" v-ripple>
               <q-item-main :label="$t('common.en')" />
             </q-item>
-          </q-list>
-        </q-collapsible>
-        <q-collapsible icon="photo_library" :label="$t('left.SFC')">
-          <q-list
+          </q-list> -->
+          <q-item-side icon="library_music" />
+          <q-item-main :label="$t('left.music')" />
+        </q-item >
+        <q-item @click.native="$router.push(`/sfcs/${$dataLang}`)" v-ripple>
+          <!-- <q-list
             no-border
             link
           >
-            <!-- <q-item @click.native="$router.push('/sfcs/jp')" v-ripple>
-              <q-item-main :label="$t('common.jp')" />
-            </q-item> -->
             <q-item @click.native="$router.push('/sfcs/tw')" v-ripple>
               <q-item-main :label="$t('common.tw')" />
             </q-item>
@@ -102,10 +92,12 @@
             <q-item @click.native="$router.push('/sfcs/en')" v-ripple>
               <q-item-main :label="$t('common.en')" />
             </q-item>
-          </q-list>
-        </q-collapsible>
-        <q-collapsible icon="loyalty" :label="$t('left.stamp')">
-          <q-list
+          </q-list> -->
+          <q-item-side icon="photo_library" />
+          <q-item-main :label="$t('left.SFC')" />
+        </q-item>
+        <q-item @click.native="$router.push(`/stamp/${$dataLang}`)" v-ripple>
+          <!-- <q-list
             no-border
             link
           >
@@ -121,10 +113,12 @@
             <q-item @click.native="$router.push('/stamp/en')" v-ripple>
               <q-item-main :label="$t('common.en')" />
             </q-item>
-          </q-list>
-        </q-collapsible>
-        <q-collapsible icon="record_voice_over" :label="$t('left.Live2d')">
-          <q-list
+          </q-list> -->
+          <q-item-side icon="loyalty" />
+          <q-item-main :label="$t('left.stamp')" />
+        </q-item>
+        <q-item @click.native="$router.push(`/l2d/${$dataLang}`)" v-ripple>
+          <!-- <q-list
             no-border
             link
           >
@@ -140,10 +134,12 @@
             <q-item @click.native="$router.push('/l2d/en')" v-ripple>
               <q-item-main :label="$t('common.en')" />
             </q-item>
-          </q-list>
-        </q-collapsible>
-        <q-collapsible icon="schedule" :label="$t('left.current-event')">
-          <q-list
+          </q-list> -->
+          <q-item-side icon="record_voice_over" />
+          <q-item-main :label="$t('left.Live2d')" />
+        </q-item>
+        <q-item @click.native="$router.push(`/currevent/${$dataLang}`)" v-ripple>
+          <!-- <q-list
             no-border
             link
           >
@@ -159,8 +155,10 @@
             <q-item @click.native="$router.push('/currevent/en')" v-ripple>
               <q-item-main :label="$t('common.en')" />
             </q-item>
-          </q-list>
-        </q-collapsible>
+          </q-list> -->
+          <q-item-side icon="schedule" />
+          <q-item-main :label="$t('left.current-event')" />
+        </q-item>
         <q-item @click.native="$router.push('/about')" v-ripple>
           <q-item-side icon="info" />
           <q-item-main :label="$t('left.about')" />
@@ -269,7 +267,7 @@ export default {
   data () {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
-      appVer: '0.7.1',
+      appVer: '0.8.0',
       moremenuOpen: false,
       isHeaderShow: true
     }

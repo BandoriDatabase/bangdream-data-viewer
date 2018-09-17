@@ -106,6 +106,10 @@ export default ({ app, router, Vue }) => {
     getCards (server, cardIds) {
       return Vue.http.post(`/api/v1/${server}/card/batch`, cardIds)
         .then(res => res.json())
+    },
+    getCostumeById (server, costumeId) {
+      return Vue.http.get(`/api/v1/${server}/live2d/costume/${costumeId}`)
+        .then(res => res.json())
     }
   }
 }

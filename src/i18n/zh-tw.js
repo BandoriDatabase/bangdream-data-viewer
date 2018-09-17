@@ -18,22 +18,22 @@ export default {
   },
   'update': {
     'title': '更新說明',
-    'desc': 'Bandori Database（少女樂團派對數據庫）網頁應用迎來重大更新，有多項改進優化您的使用體驗。',
+    'desc': 'Bandori Database（少女樂團派對數據庫）網頁應用迎來重大更新，有多項改進優化您的使用體驗。完整鏈接請訪問<a href="https://dnaroma.site/update-notice-zhcn/">博客頁面</a>',
     'new-features': '新特性',
     'feature-detail': [
-      '為卡片小圖增加樂隊圖標和稀有度圖示',
-      '重新設計卡片列表，不再加載大圖以節省流量並加快速度',
-      '調整音樂列表的樣式（感謝 @Cee）',
-      '增加表情貼紙列表（感謝 @Cee）'
+      '首頁活動卡片使用和扭蛋卡片相同的倒計時樣式',
+      '取消側邊欄分服務器的次級菜單，切換服務器數據在右上角的“SETTINGS”按鈕的菜單裏',
+      '卡牌列表界面重新設計，取消色塊底色，排版更加緊湊',
+      '歌曲列表從歌曲封面分離樂隊圖標，顯示在卡片內容裏',
+      '各詳情界面添加返回列表按鈕',
+      '卡片詳情界面重新設計，排版更加緊湊，如果存在對應Live2D服裝添加按鈕可以跳轉至對應頁面',
+      '日服的漫畫界面回歸',
+      '歌曲列表過濾器允許按照歌曲類型和加入遊戲時間排序，默認順序改為按照加入遊戲時間排序'
     ],
     'fixed-bugs': '修復的問題',
     'bug-detail': [
-      '修正部分韓語翻譯（感謝 @thtl1999）',
-      '修復抽卡界面重復描述的問題（感謝 @Cee和@alxnr）',
-      '修復主頁抽卡展示時錯誤拉伸的問題（感謝 @Cee和@alxnr）',
-      '優化抽卡詳細信息中卡片列表展示邏輯',
-      '為一些需要長時間加載的地方添加加載指示器',
-      '移除歌曲詳情頁面歌曲封面的大圖預覽功能'
+      '修正某些歌曲譜面播放器會卡死的問題',
+      '修正當前活動中加成信息錯誤的問題'
     ],
     'welcome-bug-report': "如果妳在使用本網站的過程中遇到任何問題, 歡迎通過<a href='mailto:dev@bandori.ga'>Email</a>, <a href='https://dnaroma.site/2017/12/23/bug-report/'>問題反饋頁面</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反饋問題。"
   },
@@ -47,6 +47,7 @@ export default {
     'tw': '台服',
     'kr': '韓服',
     'en': '國際服',
+    'level': '等級',
     'perform': '表演力',
     'technic': '技術',
     'visual': '視覺',
@@ -70,7 +71,13 @@ export default {
     'birthday': {
       'today': '今天過生日的是',
       'next': '下次過生日的是'
-    }
+    },
+    'data-lang': '遊戲數據語言',
+    'anime': '動畫',
+    'normal': '原創',
+    'all': '全部',
+    'release-date': '加入遊戲時間',
+    'back-to-list': '返回列表'
   },
   'gacha': {
     'list-title': '{srv}當前扭蛋池',
@@ -114,20 +121,26 @@ export default {
     'story-to-unlock': '解鎖材料',
     'story-max-level': '滿級劇情',
     'story-none': '該卡牌沒有劇情',
-    'story-reward': '劇情閱讀獎勵'
+    'story-reward': '劇情閱讀獎勵',
+    'jump-to-live2d-costume': '跳轉至Live2D',
+    'not-exist': '要查詢的卡片不存在： 伺服器 {server} 卡片編號 {cardId}'
   },
   'music': {
     'select-band': '選擇樂隊',
     'composer': '作曲',
     'lyricist': '作詞',
     'arranger': '編曲',
+    'tag': '類型',
     'howtoget': '獲得方式',
     'difficulty': '難度',
     'band': '演奏者',
     'achieve': '歌曲成就',
     'combo': '音符數',
     'check-beatmap': '打開譜面播放器',
-    'declaration': "仍在測試中，未適配行動設備，歡迎通過<a href='mailto:dev@bandori.ga'>email</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我回報問題。"
+    'back-detail': '回到樂曲詳情',
+    'declaration': "仍在測試中，未適配行動設備，歡迎通過<a href='mailto:dev@bandori.ga'>email</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我回報問題。",
+    'fetch-music-data': '獲取音樂詳細數據中...',
+    'not-exist': '要查詢的音樂不存在： 伺服器 {server} 音樂編號 {musicId}'
   },
   'scenario': {
     'voice-text': '語音文本',
@@ -140,20 +153,21 @@ export default {
     'curr-voice': '當前語音'
   },
   'live2d': {
-    'costum': '服裝',
+    'costume': '服裝',
     'voice': '語音',
     'show': '顯示',
     'how-to-use': '如何使用',
-    'costum-name': '服裝名稱：',
-    'costum-how-to-get': '獲得方式：',
-    'costum-avaliable-from': '從該時間起可見：',
+    'costume-name': '服裝名稱：',
+    'costume-how-to-get': '獲得方式：',
+    'costume-avaliable-from': '從該時間起可見：',
     'voice-appear': '語音出現場所：',
     'voice-type': '語音類別：',
     'voice-motion': 'Live2D動作：',
     'dialog-how-to-use': {
       'title': '如何使用',
       'msg': '首先選擇角色，再選擇服裝，就可以點擊“顯示”按鈕展示Live2D模型了（需要加載）。選擇壹個語音再點擊/觸摸Live2D模型，就會播放語音並附帶動作。'
-    }
+    },
+    'jump-to-card-detail': '跳轉至卡片'
   },
   'event': {
     'title': '{srv}活動',
@@ -168,6 +182,7 @@ export default {
     'badge': '活動徽章',
     'degrees': '活動頭銜',
     'musics': '活動曲',
-    'fetch-data': '獲取活動數據中'
+    'fetch-data': '獲取活動數據中',
+    'both-match': '当两者皆满足：'
   }
 }

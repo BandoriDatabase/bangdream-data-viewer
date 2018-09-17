@@ -3,8 +3,8 @@
     <q-card v-if="isEventReady">
       <q-card-media>
         <div v-if="currentEvent[server].eventType === 'challenge' || currentEvent[server].eventType === 'versus' || currentEvent[server].eventType === 'live_try'" class="event-cover"
-          :style="{ 'background-image': `url(/assets/event/${currentEvent[server].assetBundleName}/topscreen_trim_eventtop.png), url(/assets/event/${currentEvent[server].assetBundleName}/topscreen_bg_eventtop.png)` }"></div>
-        <div v-else class="event-cover" :style="{ 'background-image': `url(/assets/event/${currentEvent[server].assetBundleName}/topscreen_bg_eventtop.png)` }"></div>
+          :style="{ 'background-image': `url(/assets/event/${currentEvent[server].assetBundleName}/topscreen_rip/trim_eventtop.png), url(/assets/event/${currentEvent[server].assetBundleName}/topscreen_rip/bg_eventtop.png)` }"></div>
+        <div v-else class="event-cover" :style="{ 'background-image': `url(/assets/event/${currentEvent[server].assetBundleName}/topscreen_rip/bg_eventtop.png)` }"></div>
         <q-card-title slot="overlay">
           {{currentEvent[server].eventName}}
           <span slot="subtitle" class="text-white">
@@ -15,9 +15,9 @@
       </q-card-media>
       <q-card-main class="column items-center">
         <a-player :music="eventBGM" ref="player" mode="order" class="col-12 full-width"></a-player>
-        <img class="responsive" v-if="server != 'en'" v-lazy="`/assets-${server}/homebanner_banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`"/>
-        <img class="responsive" v-else-if="server === 'en' && currentEvent[server].eventId >= 3" v-lazy="`/assets-${server}/homebanner_banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`">
-        <img class="responsive" v-else-if="server === 'en'" v-lazy="`/assets-${server}/homebanner_banner-0${14 + currentEvent[server].eventId * 2}.png`">
+        <img class="responsive" v-if="server != 'en'" v-lazy="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`"/>
+        <img class="responsive" v-else-if="server === 'en' && currentEvent[server].eventId >= 3" v-lazy="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`">
+        <img class="responsive" v-else-if="server === 'en'" v-lazy="`/assets-${server}/homebanner_rip/banner-0${14 + currentEvent[server].eventId * 2}.png`">
         <div class="full-width column items-center" v-if="Number(currentEvent[server].startAt) > Date.now()">
           <p>{{$t('event.start-cd')}}</p>
           <count-down :target-time="Number(currentEvent[server].startAt)"></count-down>
@@ -40,33 +40,48 @@
           <div class="col-6"><card-thumb :cardId="Number(eventSpecialCardId)" :server="server"></card-thumb></div>
         </div>
         <p>{{$t('event.reward-stamp')}}</p>
-        <img v-if="eventRewardStamp" v-lazy="`/assets-${server}/stamp/01_${eventRewardStamp.imageName}.png`" />
+        <img v-if="eventRewardStamp" v-lazy="`/assets-${server}/stamp/01_rip/${eventRewardStamp.imageName}.png`" />
         <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         <p>{{$t('event.bonus-attr-card')}}</p>
-        <img v-if="isDegreeReady" class="responsive" style="max-width: 100%;" v-lazy="`/assets-${server}/event/${currentEvent[server].assetBundleName}/images_event_point_banner.png`">
+        <!-- <img v-if="isDegreeReady" class="responsive" style="max-width: 100%;" v-lazy="`/assets-${server}/event/${currentEvent[server].assetBundleName}/images_rip/event_point_banner.png`"> -->
+        <div v-if="isDegreeReady">
+          <div class="row items-center justify-center">
+            <img src="~assets/icon_cool.png" class="responsive" v-if="currentEvent[server].detail.attributes[0].attribute === 'cool'">
+            <img src="~assets/icon_happy.png" class="responsive" v-if="currentEvent[server].detail.attributes[0].attribute === 'happy'">
+            <img src="~assets/icon_powerful.png" class="responsive" v-if="currentEvent[server].detail.attributes[0].attribute === 'powerful'">
+            <img src="~assets/icon_pure.png" class="responsive" v-if="currentEvent[server].detail.attributes[0].attribute === 'pure'">
+            <span class="q-title" :class="`text-${paletteMap[currentEvent[server].detail.attributes[0].attribute]}`">+ {{currentEvent[server].detail.attributes[0].percent}}%</span>
+          </div>
+          <div class="row items-center justify-center">
+            <img :src="`statics/chara_icon_${item.characterId}.png`" class="responsive" v-for="item in currentEvent[server].detail.characters" :key="item.characterId">
+            <span class="q-title">+ {{currentEvent[server].detail.characters[0].percent}}%</span>
+          </div>
+          <div class="row items-center justify-center" v-if="currentEvent[server].detail.paramBonus">
+            <span>{{$t('event.both-match')}}</span>
+            <span v-if="currentEvent[server].detail.paramBonus[0].performance" class="text-pink-6">{{$t('common.perform')}} {{currentEvent[server].detail.paramBonus[0].performance}}</span>
+            <span v-if="currentEvent[server].detail.paramBonus[0].technique" class="text-indigo-6">{{$t('common.technic')}} {{currentEvent[server].detail.paramBonus[0].technique}}</span>
+            <span v-if="currentEvent[server].detail.paramBonus[0].visual" class="text-orange-8">{{$t('common.visual')}} {{currentEvent[server].detail.paramBonus[0].visual}}</span>
+          </div>
+        </div>
         <p>{{$t('event.badge')}}</p>
-        <img v-if="isBadgeReady" class="badge" v-lazy="`/assets/thumb/common_${eventBadgeMap[server][currentEvent[server].eventId].badgeAssetBundleName}.png`">
+        <img v-if="isBadgeReady" class="badge" v-lazy="`/assets/thumb/common_rip/${eventBadgeMap[server][currentEvent[server].eventId].badgeAssetBundleName}.png`">
         <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         <p>{{$t('event.degrees')}}</p>
-        <div v-if="isDegreeReady && currentEvent[server].eventId >= 13" class="event-degree" :style="{ 'background-image': `url(/assets-${server}/thumb/degree_event_point_icon_1.png), url(/assets-${server}/thumb/degree_event_point_1.png), url(/assets-${server}/thumb/degree_${degreeMap[server][currentEvent[server].rankingRewards[0].rewardId].imageName}.png)` }" />
-        <div v-else-if="isDegreeReady" class="event-degree" :style="{ 'background-image': `url(/assets-${server}/thumb/degree_${degreeMap[server][currentEvent[server].rankingRewards[0].rewardId].imageName}.png)` }"></div>
+        <div v-if="isDegreeReady && currentEvent[server].eventId >= 13" class="event-degree" :style="{ 'background-image': `url(/assets-${server}/thumb/degree_rip/event_point_icon_1.png), url(/assets-${server}/thumb/degree_rip/event_point_1.png), url(/assets-${server}/thumb/degree_rip/${degreeMap[server][currentEvent[server].rankingRewards[0].rewardId].imageName}.png)` }" />
+        <div v-else-if="isDegreeReady" class="event-degree" :style="{ 'background-image': `url(/assets-${server}/thumb/degree_rip/${degreeMap[server][currentEvent[server].rankingRewards[0].rewardId].imageName}.png)` }"></div>
         <!-- <div v-else-if="isDegreeReady && server === 'tw'" class="event-degree" :style="{ 'background-image': `url(/assets-tw/thumb/degree_event_point_icon_1.png), url(/assets-tw/thumb/degree_event_point_1.png), url(/assets-tw/thumb/degree_${degreeMap[server][currentEvent[server].rankingRewards[0].rewardId].imageName}.png)` }" /> -->
         <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         <span v-if="currentEvent[server].eventType === 'challenge'">
           <div class="row justify-center" v-if="isDegreeReady">
             <div class="event-degree" v-for="eventMusic in currentEvent[server].detail.musics" :key="eventMusic.seq"
-            :style="{ 'background-image': `url(/assets-${server}/thumb/degree_score_ranking_1.png), url(/assets-${server}/thumb/degree_${degreeMap[server][eventMusic.musicRankingRewards[0].resourceId].imageName}.png)` }" />
+            :style="{ 'background-image': `url(/assets-${server}/thumb/degree_rip/score_ranking_1.png), url(/assets-${server}/thumb/degree_rip/${degreeMap[server][eventMusic.musicRankingRewards[0].resourceId].imageName}.png)` }" />
           </div>
           <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         </span>
         <span v-if="currentEvent[server].eventType === 'live_try'">
-          <div class="row justify-center" v-if="isDegreeReady && server === 'jp'">
-            <div class="event-degree" :style="{ 'background-image': `url(/assets/thumb/degree_try_clear_normal.png), url(/assets/thumb/degree_${degreeMap[server][currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.normal.entries[10].resourceId].imageName}.png)` }" />
-            <div class="event-degree" :style="{ 'background-image': `url(/assets/thumb/degree_try_clear_extra.png), url(/assets/thumb/degree_${degreeMap[server][currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.extra.entries[5].resourceId].imageName}.png)` }" />
-          </div>
-          <div class="row justify-center" v-else-if="isDegreeReady && server === 'tw'">
-            <div class="event-degree" :style="{ 'background-image': `url(/assets-tw/thumb/degree_try_clear_normal.png), url(/assets-tw/thumb/degree_${degreeMap[server][currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.normal.entries[10].resourceId].imageName}.png)` }" />
-            <div class="event-degree" :style="{ 'background-image': `url(/assets-tw/thumb/degree_try_clear_extra.png), url(/assets-tw/thumb/degree_${degreeMap[server][currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.extra.entries[5].resourceId].imageName}.png)` }" />
+          <div class="row justify-center" v-if="isDegreeReady">
+            <div class="event-degree" :style="{ 'background-image': `url(/assets-${server}/thumb/degree_rip/try_clear_normal.png), url(/assets-${server}/thumb/degree_rip/${degreeMap[server][currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.normal.entries[10].resourceId].imageName}.png)` }" />
+            <div class="event-degree" :style="{ 'background-image': `url(/assets-${server}/thumb/degree_rip/try_clear_extra.png), url(/assets-${server}/thumb/degree_rip/${degreeMap[server][currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.extra.entries[5].resourceId].imageName}.png)` }" />
           </div>
           <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         </span>
@@ -112,7 +127,13 @@ export default {
       eventSpecialCardId: null,
       eventRewardStamp: null,
       isBadgeReady: false,
-      isDegreeReady: false
+      isDegreeReady: false,
+      paletteMap: {
+        happy: 'orange-8',
+        cool: 'indigo-6',
+        pure: 'green-8',
+        powerful: 'pink-6'
+      }
     }
   },
   mounted () {
@@ -131,12 +152,12 @@ export default {
       return this.$route.params.server
     },
     eventBGM () {
-      const arr = this.currentEvent[this.server].bgmAssetBundleName.split('/')
+      const { assetBundleName, bgmAssetBundleName, bgmFileName } = this.currentEvent[this.server]
       return {
         title: this.currentEvent[this.server].eventName,
         author: 'Event BGM',
-        url: `/assets/${arr.slice(0, arr.length - 1).join('/')}/${this.currentEvent[this.server].bgmFileName}.mp3`,
-        pic: `/assets/event/${this.currentEvent[this.server].assetBundleName}/images_logo.png`
+        url: `/assets/${bgmAssetBundleName}_rip/${bgmFileName}.mp3`,
+        pic: `/assets/event/${assetBundleName}/images_rip/logo.png`
       }
     }
   },

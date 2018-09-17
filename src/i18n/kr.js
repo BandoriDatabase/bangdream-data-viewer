@@ -130,13 +130,13 @@ export default {
     'curr-voice': '재생 중'
   },
   'live2d': {
-    'costum': '의상',
+    'costume': '의상',
     'voice': '대사',
     'show': '적용',
     'how-to-use': '사용법',
-    'costum-name': '의상:',
-    'costum-how-to-get': '오픈 조건:',
-    'costum-avaliable-from': '출시일:',
+    'costume-name': '의상:',
+    'costume-how-to-get': '오픈 조건:',
+    'costume-avaliable-from': '출시일:',
     'voice-appear': '대사 출처:',
     'voice-type': '대사 타입:',
     'voice-motion': 'Live2D 모션:',

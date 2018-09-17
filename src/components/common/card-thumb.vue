@@ -4,7 +4,7 @@
         $emit('close');
         $router.push(`/card/${server}/${(card || cardMap[server][cardId]).cardId}/${Number(trained)}`);
       }">
-      <div class="thumb-table" v-lazy:background-image="`/assets-${server}/thumb/chara/card${cardGroup}_${(card || cardMap[server][cardId]).cardRes}_${trained ? 'after_training' : 'normal'}.png`"></div>
+      <div class="thumb-table" v-lazy:background-image="`/assets-${server}/thumb/chara/card${cardGroup}_rip/${(card || cardMap[server][cardId]).cardRes}_${trained ? 'after_training' : 'normal'}.png`"></div>
       <div :class="`thumb-frame-${getThumbFrame(Number((card || cardMap[server][cardId]).rarity), (card || cardMap[server][cardId]).attr)}`"></div>
       <div :class="`thumb-attr-${(card || cardMap[server][cardId]).attr}`"></div>
       <div :class="`thumb-band-${bandCharaList[server][Number((card || cardMap[server][cardId]).characterId) - 1].bandId}`"></div>

@@ -14,13 +14,19 @@
           <canvas ref="game"></canvas>
         </div>
         <div class="col-lg-6 col-xs-12">
-          <h3>{{data.title}}</h3>
+          <div
+            class="jacket-img relative-position"
+          >
+            <img class="absolute-center" :src="data.jacket" />
+          </div>
+          <h4>{{data.title}}</h4>
+          <q-btn @click="$router.push(`/music/${server}/${data.musicId}`)">{{$t('music.back-detail')}}</q-btn>
           <p>{{$t('music.composer')}}: {{data.composer}}</p>
           <p>{{$t('music.lyricist')}}: {{data.lyricist}}</p>
           <p>{{$t('music.arranger')}}: {{data.arranger}}</p>
           <p>{{$t('common.band')}}:
             <span v-if="Number(data.bandId) > 5">{{data.bandName}}</span>
-            <img height="60px" width="100px" v-if="Number(data.bandId) <= 5" v-lazy="`/assets/band/logo/00${data.bandId}_logoL.png`">
+            <img height="60px" width="100px" v-if="Number(data.bandId) <= 5" v-lazy="`/assets/band/logo/00${data.bandId}_rip/logoL.png`">
           </p>
           <p>{{$t('music.combo')}}: {{data.combo}}</p>
         </div>
@@ -149,9 +155,10 @@ export default {
   },
   async mounted () {
     const { AudioContext } = this
+    this.server = this.$route.params.server
     if (!AudioContext) return
     this.audioContext = new AudioContext()
-    await this.getMusicById({musicId: this.$route.params.musicId, server: 'jp'})
+    await this.getMusicById({musicId: this.$route.params.musicId, server: this.server})
     this.data = this.musicMap.jp[this.$route.params.musicId]
     this.isReady = true
     this.difficultyOptions = [
@@ -289,7 +296,7 @@ export default {
       this.bufferLoader = new BufferLoader(
         this.audioContext,
         [
-          `/assets/sound/${this.data.bgmId}.mp3`,
+          this.data.bgmFile,
           '/statics/hihat.wav',
           '/statics/flick.mp3'
         ],
@@ -300,11 +307,10 @@ export default {
     },
     startRhythm () {
       if (!this.app) {
-        this.app = new PIXI.Application(510, 800, {
-          view: this.$refs.game
-        })
-
         if (Object.keys(PIXI.loader.resources).length) {
+          this.app = new PIXI.Application(510, 800, {
+            view: this.$refs.game
+          })
           this.renderStage()
         } else {
           PIXI.loader.add([
@@ -314,7 +320,8 @@ export default {
             'statics/gameres/note_skill_3.png',
             'statics/gameres/note_slide_among.png',
             'statics/gameres/longNoteLine.png'
-          ]).load(this.renderStage)
+          ]).load(this.startRhythm)
+          return
         }
       }
       this.BPM = 0
@@ -649,5 +656,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="stylus" scoped>
+.jacket-img
+  width: 100%
+  height: 400px
+  background-size: contain
+  background-repeat: no-repeat
+  background-position: center
 </style>

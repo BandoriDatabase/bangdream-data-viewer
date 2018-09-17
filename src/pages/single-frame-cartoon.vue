@@ -1,9 +1,9 @@
 <template>
   <q-page padding>
-    <div class="row gutter-sm" v-if="isReady">
+    <viewer class="row gutter-sm" v-if="isReady" :options="{navbar: false, toolbar: false}">
       <div class="col-lg-4 col-xl-3 col-md-6 col-12" v-for="(singleFrame, idx) in sfcList[server]" :key="idx">
         <q-card style="cursor: pointer;">
-          <q-card-media v-viewer="{navbar: false, toolbar: false}">
+          <q-card-media>
             <img v-lazy="singleFrame.assetAddress" class="single-frame-img" />
             <q-card-title slot="overlay">
               {{singleFrame.title}}
@@ -11,7 +11,7 @@
           </q-card-media>
         </q-card>
       </div>
-    </div>
+    </viewer>
     <q-spinner v-else color="pink" size="48px"></q-spinner>
   </q-page>
 </template>

@@ -2,10 +2,10 @@
   <q-modal v-model="isOpen" @close="stopMultiPickupSlideShow">
     <q-card class="q-ma-none" v-if="gacha" style="max-width: 600px;">
       <q-card-media>
-        <img v-if="!multiPickupImg" v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_pickup${gacha.gachaId === 106 ? '_kasumi' : ''}.png`" alt="" class="gacha-banner" />
+        <img v-if="!multiPickupImg" v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_rip/pickup${gacha.gachaId === 106 ? '_kasumi' : ''}.png`" alt="" class="gacha-banner" />
         <div v-if="multiPickupImg" class="multiPickup">
-          <img :class="{active: isActive}" v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_pickup1.png`" class="gacha-banner" />
-          <img :class="{active: !isActive}" v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_pickup2.png`" class="gacha-banner" />
+          <img :class="{active: isActive}" v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_rip/pickup1.png`" class="gacha-banner" />
+          <img :class="{active: !isActive}" v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_rip/pickup2.png`" class="gacha-banner" />
         </div>
         <q-card-title slot="overlay">
           <p>{{gacha.gachaName}}

@@ -5,7 +5,7 @@ export default {
     kr: {},
     en: {}
   },
-  costumMap: {
+  costumeMap: {
     jp: {},
     tw: {},
     kr: {},

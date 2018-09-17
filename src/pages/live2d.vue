@@ -2,37 +2,41 @@
   <q-page padding>
     <div class="row gutter-sm">
       <div class="col-12 col-md-6 col-lg-4 col-xl-3 relative-position">
-        <q-select :float-label="$t('common.character')" v-model="selectedChara" :options="charaOptions" @input="fetchCostumAndVoice"></q-select>
+        <q-select :float-label="$t('common.character')" v-model="selectedChara" :options="charaOptions" @input="fetchCharaCostumes"></q-select>
         <q-inner-loading :visible="!charaOptions.length">
           <q-spinner-dots size="30px" color="pink-6"></q-spinner-dots>
         </q-inner-loading>
       </div>
       <div class="col-12 col-md-6 col-lg-4 col-xl-3 relative-position">
-        <q-select :float-label="$t('live2d.costum')" v-model="selectedCostum" :options="costumOptions" :disable="!selectedChara"
+        <q-select :float-label="$t('live2d.costume')" v-model="selectedCostume" :options="costumeOptions" :disable="!selectedChara"
           @input="fetchLive2dModel"></q-select>
-        <q-inner-loading :visible="selectedChara && !costumOptions.length">
+        <q-inner-loading :visible="selectedChara && !costumeOptions.length">
           <q-spinner-dots size="30px" color="pink-6"></q-spinner-dots>
         </q-inner-loading>
       </div>
       <div class="col-12 col-md-6 col-lg-4 col-xl-3 relative-position">
-        <q-select :float-label="$t('live2d.voice')" v-model="selectedVoice" :options="voiceOptions" :disable="!selectedChara || !selectedCostum"></q-select>
-        <q-inner-loading :visible="selectedChara && selectedCostum && !voiceOptions.length">
+        <q-select :float-label="$t('live2d.voice')" v-model="selectedVoice" :options="voiceOptions" :disable="!selectedChara || !selectedCostume"></q-select>
+        <q-inner-loading :visible="selectedChara && selectedCostume && !voiceOptions.length">
           <q-spinner-dots size="30px" color="pink-6"></q-spinner-dots>
         </q-inner-loading>
       </div>
       <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-        <q-btn @click="showLive2d" :disable="!selectedChara || !selectedCostum || !voiceOptions.length">{{$t('live2d.show')}}</q-btn>
+        <q-btn @click="showLive2d" :disable="!selectedChara || !selectedCostume || !voiceOptions.length">{{$t('live2d.show')}}</q-btn>
         <q-btn @click="showHelp">{{$t('live2d.how-to-use')}}</q-btn>
       </div>
     </div>
     <div class="row gutter-sm">
-      <div class="col-12 col-md-6" v-if="selectedCostum">
+      <div class="col-12 col-md-6" v-if="selectedCostume">
         <q-card>
           <q-card-main>
-            <p>{{$t('live2d.costum-name')}} {{selectedCostum.description}}</p>
-            <p>{{$t('live2d.costum-how-to-get')}} {{selectedCostum.howToGet}}</p>
-            <p>{{$t('live2d.costum-avaliable-from')}} {{(new Date(Number(selectedCostum.publishedAt))).toLocaleString()}}</p>
+            <p>{{$t('live2d.costume-name')}} {{costumeMap[server][selectedChara].find(elem => elem.costumeId === selectedCostume).description}}</p>
+            <p>{{$t('live2d.costume-how-to-get')}} {{costumeMap[server][selectedChara].find(elem => elem.costumeId === selectedCostume).howToGet}}</p>
+            <p>{{$t('live2d.costume-avaliable-from')}} {{(new Date(Number(costumeMap[server][selectedChara].find(elem => elem.costumeId === selectedCostume).publishedAt))).toLocaleString()}}</p>
           </q-card-main>
+          <q-card-actions>
+            <q-btn v-if="costumeMap[server][selectedChara].find(elem => elem.costumeId === selectedCostume).cardId" flat :label="$t('live2d.jump-to-card-detail')"
+              @click="$router.push({name: 'cardDetail', params: {server: $route.params.server, cardId: costumeMap[server][selectedChara].find(elem => elem.costumeId === selectedCostume).cardId, isTrained: 0}})"></q-btn>
+          </q-card-actions>
         </q-card>
       </div>
       <div class="col-12 col-md-6" v-if="selectedVoice">
@@ -62,10 +66,10 @@ export default {
     return {
       isReady: false,
       selectedChara: null,
-      selectedCostum: null,
+      selectedCostume: null,
       selectedVoice: null,
       charaOptions: [],
-      costumOptions: [],
+      costumeOptions: [],
       voiceOptions: [],
       AudioContext: window.AudioContext || window.webkitAudioContext || false,
       lipSyncValue: 0,
@@ -82,7 +86,7 @@ export default {
   computed: {
     ...mapState('live2d', [
       'voiceMap',
-      'costumMap',
+      'costumeMap',
       'forceReload'
     ]),
     ...mapState('chara', [
@@ -94,7 +98,8 @@ export default {
   },
   methods: {
     ...mapActions('live2d', [
-      'getCharaLive2d'
+      'getCharaLive2d',
+      'setForceReload'
     ]),
     ...mapActions('chara', [
       'getBandCharaList'
@@ -102,29 +107,37 @@ export default {
     async updateData (server) {
       this.isReady = false
       this.selectedChara = null
-      this.selectedCostum = null
+      this.selectedCostume = null
       this.selectedVoice = null
       const bandCharaList = await this.getBandCharaList(server)
       this.charaOptions = bandCharaList.map(elem => ({
         label: elem.characterName,
         value: elem.characterId
       }))
+      const { costumeId } = this.$route.params
+      if (costumeId) {
+        const costume = await this.$api.getCostumeById(server, costumeId)
+        this.selectedChara = costume.characterId
+        await this.fetchCharaCostumes()
+        this.selectedCostume = Number(costumeId)
+        await this.fetchLive2dModel()
+      }
       this.isReady = true
     },
-    async fetchCostumAndVoice () {
-      this.selectedCostum = null
+    async fetchCharaCostumes () {
+      this.selectedCostume = null
       this.selectedVoice = null
       this.voiceOptions = []
       console.log('start fetch')
       await this.getCharaLive2d({server: this.server, charaId: this.selectedChara})
-      this.costumOptions = this.costumMap[this.server][this.selectedChara].map(elem => ({
+      this.costumeOptions = this.costumeMap[this.server][this.selectedChara].map(elem => ({
         label: elem.description,
-        value: elem
+        value: elem.costumeId
       }))
     },
     async fetchLive2dModel () {
       this.voiceOptions = []
-      this.model = await this.$api.getLive2dModel(this.server, this.selectedCostum.costumeId)
+      this.model = await this.$api.getLive2dModel(this.server, this.selectedCostume)
       this.voiceOptions = this.voiceMap[this.server][this.selectedChara].map(elem => ({
         label: elem.serif,
         value: elem
@@ -136,6 +149,7 @@ export default {
           view: this.$refs.viewer,
           transparent: true
         })
+        this.setForceReload()
 
         this.app.view.addEventListener('click', (e) => {
           if (!this.selectedVoice || this.voicePlaying) return

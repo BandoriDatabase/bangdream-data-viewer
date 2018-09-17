@@ -7,7 +7,7 @@
           {{displayName ? $t('card.name-display[1]'):$t('card.name-display[2]')}}</label>
         </div>
         <q-collapsible :label="$t('common.filter')" v-model="isFilterVisible">
-          <q-card style="padding: 1%;">
+          <div>
             <div class="row gutter">
               <q-select class="col-12" multiple chips v-model="selectRarity" :float-label="$t('common.rarity')"
                 :options="rarityOption" color="pink"></q-select>
@@ -38,13 +38,13 @@
                 {{$t('common.apply-save')}}
               </q-btn>
             </div>
-          </q-card>
+          </div>
         </q-collapsible>
       </div>
       <q-infinite-scroll ref="cardScroll" v-if="isReady" :handler="loadMore">
         <div class="row gutter-sm">
-          <div v-for="card in cardList" :key="card.cardId" class="col-12 col-xl-4 col-md-6 full-height">
-            <q-card :class="`bg-${paletteMap[card.attr]}`">
+          <div v-for="card in cardList" :key="card.cardId" class="col-12 col-xl-3 col-md-4 full-height">
+            <q-card>
               <!-- <q-card-media class="full-height" style="position: relative;">
                 <span :class="`card-img-attr-${card.attr}`"></span>
                 <span :class="`card-img-band-${bandCharaList[server][Number(card.characterId) - 1].bandId}`"></span>
@@ -85,18 +85,23 @@
               </q-card-media> -->
               <q-card-main>
                 <div style="text-align: center;">
-                  <p class="text-white q-title">{{card.title}}</p>
+                  <p class="q-subheading" :class="`text-${paletteMap[card.attr]}`">{{card.title}}</p>
+                  <p class="q-title">{{displayName ?
+                    capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) :
+                    bandCharaList[server][Number(card.characterId) - 1].characterName}}</p>
                 </div>
                 <div class="row items-center justify-center" style="padding-bottom: 10px;">
                   <card-thumb :card="card" :server="server" :trained="false" v-if="card.title !== 'ガルパ杯'"></card-thumb>
                   <card-thumb :card="card" :server="server" :trained="true" v-if="(card.rarity >= 3 && card.title !== 'ガルパ杯') || card.title === 'ガルパ杯'"></card-thumb>
                 </div>
                 <div style="text-align: center;">
-                  <p class="text-white q-title">{{displayName ?
-                    capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) :
-                    bandCharaList[server][Number(card.characterId) - 1].characterName}}</p>
-                  <p class="text-white q-body-1">[{{card.skill.skillName}}]<br>{{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}</p>
-                  <p class="text-white q-body-1">Lv {{card.maxLevel}}: {{card.maxPerformance}}/{{card.maxTechnique}}/{{card.maxVisual}}/{{card.totalMaxParam}}</p>
+                  <p class="q-body-1">[{{card.skill.skillName}}]<br>{{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}</p>
+                  <p class="q-body-1">Lv {{card.maxLevel}}:
+                    <q-chip small color="pink-6">{{card.maxPerformance}}</q-chip>
+                    <q-chip small color="indigo-6">{{card.maxTechnique}}</q-chip>
+                    <q-chip small color="orange-8">{{card.maxVisual}}</q-chip>
+                    <q-chip small>{{card.totalMaxParam}}</q-chip>
+                  </p>
                 </div>
               </q-card-main>
             </q-card>

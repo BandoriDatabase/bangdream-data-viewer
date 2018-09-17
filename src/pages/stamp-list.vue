@@ -2,7 +2,7 @@
   <q-page padding>
     <div class="row gutter-sm" v-if="isReady">
       <div class="col-xl-2 col-lg-3 col-md-4 col-4" v-for="(singleStamp, idx) in stampList[server]" :key="idx">
-        <q-card class="stamp-img" v-lazy:background-image="`/assets-${server}/stamp/01_${singleStamp.imageName}.png`"></q-card>
+        <q-card class="stamp-img" v-lazy:background-image="`/assets-${server}/stamp/01_rip/${singleStamp.imageName}.png`"></q-card>
       </div>
     </div>
     <q-spinner v-else color="pink" size="48px"></q-spinner>

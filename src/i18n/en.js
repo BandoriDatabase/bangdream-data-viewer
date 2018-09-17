@@ -18,22 +18,22 @@ export default {
   },
   'update': {
     'title': "What's new",
-    'desc': 'Bandori Database WebApp has a major update, many improvements are made to help you use the WebApp better.',
+    'desc': 'Bandori Database WebApp has a major update, many improvements are made to help you use the WebApp better. For whole update note please visit <a href="https://dnaroma.site/update-notice-zhcn/">my blog</a>',
     'new-features': 'New Features',
     'feature-detail': [
-      'Add band icon and rarity icon to card thumb',
-      'Redesigned card list, no loading full card image for less data consumption and better performance',
-      'Improve music list layout (thanks to @Cee)',
-      'Add stamp list for each server (thanks to @Cee)'
+      'Event card on home page use the same countdown layout as gacha card',
+      'Move "change server" from sidebar to "SETTINGS" button on right top corner',
+      'Redesigned card list page',
+      'In music list page, display band icon under the music name instead of on the jacket image',
+      'Add "Return" button for some detail pages',
+      'Redesigned card detail page, add a button for jumping to Live2D costume for current card (if exists)',
+      'Single Frame Cartoon of Japan Server comes back',
+      'Add "Tag" and "Release Date" to music list filter, default sort is "Release Date"'
     ],
     'fixed-bugs': 'Fixed Bugs',
     'bug-detail': [
-      'Correct some korean translation (thanks to @thtl1999)',
-      'Fix redundant description on gacha detail modal (thanks to @Cee and @alxnr)',
-      'Fix wrong stretch of gacha display card on index page (thanks to @Cee and @alxnr)',
-      'Fix slow loading of card list on gacha detail modal',
-      'Add loading indicator to the place that need some time for loading',
-      'Remove Big Picture Viewer on music detail page'
+      'Fix crash of beatmap player when playing some charts',
+      'Fix wrong bonus info for current event'
     ],
     'welcome-bug-report': "If you find any problem affecting you use this web app, please report it to me per <a href='mailto:dev@bandori.ga'>Email</a>, on <a href='https://dnaroma.site/2017/12/23/bug-report/'>Bug report page</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
   },
@@ -47,6 +47,7 @@ export default {
     'tw': 'Taiwan Server',
     'kr': 'Korean Server',
     'en': 'Intl. Server',
+    'level': 'Level',
     'perform': 'Perform',
     'technic': 'Technique',
     'visual': 'Visual',
@@ -70,7 +71,13 @@ export default {
     'birthday': {
       'today': 'Today is birthday of',
       'next': 'Next birthday on'
-    }
+    },
+    'data-lang': 'Game Data Lang',
+    'anime': 'Anime',
+    'normal': 'Normal',
+    'all': 'All',
+    'release-date': 'Release Date',
+    'back-to-list': 'Return to list'
   },
   'gacha': {
     'list-title': '{srv} Scouts List',
@@ -114,19 +121,25 @@ export default {
     'story-to-unlock': 'To unlock',
     'story-max-level': 'Max Level Story',
     'story-none': 'No story avaliable',
-    'story-reward': 'Story read reward'
+    'story-reward': 'Story read reward',
+    'jump-to-live2d-costume': 'Jump to Live2D',
+    'not-exist': 'This card does not exist: Server {server} CardID {cardId}'
   },
   'music': {
     'select-band': 'Select Bands',
     'composer': 'Composer',
     'lyricist': 'Lyricist',
     'arranger': 'Arranger',
+    'tag': 'Tag',
     'howtoget': 'How to get',
     'difficulty': 'Difficulty',
     'achieve': 'Live achievement reward',
     'combo': 'Total notes',
     'check-beatmap': 'Open beatmap player',
-    'declaration': "This is still a test version, and not fit for mobile view. If you find any problem, please contact me through <a href='mailto:dev@bandori.ga'>email</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
+    'back-detail': 'Back to music detail',
+    'declaration': "This is still a test version, and not fit for mobile view. If you find any problem, please contact me through <a href='mailto:dev@bandori.ga'>email</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>.",
+    'fetch-music-data': 'Fetching music detail data...',
+    'not-exist': 'This music does not exist: Server {server} MusicID {musicId}'
   },
   'scenario': {
     'voice-text': 'Voice text',
@@ -139,20 +152,21 @@ export default {
     'curr-voice': 'Current voice'
   },
   'live2d': {
-    'costum': 'Costum',
+    'costume': 'Costume',
     'voice': 'Voice',
     'show': 'Show',
     'how-to-use': 'How to use',
-    'costum-name': 'Costum name:',
-    'costum-how-to-get': 'How to get:',
-    'costum-avaliable-from': 'Avaliable from:',
+    'costume-name': 'Costume name:',
+    'costume-how-to-get': 'How to get:',
+    'costume-avaliable-from': 'Avaliable from:',
     'voice-appear': 'Voice appearance:',
     'voice-type': 'Voice type:',
     'voice-motion': 'Live2D motion:',
     'dialog-how-to-use': {
       'title': 'How to use',
-      'msg': 'At first choose a Character, then a costum, you can click SHOW button now to load live2d model. Select one of the voice and touch/click the live2d model, it will respond to you.'
-    }
+      'msg': 'At first choose a Character, then a costume, you can click SHOW button now to load live2d model. Select one of the voice and touch/click the live2d model, it will respond to you.'
+    },
+    'jump-to-card-detail': 'Jump to card'
   },
   'event': {
     'title': 'Event {srv}',
@@ -166,6 +180,7 @@ export default {
     'bonus-attr-card': 'Bonus attribute and cards',
     'badge': 'Event badge',
     'degrees': 'Degrees preview',
-    'musics': 'Event musics'
+    'musics': 'Event musics',
+    'both-match': 'When both matches:'
   }
 }

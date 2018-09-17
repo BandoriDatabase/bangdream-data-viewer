@@ -47,27 +47,40 @@ module.exports = function (ctx) {
       open: true, // opens browser window automatically
       proxy: {
         '/assets': {
-          target: 'https://res.bandori.ga',
+          // target: 'https://res.bandori.ga',
+          target: 'http://localhost:8080',
           changeOrigin: true
         },
         '/assets-jp': {
-          target: 'https://res.bandori.ga',
+          // target: 'https://res.bandori.ga',
+          target: 'http://localhost:8080',
           changeOrigin: true
         },
         '/assets-tw': {
-          target: 'https://res.bandori.ga',
+          // target: 'https://res.bandori.ga',
+          target: 'http://localhost:8080',
           changeOrigin: true
         },
         '/assets-kr': {
-          target: 'https://res.bandori.ga',
+          // target: 'https://res.bandori.ga',
+          target: 'http://localhost:8080',
           changeOrigin: true
         },
         '/assets-en': {
-          target: 'https://res.bandori.ga',
+          // target: 'https://res.bandori.ga',
+          target: 'http://localhost:8080',
           changeOrigin: true
         },
         '/live2d': {
-          target: 'https://res.bandori.ga/assets/live2d/chara',
+          target: 'http://localhost:8080/assets/live2d/chara',
+          // target: 'https://res.bandori.ga/assets/live2d/chara',
+          changeOrigin: true,
+          pathRewrite: {
+            '^/live2d': ''
+          }
+        },
+        '/titles': {
+          target: 'http://localhost:8080',
           changeOrigin: true,
           pathRewrite: {
             '^/live2d': ''
@@ -94,6 +107,7 @@ module.exports = function (ctx) {
         'QToolbar',
         'QToolbarTitle',
         'QBtn',
+        'QChip',
         'QIcon',
         'QList',
         'QListHeader',
