@@ -37,9 +37,9 @@
       <div class="row">
         <div class="col-xl-4 col-md-6 col-sm-12 col-12" v-for="music in musicList" :key="music.cardId">
           <div class="row music">
-            <q-card class="music-cover col-xl-6 col-md-6 col-sm-3 col-3" @click.native="$router.push(`/music/${server}/${music.musicId}`)" v-lazy:background-image="music.jacket">
+            <q-card class="music-cover col-xl-6 col-md-6 col-sm-4 col-4" @click.native="$router.push(`/music/${server}/${music.musicId}`)" v-lazy:background-image="music.jacket">
             </q-card>
-            <div class="music-desc col-xl-6 col-md-6 col-sm-9 col-9">
+            <div class="music-desc col-xl-6 col-md-6 col-sm-8 col-8">
               <p class="music-title">{{music.title}}</p>
               <p class="music-band-name">{{music.bandName}}</p>
               <div class="music-levels">
@@ -193,8 +193,11 @@ h3
   margin-top 15px
   font-weight 700
   font-size 120%
+  line-height 120%
 
 .music-band-name
+  font-size 85%
+  margin-top -10px
   color #888888
 
 .music-levels
@@ -221,19 +224,20 @@ span.music-level
   .music-cover
     position relative
     width 100%
-    padding-top 25%
+    padding-top calc(100% / 3)
     cursor pointer
     background-size contain
     background-repeat no-repeat
     background-size 100% 100%
   .music-title
-    margin-top 0px
-    font-size 100%
+    margin-top 10px
+    font-size 110%
+    line-height 110%
   .music-band-name
-    margin-top -12px
     font-size 80%
   .music-levels
-    bottom -5px
+    bottom inherit
+    margin-top -8px
 
 span.music-level-easy
   background RGB(68, 79, 173)
