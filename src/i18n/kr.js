@@ -121,7 +121,7 @@ export default {
     'story-to-unlock': '필요 아이템',
     'story-max-level': '메모리얼 에피소드',
     'story-none': '스토리 없음',
-    'story-reward': '에피소드 달성 보너스 보상'
+    'story-reward': '에피소드 달성 보너스 보상',
     'jump-to-live2d-costume': 'Live2D 보기',
     'not-exist': 'This card does not exist: Server {server} CardID {cardId}'
   },
