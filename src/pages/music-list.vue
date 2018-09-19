@@ -1,78 +1,59 @@
 <template>
   <q-page padding>
-    <div class="block filter">
-      <q-collapsible :label="$t('common.filter')" v-model="isFilterVisible">
-        <div>
-          <div class="row gutter">
-            <q-select class="col-12" multiple chips v-model="selectBandId" :float-label="$t('music.select-band')"
-              :options="bandOption" color="pink"></q-select>
-          </div>
+    <div style="margin-bottom: 10px;">
+      <span class="q-display-2 text-bold">{{$t('left.music')}}</span>
+      <q-btn :label="$t('common.filter')" style="margin-left: 10px;" class="float-right" @click="isFilterVisible = true"></q-btn>
+    </div>
+    <q-modal v-model="isFilterVisible" :content-css="{padding: '15px', maxWidth: '500px'}">
+      <div>
+        <div class="row">
+          <p class="col-12">{{$t('music.select-band')}}</p>
+          <q-checkbox color="pink" class="col-md-4 col-6" v-model="selectBandId" v-for="opt in bandOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
+        </div>
+        <div class="q-mt-md">
+          <p>{{$t('music.tag')}}</p>
           <div>
-            <p>{{$t('music.tag')}}</p>
-            <div>
-              <q-radio color="pink" v-model="selectTag" val="anime" :label="$t('common.anime')" />
-              <q-radio color="pink" v-model="selectTag" val="normal" :label="$t('common.normal')" />
-              <q-radio color="pink" v-model="selectTag" val="all" :label="$t('common.all')" />
+            <q-radio color="pink" v-model="selectTag" val="anime" :label="$t('common.anime')" />
+            <q-radio color="pink" v-model="selectTag" val="normal" :label="$t('common.normal')" />
+            <q-radio color="pink" v-model="selectTag" val="all" :label="$t('common.all')" />
+          </div>
+        </div>
+        <p class="q-mt-md">{{$t('common.sort.title')}}</p>
+        <div>
+          <q-radio color="pink" v-model="sortParam" val="asc" :label="$t('common.sort.asc')" />
+          <q-radio color="pink" v-model="sortParam" val="desc" :label="$t('common.sort.desc')" />
+        </div>
+        <div>
+          <q-radio color="pink" v-model="orderKey" val="musicId" label="ID" />
+          <!-- <q-radio color="pink" v-model="orderKey" val="bandId" :label="$t('common.band')" /> -->
+          <q-radio color="pink" v-model="orderKey" val="maxDifficilty" :label="$t('common.difficulty')" />
+          <q-radio color="pink" v-model="orderKey" val="publishedAt" :label="$t('common.release-date')" />
+        </div>
+        <div>
+          <q-btn color="pink" @click="doFilter(server), saveFilter(), isFilterVisible = false">{{$t('common.apply-save')}}</q-btn>
+        </div>
+      </div>
+    </q-modal>
+    <q-infinite-scroll ref="musicScroll" v-if="isReady" :handler="loadMore">
+      <div class="row">
+        <div class="col-xl-4 col-md-6 col-sm-12 col-12" v-for="music in musicList" :key="music.cardId">
+          <div class="row music">
+            <q-card class="music-cover col-xl-6 col-md-6 col-sm-4 col-4" @click.native="$router.push(`/music/${server}/${music.musicId}`)" v-lazy:background-image="music.jacket">
+            </q-card>
+            <div class="music-desc col-xl-6 col-md-6 col-sm-8 col-8">
+              <p class="music-title">{{music.title}}</p>
+              <p class="music-band-name">{{music.bandName}}</p>
+              <div class="music-levels">
+                <span class="music-level music-level-easy">{{music.difficulty[0]}}</span>
+                <span class="music-level music-level-normal">{{music.difficulty[3]}}</span>
+                <span class="music-level music-level-hard">{{music.difficulty[2]}}</span>
+                <span class="music-level music-level-expert">{{music.difficulty[1]}}</span>
+                <span v-if="music.difficulty[4]" class="music-level music-level-special">{{music.difficulty[4]}}</span>
+              </div>
             </div>
           </div>
-          <p>{{$t('common.sort.title')}}</p>
-          <div class="row gutter">
-            <q-radio color="pink" v-model="sortParam" val="asc" :label="$t('common.sort.asc')" />
-            <q-radio color="pink" v-model="sortParam" val="desc" :label="$t('common.sort.desc')" />
-          </div>
-          <div class="row gutter">
-            <q-radio color="pink" v-model="orderKey" val="musicId" label="ID" />
-            <!-- <q-radio color="pink" v-model="orderKey" val="bandId" :label="$t('common.band')" /> -->
-            <q-radio color="pink" v-model="orderKey" val="maxDifficilty" :label="$t('common.difficulty')" />
-            <q-radio color="pink" v-model="orderKey" val="publishedAt" :label="$t('common.release-date')" />
-          </div>
-          <div>
-            <q-btn color="pink" @click="doFilter(server), saveFilter()">{{$t('common.apply-save')}}</q-btn>
-          </div>
-        </div>
-      </q-collapsible>
-    </div>
-    <q-infinite-scroll ref="musicScroll" v-if="isReady" :handler="loadMore">
-      <div class="row gt-sm gutter-sm">
-        <div v-for="music in musicList" :key="music.cardId" class="col-6 col-md-4 col-lg-3 full-height">
-          <q-card class="music-card" @click.native="$router.push(`/music/${server}/${music.musicId}`)" v-lazy:background-image="music.jacket">
-            <q-card-title class="music-title">
-              {{music.title}}<br>
-              <span slot="subtitle">
-                {{music.bandName}}
-              </span>
-            </q-card-title>
-            <q-card-main>
-              <div :class="`music-img-band img-band-${music.bandId}`" />
-              <span class="music-difficulty">
-                <q-chip small color="indigo">{{music.difficulty[0]}}</q-chip>
-                <q-chip small color="green">{{music.difficulty[3]}}</q-chip>
-                <q-chip small color="amber">{{music.difficulty[2]}}</q-chip>
-                <q-chip small color="red">{{music.difficulty[1]}}</q-chip>
-                <q-chip v-if="music.difficulty[4]" small color="purple">{{music.difficulty[4]}}</q-chip>
-              </span>
-            </q-card-main>
-          </q-card>
         </div>
       </div>
-      <div class="row lt-md gutter-sm">
-        <div v-for="music in musicList" :key="music.cardId" class="col-12 col-lg-3 full-height">
-          <q-card class="music-card-collapse" @click.native="$router.push(`/music/${server}/${music.musicId}`)" v-lazy:background-image="music.jacket">
-            <p>
-              {{music.title}}<br>
-              {{music.bandName}}<br>
-              <span class="music-difficulty">
-                <q-chip small color="indigo">{{music.difficulty[0]}}</q-chip>
-                <q-chip small color="green">{{music.difficulty[3]}}</q-chip>
-                <q-chip small color="amber">{{music.difficulty[2]}}</q-chip>
-                <q-chip small color="red">{{music.difficulty[1]}}</q-chip>
-                <q-chip v-if="music.difficulty[4]" small color="purple">{{music.difficulty[4]}}</q-chip>
-              </span>
-            </p>
-          </q-card>
-        </div>
-      </div>
-
       <div slot="message" class="row justify-center items-center" style="margin-bottom: 50px;">
         <q-spinner color="pink" size="48px"></q-spinner>
         Loading more musics...
@@ -187,63 +168,90 @@ export default {
 .filter
   margin-bottom 10px
 
-.one-img-full
-  background-size auto 100%
-  background-repeat no-repeat
-  background-position center
+.music
+  position relative
+  margin-bottom 30px
 
-.one-img-thumb
-  height 90px
-  margin 5px
-  background-size auto 100%
-  background-repeat no-repeat
-  background-position center
-
-.music-img-band
-  width 100%
-  height 50px
-  background-size contain
-  background-repeat no-repeat
-
-.music-card
+.music-cover
   position relative
   width 100%
-  padding-top 100%
+  padding-top 50%
   cursor pointer
   background-size contain
   background-repeat no-repeat
+  background-size 100% 100%
+
+h3
+  font-family -apple-system, PingFang, Helvetica
+  font-weight bold
+
+.music-desc p, .music-levels
+  font-family -apple-system, PingFang, Helvetica
+  margin-left 15px
+  padding-right 15px
 
 .music-title
-  position relative
+  margin-top 15px
+  font-weight 700
+  font-size 120%
+  line-height 120%
 
-.music-card-collapse
-  position relative
-  height 100px
-  background-size contain
-  background-repeat no-repeat
+.music-band-name
+  font-size 85%
+  margin-top -10px
+  color #888888
 
-.music-card-collapse p
-  font-size 80%
-  margin-left 120px
-  line-height 200%
+.music-levels
   position absolute
-  top 50%
-  transform translate(0, -50%)
+  bottom 11px
 
-span.music-difficulty
-  display block
-  span
-    display inline-block
-    font-size 85%
-    font-weight bold
-    width 30px
-    height 18px
-    border-radius 8px
-    background red
-    text-align center
-    line-height 18px
-    margin-right 5px
+span.music-level
+  display inline-block
+  color white
+  font-size 85%
+  font-weight semi-bold
+  width 32px
+  height 20px
+  border-radius 10px
+  background red
+  text-align center
+  line-height 20px
+  margin-right 4px
+  margin-bottom 4px
 
-.gt-sm span.music-difficulty
-  margin-top 5px
+@media screen and (max-width: 768px)
+  .row.music
+    margin-bottom 15px
+  .music-cover
+    position relative
+    width 100%
+    padding-top calc(100% / 3)
+    cursor pointer
+    background-size contain
+    background-repeat no-repeat
+    background-size 100% 100%
+  .music-title
+    margin-top 10px
+    font-size 110%
+    line-height 110%
+  .music-band-name
+    font-size 80%
+  .music-levels
+    bottom inherit
+    margin-top -8px
+
+span.music-level-easy
+  background RGB(68, 79, 173)
+
+span.music-level-normal
+  background RGB(86, 175, 95)
+
+span.music-level-hard
+  background RGB(251, 195, 79)
+
+span.music-level-expert
+  background RGB(236, 69, 68)
+
+span.music-level-special
+  background RGB(152, 35, 168)
 </style>
