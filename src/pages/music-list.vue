@@ -1,38 +1,39 @@
 <template>
   <q-page padding>
-    <div class="block filter">
-      <q-collapsible :label="$t('common.filter')" v-model="isFilterVisible">
-        <div>
-          <div class="row gutter">
-            <q-select class="col-12" multiple chips v-model="selectBandId" :float-label="$t('music.select-band')"
-              :options="bandOption" color="pink"></q-select>
-          </div>
+    <div style="margin-bottom: 10px;">
+      <span class="q-display-2 text-bold">{{$t('left.music')}}</span>
+      <q-btn :label="$t('common.filter')" style="margin-left: 10px;" class="float-right" @click="isFilterVisible = true"></q-btn>
+    </div>
+    <q-modal v-model="isFilterVisible" :content-css="{padding: '15px', maxWidth: '500px'}">
+      <div>
+        <div class="row">
+          <p class="col-12">{{$t('music.select-band')}}</p>
+          <q-checkbox color="pink" class="col-md-4 col-6" v-model="selectBandId" v-for="opt in bandOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
+        </div>
+        <div class="q-mt-md">
+          <p>{{$t('music.tag')}}</p>
           <div>
-            <p>{{$t('music.tag')}}</p>
-            <div>
-              <q-radio color="pink" v-model="selectTag" val="anime" :label="$t('common.anime')" />
-              <q-radio color="pink" v-model="selectTag" val="normal" :label="$t('common.normal')" />
-              <q-radio color="pink" v-model="selectTag" val="all" :label="$t('common.all')" />
-            </div>
-          </div>
-          <p>{{$t('common.sort.title')}}</p>
-          <div class="row gutter">
-            <q-radio color="pink" v-model="sortParam" val="asc" :label="$t('common.sort.asc')" />
-            <q-radio color="pink" v-model="sortParam" val="desc" :label="$t('common.sort.desc')" />
-          </div>
-          <div class="row gutter">
-            <q-radio color="pink" v-model="orderKey" val="musicId" label="ID" />
-            <!-- <q-radio color="pink" v-model="orderKey" val="bandId" :label="$t('common.band')" /> -->
-            <q-radio color="pink" v-model="orderKey" val="maxDifficilty" :label="$t('common.difficulty')" />
-            <q-radio color="pink" v-model="orderKey" val="publishedAt" :label="$t('common.release-date')" />
-          </div>
-          <div>
-            <q-btn color="pink" @click="doFilter(server), saveFilter()">{{$t('common.apply-save')}}</q-btn>
+            <q-radio color="pink" v-model="selectTag" val="anime" :label="$t('common.anime')" />
+            <q-radio color="pink" v-model="selectTag" val="normal" :label="$t('common.normal')" />
+            <q-radio color="pink" v-model="selectTag" val="all" :label="$t('common.all')" />
           </div>
         </div>
-      </q-collapsible>
-    </div>
-    <h3>Musics</h3>
+        <p class="q-mt-md">{{$t('common.sort.title')}}</p>
+        <div>
+          <q-radio color="pink" v-model="sortParam" val="asc" :label="$t('common.sort.asc')" />
+          <q-radio color="pink" v-model="sortParam" val="desc" :label="$t('common.sort.desc')" />
+        </div>
+        <div>
+          <q-radio color="pink" v-model="orderKey" val="musicId" label="ID" />
+          <!-- <q-radio color="pink" v-model="orderKey" val="bandId" :label="$t('common.band')" /> -->
+          <q-radio color="pink" v-model="orderKey" val="maxDifficilty" :label="$t('common.difficulty')" />
+          <q-radio color="pink" v-model="orderKey" val="publishedAt" :label="$t('common.release-date')" />
+        </div>
+        <div>
+          <q-btn color="pink" @click="doFilter(server), saveFilter(), isFilterVisible = false">{{$t('common.apply-save')}}</q-btn>
+        </div>
+      </div>
+    </q-modal>
     <q-infinite-scroll ref="musicScroll" v-if="isReady" :handler="loadMore">
       <div class="row">
         <div class="col-xl-4 col-md-6 col-sm-12 col-12" v-for="music in musicList" :key="music.cardId">
