@@ -21,14 +21,19 @@ export default {
     'desc': 'Bandori Database WebApp has a major update, many improvements are made to help you use the WebApp better.',
     'new-features': '새로운 기능',
     'feature-detail': [
-      '채보 플레이어에서 BPM과 콤보가 보여집니다',
-      '채보 플레이어에서 BPM이 변하는게 보여집니다',
-      '스코어 SS랭크 보상 보기가 추가되었습니다'
+      'Event card on home page use the same countdown layout as gacha card',
+      'Move "change server" from sidebar to "SETTINGS" button on right top corner',
+      'Redesigned card list page',
+      'In music list page, display band icon under the music name instead of on the jacket image',
+      'Add "Return" button for some detail pages',
+      'Redesigned card detail page, add a button for jumping to Live2D costume for current card (if exists)',
+      'Single Frame Cartoon of Japan Server comes back',
+      'Add "Tag" and "Release Date" to music list filter, default sort is "Release Date"'
     ],
     'fixed-bugs': '버그 픽스',
     'bug-detail': [
-      '채보 플레이어에서 플릭이 있는 롱노트가 안보였던것',
-      '채보 플레이어에서 슬라이드가 비정상적으로 보여졌던것'
+      'Fix crash of beatmap player when playing some charts',
+      'Fix wrong bonus info for current event'
     ],
     'welcome-bug-report': "If you find any problem affecting you use this web app, please report it to me per <a href='mailto:dev@bandori.ga'>Email</a>, on <a href='https://dnaroma.site/2017/12/23/bug-report/'>Bug report page</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
   },
@@ -42,6 +47,7 @@ export default {
     'tw': '대만 서버',
     'kr': '한국 서버',
     'en': '글로벌 서버',
+    'level': '레벨',
     'perform': '퍼포먼스',
     'technic': '테크닉',
     'visual': '비쥬얼',
@@ -61,7 +67,17 @@ export default {
     'difficulty': '난이도',
     'apply-save': '저장',
     'data-ver': 'Data Ver',
-    'app-ver': 'App Ver'
+    'app-ver': 'App Ver',
+    'birthday': {
+      'today': '오늘 생일인 캐릭터',
+      'next': '다음 생일인 캐릭터'
+    },
+    'data-lang': '게임 서버',
+    'anime': '커버곡',
+    'normal': '오리지널',
+    'all': '모두',
+    'release-date': '출시 날짜',
+    'back-to-list': '목록으로 돌아가기'
   },
   'gacha': {
     'list-title': '{srv} Scouts List',
@@ -106,18 +122,24 @@ export default {
     'story-max-level': '메모리얼 에피소드',
     'story-none': '스토리 없음',
     'story-reward': '에피소드 달성 보너스 보상'
+    'jump-to-live2d-costume': 'Live2D 보기',
+    'not-exist': 'This card does not exist: Server {server} CardID {cardId}'
   },
   'music': {
     'select-band': '밴드 선택',
     'composer': '작곡',
     'lyricist': '작사',
     'arranger': '편곡',
+    'tag': 'Tag',
     'howtoget': '획득 방법',
     'difficulty': '난이도',
     'achieve': '달성 보상',
     'combo': '총 노트 수',
     'check-beatmap': '채보 플레이어',
-    'declaration': "아직 테스트 중입니다. 모바일에서 작동하지않을 수 있습니다. If you find any problem, please contact me through <a href='mailto:dev@bandori.ga'>email</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
+    'back-detail': '음악 정보로 돌아가기',
+    'declaration': "아직 테스트 중입니다. 모바일에서 작동하지않을 수 있습니다. If you find any problem, please contact me through <a href='mailto:dev@bandori.ga'>email</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>.",
+    'fetch-music-data': '음악 정보 불러오는 중...',
+    'not-exist': 'This music does not exist: Server {server} MusicID {musicId}'
   },
   'scenario': {
     'voice-text': '대사',
@@ -143,7 +165,8 @@ export default {
     'dialog-how-to-use': {
       'title': '사용법',
       'msg': '먼저 캐릭터를 선택하고 그 다음 의상을 선택해 주세요. 적용 버튼을 눌러서 LIVE2D를 불러옵니다. 대사를 선택 한 후 클릭하면 캐릭터가 반응합니다.'
-    }
+    },
+    'jump-to-card-detail': '카드 정보 보기'
   },
   'event': {
     'title': '{srv} 이벤트',
@@ -157,6 +180,7 @@ export default {
     'bonus-attr-card': '이벤트 보너스 대상',
     'badge': '이벤트 뱃지',
     'degrees': '이벤트 칭호',
-    'musics': '이벤트 음악들'
+    'musics': '이벤트 음악들',
+    'both-match': 'When both matches:'
   }
 }
