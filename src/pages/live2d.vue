@@ -154,13 +154,13 @@ export default {
         this.app.view.addEventListener('click', (e) => {
           if (!this.selectedVoice || this.voicePlaying) return
           this.live2dSprite.startRandomMotionOnce(this.selectedVoice.motion)
-          this.live2dSprite.playSound(`assets/sound/voice/system/${this.selectedVoice.voice}.mp3`)
+          this.live2dSprite.playSound(`assets/sound/voice/system/chara${this.selectedVoice.characterId}_rip/${this.selectedVoice.voice}.mp3`)
         })
 
         this.app.view.addEventListener('touchend', (e) => {
           if (!this.selectedVoice || this.voicePlaying) return
           this.live2dSprite.startRandomMotionOnce(this.selectedVoice.motion)
-          this.live2dSprite.playSound(`assets/sound/voice/system/${this.selectedVoice.voice}.mp3`)
+          this.live2dSprite.playSound(`assets/sound/voice/system/chara${this.selectedVoice.characterId}_rip/${this.selectedVoice.voice}.mp3`)
           this.voicePlaying = true
         })
       }
