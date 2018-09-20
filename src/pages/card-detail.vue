@@ -366,6 +366,10 @@ export default {
     }
   },
   beforeRouteUpdate (to, from, next) {
+    if (to.path.substr(6, 2) === from.path.substr(6, 2)) {
+      next()
+      return
+    }
     this.isReady = false
     this.isError = false
 

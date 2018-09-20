@@ -43,6 +43,7 @@
             <div class="music-desc col-xl-6 col-md-6 col-sm-8 col-8">
               <p class="music-title">{{music.title}}</p>
               <p class="music-band-name">{{music.bandName}}</p>
+              <p class="music-publish">{{(new Date(Number(music.publishedAt))).toLocaleString()}}</p>
               <div class="music-levels">
                 <span class="music-level music-level-easy">{{music.difficulty[0]}}</span>
                 <span class="music-level music-level-normal">{{music.difficulty[3]}}</span>

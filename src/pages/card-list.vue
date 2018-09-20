@@ -1,92 +1,58 @@
 <template>
   <q-page padding>
     <div>
-      <div class="block">
-        <div v-if="server === 'jp' || server === 'tw'">
-          {{$t('card.name-display[0]')}}<label><q-toggle v-model="displayName" color="pink"></q-toggle>
-          {{displayName ? $t('card.name-display[1]'):$t('card.name-display[2]')}}</label>
-        </div>
-        <q-collapsible :label="$t('common.filter')" v-model="isFilterVisible">
-          <div>
-            <div class="row gutter">
-              <q-select class="col-12" multiple chips v-model="selectRarity" :float-label="$t('common.rarity')"
-                :options="rarityOption" color="pink"></q-select>
-              <q-select class="col-12" multiple chips v-model="selectAttrs" :float-label="$t('common.attr')"
-                :options="attrOption" color="pink"></q-select>
-              <q-select class="col-12" multiple chips v-model="selectCharacters" :float-label="$t('common.character')"
-                :options="charaOption" color="pink"></q-select>
-              <q-select class="col-12" multiple chips v-model="selectSkills" :float-label="$t('common.skill')"
-                :options="skillOption" color="pink"></q-select>
-            </div>
-            <p>{{$t('common.sort.title')}}</p>
-            <div class="row gutter">
-              <q-radio color="pink" v-model="sortParam" val="asc" :label="$t('common.sort.asc')" />
-              <q-radio color="pink" v-model="sortParam" val="desc" :label="$t('common.sort.desc')" />
-            </div>
-            <br>
-            <div class="row gutter">
-              <q-radio color="pink" v-model="orderKey" val="cardId" label="ID" />
-              <q-radio color="pink" v-model="orderKey" val="rarity" :label="$t('common.rarity')" />
-              <q-radio color="pink" v-model="orderKey" val="maxPerformance" :label="$t('common.perform')" />
-              <q-radio color="pink" v-model="orderKey" val="maxTechnique" :label="$t('common.technic')" />
-              <q-radio color="pink" v-model="orderKey" val="maxVisual" :label="$t('common.visual')" />
-              <q-radio color="pink" v-model="orderKey" val="totalMaxParam" :label="$t('common.total')" />
-            </div>
-            <br>
-            <div>
-              <q-btn color="pink" @click="doFilter(server), saveFilter(), $ga.event('card-overview', 'filter', `apply-save`)">
-                {{$t('common.apply-save')}}
-              </q-btn>
-            </div>
-          </div>
-        </q-collapsible>
+      <div style="margin-bottom: 10px;">
+        <span class="q-display-2 text-bold">{{$t('left.card')}}</span>
+        <q-btn :label="$t('common.filter')" style="margin-left: 10px;" class="float-right" @click="isFilterVisible = true"></q-btn>
       </div>
+      <q-modal v-model="isFilterVisible" :content-css="{padding: '15px', maxWidth: '500px'}">
+        <div>
+          <div class="row">
+            <p class="col-12">{{$t('common.rarity')}}</p>
+            <q-checkbox color="pink" class="col-3" v-model="selectRarity" v-for="opt in rarityOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
+          </div>
+          <div class="row q-mt-md">
+            <p class="col-12">{{$t('common.attr')}}</p>
+            <q-checkbox color="pink" class="col-md-3 col-6" v-model="selectAttrs" v-for="opt in attrOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
+          </div>
+          <div class="row q-mt-md">
+            <p class="col-12">{{$t('common.character')}}</p>
+            <q-checkbox color="pink" class="col-md-3 col-6" v-model="selectCharacters" v-for="opt in charaOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
+          </div>
+          <div class="row q-mt-md">
+            <p class="col-12">{{$t('common.skill')}}</p>
+            <q-checkbox color="pink" class="col-12" v-model="selectSkills" v-for="opt in skillOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
+          </div>
+        </div>
+        <p>{{$t('common.sort.title')}}</p>
+        <div class="row gutter">
+          <q-radio color="pink" v-model="sortParam" val="asc" :label="$t('common.sort.asc')" />
+          <q-radio color="pink" v-model="sortParam" val="desc" :label="$t('common.sort.desc')" />
+        </div>
+        <br>
+        <div class="row gutter">
+          <q-radio color="pink" v-model="orderKey" val="cardId" label="ID" />
+          <q-radio color="pink" v-model="orderKey" val="rarity" :label="$t('common.rarity')" />
+          <q-radio color="pink" v-model="orderKey" val="maxPerformance" :label="$t('common.perform')" />
+          <q-radio color="pink" v-model="orderKey" val="maxTechnique" :label="$t('common.technic')" />
+          <q-radio color="pink" v-model="orderKey" val="maxVisual" :label="$t('common.visual')" />
+          <q-radio color="pink" v-model="orderKey" val="totalMaxParam" :label="$t('common.total')" />
+        </div>
+        <br>
+        <div>
+          <q-btn color="pink" @click="doFilter(server), saveFilter(), $ga.event('card-overview', 'filter', `apply-save`)">
+            {{$t('common.apply-save')}}
+          </q-btn>
+        </div>
+      </q-modal>
       <q-infinite-scroll ref="cardScroll" v-if="isReady" :handler="loadMore">
         <div class="row gutter-sm">
           <div v-for="card in cardList" :key="card.cardId" class="col-12 col-xl-3 col-md-4 full-height">
             <q-card>
-              <!-- <q-card-media class="full-height" style="position: relative;">
-                <span :class="`card-img-attr-${card.attr}`"></span>
-                <span :class="`card-img-band-${bandCharaList[server][Number(card.characterId) - 1].bandId}`"></span>
-                <div v-for="i in Number(card.rarity)" :class="`card-img-rarity-normal-${i}`" :key="i"></div>
-                <img v-lazy:background-image="getCardImg(card.cardId, card.cardRes, 'normal')"
-                  @click="$router.push(`/card/${server}/${card.cardId}/0`), $ga.event('card-overview', 'jump', `normal-detail`)"
-                  v-if="card.rarity < 3" class="one-img-full full-height">
-                <img v-lazy:background-image="getCardImg(card.cardId, card.cardRes, 'after_training')"
-                  @click="$router.push(`/card/${server}/${card.cardId}/1`), $ga.event('card-overview', 'jump', `trained-detail`)"
-                  v-if="card.title === 'ガルパ杯'" class="one-img-full full-height">
-                <div v-lazy:background-image="getCardImg(card.cardId, card.cardRes, 'normal')"
-                  @click="$router.push(`/card/${server}/${card.cardId}/0`), $ga.event('card-overview', 'jump', `normal-detail`)"
-                  v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-split full-height gt-md"
-                  :ref="`splitL${card.cardId}`" @mouseover="handleMouseOver(`splitL${card.cardId}`)" @mouseout="handleMouseOut(card.cardId)">
-                </div>
-                <div v-lazy:background-image="getCardImg(card.cardId, card.cardRes, 'after_training')"
-                  @click="$router.push(`/card/${server}/${card.cardId}/1`), $ga.event('card-overview', 'jump', `trained-detail`)"
-                  v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-split full-height gt-md"
-                  :ref="`splitR${card.cardId}`" @mouseover="handleMouseOver(`splitR${card.cardId}`)" @mouseout="handleMouseOut(card.cardId)">
-                </div>
-                <div v-lazy:background-image="getCardImg(card.cardId, card.cardRes, 'normal')"
-                  @click="$router.push(`/card/${server}/${card.cardId}/0`), $ga.event('card-overview', 'jump', `normal-detail`)"
-                  v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-full full-width lt-lg"
-                  style="height: 50%;">
-                </div>
-                <div v-lazy:background-image="getCardImg(card.cardId, card.cardRes, 'after_training')"
-                  @click="$router.push(`/card/${server}/${card.cardId}/1`), $ga.event('card-overview', 'jump', `trained-detail`)"
-                  v-if="card.rarity >= 3 && card.title !== 'ガルパ杯'" class="two-img-full full-width lt-lg"
-                  style="height: 50%;">
-                </div>
-                <q-card-title slot="overlay">
-                  [{{card.title}}] {{displayName ?
-                    capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) :
-                    bandCharaList[server][Number(card.characterId) - 1].characterName}}<br>
-                  [{{card.skill.skillName}}] {{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}<br>
-                  Lv {{card.maxLevel}}: {{card.maxPerformance}}/{{card.maxTechnique}}/{{card.maxVisual}}/{{card.totalMaxParam}}
-                </q-card-title>
-              </q-card-media> -->
               <q-card-main>
                 <div style="text-align: center;">
                   <p class="q-subheading" :class="`text-${paletteMap[card.attr]}`">{{card.title}}</p>
-                  <p class="q-title">{{displayName ?
+                  <p class="q-headline">{{displayName ?
                     capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) :
                     bandCharaList[server][Number(card.characterId) - 1].characterName}}</p>
                 </div>

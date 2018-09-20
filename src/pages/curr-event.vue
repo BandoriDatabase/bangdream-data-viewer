@@ -18,31 +18,31 @@
         <img class="responsive" v-if="server != 'en'" v-lazy="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`"/>
         <img class="responsive" v-else-if="server === 'en' && currentEvent[server].eventId >= 3" v-lazy="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId > 13 ? '' : '_open'}.png`">
         <img class="responsive" v-else-if="server === 'en'" v-lazy="`/assets-${server}/homebanner_rip/banner-0${14 + currentEvent[server].eventId * 2}.png`">
-        <div class="full-width column items-center" v-if="Number(currentEvent[server].startAt) > Date.now()">
-          <p>{{$t('event.start-cd')}}</p>
+        <div class="full-width column items-center q-mt-md" v-if="Number(currentEvent[server].startAt) > Date.now()">
+          <p class="q-headline">{{$t('event.start-cd')}}</p>
           <count-down :target-time="Number(currentEvent[server].startAt)"></count-down>
         </div>
-        <div class="full-width column items-center" v-else-if="Number(currentEvent[server].endAt) > Date.now()">
-          <p>{{$t('event.end-cd')}}</p>
+        <div class="full-width column items-center q-mt-md" v-else-if="Number(currentEvent[server].endAt) > Date.now()">
+          <p class="q-headline">{{$t('event.end-cd')}}</p>
           <count-down :target-time="Number(currentEvent[server].endAt)"></count-down>
         </div>
-        <div class="full-width column items-center" v-else-if="Number(currentEvent[server].endAt) < Date.now() && Number(currentEvent[server].distributionStartAt) > Date.now()">
-          <p>{{$t('event.dist-cd')}}</p>
+        <div class="full-width column items-center q-mt-md" v-else-if="Number(currentEvent[server].endAt) < Date.now() && Number(currentEvent[server].distributionStartAt) > Date.now()">
+          <p class="q-headline">{{$t('event.dist-cd')}}</p>
           <count-down :target-time="Number(currentEvent[server].distributionStartAt)"></count-down>
         </div>
-        <div class="full-width column items-center" v-else-if="Number(currentEvent[server].distributionStartAt) < Date.now() && Number(currentEvent[server].publicEndAt) > Date.now()">
-          <p>{{$t('event.next-cd')}}</p>
+        <div class="full-width column items-center q-mt-md" v-else-if="Number(currentEvent[server].distributionStartAt) < Date.now() && Number(currentEvent[server].publicEndAt) > Date.now()">
+          <p class="q-headline">{{$t('event.next-cd')}}</p>
           <count-down :target-time="Number(currentEvent[server].publicEndAt)"></count-down>
         </div>
-        <p>{{$t('event.reward-card')}}</p>
+        <p class="q-mt-md q-headline">{{$t('event.reward-card')}}</p>
         <div class="row">
           <div class="col-6"><card-thumb :cardId="Number(eventNormalCardId)" :server="server"></card-thumb></div>
           <div class="col-6"><card-thumb :cardId="Number(eventSpecialCardId)" :server="server"></card-thumb></div>
         </div>
-        <p>{{$t('event.reward-stamp')}}</p>
+        <p class="q-mt-md q-headline">{{$t('event.reward-stamp')}}</p>
         <img v-if="eventRewardStamp" v-lazy="`/assets-${server}/stamp/01_rip/${eventRewardStamp.imageName}.png`" />
         <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
-        <p>{{$t('event.bonus-attr-card')}}</p>
+        <p class="q-mt-md q-headline">{{$t('event.bonus-attr-card')}}</p>
         <!-- <img v-if="isDegreeReady" class="responsive" style="max-width: 100%;" v-lazy="`/assets-${server}/event/${currentEvent[server].assetBundleName}/images_rip/event_point_banner.png`"> -->
         <div v-if="isDegreeReady">
           <div class="row items-center justify-center">
@@ -50,23 +50,23 @@
             <img src="~assets/icon_happy.png" class="responsive" v-if="currentEvent[server].detail.attributes[0].attribute === 'happy'">
             <img src="~assets/icon_powerful.png" class="responsive" v-if="currentEvent[server].detail.attributes[0].attribute === 'powerful'">
             <img src="~assets/icon_pure.png" class="responsive" v-if="currentEvent[server].detail.attributes[0].attribute === 'pure'">
-            <span class="q-title" :class="`text-${paletteMap[currentEvent[server].detail.attributes[0].attribute]}`">+ {{currentEvent[server].detail.attributes[0].percent}}%</span>
+            <span class="q-title" :class="`text-${paletteMap[currentEvent[server].detail.attributes[0].attribute]}`"> +{{currentEvent[server].detail.attributes[0].percent}}%</span>
           </div>
           <div class="row items-center justify-center">
             <img :src="`statics/chara_icon_${item.characterId}.png`" class="responsive" v-for="item in currentEvent[server].detail.characters" :key="item.characterId">
-            <span class="q-title">+ {{currentEvent[server].detail.characters[0].percent}}%</span>
+            <span class="q-title"> +{{currentEvent[server].detail.characters[0].percent}}%</span>
           </div>
-          <div class="row items-center justify-center" v-if="currentEvent[server].detail.paramBonus">
+          <div class="row items-center justify-center q-title" v-if="currentEvent[server].detail.paramBonus">
             <span>{{$t('event.both-match')}}</span>
-            <span v-if="currentEvent[server].detail.paramBonus[0].performance" class="text-pink-6">{{$t('common.perform')}} {{currentEvent[server].detail.paramBonus[0].performance}}</span>
-            <span v-if="currentEvent[server].detail.paramBonus[0].technique" class="text-indigo-6">{{$t('common.technic')}} {{currentEvent[server].detail.paramBonus[0].technique}}</span>
-            <span v-if="currentEvent[server].detail.paramBonus[0].visual" class="text-orange-8">{{$t('common.visual')}} {{currentEvent[server].detail.paramBonus[0].visual}}</span>
+            <span v-if="currentEvent[server].detail.paramBonus[0].performance" class="text-pink-6">{{$t('common.perform')}} +{{currentEvent[server].detail.paramBonus[0].performance}}%</span>
+            <span v-if="currentEvent[server].detail.paramBonus[0].technique" class="text-indigo-6">{{$t('common.technic')}} +{{currentEvent[server].detail.paramBonus[0].technique}}%</span>
+            <span v-if="currentEvent[server].detail.paramBonus[0].visual" class="text-orange-8">{{$t('common.visual')}} +{{currentEvent[server].detail.paramBonus[0].visual}}%</span>
           </div>
         </div>
-        <p>{{$t('event.badge')}}</p>
+        <p class="q-mt-md q-headline">{{$t('event.badge')}}</p>
         <img v-if="isBadgeReady" class="badge" v-lazy="`/assets/thumb/common_rip/${eventBadgeMap[server][currentEvent[server].eventId].badgeAssetBundleName}.png`">
         <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
-        <p>{{$t('event.degrees')}}</p>
+        <p class="q-mt-md q-headline">{{$t('event.degrees')}}</p>
         <div v-if="isDegreeReady && currentEvent[server].eventId >= 13" class="event-degree" :style="{ 'background-image': `url(/assets-${server}/thumb/degree_rip/event_point_icon_1.png), url(/assets-${server}/thumb/degree_rip/event_point_1.png), url(/assets-${server}/thumb/degree_rip/${degreeMap[server][currentEvent[server].rankingRewards[0].rewardId].imageName}.png)` }" />
         <div v-else-if="isDegreeReady" class="event-degree" :style="{ 'background-image': `url(/assets-${server}/thumb/degree_rip/${degreeMap[server][currentEvent[server].rankingRewards[0].rewardId].imageName}.png)` }"></div>
         <!-- <div v-else-if="isDegreeReady && server === 'tw'" class="event-degree" :style="{ 'background-image': `url(/assets-tw/thumb/degree_event_point_icon_1.png), url(/assets-tw/thumb/degree_event_point_1.png), url(/assets-tw/thumb/degree_${degreeMap[server][currentEvent[server].rankingRewards[0].rewardId].imageName}.png)` }" /> -->
@@ -85,10 +85,10 @@
           </div>
           <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
         </span>
-        <span class="column items-center" v-if="currentEvent[server].eventType === 'challenge'">
-          <p>{{$t('event.musics')}}</p>
+        <span class="column items-center q-mt-md" v-if="currentEvent[server].eventType === 'challenge'">
+          <p class="q-headline">{{$t('event.musics')}}</p>
           <div class="row justify-center">
-            <img v-for="eventMusic in currentEvent[server].detail.musics" :key="eventMusic.seq" v-if="musicMap[server][eventMusic.musicId]" v-lazy="`/assets/musicjacket/${musicMap[server][eventMusic.musicId].jacketImage}_thumb.png`"
+            <img v-for="eventMusic in currentEvent[server].detail.musics" :key="eventMusic.seq" v-if="musicMap[server][eventMusic.musicId]" v-lazy="`/assets/musicjacket/${musicMap[server][eventMusic.musicId].jacketImage}_rip/thumb.png`"
               style="margin: 4px; cursor: pointer; width: 150px; height: 150px;" @click="$router.push(`/music/${server}/${eventMusic.musicId}`)">
             <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
           </div>
