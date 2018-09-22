@@ -182,7 +182,7 @@
                 <q-card-title>
                   {{episode.title}}
                   <q-btn small color="pink" round flat
-                    @click="$router.push(`/scenario/${server}/chara/${episode.scenarioId}`), $ga.event('card-detail', 'jump', `scenario`)">
+                    @click="$router.push(`/scenario/${server}/${cardInfo.cardRes}/${episode.scenarioId}`), $ga.event('card-detail', 'jump', `scenario`)">
                     <q-icon name="launch"></q-icon>
                   </q-btn>
                   <span v-if="idx" slot="subtitle">{{$t('card.story-max-level')}}</span>
