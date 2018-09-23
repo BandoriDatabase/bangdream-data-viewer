@@ -40,7 +40,7 @@
         </div>
         <br>
         <div>
-          <q-btn color="pink" @click="doFilter(server), saveFilter(), $ga.event('card-overview', 'filter', `apply-save`)">
+          <q-btn color="pink" @click="doFilter(server), saveFilter(), isFilterVisible = false, $ga.event('card-overview', 'filter', `apply-save`)">
             {{$t('common.apply-save')}}
           </q-btn>
         </div>
