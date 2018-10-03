@@ -2,7 +2,7 @@
 export const someMutation = (state) => {}
  */
 
-export const SET_RES_VER = (state, {ver, server}) => {
+export const SET_RES_VER = (state, { ver, server }) => {
   state.resVer[server] = ver
 }
 

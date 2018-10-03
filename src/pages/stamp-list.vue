@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <div style="margin-bottom: 10px;">
+    <div style="margin-bottom: 30px;">
       <span class="q-display-2 text-bold">{{$t('left.stamp')}}</span>
     </div>
     <div class="row gutter-sm" v-if="isReady">

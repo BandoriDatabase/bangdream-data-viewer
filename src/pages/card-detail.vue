@@ -257,9 +257,9 @@ export default {
   },
   async mounted () {
     try {
-      const card = await this.getCardById({cardId: this.$route.params.cardId, server: this.$route.params.server})
-      await this.getSkillById({cardId: card.cardId, server: this.$route.params.server})
-      this.charaInfo = await this.getCharaById({charaId: card.characterId, server: this.$route.params.server})
+      const card = await this.getCardById({ cardId: this.$route.params.cardId, server: this.$route.params.server })
+      await this.getSkillById({ cardId: card.cardId, server: this.$route.params.server })
+      this.charaInfo = await this.getCharaById({ charaId: card.characterId, server: this.$route.params.server })
       if (card.costumeId) this.costumeInfo = await this.$api.getCostumeById(this.$route.params.server, card.costumeId)
       this.isReady = true
       this.level = Number(this.cardInfo.maxLevel)
@@ -375,9 +375,9 @@ export default {
 
     this.$nextTick(async () => {
       try {
-        const card = await this.getCardById({cardId: to.params.cardId, server: to.params.server})
-        await this.getSkillById({cardId: card.cardId, server: to.params.server})
-        this.charaInfo = await this.getCharaById({charaId: card.characterId, server: to.params.server})
+        const card = await this.getCardById({ cardId: to.params.cardId, server: to.params.server })
+        await this.getSkillById({ cardId: card.cardId, server: to.params.server })
+        this.charaInfo = await this.getCharaById({ charaId: card.characterId, server: to.params.server })
         if (card.costumeId) this.costumeInfo = await this.$api.getCostumeById(to.params.server, card.costumeId)
         this.isReady = true
         this.level = Number(this.cardInfo.maxLevel)
@@ -649,7 +649,7 @@ div.row
   background url('~assets/band_icon_5.png') no-repeat
 
 .card-img-band
-  width 100%
+  // width 100%
   height 50px
   background-size contain
   background-position center

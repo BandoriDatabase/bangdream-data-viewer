@@ -129,7 +129,7 @@ export default {
       this.selectedVoice = null
       this.voiceOptions = []
       console.log('start fetch')
-      await this.getCharaLive2d({server: this.server, charaId: this.selectedChara})
+      await this.getCharaLive2d({ server: this.server, charaId: this.selectedChara })
       this.costumeOptions = this.costumeMap[this.server][this.selectedChara].map(elem => ({
         label: elem.description,
         value: elem.costumeId

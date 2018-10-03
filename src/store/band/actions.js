@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-export const getBandList = async ({commit, state}, server) => {
+export const getBandList = async ({ commit, state }, server) => {
   if (state.bandList[server].length) {
     return state.bandList[server]
   }

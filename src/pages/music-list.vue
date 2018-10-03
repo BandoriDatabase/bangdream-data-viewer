@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <div style="margin-bottom: 10px;">
+    <div style="margin-bottom: 30px;">
       <span class="q-display-2 text-bold">{{$t('left.music')}}</span>
       <q-btn :label="$t('common.filter')" style="margin-left: 10px;" class="float-right" @click="isFilterVisible = true"></q-btn>
     </div>
@@ -43,7 +43,7 @@
             <div class="music-desc col-xl-6 col-md-6 col-sm-8 col-8">
               <p class="music-title">{{music.title}}</p>
               <p class="music-band-name">{{music.bandName}}</p>
-              <p class="music-publish">{{(new Date(Number(music.publishedAt))).toLocaleString()}}</p>
+              <!-- <p class="music-publish">{{(new Date(Number(music.publishedAt))).toLocaleString()}}</p> -->
               <div class="music-levels">
                 <span class="music-level music-level-easy">{{music.difficulty[0]}}</span>
                 <span class="music-level music-level-normal">{{music.difficulty[3]}}</span>
@@ -79,7 +79,7 @@ export default {
       selectBandId: [],
       bandOption: [],
       musicList: [],
-      queryParams: {limit: 12, page: 1},
+      queryParams: { limit: 12, page: 1 },
       orderKey: 'publishedAt',
       sortParam: 'desc',
       selectTag: 'all'
@@ -175,7 +175,6 @@ export default {
 
 .music-cover
   position relative
-  width 100%
   padding-top 50%
   cursor pointer
   background-size contain
@@ -225,7 +224,6 @@ span.music-level
     margin-bottom 15px
   .music-cover
     position relative
-    width 100%
     padding-top calc(100% / 3)
     cursor pointer
     background-size contain

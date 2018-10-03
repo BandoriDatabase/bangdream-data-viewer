@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <div>
-      <div style="margin-bottom: 10px;">
+      <div style="margin-bottom: 30px;">
         <span class="q-display-2 text-bold">{{$t('left.card')}}</span>
         <q-btn :label="$t('common.filter')" style="margin-left: 10px;" class="float-right" @click="isFilterVisible = true"></q-btn>
       </div>
@@ -62,11 +62,11 @@
                 </div>
                 <div style="text-align: center;">
                   <p class="q-body-1">[{{card.skill.skillName}}]<br>{{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}</p>
-                  <p class="q-body-1">Lv {{card.maxLevel}}:
+                  <p class="q-body-1 card-list-param">Lv {{card.maxLevel}}:
                     <q-chip small color="pink-6">{{card.maxPerformance}}</q-chip>
                     <q-chip small color="indigo-6">{{card.maxTechnique}}</q-chip>
                     <q-chip small color="orange-8">{{card.maxVisual}}</q-chip>
-                    <q-chip small>{{card.totalMaxParam}}</q-chip>
+                    <q-chip small color="white" class="text-black">{{card.totalMaxParam}}</q-chip>
                   </p>
                 </div>
               </q-card-main>
@@ -163,7 +163,7 @@ export default {
         color: 'orange'
       }],
       cardList: [],
-      queryParams: {limit: 12, page: 1},
+      queryParams: { limit: 12, page: 1 },
       toRomaji,
       isReady: false,
       isFilterVisible: false,
@@ -452,4 +452,7 @@ export default {
   height 35px
   background url('~assets/star_untrained.png') no-repeat
   background-size 100% 100%
+
+p.card-list-param > div
+  margin 0 2px
 </style>

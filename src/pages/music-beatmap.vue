@@ -158,7 +158,7 @@ export default {
     this.server = this.$route.params.server
     if (!AudioContext) return
     this.audioContext = new AudioContext()
-    await this.getMusicById({musicId: this.$route.params.musicId, server: this.server})
+    await this.getMusicById({ musicId: this.$route.params.musicId, server: this.server })
     this.data = this.musicMap.jp[this.$route.params.musicId]
     this.isReady = true
     this.difficultyOptions = [

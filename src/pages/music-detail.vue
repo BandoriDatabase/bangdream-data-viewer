@@ -13,7 +13,7 @@
           author: musicData.bandName,
           url: musicData.bgmFile,
           pic: musicData.thumb
-        }" ref="player" mode="order"></a-player>
+        }" ref="player" mode="order" theme="#Cee"></a-player>
       </div>
       <div class="col-lg-6 col-xs-12">
         <h3>{{musicData.title}}</h3>
@@ -151,7 +151,7 @@ export default {
   mounted () {
     this.$nextTick(async () => {
       try {
-        await this.getMusicById({musicId: this.musicId, server: this.server})
+        await this.getMusicById({ musicId: this.musicId, server: this.server })
         this.isReady = true
       } catch (error) {
         this.isError = true
@@ -198,7 +198,7 @@ export default {
     this.isError = false
     this.$nextTick(async () => {
       try {
-        await this.getMusicById({musicId: this.musicId, server: this.server})
+        await this.getMusicById({ musicId: this.musicId, server: this.server })
         this.isReady = true
       } catch (error) {
         this.isError = true
@@ -232,4 +232,7 @@ span.music-difficulty span
     text-align center
     line-height 18px
     margin-right 5px
+
+span.music-difficulty > div
+  margin 0 2px
 </style>

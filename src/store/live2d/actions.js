@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-export const getCharaLive2d = async ({commit, state}, {server, charaId}) => {
+export const getCharaLive2d = async ({ commit, state }, { server, charaId }) => {
   if (state.voiceMap[server][charaId] && state.costumeMap[server][charaId]) {
     return {
       voices: state.voiceMap[server][charaId],
@@ -12,4 +12,4 @@ export const getCharaLive2d = async ({commit, state}, {server, charaId}) => {
   return charaLive2d
 }
 
-export const setForceReload = ({commit}) => commit('SET_FORCE_RELOAD')
+export const setForceReload = ({ commit }) => commit('SET_FORCE_RELOAD')
