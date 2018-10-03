@@ -62,11 +62,11 @@
                 </div>
                 <div style="text-align: center;">
                   <p class="q-body-1">[{{card.skill.skillName}}]<br>{{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}</p>
-                  <p class="q-body-1">Lv {{card.maxLevel}}:
+                  <p class="q-body-1 card-list-param">Lv {{card.maxLevel}}:
                     <q-chip small color="pink-6">{{card.maxPerformance}}</q-chip>
                     <q-chip small color="indigo-6">{{card.maxTechnique}}</q-chip>
                     <q-chip small color="orange-8">{{card.maxVisual}}</q-chip>
-                    <q-chip small>{{card.totalMaxParam}}</q-chip>
+                    <q-chip small color="white" class="text-black">{{card.totalMaxParam}}</q-chip>
                   </p>
                 </div>
               </q-card-main>
@@ -452,4 +452,7 @@ export default {
   height 35px
   background url('~assets/star_untrained.png') no-repeat
   background-size 100% 100%
+
+p.card-list-param > div
+  margin 0 2px
 </style>

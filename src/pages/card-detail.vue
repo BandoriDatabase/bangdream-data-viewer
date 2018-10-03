@@ -649,7 +649,7 @@ div.row
   background url('~assets/band_icon_5.png') no-repeat
 
 .card-img-band
-  width 100%
+  // width 100%
   height 50px
   background-size contain
   background-position center

@@ -232,4 +232,7 @@ span.music-difficulty span
     text-align center
     line-height 18px
     margin-right 5px
+
+span.music-difficulty > div
+  margin 0 2px
 </style>
