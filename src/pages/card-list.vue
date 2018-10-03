@@ -163,7 +163,7 @@ export default {
         color: 'orange'
       }],
       cardList: [],
-      queryParams: {limit: 12, page: 1},
+      queryParams: { limit: 12, page: 1 },
       toRomaji,
       isReady: false,
       isFilterVisible: false,

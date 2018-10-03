@@ -1,5 +1,5 @@
 import VueI18n from 'vue-i18n'
-import Quasar, { LocalStorage } from 'quasar'
+import { Quasar, LocalStorage } from 'quasar'
 import messages from 'src/i18n'
 
 export default ({ app, router, Vue }) => {

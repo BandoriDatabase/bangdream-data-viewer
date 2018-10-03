@@ -151,7 +151,7 @@ export default {
   mounted () {
     this.$nextTick(async () => {
       try {
-        await this.getMusicById({musicId: this.musicId, server: this.server})
+        await this.getMusicById({ musicId: this.musicId, server: this.server })
         this.isReady = true
       } catch (error) {
         this.isError = true
@@ -198,7 +198,7 @@ export default {
     this.isError = false
     this.$nextTick(async () => {
       try {
-        await this.getMusicById({musicId: this.musicId, server: this.server})
+        await this.getMusicById({ musicId: this.musicId, server: this.server })
         this.isReady = true
       } catch (error) {
         this.isError = true

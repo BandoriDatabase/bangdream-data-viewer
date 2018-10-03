@@ -31,7 +31,7 @@ export default ({ app, router, Vue }) => {
 
   Vue.use((Vue) => {
     const ImgPreClass = Vue.extend(imgPreview)
-    const imgVM = new ImgPreClass({el: document.createElement('div')})
+    const imgVM = new ImgPreClass({ el: document.createElement('div') })
     document.body.appendChild(imgVM.$el)
 
     Vue.preview = Vue.prototype.$preview = {

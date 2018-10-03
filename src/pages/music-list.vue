@@ -79,7 +79,7 @@ export default {
       selectBandId: [],
       bandOption: [],
       musicList: [],
-      queryParams: {limit: 12, page: 1},
+      queryParams: { limit: 12, page: 1 },
       orderKey: 'publishedAt',
       sortParam: 'desc',
       selectTag: 'all'

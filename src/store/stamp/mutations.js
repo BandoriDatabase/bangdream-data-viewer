@@ -1,4 +1,4 @@
-export const SET_STAMP_LIST = (state, {stamps, server}) => {
+export const SET_STAMP_LIST = (state, { stamps, server }) => {
   state.stampList[server] = stamps
 }
 

@@ -1,8 +1,8 @@
-export const SET_CHARA_LIST = async (state, {data, server}) => {
+export const SET_CHARA_LIST = async (state, { data, server }) => {
   state.charaList[server] = data
 }
 
-export const SET_BAND_CHARA_LIST = async (state, {data, server}) => {
+export const SET_BAND_CHARA_LIST = async (state, { data, server }) => {
   state.bandCharaList[server] = data
 }
 
