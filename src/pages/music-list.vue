@@ -175,7 +175,6 @@ export default {
 
 .music-cover
   position relative
-  width 100%
   padding-top 50%
   cursor pointer
   background-size contain
@@ -225,7 +224,6 @@ span.music-level
     margin-bottom 15px
   .music-cover
     position relative
-    width 100%
     padding-top calc(100% / 3)
     cursor pointer
     background-size contain
