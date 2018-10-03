@@ -13,7 +13,7 @@
           author: musicData.bandName,
           url: musicData.bgmFile,
           pic: musicData.thumb
-        }" ref="player" mode="order"></a-player>
+        }" ref="player" mode="order" theme="#Cee"></a-player>
       </div>
       <div class="col-lg-6 col-xs-12">
         <h3>{{musicData.title}}</h3>
