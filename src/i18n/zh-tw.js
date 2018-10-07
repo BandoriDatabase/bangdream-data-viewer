@@ -73,8 +73,8 @@ export default {
       'next': '下次過生日的是'
     },
     'data-lang': '遊戲數據語言',
-    'anime': '動畫',
-    'normal': '原創',
+    'cover': '翻唱',
+    'original': '原創',
     'all': '全部',
     'release-date': '加入遊戲時間',
     'back-to-list': '返回列表'
