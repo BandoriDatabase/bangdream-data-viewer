@@ -73,8 +73,8 @@ export default {
       'next': 'Next birthday on'
     },
     'data-lang': 'Game Data Lang',
-    'anime': 'Anime',
-    'normal': 'Normal',
+    'cover': 'Cover',
+    'original': 'Original',
     'all': 'All',
     'release-date': 'Release Date',
     'back-to-list': 'Return to list'
