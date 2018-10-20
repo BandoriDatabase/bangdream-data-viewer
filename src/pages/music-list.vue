@@ -13,8 +13,8 @@
         <div class="q-mt-md">
           <p>{{$t('music.tag')}}</p>
           <div>
-            <q-radio color="pink" v-model="selectTag" val="anime" :label="$t('common.anime')" />
-            <q-radio color="pink" v-model="selectTag" val="normal" :label="$t('common.normal')" />
+            <q-radio color="pink" v-model="selectTag" val="anime" :label="$t('common.cover')" />
+            <q-radio color="pink" v-model="selectTag" val="normal" :label="$t('common.original')" />
             <q-radio color="pink" v-model="selectTag" val="all" :label="$t('common.all')" />
           </div>
         </div>
