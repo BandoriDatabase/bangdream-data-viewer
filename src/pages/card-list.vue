@@ -285,21 +285,21 @@ export default {
       } finally {
         done()
       }
-    },
-    getCardImg (cardId, cardRes, type) {
-      if (this.$specialCardList[this.server].indexOf(cardId) !== -1) {
-        return `/assets-${this.server}/characters/resourceset/${cardRes}_card_${type}.png`
-      }
-      return `/assets/characters/resourceset/${cardRes}_card_${type}.png`
-    },
-    getCardThumb (card, type) {
-      let groupId = Math.trunc(card.cardId / 50).toString()
-      groupId = `${'0'.repeat(5 - groupId.length)}${groupId}`
-      if (this.$specialCardList[this.server].indexOf(card.cardId) !== -1) {
-        return `/assets-${this.server}/thumb/chara/card${groupId}_${card.cardRes}_${type}.png`
-      }
-      return `/assets/thumb/chara/card${groupId}_${card.cardRes}_${type}.png`
     }
+    // getCardImg (cardId, cardRes, type) {
+    //   if (this.$specialCardList[this.server].indexOf(cardId) !== -1) {
+    //     return `/assets-${this.server}/characters/resourceset/${cardRes}_card_${type}.png`
+    //   }
+    //   return `/assets/characters/resourceset/${cardRes}_card_${type}.png`
+    // },
+    // getCardThumb (card, type) {
+    //   let groupId = Math.trunc(card.cardId / 50).toString()
+    //   groupId = `${'0'.repeat(5 - groupId.length)}${groupId}`
+    //   if (this.$specialCardList[this.server].indexOf(card.cardId) !== -1) {
+    //     return `/assets-${this.server}/thumb/chara/card${groupId}_${card.cardRes}_${type}.png`
+    //   }
+    //   return `/assets/thumb/chara/card${groupId}_${card.cardRes}_${type}.png`
+    // }
   },
   beforeRouteUpdate (to, from, next) {
     this.updateData(to.params.server)

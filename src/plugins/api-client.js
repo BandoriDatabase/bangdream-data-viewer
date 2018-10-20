@@ -59,8 +59,12 @@ export default ({ app, router, Vue }) => {
       return Vue.http.get(`/api/v1/${server}/skill`)
         .then(res => res.json())
     },
-    getCardsBySkillId (id, server) {
+    getSkillDetail (id, server) {
       return Vue.http.get(`/api/v1/${server}/skill/${id}`)
+        .then(res => res.json())
+    },
+    getCardsBySkillId (id, server) {
+      return Vue.http.get(`/api/v1/${server}/skill/cards/${id}`)
         .then(res => res.json())
     },
     getSingleFrameCartoon (server) {

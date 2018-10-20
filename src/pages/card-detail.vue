@@ -315,22 +315,22 @@ export default {
     ]),
     openURL,
     getCardThumb () {
-      if (this.$specialCardList[this.server].indexOf(this.cardId) !== -1) {
-        return `/assets-${this.server}/thumb/chara/card${this.cardGroup}_rip/${this.cardInfo.cardRes}_${this.cardResType}.png`
-      }
-      return `/assets/thumb/chara/card${this.cardGroup}_rip/${this.cardInfo.cardRes}_${this.cardResType}.png`
+      // if (this.$specialCardList[this.server].indexOf(this.cardId) !== -1) {
+      return `/assets-${this.server}/thumb/chara/card${this.cardGroup}_rip/${this.cardInfo.cardRes}_${this.cardResType}.png`
+      // }
+      // return `/assets/thumb/chara/card${this.cardGroup}_rip/${this.cardInfo.cardRes}_${this.cardResType}.png`
     },
     getCardImage () {
-      if (this.$specialCardList[this.server].indexOf(this.cardId) !== -1) {
-        return `/assets-${this.server}/characters/resourceset/${this.cardInfo.cardRes}_rip/${this.cardImgType}_${this.cardResType}.png`
-      }
-      return `/assets/characters/resourceset/${this.cardInfo.cardRes}_rip/${this.cardImgType}_${this.cardResType}.png`
+      // if (this.$specialCardList[this.server].indexOf(this.cardId) !== -1) {
+      return `/assets-${this.server}/characters/resourceset/${this.cardInfo.cardRes}_rip/${this.cardImgType}_${this.cardResType}.png`
+      // }
+      // return `/assets/characters/resourceset/${this.cardInfo.cardRes}_rip/${this.cardImgType}_${this.cardResType}.png`
     },
     getCardLivesd () {
-      if (this.$specialCardList[this.server].indexOf(this.cardId) !== -1) {
-        return `/assets-${this.server}/characters/livesd/${this.cardInfo.live2dRes}_rip/sdchara.png`
-      }
+      // if (this.$specialCardList[this.server].indexOf(this.cardId) !== -1) {
       return `/assets-${this.server}/characters/livesd/${this.cardInfo.live2dRes}_rip/sdchara.png`
+      // }
+      // return `/assets-${this.server}/characters/livesd/${this.cardInfo.live2dRes}_rip/sdchara.png`
     },
     switchCardResType () {
       if (this.cardResType === 'normal') {
