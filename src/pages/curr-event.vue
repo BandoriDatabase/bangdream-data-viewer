@@ -2,7 +2,7 @@
   <q-page padding>
     <q-card v-if="isEventReady">
       <q-card-media>
-        <div v-if="currentEvent[server].eventType === 'challenge' || currentEvent[server].eventType === 'versus' || currentEvent[server].eventType === 'live_try'" class="event-cover"
+        <div v-if="currentEvent[server].eventType === 'challenge' || currentEvent[server].eventType === 'versus' || currentEvent[server].eventType === 'live_try' || currentEvent[server].eventType === 'mission_live'" class="event-cover"
           :style="{ 'background-image': `url(/assets/event/${currentEvent[server].assetBundleName}/topscreen_rip/trim_eventtop.png), url(/assets/event/${currentEvent[server].assetBundleName}/topscreen_rip/bg_eventtop.png)` }"></div>
         <div v-else class="event-cover" :style="{ 'background-image': `url(/assets/event/${currentEvent[server].assetBundleName}/topscreen_rip/bg_eventtop.png)` }"></div>
         <q-card-title slot="overlay">
