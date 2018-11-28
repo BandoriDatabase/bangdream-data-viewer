@@ -9,7 +9,7 @@
     </div>
     <q-collapsible :label="$t('common.event')" v-model="isEventOpen">
       <div class="row col-12 gutter-sm">
-        <event-card v-for="server in $servers" :key="server" class="col-xl-3 col-md-6 col-12" :server="server"></event-card>
+        <event-card v-for="server in $servers" :key="server" v-if="server !== 'kr'" class="col-lg-4 col-md-6 col-12" :server="server"></event-card>
       </div>
     </q-collapsible>
     <q-collapsible :label="$t('common.gacha')" v-model="isGachaOpen">
@@ -37,7 +37,7 @@
           </div>
         </lazy-component>
       </q-collapsible>
-      <q-collapsible :label="$t('common.kr')" v-model="isOpen.kr">
+      <!-- <q-collapsible :label="$t('common.kr')" v-model="isOpen.kr">
         <lazy-component @show="loadGachaData('kr')">
           <div class="row col-12 gutter-sm">
             <div v-if="isGcahaReady.kr" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.kr" :key="gacha.seq">
@@ -48,7 +48,7 @@
             </div>
           </div>
         </lazy-component>
-      </q-collapsible>
+      </q-collapsible> -->
       <q-collapsible :label="$t('common.en')" v-model="isOpen.en">
         <lazy-component @show="loadGachaData('en')">
           <div class="row col-12 gutter-sm">
