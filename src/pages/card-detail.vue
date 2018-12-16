@@ -70,7 +70,7 @@
                     v-model="level"
                     type="number"
                     :min="1"
-                    :max="cardResType === 'normal' ? cardInfo.levelLimit : cardInfo.maxLv"
+                    :max="cardResType === 'normal' ? cardInfo.levelLimit : cardInfo.simpleParams.max.level"
                   ></q-input>
                 </div>
                 <br>
@@ -262,7 +262,7 @@ export default {
       this.charaInfo = await this.getCharaById({ charaId: card.characterId, server: this.$route.params.server })
       if (card.costumeId) this.costumeInfo = await this.$api.getCostumeById(this.$route.params.server, card.costumeId)
       this.isReady = true
-      this.level = Number(this.cardInfo.maxLevel)
+      this.level = Number(this.cardInfo.levelLimit)
       this.skillLv = this.skillInfo.skillDetail.slice(-1)[0].skillLevel
 
       if (this.isTrained) this.switchCardResType()
@@ -335,10 +335,10 @@ export default {
     switchCardResType () {
       if (this.cardResType === 'normal') {
         this.cardResType = 'after_training'
-        this.level = Number(this.cardInfo.maxLevel)
+        this.level = Number(this.cardInfo.simpleParams.max.level)
       } else if (this.cardResType === 'after_training') {
         this.cardResType = 'normal'
-        this.level = Number(this.cardInfo.maxLevel) - 10
+        this.level = Number(this.cardInfo.simpleParams.max.level) - 10
       }
     },
     switchCardImgType () {
@@ -380,7 +380,7 @@ export default {
         this.charaInfo = await this.getCharaById({ charaId: card.characterId, server: to.params.server })
         if (card.costumeId) this.costumeInfo = await this.$api.getCostumeById(to.params.server, card.costumeId)
         this.isReady = true
-        this.level = Number(this.cardInfo.maxLevel)
+        this.level = Number(this.cardInfo.simpleParams.max.level)
         this.skillLv = this.skillInfo.skillDetail.slice(-1)[0].skillLevel
       } catch (error) {
         this.isError = true

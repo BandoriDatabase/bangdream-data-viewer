@@ -33,10 +33,10 @@
         <div class="row gutter">
           <q-radio color="pink" v-model="orderKey" val="cardId" label="ID" />
           <q-radio color="pink" v-model="orderKey" val="rarity" :label="$t('common.rarity')" />
-          <q-radio color="pink" v-model="orderKey" val="maxPerformance" :label="$t('common.perform')" />
-          <q-radio color="pink" v-model="orderKey" val="maxTechnique" :label="$t('common.technic')" />
-          <q-radio color="pink" v-model="orderKey" val="maxVisual" :label="$t('common.visual')" />
-          <q-radio color="pink" v-model="orderKey" val="totalMaxParam" :label="$t('common.total')" />
+          <q-radio color="pink" v-model="orderKey" val="simpleParams.max.performance" :label="$t('common.perform')" />
+          <q-radio color="pink" v-model="orderKey" val="simpleParams.max.technique" :label="$t('common.technic')" />
+          <q-radio color="pink" v-model="orderKey" val="simpleParams.max.visual" :label="$t('common.visual')" />
+          <q-radio color="pink" v-model="orderKey" val="simpleParams.max.total" :label="$t('common.total')" />
         </div>
         <br>
         <div>
@@ -62,47 +62,23 @@
                 </div>
                 <div style="text-align: center;">
                   <p class="q-body-1">[{{card.skill.skillName}}]<br>{{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}</p>
-                  <p class="q-body-1 card-list-param">Lv {{card.maxLevel}}:
-                    <q-chip small color="pink-6">{{card.maxPerformance}}</q-chip>
-                    <q-chip small color="indigo-6">{{card.maxTechnique}}</q-chip>
-                    <q-chip small color="orange-8">{{card.maxVisual}}</q-chip>
-                    <q-chip small color="white" class="text-black">{{card.totalMaxParam}}</q-chip>
+                  <p class="q-body-1 card-list-param">Lv {{card.simpleParams.min.level}}:
+                    <q-chip small color="pink-6">{{card.simpleParams.min.performance}}</q-chip>
+                    <q-chip small color="indigo-6">{{card.simpleParams.min.technique}}</q-chip>
+                    <q-chip small color="orange-8">{{card.simpleParams.min.visual}}</q-chip>
+                    <q-chip small color="gray" class="text-black">{{card.simpleParams.min.total}}</q-chip>
+                  </p>
+                  <p class="q-body-1 card-list-param">Lv {{card.simpleParams.max.level}}:
+                    <q-chip small color="pink-6">{{card.simpleParams.max.performance}}</q-chip>
+                    <q-chip small color="indigo-6">{{card.simpleParams.max.technique}}</q-chip>
+                    <q-chip small color="orange-8">{{card.simpleParams.max.visual}}</q-chip>
+                    <q-chip small color="gray" class="text-black">{{card.simpleParams.max.total}}</q-chip>
                   </p>
                 </div>
               </q-card-main>
             </q-card>
           </div>
         </div>
-        <!-- <div class="row lt-md gutter-sm">
-          <div v-for="card in cardList" :key="card.cardId" class="col-12 full-height">
-            <q-card>
-              <q-card-main>
-                <div style="text-align: center;">
-                  <img style="height: 24px; width: 24px;" v-for="i in Number(card.rarity)" :key="i" src="~assets/star_untrained.png" />
-                </div>
-                <div style="text-align: center; padding-bottom: 10px;">
-                  <span :class="`text-${paletteMap[card.attr]}`">[{{card.title}}] {{displayName ?
-                    capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) :
-                    bandCharaList[server][Number(card.characterId) - 1].characterName}}</span>
-                </div>
-                <div class="row items-center justify-center" style="padding-bottom: 10px;">
-                  <img class="col-4" :src="getCardThumb(card, 'normal')" style="padding-right: 5px"
-                    @click="$router.push(`/card/${server}/${card.cardId}/0`), $ga.event('card-overview', 'jump', `normal-detail`)"
-                    v-if="card.title !== 'ガルパ杯'">
-                  <img class="col-4" :src="getCardThumb(card, 'after_training')" style="padding-right: 5px"
-                    @click="$router.push(`/card/${server}/${card.cardId}/1`), $ga.event('card-overview', 'jump', `trained-detail`)"
-                    v-if="(card.rarity >= 3 && card.title !== 'ガルパ杯') || card.title === 'ガルパ杯'">
-                </div>
-                <div style="text-align: center;">
-                  [ {{card.skill.skillName}} ]<br>
-                  {{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}<br><br>
-                  Lv {{card.maxLevel}}: {{card.maxPerformance}}/{{card.maxTechnique}}/{{card.maxVisual}}/{{card.totalMaxParam}}
-                </div>
-              </q-card-main>
-            </q-card>
-          </div>
-        </div> -->
-
         <div slot="message" class="row justify-center items-center" style="margin-bottom: 50px;">
           <q-spinner color="pink" size="48px"></q-spinner>
           Loading more cards...
