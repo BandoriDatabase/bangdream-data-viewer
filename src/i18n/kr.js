@@ -21,19 +21,12 @@ export default {
     'desc': 'Bandori Database WebApp has a major update, many improvements are made to help you use the WebApp better.',
     'new-features': '새로운 기능',
     'feature-detail': [
-      'Event card on home page use the same countdown layout as gacha card',
-      'Move "change server" from sidebar to "SETTINGS" button on right top corner',
-      'Redesigned card list page',
-      'In music list page, display band icon under the music name instead of on the jacket image',
-      'Add "Return" button for some detail pages',
-      'Redesigned card detail page, add a button for jumping to Live2D costume for current card (if exists)',
-      'Single Frame Cartoon of Japan Server comes back',
-      'Add "Tag" and "Release Date" to music list filter, default sort is "Release Date"'
+      'Add game title screen list page',
+      'Show minimal params in card list page'
     ],
     'fixed-bugs': '버그 픽스',
     'bug-detail': [
-      'Fix crash of beatmap player when playing some charts',
-      'Fix wrong bonus info for current event'
+      'Minor bugs are fixed'
     ],
     'welcome-bug-report': "If you find any problem affecting you use this web app, please report it to me per <a href='mailto:dev@bandori.ga'>Email</a>, on <a href='https://dnaroma.site/2017/12/23/bug-report/'>Bug report page</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
   },

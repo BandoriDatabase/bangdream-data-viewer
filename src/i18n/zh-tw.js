@@ -14,26 +14,20 @@ export default {
     'Live2d': 'Live2D',
     'update-note': '更新說明',
     'useful-link': '重要鏈接',
-    'stamp': '表情貼紙'
+    'stamp': '表情貼紙',
+    'gametitle': '遊戲標題界面'
   },
   'update': {
     'title': '更新說明',
     'desc': 'Bandori Database（少女樂團派對數據庫）網頁應用迎來重大更新，有多項改進優化您的使用體驗。完整鏈接請訪問<a href="https://dnaroma.site/update-notice-zhcn/">博客頁面</a>',
     'new-features': '新特性',
     'feature-detail': [
-      '首頁活動卡片使用和扭蛋卡片相同的倒計時樣式',
-      '取消側邊欄分服務器的次級菜單，切換服務器數據在右上角的“SETTINGS”按鈕的菜單裏',
-      '卡牌列表界面重新設計，取消色塊底色，排版更加緊湊',
-      '歌曲列表從歌曲封面分離樂隊圖標，顯示在卡片內容裏',
-      '各詳情界面添加返回列表按鈕',
-      '卡片詳情界面重新設計，排版更加緊湊，如果存在對應Live2D服裝添加按鈕可以跳轉至對應頁面',
-      '日服的漫畫界面回歸',
-      '歌曲列表過濾器允許按照歌曲類型和加入遊戲時間排序，默認順序改為按照加入遊戲時間排序'
+      '添加遊戲標題畫面列表頁面',
+      '卡牌列表頁面顯示一級數據'
     ],
     'fixed-bugs': '修復的問題',
     'bug-detail': [
-      '修正某些歌曲譜面播放器會卡死的問題',
-      '修正當前活動中加成信息錯誤的問題'
+      '修復部分小錯誤'
     ],
     'welcome-bug-report': "如果妳在使用本網站的過程中遇到任何問題, 歡迎通過<a href='mailto:dev@bandori.ga'>Email</a>, <a href='https://dnaroma.site/2017/12/23/bug-report/'>問題反饋頁面</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反饋問題。"
   },

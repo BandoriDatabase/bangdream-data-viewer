@@ -15,7 +15,7 @@ export default [
       { name: 'live2d', path: 'l2d/:server(\\S{2})/:costumeId(\\d+)?', component: () => import('pages/live2d') },
       { name: 'currEvent', path: 'currevent/:server(\\S{2})', component: () => import('pages/curr-event') },
       { name: 'stampList', path: 'stamp/:server(\\S{2})', component: () => import('pages/stamp-list') },
-      { name: 'titleList', path: 'title', component: () => import('pages/title-images') },
+      { name: 'titleList', path: 'titles', component: () => import('pages/title-images') },
       { name: 'about', path: 'about', component: () => import('pages/about') }
     ]
   },

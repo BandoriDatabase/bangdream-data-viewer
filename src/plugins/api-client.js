@@ -114,6 +114,9 @@ export default ({ app, router, Vue }) => {
     getCostumeById (server, costumeId) {
       return Vue.http.get(`/api/v1/${server}/live2d/costume/${costumeId}`)
         .then(res => res.json())
+    },
+    getTitles () {
+      return Vue.http.get('/assets/title/').then(res => res.json())
     }
   }
 }

@@ -37,125 +37,30 @@
           <q-item-main :label="$t('left.home')" />
         </q-item>
         <q-item @click.native="$router.push(`/card/overview/${$dataLang}`)" v-ripple>
-          <!-- <q-list
-            no-border
-            link
-          >
-            <q-item @click.native="$router.push('/card/overview/jp')" v-ripple>
-              <q-item-main :label="$t('common.jp')" />
-            </q-item>
-            <q-item @click.native="$router.push('/card/overview/tw')" v-ripple>
-              <q-item-main :label="$t('common.tw')" />
-            </q-item>
-            <q-item @click.native="$router.push('/card/overview/kr')" v-ripple>
-              <q-item-main :label="$t('common.kr')" />
-            </q-item>
-            <q-item @click.native="$router.push('/card/overview/en')" v-ripple>
-              <q-item-main :label="$t('common.en')" />
-            </q-item>
-          </q-list> -->
           <q-item-side icon="picture_in_picture" />
           <q-item-main :label="$t('left.card')" />
         </q-item>
         <q-item @click.native="$router.push(`/music/${$dataLang}`)" v-ripple>
-          <!-- <q-list
-            no-border
-            link
-          >
-            <q-item @click.native="$router.push('/music/jp')" v-ripple>
-              <q-item-main :label="$t('common.jp')" />
-            </q-item>
-            <q-item @click.native="$router.push('/music/tw')" v-ripple>
-              <q-item-main :label="$t('common.tw')" />
-            </q-item>
-            <q-item @click.native="$router.push('/music/kr')" v-ripple>
-              <q-item-main :label="$t('common.kr')" />
-            </q-item>
-            <q-item @click.native="$router.push('/music/en')" v-ripple>
-              <q-item-main :label="$t('common.en')" />
-            </q-item>
-          </q-list> -->
           <q-item-side icon="library_music" />
           <q-item-main :label="$t('left.music')" />
         </q-item >
         <q-item @click.native="$router.push(`/sfcs/${$dataLang}`)" v-ripple>
-          <!-- <q-list
-            no-border
-            link
-          >
-            <q-item @click.native="$router.push('/sfcs/tw')" v-ripple>
-              <q-item-main :label="$t('common.tw')" />
-            </q-item>
-            <q-item @click.native="$router.push('/sfcs/kr')" v-ripple>
-              <q-item-main :label="$t('common.kr')" />
-            </q-item>
-            <q-item @click.native="$router.push('/sfcs/en')" v-ripple>
-              <q-item-main :label="$t('common.en')" />
-            </q-item>
-          </q-list> -->
           <q-item-side icon="photo_library" />
           <q-item-main :label="$t('left.SFC')" />
         </q-item>
+        <q-item @click.native="$router.push(`/titles`)" v-ripple>
+          <q-item-side icon="aspect_ratio" />
+          <q-item-main :label="$t('left.gametitle')" />
+        </q-item>
         <q-item @click.native="$router.push(`/stamp/${$dataLang}`)" v-ripple>
-          <!-- <q-list
-            no-border
-            link
-          >
-            <q-item @click.native="$router.push('/stamp/jp')" v-ripple>
-              <q-item-main :label="$t('common.jp')" />
-            </q-item>
-            <q-item @click.native="$router.push('/stamp/tw')" v-ripple>
-              <q-item-main :label="$t('common.tw')" />
-            </q-item>
-            <q-item @click.native="$router.push('/stamp/kr')" v-ripple>
-              <q-item-main :label="$t('common.kr')" />
-            </q-item>
-            <q-item @click.native="$router.push('/stamp/en')" v-ripple>
-              <q-item-main :label="$t('common.en')" />
-            </q-item>
-          </q-list> -->
           <q-item-side icon="loyalty" />
           <q-item-main :label="$t('left.stamp')" />
         </q-item>
         <q-item @click.native="$router.push(`/l2d/${$dataLang}`)" v-ripple>
-          <!-- <q-list
-            no-border
-            link
-          >
-            <q-item @click.native="$router.push('/l2d/jp')" v-ripple>
-              <q-item-main :label="$t('common.jp')" />
-            </q-item>
-            <q-item @click.native="$router.push('/l2d/tw')" v-ripple>
-              <q-item-main :label="$t('common.tw')" />
-            </q-item>
-            <q-item @click.native="$router.push('/l2d/kr')" v-ripple>
-              <q-item-main :label="$t('common.kr')" />
-            </q-item>
-            <q-item @click.native="$router.push('/l2d/en')" v-ripple>
-              <q-item-main :label="$t('common.en')" />
-            </q-item>
-          </q-list> -->
           <q-item-side icon="record_voice_over" />
           <q-item-main :label="$t('left.Live2d')" />
         </q-item>
         <q-item @click.native="$router.push(`/currevent/${$dataLang}`)" v-ripple>
-          <!-- <q-list
-            no-border
-            link
-          >
-            <q-item @click.native="$router.push('/currevent/jp')" v-ripple>
-              <q-item-main :label="$t('common.jp')" />
-            </q-item>
-            <q-item @click.native="$router.push('/currevent/tw')" v-ripple>
-              <q-item-main :label="$t('common.tw')" />
-            </q-item>
-            <q-item @click.native="$router.push('/currevent/kr')" v-ripple>
-              <q-item-main :label="$t('common.kr')" />
-            </q-item>
-            <q-item @click.native="$router.push('/currevent/en')" v-ripple>
-              <q-item-main :label="$t('common.en')" />
-            </q-item>
-          </q-list> -->
           <q-item-side icon="schedule" />
           <q-item-main :label="$t('left.current-event')" />
         </q-item>
@@ -267,7 +172,7 @@ export default {
   data () {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
-      appVer: '0.8.0',
+      appVer: '0.8.1',
       moremenuOpen: false,
       isHeaderShow: true
     }

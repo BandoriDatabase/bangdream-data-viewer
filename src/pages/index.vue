@@ -9,15 +9,17 @@
     </div>
     <q-collapsible :label="$t('common.event')" v-model="isEventOpen">
       <div class="row col-12 gutter-sm">
-        <event-card v-for="server in $servers" :key="server" v-if="server !== 'kr'" class="col-lg-4 col-md-6 col-12" :server="server"></event-card>
+        <div v-for="server in servers" :key="server" class="col-lg-4 col-md-6 col-12">
+          <event-card :server="server"></event-card>
+        </div>
       </div>
     </q-collapsible>
     <q-collapsible :label="$t('common.gacha')" v-model="isGachaOpen">
       <q-collapsible :label="$t('common.jp')" v-model="isOpen.jp">
         <lazy-component @show="loadGachaData('jp')">
           <div class="row col-12 gutter-sm">
-            <div v-if="isGcahaReady.jp" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.jp" :key="gacha.seq">
-              <gacha-card server="jp" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'jp')"></gacha-card>
+            <div v-if="isGcahaReady.jp" class="row col-12 gutter-sm">
+              <gacha-card server="jp" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.jp" :key="gacha.seq" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'jp')"></gacha-card>
             </div>
             <div v-if="!isGcahaReady.jp" class="col-12">
               <q-spinner color="pink" size="48px"></q-spinner>
@@ -28,8 +30,8 @@
       <q-collapsible :label="$t('common.tw')" v-model="isOpen.tw">
         <lazy-component @show="loadGachaData('tw')">
           <div class="row col-12 gutter-sm">
-            <div v-if="isGcahaReady.tw" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.tw" :key="gacha.seq">
-              <gacha-card server="tw" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'tw')"></gacha-card>
+            <div v-if="isGcahaReady.tw" class="row col-12 gutter-sm">
+              <gacha-card server="tw" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.tw" :key="gacha.seq" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'tw')"></gacha-card>
             </div>
             <div v-if="!isGcahaReady.tw" class="col-12">
               <q-spinner color="pink" size="48px"></q-spinner>
@@ -37,23 +39,11 @@
           </div>
         </lazy-component>
       </q-collapsible>
-      <!-- <q-collapsible :label="$t('common.kr')" v-model="isOpen.kr">
-        <lazy-component @show="loadGachaData('kr')">
-          <div class="row col-12 gutter-sm">
-            <div v-if="isGcahaReady.kr" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.kr" :key="gacha.seq">
-              <gacha-card server="kr" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'kr')"></gacha-card>
-            </div>
-            <div v-if="!isGcahaReady.kr" class="col-12">
-              <q-spinner color="pink" size="48px"></q-spinner>
-            </div>
-          </div>
-        </lazy-component>
-      </q-collapsible> -->
       <q-collapsible :label="$t('common.en')" v-model="isOpen.en">
         <lazy-component @show="loadGachaData('en')">
           <div class="row col-12 gutter-sm">
-            <div v-if="isGcahaReady.en" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.en" :key="gacha.seq">
-              <gacha-card server="en" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'en')"></gacha-card>
+            <div v-if="isGcahaReady.en" class="row col-12 gutter-sm">
+              <gacha-card server="en" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.en" :key="gacha.seq" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'en')"></gacha-card>
             </div>
             <div v-if="!isGcahaReady.en" class="col-12">
               <q-spinner color="pink" size="48px"></q-spinner>
@@ -107,7 +97,10 @@ export default {
   computed: {
     ...mapState('gacha', [
       'currentGachaList'
-    ])
+    ]),
+    servers () {
+      return this.$servers.filter(elem => elem !== 'kr')
+    }
   },
   methods: {
     ...mapActions('gacha', [

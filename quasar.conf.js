@@ -79,16 +79,9 @@ module.exports = function (ctx) {
             '^/live2d': ''
           }
         },
-        '/titles': {
-          target: 'http://localhost:8080',
-          changeOrigin: true,
-          pathRewrite: {
-            '^/live2d': ''
-          }
-        },
         '/api': {
-          // target: 'https://api.bandori.ga',
-          target: 'http://localhost:8180',
+          target: 'https://api.bandori.ga',
+          // target: 'http://localhost:8180',
           changeOrigin: true,
           pathRewrite: {
             '^/api/v1': '/v1'
