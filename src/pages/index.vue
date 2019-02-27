@@ -2,10 +2,14 @@
   <q-page padding class="column gutter-sm">
     <p style="text-align: center;" v-if="!$q.platform.is.desktop">{{$t('mobile.click-collapsible')}}</p>
     <div v-if="birthdayInfo" class="row items-center gutter-sm">
-      <div v-if="birthdayInfo.today">{{$t('common.birthday.today')}}</div>
-      <div v-if="birthdayInfo.today"><img :src="`statics/chara_icon_${birthdayInfo.today.chara.characterId}.png`"></div>
-      <div>{{$t('common.birthday.next')}} {{`${birthdayInfo.next.birthday.month}/${birthdayInfo.next.birthday.day}`}}</div>
-      <div><img :src="`statics/chara_icon_${birthdayInfo.next.chara.characterId}.png`"></div>
+      <div v-if="birthdayInfo.today.length">{{$t('common.birthday.today')}}</div>
+      <div v-if="birthdayInfo.today.length">
+        <img v-for="todayInfo in birthdayInfo.today" :key="todayInfo.chara.characterId" :src="`statics/chara_icon_${todayInfo.chara.characterId}.png`">
+      </div>
+      <div>{{$t('common.birthday.next')}} {{`${birthdayInfo.next[0].birthday.month}/${birthdayInfo.next[0].birthday.day}`}}</div>
+      <div>
+        <img v-for="nextInfo in birthdayInfo.next" :key="nextInfo.chara.characterId" :src="`statics/chara_icon_${nextInfo.chara.characterId}.png`">
+      </div>
     </div>
     <q-collapsible :label="$t('common.event')" v-model="isEventOpen">
       <div class="row col-12 gutter-sm">
