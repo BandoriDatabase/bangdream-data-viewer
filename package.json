@@ -1,6 +1,6 @@
 {
   "name": "bangdream_dataviewer",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Game data viewer for BangDream! Girls' Band Party!",
   "author": "DNARoma <tangpei506@gmail.com>",
   "license": "GPL-3.0",
@@ -25,6 +25,7 @@
     "vue-i18n": "^7.6.0",
     "vue-lazyload": "^1.2.2",
     "vue-resource": "^1.5.0",
+    "vue2-waterfall": "^2.0.1",
     "vuex": "^3.0.1",
     "wanakana": "^3.1.0"
   },

@@ -48,7 +48,7 @@
           <q-item-side icon="photo_library" />
           <q-item-main :label="$t('left.SFC')" />
         </q-item>
-        <q-item @click.native="$router.push(`/titles`)" v-ripple>
+        <q-item @click.native="$router.push(`/titles/${$dataLang}`)" v-ripple>
           <q-item-side icon="aspect_ratio" />
           <q-item-main :label="$t('left.gametitle')" />
         </q-item>
@@ -172,7 +172,7 @@ export default {
   data () {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
-      appVer: '0.8.1',
+      appVer: '0.8.2',
       moremenuOpen: false,
       isHeaderShow: true
     }

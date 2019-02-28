@@ -22,12 +22,13 @@ export default {
     'desc': 'Bandori Database WebApp has a major update, many improvements are made to help you use the WebApp better. For whole update note please visit <a href="https://dnaroma.site/update-notice-en/">my blog</a>',
     'new-features': 'New Features',
     'feature-detail': [
-      'Add game title screen list page',
-      'Show minimal params in card list page'
+      'Game title screen list will show the titles of the server you selected'
     ],
     'fixed-bugs': 'Fixed Bugs',
     'bug-detail': [
-      'Minor bugs are fixed'
+      'Fix the wrong order of displaying character birthday',
+      'Fix the "next birthday" display of two or more characters whose birthday are on the same day',
+      'Fix the wrong order of EN server events'
     ],
     'welcome-bug-report': "If you find any problem affecting you use this web app, please report it to me per <a href='mailto:dev@bandori.ga'>Email</a>, on <a href='https://dnaroma.site/2017/12/23/bug-report/'>Bug report page</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>."
   },

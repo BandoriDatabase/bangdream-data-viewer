@@ -22,12 +22,13 @@ export default {
     'desc': 'Bandori Database（少女樂團派對數據庫）網頁應用迎來重大更新，有多項改進優化您的使用體驗。完整鏈接請訪問<a href="https://dnaroma.site/update-notice-zhcn/">博客頁面</a>',
     'new-features': '新特性',
     'feature-detail': [
-      '添加遊戲標題畫面列表頁面',
-      '卡牌列表頁面顯示一級數據'
+      '遊戲標題畫面列表可以按照選定的伺服器顯示相應的圖片'
     ],
     'fixed-bugs': '修復的問題',
     'bug-detail': [
-      '修復部分小錯誤'
+      '修复生日先后顺序错误的问题',
+      '修复不支持同一天两人生日的问题',
+      '修复国际服活动顺序错误的问题'
     ],
     'welcome-bug-report': "如果妳在使用本網站的過程中遇到任何問題, 歡迎通過<a href='mailto:dev@bandori.ga'>Email</a>, <a href='https://dnaroma.site/2017/12/23/bug-report/'>問題反饋頁面</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反饋問題。"
   },
