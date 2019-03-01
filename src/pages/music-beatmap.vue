@@ -311,6 +311,8 @@ export default {
           this.app = new PIXI.Application(510, 800, {
             view: this.$refs.game
           })
+          this.app.renderer.plugins.interaction.autoPreventDefault = false
+          this.app.renderer.view.style.touchAction = 'auto'
           this.renderStage()
         } else {
           PIXI.loader.add([
@@ -341,7 +343,7 @@ export default {
               this.playSound(this.bufferLoader.bufferList[0], baseTime + note.timing)
             } else {
               if (note.effect.indexOf('Flick') !== -1) this.playSound(this.bufferLoader.bufferList[2], baseTime + note.timing)
-              else this.playSound(this.bufferLoader.bufferList[1], baseTime + note.timing)
+              else if (note.type !== 'System') this.playSound(this.bufferLoader.bufferList[1], baseTime + note.timing)
             }
           })
 

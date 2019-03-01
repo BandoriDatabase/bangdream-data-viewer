@@ -50,6 +50,7 @@
       </div>
     </div>
     <div class="row justify-center">
+      <q-progress indeterminate v-if="modelLoading" color="pink-6"></q-progress>
       <canvas ref="viewer"></canvas>
     </div>
   </q-page>
@@ -73,7 +74,8 @@ export default {
       voiceOptions: [],
       AudioContext: window.AudioContext || window.webkitAudioContext || false,
       lipSyncValue: 0,
-      voicePlaying: false
+      voicePlaying: false,
+      modelLoading: false
     }
   },
   mounted () {
@@ -144,11 +146,14 @@ export default {
       }))
     },
     showLive2d () {
+      this.modelLoading = true
       if (!this.app) {
         this.app = new PIXI.Application(400, 600, {
           view: this.$refs.viewer,
           transparent: true
         })
+        this.app.renderer.plugins.interaction.autoPreventDefault = false
+        this.app.renderer.view.style.touchAction = 'auto'
         this.setForceReload()
 
         this.app.view.addEventListener('click', (e) => {
@@ -228,6 +233,9 @@ export default {
       this.live2dSprite.adjustScale(0, 0, 0.7)
       this.live2dSprite.adjustTranslate(0, -0.2)
       this.live2dSprite.startRandomMotionOnce('idle01')
+      this.live2dSprite.onModelReady.push(() => {
+        this.modelLoading = false
+      })
 
       this.app.stage.addChild(this.live2dSprite)
 
