@@ -5,7 +5,7 @@
     </div>
     <viewer :images="imgs">
     <Waterfall :maxCol="3" :gutterWidth="15" :gutterHeight="5">
-      <WaterfallItem v-for="src in imgs" :key="src" :width="465">
+      <WaterfallItem v-for="src in imgs" :key="src" :width="$q.platform.is.mobile ? 350 : 465">
         <img v-lazy="src" class="game-title-img shadow-3" />
       </WaterfallItem>
     </Waterfall>
