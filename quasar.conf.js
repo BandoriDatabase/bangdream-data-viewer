@@ -28,6 +28,7 @@ module.exports = function (ctx) {
     build: {
       scopeHoisting: true,
       vueRouterMode: 'history',
+      showProgress: true,
       // gzip: true,
       // analyze: true,
       // extractCSS: false,
@@ -152,6 +153,21 @@ module.exports = function (ctx) {
     ],
     pwa: {
       start_url: '/',
+      // workboxPluginMode: 'InjectManifest',
+      workboxPluginMode: 'GenerateSW',
+      workboxOptions: {
+        runtimeCaching: [{
+          urlPattern: /api/,
+          handler: 'NetworkFirst',
+          options: {
+            networkTimeoutSeconds: 10,
+            cacheName: 'bd-api-cache'
+          }
+        }, {
+          urlPattern: /assets.*/,
+          handler: 'StaleWhileRevalidate'
+        }]
+      },
       manifest: {
         name: 'Bandori Database',
         short_name: 'Bandori DB',
