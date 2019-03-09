@@ -19,5 +19,5 @@ $ quasar dev
 $ quasar build
 
 # lint code
-$ quasar lint
+$ eslint src
 ```
