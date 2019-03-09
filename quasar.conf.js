@@ -28,6 +28,7 @@ module.exports = function (ctx) {
     build: {
       scopeHoisting: true,
       vueRouterMode: 'history',
+      showProgress: true,
       // gzip: true,
       // analyze: true,
       // extractCSS: false,
@@ -152,6 +153,17 @@ module.exports = function (ctx) {
     ],
     pwa: {
       start_url: '/',
+      // workboxPluginMode: 'InjectManifest',
+      workboxPluginMode: 'GenerateSW',
+      workboxOptions: {
+        runtimeCaching: [{
+          urlPattern: /api\/v\d\/\S{2}\/(card|chara|live2d\/model|music|stamp|degree|event\/badge)\/.+/,
+          handler: 'staleWhileRevalidate',
+          options: {
+            cacheName: 'bd-api-cache'
+          }
+        }]
+      },
       manifest: {
         name: 'Bandori Database',
         short_name: 'Bandori DB',

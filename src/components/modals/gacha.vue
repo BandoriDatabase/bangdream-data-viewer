@@ -34,12 +34,15 @@
           <q-spinner color="pink" size="48px"></q-spinner>
         </div>
         <h6>{{$t('gacha.normal')}}</h6>
-        <div class="center" v-for="gc in gacha.details.filter(gc => !gc.pickup)" :key="gc.situationId" style="display: inline-block; margin: 3px 3px;" v-if="isNormalReady">
-          <card-thumb :card="cardMap[server][gc.situationId]" :server="server" @click="isOpen = false"></card-thumb>
-          <q-tooltip v-show="gc.weight != 1">Rate: {{Number(gc.weight)/10000}}%</q-tooltip>
-        </div>
-        <div v-if="!isNormalReady">
-          <q-spinner color="pink" size="48px"></q-spinner>
+        <q-btn class="center" color="pink-6" :label="$t('live2d.show') + ' ' + $t('gacha.normal')" @click="showNormalCards" v-show="!isShowNormalCards"></q-btn>
+        <div v-if="isShowNormalCards">
+          <div class="center" v-for="gc in gacha.details.filter(gc => !gc.pickup)" :key="gc.situationId" style="display: inline-block; margin: 3px 3px;" v-if="isNormalReady">
+            <card-thumb :card="cardMap[server][gc.situationId]" :server="server" @click="isOpen = false"></card-thumb>
+            <q-tooltip v-show="gc.weight != 1">Rate: {{Number(gc.weight)/10000}}%</q-tooltip>
+          </div>
+          <div v-if="!isNormalReady">
+            <q-spinner color="pink" size="48px"></q-spinner>
+          </div>
         </div>
       </q-card-main>
     </q-card>
@@ -61,7 +64,8 @@ export default {
       isActive: true,
       isOpen: false,
       isPickupReady: false,
-      isNormalReady: false
+      isNormalReady: false,
+      isShowNormalCards: false
     }
   },
   mounted () {
@@ -90,15 +94,19 @@ export default {
       this.isOpen = true
       this.isPickupReady = false
       this.isNormalReady = false
+      this.isShowNormalCards = false
       this.getBatchCards({
         server,
         cardIds: data.details.filter(gc => gc.pickup).map(gc => gc.situationId)
       }).then(() => {
         this.isPickupReady = true
       })
+    },
+    showNormalCards () {
+      this.isShowNormalCards = true
       this.getBatchCards({
-        server,
-        cardIds: data.details.filter(gc => !gc.pickup).map(gc => gc.situationId)
+        server: this.server,
+        cardIds: this.gacha.details.filter(gc => !gc.pickup).map(gc => gc.situationId)
       }).then(() => {
         this.isNormalReady = true
       })
