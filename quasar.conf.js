@@ -157,7 +157,13 @@ module.exports = function (ctx) {
       workboxPluginMode: 'GenerateSW',
       workboxOptions: {
         runtimeCaching: [{
-          urlPattern: /api\/v\d\/\S{2}\/(card|chara|live2d\/model|music|stamp|degree|event\/badge)\/.+/,
+          urlPattern: /api\/v\d\/\S{2}\/chara\/birthday/,
+          handler: 'networkFirst',
+          options: {
+            cacheName: 'bd-api-cache'
+          }
+        }, {
+          urlPattern: /api\/v\d\/\S{2}\/(card|chara|live2d\/model|live2d\/costume|music|stamp|degree|event\/badge)\/.+/,
           handler: 'staleWhileRevalidate',
           options: {
             cacheName: 'bd-api-cache'
