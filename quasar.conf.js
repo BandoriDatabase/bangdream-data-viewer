@@ -157,15 +157,11 @@ module.exports = function (ctx) {
       workboxPluginMode: 'GenerateSW',
       workboxOptions: {
         runtimeCaching: [{
-          urlPattern: /api/,
-          handler: 'NetworkFirst',
+          urlPattern: /api\/v\d\/\S{2}\/(card|chara|live2d\/model|music|stamp|degree|event\/badge)\/.+/,
+          handler: 'staleWhileRevalidate',
           options: {
-            networkTimeoutSeconds: 10,
             cacheName: 'bd-api-cache'
           }
-        }, {
-          urlPattern: /assets.*/,
-          handler: 'StaleWhileRevalidate'
         }]
       },
       manifest: {
