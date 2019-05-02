@@ -10,20 +10,19 @@
             </div>
           </div>
           <viewer @inited="handleInited" :options="{navbar: false, toolbar: false}">
-            <img :src="getCardImage()" alt="" style="display: none;">
+              <div class="main-div" style="position:static;">
+            <div class="img-div">
+              <img :src="getCardImage()" alt="" class="card-img">
             <div class="card-img-parent" v-if="cardImgType === 'card'" @click="$viewer.show()">
-              <div v-lazy:background-image="getCardImage()" class="card-img-main" />
               <div :class="`card-img-frame-${frameMap[cardInfo.rarity] || cardInfo.attr}`" />
               <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" :key="i"></div>
               <div :class="`card-img-band-${charaInfo.bandId}`"></div>
               <div :class="`card-img-attr-${cardInfo.attr}`"></div>
             </div>
-            <div v-else class="card-img-parent"
-              @click="$viewer.show()">
-              <div v-lazy:background-image="getCardImage()" class="card-img-main" />
             </div>
+              </div>
           </viewer>
-          <div>
+          <div style="margin-top: 66.6%">
             <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3 && cardInfo.title !== 'ガルパ杯'"
               @click="$router.push(`/card/${server}/${cardId}/${Number(!isTrained)}`)">{{$t('card.un-trained')}}</q-btn>
             <q-btn class="light" style="margin: 5px;" @click="switchCardImgType()">{{$t('card.cut-in-normal')}}</q-btn>
@@ -396,8 +395,27 @@ export default {
   width 60px
   height 60px
 
-img
+.card-img
+  padding-left 1.2%
+  width 99%
+  position absolute
+  left 0
+  top -5.65%
+
+.main-div
   width 100%
+  height 0
+  padding-bottom 100%
+  overflow hidden
+
+.img-div
+  width 100%
+  position relative
+  overflow hidden
+
+.card-img-div
+  width 100%
+  height 100vw
 
 .thumb-training
   width 72px
@@ -405,201 +423,103 @@ img
 
 .card-img-parent
   width 100%
-  height 280px
-  max-width 420px
   position relative
   cursor pointer
 
-.card-img-main
-  position absolute
-  width 97.5%
-  height 268px
-  max-width 408px
-  background-size cover
-  background-repeat no-repeat
-  background-position center center
-  left 6px
-  top 6px
-
 .card-img-attr-powerful
-  position absolute
-  top 1.7%
-  right 1.5%
-  width 45px
-  height 45px
   background url('~assets/icon_powerful.png') no-repeat
-  background-size 100% 100%
 
 .card-img-attr-cool
-  position absolute
-  top 1.7%
-  right 1.5%
-  width 45px
-  height 45px
   background url('~assets/icon_cool.png') no-repeat
-  background-size 100% 100%
 
 .card-img-attr-happy
-  position absolute
-  top 1.7%
-  right 1.5%
-  width 45px
-  height 45px
   background url('~assets/icon_happy.png') no-repeat
-  background-size 100% 100%
 
 .card-img-attr-pure
-  position absolute
-  top 1.7%
-  right 1.5%
-  width 45px
-  height 45px
   background url('~assets/icon_pure.png') no-repeat
-  background-size 100% 100%
 
-.card-img-rarity-normal-1
+.card-img-attr-powerful,
+.card-img-attr-cool,
+.card-img-attr-happy,
+.card-img-attr-pure
   position absolute
-  top 86%
-  left 1%
-  width 35px
-  height 35px
-  background url('~assets/star_untrained.png') no-repeat
+  top 2.0%
+  right 1.68%
+  width 10%
+  height 15%
   background-size 100% 100%
 
-.card-img-rarity-normal-2
-  position absolute
-  top 76%
-  left 1%
-  width 35px
-  height 35px
-  background url('~assets/star_untrained.png') no-repeat
-  background-size 100% 100%
-
-.card-img-rarity-normal-3
-  position absolute
-  top 66%
-  left 1%
-  width 35px
-  height 35px
-  background url('~assets/star_untrained.png') no-repeat
-  background-size 100% 100%
-
+.card-img-rarity-normal-1,
+.card-img-rarity-normal-2,
+.card-img-rarity-normal-3,
 .card-img-rarity-normal-4
   position absolute
-  top 56%
   left 1%
-  width 35px
-  height 35px
+  width 8%
+  height 12%
   background url('~assets/star_untrained.png') no-repeat
   background-size 100% 100%
 
-.card-img-rarity-after_training-1
-  position absolute
-  top 86%
-  left 1%
-  width 35px
-  height 35px
-  background url('~assets/star_after_training.png') no-repeat
-  background-size 100% 100%
-
-.card-img-rarity-after_training-2
-  position absolute
-  top 76%
-  left 1%
-  width 35px
-  height 35px
-  background url('~assets/star_after_training.png') no-repeat
-  background-size 100% 100%
-
-.card-img-rarity-after_training-3
-  position absolute
-  top 66%
-  left 1%
-  width 35px
-  height 35px
-  background url('~assets/star_after_training.png') no-repeat
-  background-size 100% 100%
-
+.card-img-rarity-after_training-1,
+.card-img-rarity-after_training-2,
+.card-img-rarity-after_training-3,
 .card-img-rarity-after_training-4
   position absolute
-  top 56%
   left 1%
-  width 35px
-  height 35px
+  width 8%
+  height 12%
   background url('~assets/star_after_training.png') no-repeat
   background-size 100% 100%
 
+.card-img-rarity-normal-1,
+.card-img-rarity-after_training-1
+  top 86%
+
+.card-img-rarity-normal-2,
+.card-img-rarity-after_training-2
+  top 76%
+
+.card-img-rarity-normal-3,
+.card-img-rarity-after_training-3
+  top 66%
+
+.card-img-rarity-normal-4,
+.card-img-rarity-after_training-4
+  top 56%
+
 .card-img-frame-rainbow
-  position absolute
-  width 100%
-  height 280px
-  max-width 420px
   background url('~assets/frame_ss_rainbow.png') no-repeat
-  background-size cover
-  background-size 100% 100%
-  left 0
-  top 0
 
 .card-img-frame-gold
-  position absolute
-  width 100%
-  height 280px
-  max-width 420px
   background url('~assets/frame_s_gold.png') no-repeat
-  background-size cover
-  background-size 100% 100%
-  left 0
-  top 0
 
 .card-img-frame-silver
-  position absolute
-  width 100%
-  height 280px
-  max-width 420px
   background url('~assets/frame_r_silver.png') no-repeat
-  background-size 100% 100%
-  left 0
-  top 0
 
 .card-img-frame-pure
-  position absolute
-  width 100%
-  height 280px
-  max-width 420px
   background url('~assets/frame_n_pure.png') no-repeat
-  background-size cover
-  background-size 100% 100%
-  left 0
-  top 0
 
 .card-img-frame-powerful
-  position absolute
-  width 100%
-  height 280px
-  max-width 420px
   background url('~assets/frame_n_powerful.png') no-repeat
-  background-size cover
-  background-size 100% 100%
-  left 0
-  top 0
 
 .card-img-frame-happy
-  position absolute
-  width 100%
-  height 280px
-  max-width 420px
   background url('~assets/frame_n_happy.png') no-repeat
-  background-size cover
-  background-size 100% 100%
-  left 0
-  top 0
 
 .card-img-frame-cool
+  background url('~assets/frame_n_cool.png') no-repeat
+
+.card-img-frame-rainbow,
+.card-img-frame-gold,
+.card-img-frame-silver,
+.card-img-frame-pure,
+.card-img-frame-powerful,
+.card-img-frame-happy,
+.card-img-frame-cool,
   position absolute
   width 100%
-  height 280px
-  max-width 420px
-  background url('~assets/frame_n_cool.png') no-repeat
+  padding-bottom 66.666%
+  margin-top -0.3%
+  margin-bottom -0.6%
   background-size cover
   background-size 100% 100%
   left 0
@@ -609,48 +529,33 @@ div.row
   padding 5px
 
 .card-img-band-1
-  position absolute
-  top 2%
-  left 1%
-  width 50px
-  height 50px
   background url('~assets/band_icon_1.png') no-repeat
 
 .card-img-band-2
-  position absolute
-  top 2%
-  left 1%
-  width 50px
-  height 50px
   background url('~assets/band_icon_2.png') no-repeat
 
 .card-img-band-3
-  position absolute
-  top 2%
-  left 1%
-  width 50px
-  height 50px
   background url('~assets/band_icon_3.png') no-repeat
 
 .card-img-band-4
-  position absolute
-  top 2%
-  left 1%
-  width 50px
-  height 50px
   background url('~assets/band_icon_4.png') no-repeat
 
 .card-img-band-5
-  position absolute
-  top 2%
-  left 1%
-  width 50px
-  height 50px
   background url('~assets/band_icon_5.png') no-repeat
 
+.card-img-band-1,
+.card-img-band-2,
+.card-img-band-3,
+.card-img-band-4,
+.card-img-band-5
+  position absolute
+  top 2.0%
+  left 1.6%
+  width 10%
+  height 15%
+  background-size 90% 100%
+
 .card-img-band
-  // width 100%
-  height 50px
   background-size contain
   background-position center
   background-repeat no-repeat
