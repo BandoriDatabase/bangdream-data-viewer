@@ -203,7 +203,7 @@ h3
 
 .music-levels
   position absolute
-  bottom 11px
+  bottom 10px
 
 span.music-level
   display inline-block
