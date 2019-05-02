@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <div style="margin-bottom: 30px;"><!--加载界面漫画-->
+    <div style="margin-bottom: 30px;">
       <span class="q-display-2 text-bold">{{$t('left.SFC')}}</span>
     </div>
     <viewer class="row gutter-sm" v-if="isReady" :options="{navbar: false, toolbar: false}">
