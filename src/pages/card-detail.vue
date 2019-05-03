@@ -3,24 +3,30 @@
     <div v-if="isReady">
       <div class="row gutter-sm">
         <div class="column col-xl-4 col-lg-6 col-md-6 col-12">
-          <div class="row items-center" :class="`bg-${paletteMap[cardInfo.attr]}`" style="border-radius: 15px; margin-bottom: 10px;">
-            <div class="col-4 card-img-band" :class="`img-band-${charaInfo.bandId}`"></div>
-            <div class="col-8 text-white q-title" style="text-align: center">
-              {{cardInfo.title}}<br>{{charaInfo.characterName}}
+          <div class="row items-center card-title">
+            <div class="col-8 text-white q-title" style="text-align: center;margin:0 auto;">
+              <span style="font-size: 15px">{{cardInfo.title}}</span><br>{{charaInfo.characterName}}
             </div>
+            <div class="col-4 card-img-band" :class="`img-band-${charaInfo.bandId}`"
+              style="position:absolute;width: 22%;padding-bottom: 11%;left: 3%;max-width:100px"></div>
           </div>
           <viewer @inited="handleInited" :options="{navbar: false, toolbar: false}">
-              <div class="main-div" style="position:static;">
-            <div class="img-div">
-              <img :src="getCardImage()" alt="" class="card-img">
-            <div class="card-img-parent" v-if="cardImgType === 'card'" @click="$viewer.show()">
-              <div :class="`card-img-frame-${frameMap[cardInfo.rarity] || cardInfo.attr}`" />
-              <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" :key="i"></div>
-              <div :class="`card-img-band-${charaInfo.bandId}`"></div>
-              <div :class="`card-img-attr-${cardInfo.attr}`"></div>
-            </div>
-            </div>
+            <div class="main-div" style="position:static;">
+              <div class="img-div" v-if="cardImgType === 'card'">
+                <img :src="getCardImage()" alt="" class="card-img">
+                <div class="card-img-parent"  @click="$viewer.show()">
+                  <div :class="`card-img-frame-${frameMap[cardInfo.rarity] || cardInfo.attr}`" />
+                  <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" :key="i"></div>
+                  <!--<div :class="`card-img-band-${charaInfo.bandId}`"></div>-->
+                  <div :class="`card-img-attr-${cardInfo.attr}`"></div>
+                </div>
               </div>
+              <div class="img-div" v-else style="padding-bottom:66.666%">
+                <div class="card-img-parent" @click="$viewer.show()">
+                  <img :src="getCardImage()" alt="" class="card-img" style="margin-top:-20%;">
+                </div>
+              </div>
+            </div>
           </viewer>
           <div style="margin-top: 66.6%">
             <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3 && cardInfo.title !== 'ガルパ杯'"
@@ -391,6 +397,15 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.card-title
+  border-radius 8px
+  margin-bottom 10px
+  text-align center
+  position relative
+  background-color rgb(97,97,97)
+  border solid 2px rgb(140,140,140)
+  height 60px
+
 .thumb
   width 60px
   height 60px
