@@ -5,10 +5,9 @@
         <div class="column col-xl-4 col-lg-6 col-md-6 col-12">
           <div class="row items-center card-title">
             <div class="col-8 text-white q-title" style="text-align: center;margin:0 auto;">
-              <span style="font-size: 15px">{{cardInfo.title}}</span><br>{{charaInfo.characterName}}
+              <span style="font-size:15px;font-weight 800;">{{cardInfo.title}}</span><br>{{charaInfo.characterName}}
             </div>
-            <div class="col-4 card-img-band" :class="`img-band-${charaInfo.bandId}`"
-              style="position:absolute;width: 22%;padding-bottom: 11%;left: 3%;max-width:100px"></div>
+            <div class="col-4 card-img-band" :class="`img-band-${charaInfo.bandId}`"></div>
           </div>
           <viewer @inited="handleInited" :options="{navbar: false, toolbar: false}">
             <div class="main-div" style="position:static;">
@@ -21,7 +20,7 @@
                   <div :class="`card-img-attr-${cardInfo.attr}`"></div>
                 </div>
               </div>
-              <div class="img-div" v-else style="padding-bottom:66.666%">
+              <div class="img-div" v-else style="padding-bottom:66%">
                 <div class="card-img-parent" @click="$viewer.show()">
                   <img :src="getCardImage()" alt="" class="card-img" style="margin-top:-20%;">
                 </div>
@@ -29,59 +28,77 @@
             </div>
           </viewer>
           <div style="margin-top: 66.6%">
-            <q-btn class="light" style="margin: 5px;" v-if="cardInfo.rarity >= 3 && cardInfo.title !== 'ガルパ杯'"
-              @click="$router.push(`/card/${server}/${cardId}/${Number(!isTrained)}`)">{{$t('card.un-trained')}}</q-btn>
-            <q-btn class="light" style="margin: 5px;" @click="switchCardImgType()">{{$t('card.cut-in-normal')}}</q-btn>
-            <q-btn class="light" style="margin: 5px;" v-if="cardInfo.title !== 'ガルパ杯'"
-              @click="openURL(getCardLivesd())">{{$t('card.live-chara')}}</q-btn>
-            <q-btn class="light" style="margin: 5px" @click="$router.push({ name: 'cardList', params: { server } })">{{$t('common.back-to-list')}}</q-btn>
-            <div class="column" v-if="cardInfo.episodes">
-              <label>
-                <q-toggle
-                  v-model="isSelfInfoReward"
-                ></q-toggle>
-                {{$t('card.self-intro-unlock-reward')}}
-              </label>
-              <label>
-                <q-toggle
-                  v-model="isMaxLvReward"
-                ></q-toggle>
-                {{$t('card.max-lv-unlock-reward')}}
-              </label>
+            <div v-if="cardInfo.costumeId" style="text-align:center">
+              <q-btn class="light img-btn" v-if="cardInfo.title !== 'ガルパ杯'"
+                @click="openURL(getCardLivesd())">{{$t('card.live-chara')}}</q-btn>
+              <q-btn class="light img-btn" @click="$router.push({ name:'live2d', params: { server: $route.params.server, costumeId: cardInfo.costumeId }})">
+                <q-icon name="person" />{{$t('live2d.costume')}}  -  {{costumeInfo.description}} & {{$t('card.jump-to-live2d-costume')}}</q-btn>
             </div>
           </div>
-          <q-card v-if="cardInfo.costumeId">
+          <q-card style="margin-top: 5px;">
             <q-card-main>
-              <p style="font-size: 18px;">
-                <q-icon name="person" />
-                {{$t('live2d.costume')}}
+              <p style="font-size: 16px;float:left;line-height:62px;margin:0;">
+                <q-icon name="highlight" />
+                {{$t('card.training-title')}}
               </p>
-              {{costumeInfo.description}}
+              <div class="row" v-if="cardInfo.rarity >= 3" style="padding-bottom:0">
+                <div v-for="entry in cardInfo.training.costs.entries" class="column col-4 items-center" :key="entry.resourceId">
+                  <img class="thumb-training" v-lazy="`/assets/thumb/material_rip/material0${String(entry.resourceId).length === 1 ? `0${entry.resourceId}` : entry.resourceId}.png`">
+                  <span>{{entry.quantity}}</span>
+                </div>
+              </div>
+              <div v-else>{{$t('card.no-train-ava')}}</div>
             </q-card-main>
-            <q-card-actions>
-              <q-btn flat :label="$t('card.jump-to-live2d-costume')"
-                @click="$router.push({ name:'live2d', params: { server: $route.params.server, costumeId: cardInfo.costumeId }})"></q-btn>
-            </q-card-actions>
           </q-card>
         </div>
         <div class="column col-xl-4 col-lg-6 col-md-6 col-12">
+          <q-btn class="light" style="margin: 0 0 15px 0;height:40px" @click="$router.push({ name: 'cardList', params: { server } })">{{$t('common.back-to-list')}}</q-btn>
+          <div v-if="cardInfo.episodes">
+            <q-btn class="light switch-btn" v-if="cardResType === 'normal'" @click="$router.push(`/card/${server}/${cardId}/${Number(!isTrained)}`)"
+              style="border:1px solid red;margin-right:2%;">
+               {{$t('card.un-trained')}}</q-btn>
+            <q-btn class="light switch-btn" v-if="cardResType === 'after_training'" @click="$router.push(`/card/${server}/${cardId}/${Number(!isTrained)}`)"
+              style="border:1px solid green;margin-right:2%;">
+               {{$t('card.un-trained')}}</q-btn>
+            <q-btn class="light switch-btn" v-if="cardImgType === 'trim'" @click="switchCardImgType()"
+               style="border:1px solid red;margin-left:2%;">
+              {{$t('card.cut-in-normal')}}</q-btn>
+            <q-btn class="light switch-btn" v-if="cardImgType === 'card'" @click="switchCardImgType()"
+               style="border:1px solid green;margin-left:2%;">
+              {{$t('card.cut-in-normal')}}</q-btn>
+          </div>
+          <div v-if="cardInfo.episodes">
+            <q-btn class="light switch-btn" v-if="isSelfInfoReward===false" @click="setSelfInfoReward()"
+              style="border:1px solid red;margin-right:2%;">
+               {{$t('card.self-intro-unlock-reward')}}</q-btn>
+            <q-btn class="light switch-btn" v-if="isSelfInfoReward===true" @click="setSelfInfoReward()"
+              style="border:1px solid green;margin-right:2%;">
+               {{$t('card.self-intro-unlock-reward')}}</q-btn>
+            <q-btn class="light switch-btn" v-if="isMaxLvReward===false" @click="setMaxLvReward()"
+               style="border:1px solid red;margin-left:2%;">
+              {{$t('card.max-lv-unlock-reward')}}</q-btn>
+            <q-btn class="light switch-btn" v-if="isMaxLvReward===true" @click="setMaxLvReward()"
+               style="border:1px solid green;margin-left:2%;">
+              {{$t('card.max-lv-unlock-reward')}}</q-btn>
+          </div>
           <q-card>
             <q-card-main class="row">
-              <div class="col-12 col-sm-6">
-                <div>
-                  {{$t('common.level')}}
-                  <q-input
-                    style="display: inline-block"
+              <p style="width:100%;font-size:18px;height:30px;float:left;line-height:30px;padding:0 10px;margin:10px auto;">
+                {{$t('common.level')}} : {{level}}</p>
+              <div style="float:left;width:100%;margin:0 10px">
+                <input
+                    class="lInput"
                     v-model="level"
-                    type="number"
+                    type="range"
                     :min="1"
+                    value="1"
+                    step="1"
                     :max="cardResType === 'normal' ? cardInfo.levelLimit : cardInfo.simpleParams.max.level"
-                  ></q-input>
-                </div>
-                <br>
-                <div style="padding: 5px 0;">
-                  {{$t('common.total')}}
-                  <q-chip>{{Number(cardInfo.parameterMap[level].performance) +
+                >
+                <div style="margin-top:35px;margin-right:10px;font-weight:600;">
+                  <p style="margin-bottom:20px;"><span style="font-size:16px;margin-left:16px;color:rgb(254,60,115)">{{$t('common.total')}}</span>
+                  <span style="font-size:18px;float:right;">
+                    {{Number(cardInfo.parameterMap[level].performance) +
                   Number(cardInfo.parameterMap[level].technique) +
                   Number(cardInfo.parameterMap[level].visual) +
                   (cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) +
@@ -92,8 +109,9 @@
                   Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
                   (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) +
                   Number(cardInfo.episodes.entries[1].appendTechnique) +
-                  Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}</q-chip>
-                  +{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) +
+                  Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}
+                  <!---->
+                  ({{(cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) +
                   Number(cardInfo.training.trainingTechnic) +
                   Number(cardInfo.training.trainingVisual) : 0) +
                   (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) +
@@ -101,39 +119,46 @@
                   Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
                   (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) +
                   Number(cardInfo.episodes.entries[1].appendTechnique) +
-                  Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}
-                </div>
-              </div>
-              <div class="col-12 col-sm-6">
-                <div class="text-pink-6" style="padding: 5px 0;">
-                  {{$t('common.perform')}}
-                  <q-chip color="pink-6">{{Number(cardInfo.parameterMap[level].performance) +
+                  Number(cardInfo.episodes.entries[1].appendVisual) : 0)}})
+                  </span>
+                  </p>
+                  <hr />
+                  <p style="margin-top:20px;"><q-chip color="pink-2" style="font-size:14px;width:120px;text-align:center;">
+                  <span style="color:#000;">{{$t('common.perform')}}</span></q-chip>
+                  <span style="font-size:15px;float:right;margin-top:5px;">
+                  {{Number(cardInfo.parameterMap[level].performance) +
                   (cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) : 0) +
                   (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) : 0) +
-                  (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) : 0)}}</q-chip>
-                  +{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) : 0) +
-                  (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) : 0) +
                   (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) : 0)}}
-                </div>
-                <div class="text-indigo-6" style="padding: 5px 0;">
-                  {{$t('common.technic')}}
-                  <q-chip color="indigo-6">{{Number(cardInfo.parameterMap[level].technique) +
+                  ({{(cardResType === 'after_training' ? Number(cardInfo.training.trainingPerformance) : 0) +
+                  (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendPerformance) : 0) +
+                  (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendPerformance) : 0)}})
+                  </span>
+                  </p>
+                  <p><q-chip color="blue-2" style="font-size:14px;width:120px;text-align:center;">
+                  <span style="color:#000;">{{$t('common.technic')}}</span></q-chip>
+                  <span style="font-size:15px;float:right;margin-top:5px;">
+                  {{Number(cardInfo.parameterMap[level].technique) +
                   (cardResType === 'after_training' ? Number(cardInfo.training.trainingTechnic) : 0) +
                   (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendTechnique) : 0) +
-                  (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendTechnique) : 0)}}</q-chip>
-                  +{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingTechnic) : 0) +
-                  (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendTechnique) : 0) +
                   (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendTechnique) : 0)}}
-                </div>
-                <div class="text-orange-8" style="padding: 5px 0;">
-                  {{$t('common.visual')}}
-                  <q-chip color="orange-8">{{Number(cardInfo.parameterMap[level].visual) +
+                  ({{(cardResType === 'after_training' ? Number(cardInfo.training.trainingTechnic) : 0) +
+                  (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendTechnique) : 0) +
+                  (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendTechnique) : 0)}})
+                  </span>
+                  </p>
+                  <p><q-chip color="orange-2" style="font-size:14px;width:120px;text-align:center;">
+                  <span style="color:#000;">{{$t('common.visual')}}</span></q-chip>
+                  <span style="font-size:15px;float:right;margin-top:5px;">
+                  {{Number(cardInfo.parameterMap[level].visual) +
                   (cardResType === 'after_training' ? Number(cardInfo.training.trainingVisual) : 0) +
                   (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
-                  (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}</q-chip>
-                  +{{(cardResType === 'after_training' ? Number(cardInfo.training.trainingVisual) : 0) +
-                  (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
                   (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendVisual) : 0)}}
+                  ({{(cardResType === 'after_training' ? Number(cardInfo.training.trainingVisual) : 0) +
+                  (cardInfo.episodes && isSelfInfoReward ? Number(cardInfo.episodes.entries[0].appendVisual) : 0) +
+                  (cardInfo.episodes && isMaxLvReward ? Number(cardInfo.episodes.entries[1].appendVisual) : 0)}})
+                  </span>
+                  </p>
                 </div>
               </div>
             </q-card-main>
@@ -142,35 +167,24 @@
             <q-card-main>
               <p style="font-size: 18px;">
                 <q-icon name="trending up" />
-                {{skillInfo.skillName}}
+                {{skillInfo.skillName}}  {{$t('card.skill-level')}} : {{skillLv}}
               </p>
-              {{$t('card.skill-level')}}
-              <q-input
-                style="display: inline-block"
+              <p>
+              </p>
+              <input
+              class="lInput"
                 v-model="skillLv"
-                type="number"
+                type="range"
                 :min="1"
+                step="1"
                 :max="skillInfo.skillDetail.length || skillInfo.activateEffect.length || skillInfo.onceEffect.length"
-              ></q-input>
-              <p>{{skillInfo.skillDetail.find(sd => sd.skillLevel === skillLv).simpleDescription}}</p>
-              <p>{{getSkillDesc((skillInfo.skillDetail[skillLv] ||
-                skillInfo.skillDetail[Math.floor((skillLv - 1)/2)]).description,
-                skillInfo.activateEffect, skillInfo.onceEffect, skillLv)}}</p>
-            </q-card-main>
-          </q-card>
-          <q-card style="margin-top: 15px;">
-            <q-card-main>
-              <p style="font-size: 18px;">
-                <q-icon name="highlight" />
-                {{$t('card.training-title')}}
-              </p>
-              <div class="row" v-if="cardInfo.rarity >= 3">
-                <div v-for="entry in cardInfo.training.costs.entries" class="column col-4 items-center" :key="entry.resourceId">
-                  <img class="thumb-training" v-lazy="`/assets/thumb/material_rip/material0${String(entry.resourceId).length === 1 ? `0${entry.resourceId}` : entry.resourceId}.png`">
-                  <span>{{entry.quantity}}</span>
-                </div>
-              </div>
-              <div v-else>{{$t('card.no-train-ava')}}</div>
+              >
+              <!--
+              <p style="margin-top:30px;font-size:16px;">{{skillInfo.skillDetail[skillLv - 1].simpleDescription}}</p>-->
+              <p style="margin-top:30px;font-size:16px;">{{getSkillDesc((skillInfo.skillDetail[skillLv - 1] ||
+                skillInfo.skillDetail[skillLv - 1]).description,
+                skillInfo.activateEffect, skillInfo.onceEffect, skillLv-1)}}</p>
+              <!---->
             </q-card-main>
           </q-card>
         </div>
@@ -337,6 +351,20 @@ export default {
       // }
       // return `/assets-${this.server}/characters/livesd/${this.cardInfo.live2dRes}_rip/sdchara.png`
     },
+    setSelfInfoReward () {
+      if (this.isSelfInfoReward === true) {
+        this.isSelfInfoReward = false
+      } else if (this.isSelfInfoReward === false) {
+        this.isSelfInfoReward = true
+      }
+    },
+    setMaxLvReward () {
+      if (this.isMaxLvReward === true) {
+        this.isMaxLvReward = false
+      } else if (this.isMaxLvReward === false) {
+        this.isMaxLvReward = true
+      }
+    },
     switchCardResType () {
       if (this.cardResType === 'normal') {
         this.cardResType = 'after_training'
@@ -353,16 +381,16 @@ export default {
         this.cardImgType = 'card'
       }
     },
-    getSkillDesc (skillDesc, activateEffects, onceEffectList, skillLv) {
-      const activateEffect = activateEffects ? activateEffects.find(af => af.skillLevel === skillLv) : this.skillInfo.skillDetail.find(sd => sd.skillLevel === skillLv)
+    getSkillDesc (skillStr, activateEffects, onceEffectList, skillLv) {
+      const activateEffect = activateEffects ? activateEffects.find(af => af.skillLevel === skillLv + 1) : this.skillInfo.skillDetail.find(sd => sd.skillLevel === skillLv + 1)
       if (onceEffectList && onceEffectList.length && activateEffect) {
         const onceEffect = onceEffectList.find(oe => oe.skillLv === skillLv)
-        return skillDesc.replace(/\{0\}/, onceEffect.onceEffectValue).replace(/\{1\}/, activateEffect.valueDescription)
+        return skillStr.replace(/\{0\}/, onceEffect.onceEffectValue).replace(/\{1\}/, activateEffect.valueDescription)
       } else if (activateEffect) {
-        return skillDesc.replace(/\{0\}/, activateEffect.valueDescription || activateEffect.duration)
+        return skillStr.replace(/\{0\}/, activateEffect.valueDescription || activateEffect.duration)
       } else if (onceEffectList && onceEffectList.length) {
         const onceEffect = onceEffectList.find(oe => oe.skillLv === skillLv)
-        return skillDesc.replace(/\{0\}/, `${onceEffect.onceEffectValue}`)
+        return skillStr.replace(/\{0\}/, `${onceEffect.onceEffectValue}`)
       }
       return ''
     },
@@ -397,6 +425,18 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.img-btn
+  width 100%
+  padding-left 5px
+  padding-right 5px
+  margin-bottom 10px
+
+.switch-btn
+  width 48%
+  float left
+  padding-left 5px
+  padding-right 5px
+
 .card-title
   border-radius 8px
   margin-bottom 10px
@@ -433,8 +473,8 @@ export default {
   height 100vw
 
 .thumb-training
-  width 72px
-  height 72px
+  width 40px
+  height 40px
 
 .card-img-parent
   width 100%
@@ -571,7 +611,34 @@ div.row
   background-size 90% 100%
 
 .card-img-band
+  position absolute
+  width 26%
+  padding-bottom 11%
+  left 2%
+  max-width 125px
   background-size contain
   background-position center
   background-repeat no-repeat
+
+.sInput
+  width 100%
+
+input[type='range']
+  outline none
+  -webkit-appearance none
+  width 100% !important
+  background -webkit-linear-gradient(rgb(255, 255, 30), rgb(255, 255, 30)) no-repeat,#fff
+  background-size 0 100%
+  height 3px
+  border solid 1px #ddd
+  border-radius 2px
+
+input[type='range']::-webkit-slider-thumb
+  -webkit-appearance none
+  height 26px
+  width 26px
+  background #fff
+  border solid 2px rgb(254,60,115)
+  border-radius 13px
+
 </style>

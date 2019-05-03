@@ -5,8 +5,7 @@
         {{currentEvent[server].eventName}}
         <span slot="subtitle"
               class="text-white">
-          {{$t('event-srv', { srv: $t(`common.${server}`) }) }}<br>
-          {{currentEvent[server].eventType}}
+          {{$t('event-srv', { srv: $t(`common.${server}`) }) }} - {{currentEvent[server].eventType}}
         </span>
       </q-card-title>
       <q-card-media style="cursor: pointer;"
