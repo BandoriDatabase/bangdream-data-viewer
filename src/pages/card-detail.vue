@@ -47,7 +47,7 @@
                   <span>{{entry.quantity}}</span>
                 </div>
               </div>
-              <div v-else>{{$t('card.no-train-ava')}}</div>
+              <div style="font-size: 16px;float:left;line-height:62px;padding-left:50px;" v-else>{{$t('card.no-train-ava')}}</div>
             </q-card-main>
           </q-card>
         </div>
@@ -195,20 +195,19 @@
           </p>
           <div class="row gutter-md">
             <div v-for="(episode, idx) in cardInfo.episodes.entries" :key="episode.episodeId"
-              class="col-xl-12 col-md-6 col-12"
-            >
+              class="col-xl-12 col-md-6 col-12">
               <q-card>
                 <q-card-title>
-                  {{episode.title}}
+                  <span style="margin:10px;">{{episode.title}}</span>
                   <q-btn small color="pink" round flat
                     @click="$router.push(`/scenario/${server}/${cardInfo.cardRes}/${episode.scenarioId}`), $ga.event('card-detail', 'jump', `scenario`)">
                     <q-icon name="launch"></q-icon>
                   </q-btn>
-                  <span v-if="idx" slot="subtitle">{{$t('card.story-max-level')}}</span>
-                  <span v-else slot="subtitle">{{$t('card.story-self-intro')}}</span>
+                  <span v-if="idx" slot="subtitle" style="margin:10px;">{{$t('card.story-max-level')}}</span>
+                  <span v-else slot="subtitle" style="margin:10px;">{{$t('card.story-self-intro')}}</span>
                 </q-card-title>
                 <q-card-separator />
-                <q-card-main>
+                <q-card-main style="padding-bottom:8px;">
                   <div class="row items-center">
                     <p class="col-3">{{$t('card.story-to-unlock')}}</p>
                     <div class="row col-9">
@@ -218,6 +217,7 @@
                       </div>
                     </div>
                   </div>
+                  <hr/>
                   <div class="row items-center">
                     <p class="col-3">{{$t('card.story-reward')}}</p>
                     <div class="row col-9">

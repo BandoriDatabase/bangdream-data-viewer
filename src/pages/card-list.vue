@@ -59,7 +59,7 @@
                 <div class="row items-center justify-center" style="padding-bottom: 10px;">
                   <card-thumb :card="card" :server="server" :trained="false" v-if="card.title !== 'ガルパ杯'"></card-thumb>
                   <card-thumb :card="card" :server="server" :trained="true" v-if="(card.rarity >= 3 && card.title !== 'ガルパ杯') || card.title === 'ガルパ杯'"></card-thumb>
-                </div>
+                </div><!--
                 <div style="text-align: center;">
                   <p class="q-body-1">[{{card.skill.skillName}}]<br>{{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}</p>
                   <p class="q-body-1 card-list-param">Lv {{card.simpleParams.min.level}}:
@@ -74,7 +74,7 @@
                     <q-chip small color="orange-8">{{card.simpleParams.max.visual}}</q-chip>
                     <q-chip small color="gray" class="text-black">{{card.simpleParams.max.total}}</q-chip>
                   </p>
-                </div>
+                </div>-->
               </q-card-main>
             </q-card>
           </div>
