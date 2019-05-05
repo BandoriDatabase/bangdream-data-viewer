@@ -1,7 +1,7 @@
 <template>
   <div id="game-container" v-if="downloaded" />
   <div v-else>
-    Downloading ...
+    Downloading /api/v1/jp/music/chart/100/expert ...
   </div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
   },
   mounted () {
     import('../game/game').then(game => {
-      this.$http.get('/api/v1/jp/music/chart/100/hard')
+      this.$http.get('/api/v1/jp/music/chart/100/expert')
         .then(res => {
           game.beatmap = res
           this.downloaded = true
