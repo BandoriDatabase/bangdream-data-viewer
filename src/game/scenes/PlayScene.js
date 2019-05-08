@@ -25,8 +25,11 @@ export default class PlayScene extends Scene {
   speed2 = 30
   noteSpriteInfo () {
   }
+  offset=1600
   noteSprite = []
   sliderSprite = []
+  // bgm
+  cBGM
   constructor () {
     super({ key: 'PlayScene' })
   }
@@ -64,7 +67,7 @@ export default class PlayScene extends Scene {
         isUsed: false
       }
       if (this.beatmap.objects[i].type === 'Object') {
-        if ((this.beatmap.objects[i].effect === 'Single' || this.beatmap.objects[i].effect === 'FeverSingle') &&
+        if ((this.beatmap.objects[i].effect === 'Single' || (this.beatmap.objects[i].effect === 'Skill' && this.beatmap.objects[i].property === 'Slider') || this.beatmap.objects[i].effect === 'FeverSingle') &&
         this.beatmap.objects[i].property === 'Single') {
           switch (this.beatmap.objects[i].lane) {
             case 1:
@@ -92,7 +95,7 @@ export default class PlayScene extends Scene {
           nSI.s.displayWidth = 10
           nSI.s.displayHeight = 5
           nSI.s.depth = -1
-          nSI.startT = this.beatmap.objects[i].timing - 2000 / 1000
+          nSI.startT = this.beatmap.objects[i].timing - this.offset / 1000
         } else if (this.beatmap.objects[i].effect === 'Flick' || this.beatmap.objects[i].effect === 'SlideEndFlick_A' || this.beatmap.objects[i].effect === 'SlideEndFlick_B') {
           switch (this.beatmap.objects[i].lane) {
             case 1:
@@ -127,7 +130,7 @@ export default class PlayScene extends Scene {
           nSI.s.displayWidth = 10
           nSI.s.displayHeight = 5
           nSI.s.depth = -1
-          nSI.startT = this.beatmap.objects[i].timing - 2000 / 1000
+          nSI.startT = this.beatmap.objects[i].timing - this.offset / 1000
           nSI.s2.displayWidth = 6
           nSI.s2.displayHeight = 3
           nSI.s2.depth = -1
@@ -158,7 +161,7 @@ export default class PlayScene extends Scene {
           nSI.s.displayWidth = 10
           nSI.s.displayHeight = 5
           nSI.s.depth = -1
-          nSI.startT = this.beatmap.objects[i].timing - 2000 / 1000
+          nSI.startT = this.beatmap.objects[i].timing - this.offset / 1000
         } else if (this.beatmap.objects[i].property === 'LongStart' || this.beatmap.objects[i].property === 'LongEnd' || this.beatmap.objects[i].property === 'Slide') {
           switch (this.beatmap.objects[i].lane) {
             case 1:
@@ -186,7 +189,7 @@ export default class PlayScene extends Scene {
           nSI.s.displayWidth = 10
           nSI.s.displayHeight = 5
           nSI.s.depth = -1
-          nSI.startT = this.beatmap.objects[i].timing - 2000 / 1000
+          nSI.startT = this.beatmap.objects[i].timing - this.offset / 1000
         }
       }
       this.noteSprite[i] = nSI
@@ -203,7 +206,7 @@ export default class PlayScene extends Scene {
         sSI.s = this.add.quad(this.cW / 2, 100, 'longNL')
         sSI.s.depth = -1
         sSI.n1 = i
-        sSI.startT = this.beatmap.objects[i].timing - 2000 / 1000
+        sSI.startT = this.beatmap.objects[i].timing - this.offset / 1000
         let flag = false
         for (let i0 = i + 1; i0 < this.beatmap.objects.length; i0++) { // 向后遍历
           if (this.beatmap.objects[i0].property === 'LongEnd' && this.noteSprite[i0].isUsed === false) { // 查询是否有第一个符合end且未用过的note
@@ -245,7 +248,7 @@ export default class PlayScene extends Scene {
         sSI.s = this.add.quad(this.cW / 2, 100, 'longNL')
         sSI.s.depth = -1
         sSI.n1 = i
-        sSI.startT = this.beatmap.objects[i].timing - 2000 / 1000
+        sSI.startT = this.beatmap.objects[i].timing - this.offset / 1000
         for (let i0 = i + 1; i0 < this.beatmap.objects.length; i0++) {
           if (this.beatmap.objects[i0].effect === 'SlideEndFlick_A' || this.beatmap.objects[i0].effect === 'SlideEnd_A' || this.beatmap.objects[i0].effect === 'Slide_A') {
             sSI.n2 = i0
@@ -259,7 +262,7 @@ export default class PlayScene extends Scene {
         sSI.s = this.add.quad(this.cW / 2, 100, 'longNL')
         sSI.s.depth = -1
         sSI.n1 = i
-        sSI.startT = this.beatmap.objects[i].timing - 2000 / 1000
+        sSI.startT = this.beatmap.objects[i].timing - this.offset / 1000
         for (let i0 = i + 1; i0 < this.beatmap.objects.length; i0++) {
           if (this.beatmap.objects[i0].effect === 'SlideEndFlick_B' || this.beatmap.objects[i0].effect === 'SlideEnd_B' || this.beatmap.objects[i0].effect === 'Slide_B') {
             sSI.n2 = i0
@@ -273,7 +276,7 @@ export default class PlayScene extends Scene {
         sSI.s = this.add.quad(this.cW / 2, 100, 'longNL')
         sSI.s.depth = -1
         sSI.n1 = i
-        sSI.startT = this.beatmap.objects[i].timing - 2000 / 1000
+        sSI.startT = this.beatmap.objects[i].timing - this.offset / 1000
         for (let i0 = i + 1; i0 < this.beatmap.objects.length; i0++) {
           if (this.beatmap.objects[i0].effect === 'SlideEndFlick_A' || this.beatmap.objects[i0].effect === 'SlideEnd_A' || this.beatmap.objects[i0].effect === 'Slide_A') {
             sSI.n2 = i0
@@ -287,7 +290,7 @@ export default class PlayScene extends Scene {
         sSI.s = this.add.quad(this.cW / 2, 100, 'longNL')
         sSI.s.depth = -1
         sSI.n1 = i
-        sSI.startT = this.beatmap.objects[i].timing - 2000 / 1000
+        sSI.startT = this.beatmap.objects[i].timing - this.offset / 1000
         for (let i0 = i + 1; i0 < this.beatmap.objects.length; i0++) {
           if (this.beatmap.objects[i0].effect === 'SlideEndFlick_B' || this.beatmap.objects[i0].effect === 'SlideEnd_B' || this.beatmap.objects[i0].effect === 'Slide_B') {
             sSI.n2 = i0
@@ -305,23 +308,25 @@ export default class PlayScene extends Scene {
       fill: '#fff',
       fontSize: 100 + 'px'
     })
+    // add sound
+    this.sound.add('flickS')
+    this.sound.add('hihatS')
+    this.cBGM = this.sound.add('BGM')
     // init time
     this.startT = Date.now()
     this.nowT = this.startT
-  }
-  countTime () {
-    this.nowT = Date.now()// 获取当前时间
-    this.totalT = this.nowT - this.startT // 计算经过时间
+    // add sound
+    this.cBGM.play()
   }
   update () {
     this.lastT = this.nowT// 保存当前时间
     this.countFPS()
+    this.nowT = Date.now()// 获取当前时间
+    this.totalT = this.cBGM.seek * 1000
     // hit note
     for (let i = 0; i < this.noteSprite.length; i++) {
       if (this.noteSprite[i].isHit === false && this.beatmap.objects[i].type === 'Object') {
         if (this.noteSprite[i].s !== null && (this.totalT / 1000) >= this.noteSprite[i].startT) {
-          this.nowT = Date.now()// 获取当前时间
-          this.totalT = this.nowT - this.startT // 计算经过时间
           this.noteSprite[i].runT = this.totalT / 1000 - this.noteSprite[i].startT
           if (this.noteSprite[i].s2 != null) {
             this.changeNoteSSX(i)
@@ -335,20 +340,28 @@ export default class PlayScene extends Scene {
           this.noteSprite[i].s.displayHeight = 4 + 1 * (this.noteSprite[i].s.y - 100) / 10
           this.noteSprite[i].s.y = this.noteAppearHeight + 10 + 1000 * this.noteSprite[i].runT * this.speed * this.noteSprite[i].s.displayHeight / this.speed2
           this.noteSprite[i].s.depth = 2
-        }/*
-        if (this.noteSprite[i].s !== null && this.beatmap.objects[i].timing <= this.totalT / 1000) {
+        }
+        if (this.noteSprite[i].isHit === false && this.noteSprite[i].s !== null && this.beatmap.objects[i].timing <= this.totalT / 1000) {
           this.combo++
           // eslint-disable-next-line no-unused-expressions
-          // this.noteSprite[i].isHit = true
+          this.noteSprite[i].isHit = true
+          this.noteSprite[i].runT = 1600
+          this.noteSprite[i].s.y = this.hitLineHeight
           this.noteSprite[i].s.depth = -1
+          if (this.beatmap.objects[i].effect === 'Flick' || this.beatmap.objects[i].effect === 'SlideEndFlick_A' || this.beatmap.objects[i].effect === 'SlideEndFlick_B') {
+            this.sound.play('flickS', { volume: 1 })
+          } else {
+            this.sound.play('hihatS', { volume: 1 })
+          }
           if (this.noteSprite[i].s2 !== null) {
             this.noteSprite[i].s2.depth = -1
           }
-        } */
+        }
         if (this.noteSprite[i].s !== null && this.noteSprite[i].s.y >= this.cH - 200) {
           this.combo++
           // eslint-disable-next-line no-unused-expressions
           this.noteSprite[i].isHit = true
+          this.noteSprite[i].s.y = this.hitLineHeight
           this.noteSprite[i].s.depth = -1
           if (this.noteSprite[i].s2 !== null) {
             this.noteSprite[i].s2.depth = -1
@@ -357,9 +370,13 @@ export default class PlayScene extends Scene {
       }
     }
     for (let i = 0; i < this.sliderSprite.length; i++) {
-      this.nowT = Date.now()// 获取当前时间
-      this.totalT = this.nowT - this.startT // 计算经过时间
       if (this.sliderSprite[i].startT <= this.totalT / 1000) {
+        if (this.beatmap.objects[this.sliderSprite[i].n1].timing <= this.totalT / 1000) {
+          this.noteSprite[this.sliderSprite[i].n1].s.x = 75 + this.beatmap.objects[this.sliderSprite[i].n1].lane * 86 +
+          (this.beatmap.objects[this.sliderSprite[i].n2].lane - this.beatmap.objects[this.sliderSprite[i].n1].lane) * 86 *
+          ((this.totalT / 1000 - this.beatmap.objects[this.sliderSprite[i].n1].timing) / (this.beatmap.objects[this.sliderSprite[i].n2].timing - this.beatmap.objects[this.sliderSprite[i].n1].timing))
+          // console.log(this.noteSprite[this.sliderSprite[i].n1].s.x)
+        }
         this.sliderSprite[i].s.depth = 1
         this.sliderSprite[i].s.bottomLeftX = this.noteSprite[this.sliderSprite[i].n1].s.x - this.noteSprite[this.sliderSprite[i].n1].s.displayWidth / 2 + 2
         this.sliderSprite[i].s.bottomLeftY = this.noteSprite[this.sliderSprite[i].n1].s.y
@@ -370,7 +387,14 @@ export default class PlayScene extends Scene {
         this.sliderSprite[i].s.topRightX = this.noteSprite[this.sliderSprite[i].n2].s.x + this.noteSprite[this.sliderSprite[i].n2].s.displayWidth / 2 - 2
         this.sliderSprite[i].s.topRightY = this.noteSprite[this.sliderSprite[i].n2].s.y
       }
+      if (this.noteSprite[this.sliderSprite[i].n2].isHit === true) {
+        this.sliderSprite[i].s.depth = -1
+      }
     }
+  }
+  countTime () {
+    this.nowT = Date.now()// 获取当前时间
+    this.totalT = this.nowT - this.startT // 计算经过时间
   }
   countFPS () {
     this.countTime()

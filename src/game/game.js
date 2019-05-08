@@ -4,10 +4,13 @@ import PlayScene from './scenes/PlayScene'
 
 // eslint-disable-next-line no-unused-vars
 let beatmap = null
+// eslint-disable-next-line no-unused-vars
+let bgm = null
 
 function launch () {
   // eslint-disable-next-line no-unused-vars
   let beatmap1 = this.beatmap
+  let bgm1 = this.bgm
   // eslint-disable-next-line no-unused-vars
   let game = new Phaser.Game({
     type: Phaser.AUTO,
@@ -18,6 +21,8 @@ function launch () {
     scene: [BootScene, PlayScene]
   })
   window.name = JSON.stringify(beatmap1)
+  window.name2 = bgm1
+  console.log(bgm1)
 }
 
 export default launch

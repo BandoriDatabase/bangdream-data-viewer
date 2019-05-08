@@ -35,6 +35,9 @@ export default class BootScene extends Scene {
     this.load.image('longNL', 'statics/assets/note/longNoteLine.png')
     this.load.image('upImg', 'statics/assets/note/up.png')
     this.load.image('sliderP', 'statics/assets/note/slider_point.png')
+    this.load.audio('BGM', window.name2)
+    this.load.audio('flickS', 'statics/flick.mp3')
+    this.load.audio('hihatS', 'statics/hihat.wav')
   }
 
   create () {
