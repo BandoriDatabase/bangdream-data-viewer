@@ -19,11 +19,14 @@ export default class PlayScene extends Scene {
   testText
   totalCombo = 0
   combo = 0
+  // setting
+  speed = 11.0
+  noteSize = 1.0
   // note
   xK = 250
   changeK = 3.5
-  offset = 500
-  speed = 0.175 / 30 / Math.pow(this.offset, 1.05) * Math.pow(1600, 1.05)
+  offset = 500 + (11 - this.speed) * 500
+  speedK
   noteSprite = []
   sliderSprite = []
   // bgm
@@ -54,6 +57,7 @@ export default class PlayScene extends Scene {
     // set bg depth
     bg.depth = bgR.depth = bgHL.depth = 0
     // init note sprite
+    this.speedK = (bgR.displayHeight - 10) / (this.offset * this.offset) * 14
     let j = 0
     for (let i = 0; i < this.beatmap.objects.length; i++) {
       let nSI = {
@@ -319,7 +323,6 @@ export default class PlayScene extends Scene {
   update () {
     this.lastT = this.nowT
     this.countFPS()
-    this.nowT = Date.now()
     this.totalT = this.cBGM.seek * 1000
     for (let i = 0; i < this.noteSprite.length; i++) {
       if (this.noteSprite[i].isHit === false && this.beatmap.objects[i].type === 'Object') {
@@ -328,15 +331,15 @@ export default class PlayScene extends Scene {
           this.noteSprite[i].runT = this.totalT / 1000 - this.noteSprite[i].startT
           if (this.noteSprite[i].s2 != null) {
             this.changeNoteSSX(i)
-            this.noteSprite[i].s2.displayWidth = 4 + 1 * (this.noteSprite[i].s.y - 100) / 10
-            this.noteSprite[i].s2.displayHeight = 2 + 0.5 * (this.noteSprite[i].s.y - 100) / 10
-            this.noteSprite[i].s2.y = this.noteAppearHeight + 9 + 1000 * this.noteSprite[i].runT * this.speed * 0.9 * this.noteSprite[i].s.displayHeight
+            this.noteSprite[i].s2.displayWidth = this.noteSize * 4 + this.noteSize * 1 * (this.noteSprite[i].s.y - 100) / 10
+            this.noteSprite[i].s2.displayHeight = this.noteSize * 2 + this.noteSize * 0.5 * (this.noteSprite[i].s.y - 100) / 10
+            this.noteSprite[i].s2.y = this.noteAppearHeight + 9 + 1000 * this.noteSprite[i].runT * this.speedK * 0.9 * this.noteSprite[i].s.displayHeight
             this.noteSprite[i].s2.depth = 6
           }
           this.changeNoteX(i)
-          this.noteSprite[i].s.displayWidth = 8 + 2 * (this.noteSprite[i].s.y - 100) / 10
-          this.noteSprite[i].s.displayHeight = 4 + 1 * (this.noteSprite[i].s.y - 100) / 10
-          this.noteSprite[i].s.y = this.noteAppearHeight + 10 + 1000 * this.noteSprite[i].runT * this.speed * this.noteSprite[i].s.displayHeight
+          this.noteSprite[i].s.displayWidth = this.noteSize * 8 + this.noteSize * 2 * (this.noteSprite[i].s.y - 100) / 10
+          this.noteSprite[i].s.displayHeight = this.noteSize * 4 + this.noteSize * 1 * (this.noteSprite[i].s.y - 100) / 10
+          this.noteSprite[i].s.y = this.noteAppearHeight + 10 + 1000 * this.noteSprite[i].runT * this.speedK * this.noteSprite[i].s.displayHeight
           this.noteSprite[i].s.depth = 5
         }
         if (this.noteSprite[i].isHit === false && this.noteSprite[i].s !== null && this.beatmap.objects[i].timing <= this.totalT / 1000) {
@@ -396,7 +399,7 @@ export default class PlayScene extends Scene {
     this.countTime()
     this.sumT += this.nowT - this.lastT
     this.frame++// 帧片数++
-    if (this.sumT >= 500) { // 如果时间和大于1000ms
+    if (this.sumT >= 499) { // 如果时间和大于500ms
       this.testText.text = this.cBGM.seek.toFixed(3) + '   ' + this.combo + '   ' + Math.floor(1000 / (this.sumT / this.frame)) + ' fps'
       this.frame = 0 // 标志位置0
       this.sumT = 0 // 时间和清零
@@ -404,10 +407,10 @@ export default class PlayScene extends Scene {
   }
   changeNoteX (i1) {
     this.noteSprite[i1].s.x = this.cW / 2 +
-        (this.beatmap.objects[i1].lane - 4) * (this.xK * this.noteSprite[i1].runT * this.speed * this.noteSprite[i1].s.displayHeight + this.changeK)
+        (this.beatmap.objects[i1].lane - 4) * (this.xK * this.noteSprite[i1].runT * this.speedK * this.noteSprite[i1].s.displayHeight + this.changeK)
   }
   changeNoteSSX (i1) {
     this.noteSprite[i1].s2.x = this.cW / 2 +
-        (this.beatmap.objects[i1].lane - 4) * (this.xK * this.noteSprite[i1].runT * this.speed * this.noteSprite[i1].s.displayHeight + this.changeK)
+        (this.beatmap.objects[i1].lane - 4) * (this.xK * this.noteSprite[i1].runT * this.speedK * this.noteSprite[i1].s.displayHeight + this.changeK)
   }
 }
