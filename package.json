@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "bandori-pixi-live2d": "^1.2.3",
+    "dat.gui": "^0.7.6",
     "phaser": "^3.16.2",
     "pixi.js": "^4.7.1",
     "semver": "^5.5.0",
