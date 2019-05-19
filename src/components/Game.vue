@@ -60,6 +60,7 @@ export default {
           this.$nextTick(() => game.launch())
         })
     })
-  }
+  },
+  destroyed () { location.reload() }
 }
 </script>
