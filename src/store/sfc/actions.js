@@ -6,3 +6,10 @@ export const getSFCList = async ({ commit, state }, server) => {
   commit('SET_SFC_LIST', { data: sfcs.data, server })
   return sfcs.data
 }
+
+export const initState = {
+  root: true,
+  handler ({ commit }, servers) {
+    commit('INIT_STATE_DATA', servers)
+  }
+}

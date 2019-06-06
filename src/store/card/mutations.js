@@ -22,3 +22,22 @@ export const ADD_SKILL_MAP_ENTRY = (state, obj) => {
 export const ADD_MULTI_CARD_MAP = (state, obj) => {
   Object.assign(state.cardMap[obj.server], obj.cardMap)
 }
+
+export const INIT_STATE_DATA = (state, servers) => {
+  state.cardList = servers.reduce((sum, curr) => {
+    sum[curr] = []
+    return sum
+  }, {})
+  state.cardMap = servers.reduce((sum, curr) => {
+    sum[curr] = {}
+    return sum
+  }, {})
+  state.skillList = servers.reduce((sum, curr) => {
+    sum[curr] = []
+    return sum
+  }, {})
+  state.skillMap = servers.reduce((sum, curr) => {
+    sum[curr] = {}
+    return sum
+  }, {})
+}

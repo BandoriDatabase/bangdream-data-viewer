@@ -20,3 +20,10 @@ export const getDegreeById = async ({ commit, state }, { server, id }) => {
   commit('ADD_DEGREE_MAP_ENTRY', { server, id, value: degree })
   return degree
 }
+
+export const initState = {
+  root: true,
+  handler ({ commit }, servers) {
+    commit('INIT_STATE_DATA', servers)
+  }
+}

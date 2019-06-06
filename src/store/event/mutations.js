@@ -9,3 +9,18 @@ export const ADD_EVENT_BADGE_MAP_ENTRY = (state, { server, id, value }) => {
 export const ADD_DEGREE_MAP_ENTRY = (state, { server, id, value }) => {
   state.degreeMap[server][id] = value
 }
+
+export const INIT_STATE_DATA = (state, servers) => {
+  state.currentEvent = servers.reduce((sum, curr) => {
+    sum[curr] = {}
+    return sum
+  }, {})
+  state.eventBadgeMap = servers.reduce((sum, curr) => {
+    sum[curr] = {}
+    return sum
+  }, {})
+  state.degreeMap = servers.reduce((sum, curr) => {
+    sum[curr] = {}
+    return sum
+  }, {})
+}
