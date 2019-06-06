@@ -93,7 +93,7 @@ export default {
 .card-img-parent
   width 120px
   height 120px
-  margin 4.5px 4.5px
+  margin 4.5px auto
   position relative
   cursor pointer
 

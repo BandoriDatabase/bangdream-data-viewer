@@ -1,6 +1,7 @@
 <template>
   <div style="width: 100%">
-    <div class="row gutter-sm items-center" v-if="!small">
+    <div class="row gutter-sm items-center"
+         v-if="!small">
       <div class="column items-center cd-elem col-3">
         <h4 class="q-ma-none">{{days}}</h4>
         <h6 class="q-ma-none">Days</h6>
@@ -18,7 +19,8 @@
         <h6 class="q-ma-none">Secs</h6>
       </div>
     </div>
-    <div class="row items-center justify-center" v-else>
+    <div class="row items-center justify-center"
+         v-else>
       <div class="column items-center cd-elem col-12">
         <h5 class="q-ma-none">{{days}}<small>d</small></h5>
       </div>
@@ -40,7 +42,7 @@ export default {
   name: 'countdown',
   data () {
     return {
-      timeNow: Math.trunc((new Date()).getTime() / 1000)
+      timeNow: Math.trunc(new Date().getTime() / 1000)
     }
   },
   props: {
@@ -54,8 +56,11 @@ export default {
   },
   computed: {
     toTargetTime () {
-      if (this.targetTime) { // make sure we can calculate
-        const targetTimeSec = Math.trunc((new Date(this.targetTime)).getTime() / 1000)
+      if (this.targetTime) {
+        // make sure we can calculate
+        const targetTimeSec = Math.trunc(
+          new Date(this.targetTime).getTime() / 1000
+        )
         return targetTimeSec - this.timeNow
       }
       return -1
@@ -75,7 +80,7 @@ export default {
   },
   mounted () {
     setInterval(() => {
-      this.timeNow = Math.trunc((new Date()).getTime() / 1000)
+      this.timeNow = Math.trunc(new Date().getTime() / 1000)
     }, 1000)
   }
 }
