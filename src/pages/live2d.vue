@@ -59,7 +59,7 @@
 <script>
 import { Dialog } from 'quasar'
 import { mapState, mapActions } from 'vuex'
-import BufferLoader from '../plugins/bufferLoader'
+import BufferLoader from '../boot/bufferLoader'
 
 export default {
   // name: 'PageName',

@@ -42,6 +42,7 @@ export default {
     'tw': 'Taiwan Server',
     'kr': 'Korean Server',
     'en': 'Intl. Server',
+    'cn': 'China Mainland Server',
     'level': 'Level',
     'perform': 'Perform',
     'technic': 'Technique',

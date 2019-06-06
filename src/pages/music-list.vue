@@ -67,7 +67,6 @@
 </template>
 
 <script>
-import { LocalStorage } from 'quasar'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -102,11 +101,11 @@ export default {
     ]),
     async updateData (server) {
       this.isReady = false
-      if (!LocalStorage.get.item(`musicfilter.${server}`)) LocalStorage.set(`musicfilter.${server}`, {})
-      this.selectBandId = LocalStorage.get.item(`musicfilter.${server}`).bandId || []
-      this.sortParam = LocalStorage.get.item(`musicfilter.${server}`).sort || 'desc'
-      this.orderKey = LocalStorage.get.item(`musicfilter.${server}`).orderKey || 'publishedAt'
-      this.selectTag = LocalStorage.get.item(`musicfilter.${server}`).tag || 'all'
+      if (!this.$q.localStorage.getItem(`musicfilter.${server}`)) this.$q.localStorage.set(`musicfilter.${server}`, {})
+      this.selectBandId = this.$q.localStorage.getItem(`musicfilter.${server}`).bandId || []
+      this.sortParam = this.$q.localStorage.getItem(`musicfilter.${server}`).sort || 'desc'
+      this.orderKey = this.$q.localStorage.getItem(`musicfilter.${server}`).orderKey || 'publishedAt'
+      this.selectTag = this.$q.localStorage.getItem(`musicfilter.${server}`).tag || 'all'
       await this.doFilter(server)
       await this.getBandList(server)
       this.bandOption = this.bandList[server].map(elem => ({
@@ -138,7 +137,7 @@ export default {
       this.isReady = true
     },
     saveFilter () {
-      LocalStorage.set(`musicfilter.${this.server}`, {
+      this.$q.localStorage.set(`musicfilter.${this.server}`, {
         bandId: this.selectBandId,
         sort: this.sortParam,
         orderKey: this.orderKey,

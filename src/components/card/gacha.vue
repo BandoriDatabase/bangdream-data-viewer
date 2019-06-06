@@ -1,18 +1,17 @@
 <template>
   <div>
     <q-card>
-      <q-card-title class="bg-pink text-white">
-        {{data.gachaName}}
-      </q-card-title>
-      <q-card-media class="gacha-img"
-                    v-lazy:background-image="`/assets-${server}/gacha/screen/${data.resourceName}_rip/logo.png`"></q-card-media>
-      <q-card-main>
-        <h5 class="q-my-sm"
+      <q-banner class="bg-pink text-white">
+        <div class="text-subtitle1">{{data.gachaName}}</div>
+      </q-banner>
+      <div class="gacha-img" v-lazy:background-image="`/assets-${server}/gacha/screen/${data.resourceName}_rip/logo.png`"></div>
+      <q-card-section>
+        <h5 class="q-my-xs"
             v-if="Number(data.publishedAt) > Date.now()">{{$t('not-started')}}<br>{{(new Date(Number(data.publishedAt))).toLocaleString()}}</h5>
         <count-down :target-time="Number(data.closedAt)"
                     v-else></count-down>
-      </q-card-main>
-      <q-card-separator />
+      </q-card-section>
+      <q-separator />
       <q-card-actions>
         <q-btn flat
                class="text-pink"

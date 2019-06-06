@@ -1,21 +1,42 @@
 <template>
-  <q-modal v-model="isOpen" @close="stopMultiPickupSlideShow">
-    <q-card class="q-ma-none" v-if="gacha" style="max-width: 600px;">
-      <q-card-media>
-        <img v-if="!multiPickupImg" v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_rip/pickup${gacha.gachaId === 106 ? '_kasumi' : ''}.png`" alt="" class="gacha-banner" />
-        <div v-if="multiPickupImg" class="multiPickup">
-          <img :class="{active: isActive}" v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_rip/pickup1.png`" class="gacha-banner" />
-          <img :class="{active: !isActive}" v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_rip/pickup2.png`" class="gacha-banner" />
-        </div>
-        <q-card-title slot="overlay">
-          <p>{{gacha.gachaName}}
+  <q-dialog v-model="isOpen" @hide="stopMultiPickupSlideShow">
+    <q-card class="q-ma-none" v-if="gacha" style="width: 100%; max-width: 700px;">
+      <q-img v-if="!multiPickupImg"
+        v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_rip/pickup${gacha.gachaId === 106 ? '_kasumi' : ''}.png`"
+        alt="" class="gacha-banner">
+        <div class="absolute-bottom text-subtitle2">
+          <p class="text-h6">{{gacha.gachaName}}
             <q-btn class="float-right" flat small @click="isOpen = false"><q-icon name="close" /></q-btn>
           </p>
           <p slot="subtitle">{{$t('gacha.start-at')}} {{(new Date(Number(gacha.publishedAt))).toLocaleString()}}</p>
           <p slot="subtitle">{{$t('gacha.end-at')}} {{(new Date(Number(gacha.closedAt))).toLocaleString()}}</p>
-        </q-card-title>
-      </q-card-media>
-      <q-card-main style="text-align: center">
+        </div>
+      </q-img>
+      <div v-if="multiPickupImg" class="multiPickup">
+        <q-img :class="{active: isActive}"
+          v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_rip/pickup1.png`"
+          class="gacha-banner">
+          <div class="absolute-bottom text-subtitle2">
+            <p class="text-h6">{{gacha.gachaName}}
+              <q-btn class="float-right" flat small @click="isOpen = false"><q-icon name="close" /></q-btn>
+            </p>
+            <p slot="subtitle">{{$t('gacha.start-at')}} {{(new Date(Number(gacha.publishedAt))).toLocaleString()}}</p>
+            <p slot="subtitle">{{$t('gacha.end-at')}} {{(new Date(Number(gacha.closedAt))).toLocaleString()}}</p>
+          </div>
+        </q-img>
+        <q-img :class="{active: !isActive}"
+          v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_rip/pickup2.png`"
+          class="gacha-banner">
+          <div class="absolute-bottom text-subtitle2">
+            <p class="text-h6">{{gacha.gachaName}}
+              <q-btn class="float-right" flat small @click="isOpen = false"><q-icon name="close" /></q-btn>
+            </p>
+            <p slot="subtitle">{{$t('gacha.start-at')}} {{(new Date(Number(gacha.publishedAt))).toLocaleString()}}</p>
+            <p slot="subtitle">{{$t('gacha.end-at')}} {{(new Date(Number(gacha.closedAt))).toLocaleString()}}</p>
+          </div>
+        </q-img>
+      </div>
+      <q-card-section style="text-align: center">
         <h6>{{$t('gacha.desc')}}</h6>
         <p>{{gacha.description}}</p>
         <p v-if="gacha.information && gacha.information.description" v-html="gacha.information.description.replace(/\n/g, '<br>')"></p>
@@ -44,9 +65,9 @@
             <q-spinner color="pink" size="48px"></q-spinner>
           </div>
         </div>
-      </q-card-main>
+      </q-card-section>
     </q-card>
-  </q-modal>
+  </q-dialog>
 </template>
 
 <script>
@@ -138,7 +159,7 @@ export default {
   width: auto
   position: relative
 
-.multiPickup img
+.multiPickup .q-img
   position: absolute
   width: 100%
   top: 0
@@ -146,6 +167,6 @@ export default {
   transition: opacity 0.5s linear
   opacity: 0
 
-.multiPickup img.active
+.multiPickup .q-img.active
   opacity: 1
 </style>

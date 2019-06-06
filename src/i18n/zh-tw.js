@@ -42,6 +42,7 @@ export default {
     'tw': '台服',
     'kr': '韓服',
     'en': '國際服',
+    'cn': '國服',
     'level': '等級',
     'perform': '表演力',
     'technic': '技術',

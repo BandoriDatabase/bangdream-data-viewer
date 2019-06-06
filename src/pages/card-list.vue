@@ -92,7 +92,6 @@
 </template>
 
 <script>
-import { LocalStorage } from 'quasar'
 import { toRomaji } from 'wanakana'
 import { mapState, mapActions } from 'vuex'
 import CardThumb from 'components/common/card-thumb'
@@ -179,13 +178,13 @@ export default {
     ]),
     async updateData (server) {
       this.isReady = false
-      if (!LocalStorage.get.item(`cardfilter.${server}`)) LocalStorage.set(`cardfilter.${server}`, {})
-      this.selectCharacters = LocalStorage.get.item(`cardfilter.${server}`).charas || []
-      this.selectSkills = LocalStorage.get.item(`cardfilter.${server}`).skills || []
-      this.selectRarity = LocalStorage.get.item(`cardfilter.${server}`).rarity || []
-      this.selectAttrs = LocalStorage.get.item(`cardfilter.${server}`).attrs || []
-      this.sortParam = LocalStorage.get.item(`cardfilter.${server}`).sort || 'desc'
-      this.orderKey = LocalStorage.get.item(`cardfilter.${server}`).orderKey || 'cardId'
+      if (!this.$q.localStorage.getItem(`cardfilter.${server}`)) this.$q.localStorage.set(`cardfilter.${server}`, {})
+      this.selectCharacters = this.$q.localStorage.getItem(`cardfilter.${server}`).charas || []
+      this.selectSkills = this.$q.localStorage.getItem(`cardfilter.${server}`).skills || []
+      this.selectRarity = this.$q.localStorage.getItem(`cardfilter.${server}`).rarity || []
+      this.selectAttrs = this.$q.localStorage.getItem(`cardfilter.${server}`).attrs || []
+      this.sortParam = this.$q.localStorage.getItem(`cardfilter.${server}`).sort || 'desc'
+      this.orderKey = this.$q.localStorage.getItem(`cardfilter.${server}`).orderKey || 'cardId'
       await this.doFilter(server)
       await this.getBandCharaList(server)
       await this.getSkillList(server)
@@ -242,7 +241,7 @@ export default {
       this.isReady = true
     },
     saveFilter () {
-      LocalStorage.set(`cardfilter.${this.server}`, {
+      this.$q.localStorage.set(`cardfilter.${this.server}`, {
         rarity: this.selectRarity,
         charas: this.selectCharacters,
         attrs: this.selectAttrs,

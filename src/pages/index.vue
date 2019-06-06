@@ -1,7 +1,7 @@
 <template>
-  <q-page padding class="column gutter-sm">
-    <p style="text-align: center;" v-if="!$q.platform.is.desktop">{{$t('mobile.click-collapsible')}}</p>
-    <div v-if="birthdayInfo" class="row items-center gutter-sm">
+  <q-page padding class="column q-gutter-sm">
+    <!-- <p style="text-align: center;" v-if="!$q.platform.is.desktop">{{$t('mobile.click-expansion-item')}}</p> -->
+    <div v-if="birthdayInfo" class="row items-center q-gutter-sm">
       <div v-if="birthdayInfo.today.length">{{$t('common.birthday.today')}}</div>
       <div v-if="birthdayInfo.today.length">
         <img v-for="todayInfo in birthdayInfo.today" :key="todayInfo.chara.characterId" :src="`statics/chara_icon_${todayInfo.chara.characterId}.png`">
@@ -11,51 +11,30 @@
         <img v-for="nextInfo in birthdayInfo.next" :key="nextInfo.chara.characterId" :src="`statics/chara_icon_${nextInfo.chara.characterId}.png`">
       </div>
     </div>
-    <q-collapsible :label="$t('common.event')" v-model="isEventOpen">
-      <div class="row col-12 gutter-sm">
-        <div v-for="server in servers" :key="server" class="col-lg-4 col-md-6 col-12">
+    <q-expansion-item :label="$t('common.event')" v-model="isEventOpen">
+      <div class="row col-12 q-col-gutter-sm q-mx-sm">
+        <div v-for="server in servers" :key="server" class="col-xl-3 col-md-6 col-12">
           <event-card :server="server"></event-card>
         </div>
       </div>
-    </q-collapsible>
-    <q-collapsible :label="$t('common.gacha')" v-model="isGachaOpen">
-      <q-collapsible :label="$t('common.jp')" v-model="isOpen.jp">
-        <lazy-component @show="loadGachaData('jp')">
-          <div class="row col-12 gutter-sm">
-            <div v-if="isGcahaReady.jp" class="row col-12 gutter-sm">
-              <gacha-card server="jp" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.jp" :key="gacha.seq" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'jp')"></gacha-card>
+    </q-expansion-item>
+    <q-expansion-item :label="$t('common.gacha')" v-model="isGachaOpen">
+      <q-expansion-item v-for="server in servers" :key="server" :label="$t(`common.${server}`)"
+        v-model="isOpen[server]" class="q-mx-xs">
+        <lazy-component @show="loadGachaData(server)">
+          <div class="row col-12 q-col-gutter-sm q-mx-sm">
+            <div v-if="isGcahaReady[server]" class="row col-12 q-col-gutter-sm">
+              <gacha-card :server="server" class="col-xl-3 col-lg-4 col-md-6 col-12"
+              v-for="gacha in currentGachaList[server]" :key="gacha.seq" :data="gacha"
+              @open-modal="$refs.gachaModal.open(gacha, server)"></gacha-card>
             </div>
-            <div v-if="!isGcahaReady.jp" class="col-12">
+            <div v-if="!isGcahaReady[server]" class="col-12">
               <q-spinner color="pink" size="48px"></q-spinner>
             </div>
           </div>
         </lazy-component>
-      </q-collapsible>
-      <q-collapsible :label="$t('common.tw')" v-model="isOpen.tw">
-        <lazy-component @show="loadGachaData('tw')">
-          <div class="row col-12 gutter-sm">
-            <div v-if="isGcahaReady.tw" class="row col-12 gutter-sm">
-              <gacha-card server="tw" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.tw" :key="gacha.seq" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'tw')"></gacha-card>
-            </div>
-            <div v-if="!isGcahaReady.tw" class="col-12">
-              <q-spinner color="pink" size="48px"></q-spinner>
-            </div>
-          </div>
-        </lazy-component>
-      </q-collapsible>
-      <q-collapsible :label="$t('common.en')" v-model="isOpen.en">
-        <lazy-component @show="loadGachaData('en')">
-          <div class="row col-12 gutter-sm">
-            <div v-if="isGcahaReady.en" class="row col-12 gutter-sm">
-              <gacha-card server="en" class="col-xl-3 col-lg-4 col-md-6 col-12" v-for="gacha in currentGachaList.en" :key="gacha.seq" :data="gacha" @open-modal="$refs.gachaModal.open(gacha, 'en')"></gacha-card>
-            </div>
-            <div v-if="!isGcahaReady.en" class="col-12">
-              <q-spinner color="pink" size="48px"></q-spinner>
-            </div>
-          </div>
-        </lazy-component>
-      </q-collapsible>
-    </q-collapsible>
+      </q-expansion-item>
+    </q-expansion-item>
     <gacha-modal ref="gachaModal"></gacha-modal>
   </q-page>
 </template>

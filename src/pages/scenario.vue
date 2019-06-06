@@ -40,7 +40,7 @@
 
 <script>
 import { openURL } from 'quasar'
-import BufferLoader from '../plugins/bufferLoader'
+import BufferLoader from '../boot/bufferLoader'
 
 export default {
   // name: 'PageName',
