@@ -73,15 +73,9 @@
 
     <q-page-container>
       <router-view />
-      <!-- <q-btn
-        v-back-to-top.animate="{offset: 500, duration: 200}"
-        round
-        color="pink"
-        class="fixed-bottom-right animate-pop"
-        style="margin: 0 15px 15px 0"
-      >
-        <q-icon name="keyboard_arrow_up" />
-      </q-btn> -->
+      <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
+        <q-btn fab-mini icon="keyboard_arrow_up" color="pink" />
+      </q-page-scroller>
     </q-page-container>
 
     <settings-modal ref="settings"></settings-modal>

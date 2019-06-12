@@ -1,9 +1,9 @@
 <template>
   <div>
     <q-card>
-      <q-banner class="bg-pink text-white">
+      <q-card-section class="bg-pink text-white">
         <div class="text-subtitle1">{{data.gachaName}}</div>
-      </q-banner>
+      </q-card-section>
       <div class="gacha-img" v-lazy:background-image="`/assets-${server}/gacha/screen/${data.resourceName}_rip/logo.png`"></div>
       <q-card-section>
         <h5 class="q-my-xs"
@@ -12,7 +12,7 @@
                     v-else></count-down>
       </q-card-section>
       <q-separator />
-      <q-card-actions>
+      <q-card-actions vertical>
         <q-btn flat
                class="text-pink"
                @click="$emit('open-modal')"

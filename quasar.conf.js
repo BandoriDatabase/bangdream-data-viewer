@@ -98,6 +98,7 @@ module.exports = function (ctx) {
         'QHeader',
         'QDrawer',
         'QPageContainer',
+        'QPageScroller',
         'QPage',
         'QToolbar',
         'QToolbarTitle',
@@ -160,13 +161,13 @@ module.exports = function (ctx) {
       workboxOptions: {
         runtimeCaching: [{
           urlPattern: /api\/v\d\/\S{2}\/chara\/birthday/,
-          handler: 'networkFirst',
+          handler: 'NetworkFirst',
           options: {
             cacheName: 'bd-api-cache'
           }
         }, {
           urlPattern: /api\/v\d\/\S{2}\/(card|chara|live2d\/model|live2d\/costume|music|stamp|degree|event\/badge)\/.+/,
-          handler: 'staleWhileRevalidate',
+          handler: 'StaleWhileRevalidate',
           options: {
             cacheName: 'bd-api-cache'
           }

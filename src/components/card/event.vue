@@ -1,20 +1,20 @@
 <template>
   <div>
     <q-card v-if="isReady">
-      <q-banner class="bg-pink text-white">
+      <q-card-section class="bg-pink text-white">
         <div class="text-subtitle1">{{currentEvent[server].eventName}}</div>
         <div class="text-caption">
           {{$t('event-srv', { srv: $t(`common.${server}`) }) }} - {{currentEvent[server].eventType}}
         </div>
-      </q-banner>
-      <img v-if="server === 'kr'" @click="$router.push(`/currevent/${server}`), $ga.event('event-detail', 'jump', server)" style="cursor: pointer;"
-            v-lazy="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}.png`" />
-      <img v-else-if="server !== 'en'" @click="$router.push(`/currevent/${server}`), $ga.event('event-detail', 'jump', server)" style="cursor: pointer;"
-            v-lazy="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.png`" />
-      <img v-else-if="server === 'en' && currentEvent[server].eventId >= 3" @click="$router.push(`/currevent/${server}`), $ga.event('event-detail', 'jump', server)" style="cursor: pointer;"
-            v-lazy="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.png`">
-      <img v-else-if="server === 'en'" @click="$router.push(`/currevent/${server}`), $ga.event('event-detail', 'jump', server)" style="cursor: pointer;"
-            v-lazy="`/assets-${server}/homebanner_rip/banner-0${14 + currentEvent[server].eventId * 2}.png`">
+      </q-card-section>
+      <q-img contain class="event-card-img" v-if="server === 'kr'"
+            :src="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}.png`"></q-img>
+      <q-img contain class="event-card-img" v-else-if="server !== 'en'"
+            :src="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.png`"></q-img>
+      <q-img contain class="event-card-img" v-else-if="server === 'en' && currentEvent[server].eventId >= 3"
+            :src="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.png`"></q-img>
+      <q-img contain class="event-card-img" v-else-if="server === 'en'"
+            :src="`/assets-${server}/homebanner_rip/banner-0${14 + currentEvent[server].eventId * 2}.png`"></q-img>
       <q-card-section>
         <div class="row items-center justify-center">
           <div class="col-6"
@@ -36,14 +36,21 @@
                       v-else-if="Number(currentEvent[server].endAt) > Date.now()"></count-down>
         </div>
       </q-card-section>
+      <q-separator />
+      <q-card-actions vertical>
+        <q-btn flat
+               class="text-pink"
+               @click="$router.push(`/currevent/${server}`), $ga.event('event-detail', 'jump', server)"
+               icon="launch">{{$t('gacha.open-detail')}}</q-btn>
+      </q-card-actions>
     </q-card>
     <q-card v-else>
-      <q-banner class="bg-pink text-white">
+      <q-card-section class="bg-pink text-white">
         <div class="text-subtitle1">{{$t('fetch-data', { type: $t('common.event') })}}</div>
         <div class="text-caption">
           {{$t('fetch-data', { type: $t('common.event') })}}
         </div>
-      </q-banner>
+      </q-card-section>
       <q-card-section>
         <q-spinner color="pink" size="48px"></q-spinner>
       </q-card-section>
@@ -96,5 +103,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.event-card-img {
+  max-height: 140px;
+}
 </style>

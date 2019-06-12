@@ -1,6 +1,6 @@
 <template>
   <lazy-component @show="loadData">
-    <div class="card-img-parent" v-if="isReady" @click="() => {
+    <div class="card-img-parent" v-if="isReady && !mini" @click="() => {
         $emit('close');
         $router.push(`/card/${server}/${(card || cardMap[server][cardId]).cardId}/${Number(trained)}`);
       }">
@@ -9,6 +9,16 @@
       <div :class="`thumb-attr-${(card || cardMap[server][cardId]).attr}`"></div>
       <div :class="`thumb-band-${bandCharaList[server][Number((card || cardMap[server][cardId]).characterId) - 1].bandId}`"></div>
       <div v-for="i in (card || cardMap[server][cardId]).rarity" :key="i" :class="`thumb-rarity-${Number(trained)}-${i}`"></div>
+    </div>
+    <div class="card-img-mini-parent" v-else-if="isReady" @click="() => {
+        $emit('close');
+        $router.push(`/card/${server}/${(card || cardMap[server][cardId]).cardId}/${Number(trained)}`);
+      }">
+      <div class="thumb-mini-table" v-lazy:background-image="`/assets-${server}/thumb/chara/card${cardGroup}_rip/${(card || cardMap[server][cardId]).cardRes}_${trained ? 'after_training' : 'normal'}.png`"></div>
+      <div :class="`thumb-mini-frame-${getThumbFrame(Number((card || cardMap[server][cardId]).rarity), (card || cardMap[server][cardId]).attr)}`"></div>
+      <div :class="`thumb-mini-attr-${(card || cardMap[server][cardId]).attr}`"></div>
+      <div :class="`thumb-mini-band-${bandCharaList[server][Number((card || cardMap[server][cardId]).characterId) - 1].bandId}`"></div>
+      <div v-for="i in (card || cardMap[server][cardId]).rarity" :key="i" :class="`thumb-mini-rarity-${Number(trained)}-${i}`"></div>
     </div>
     <div class="card-img-parent" v-else>
       <q-inner-loading :visible="!isReady">
@@ -30,10 +40,8 @@ export default {
       type: String,
       required: true
     },
-    trained: {
-      type: Boolean,
-      default: false
-    }
+    trained: Boolean,
+    mini: Boolean
   },
   data () {
     return {
@@ -93,7 +101,14 @@ export default {
 .card-img-parent
   width 120px
   height 120px
-  margin 4.5px auto
+  margin 0 auto
+  position relative
+  cursor pointer
+
+.card-img-mini-parent
+  width 60px
+  height 60px
+  margin 0 auto
   position relative
   cursor pointer
 
@@ -105,175 +120,146 @@ export default {
   left 5px
   top 5px
 
+.thumb-mini-table
+  position absolute
+  width 55.5px
+  height 55.5px
+  background-size cover
+  left 2.5px
+  top 2.5px
+
 thumb-frame(uri)
   width 120px
   height 120px
-  background url(uri) no-repeat
+  realUri = '~assets/thumb_frame_' + uri + '.png'
+  background url(realUri) no-repeat
   background-size cover
   left 0
   top 0
-
-.thumb-frame-normal-happy
-  position: absolute
-  thumb-frame('~assets/thumb_frame_happy.png')
-
-.thumb-frame-normal-pure
-  position: absolute
-  thumb-frame('~assets/thumb_frame_pure.png')
-
-.thumb-frame-normal-cool
-  position: absolute
-  thumb-frame('~assets/thumb_frame_cool.png')
-
-.thumb-frame-normal-powerful
-  position: absolute
-  thumb-frame('~assets/thumb_frame_powerful.png')
-
-.thumb-frame-rare
-  position: absolute
-  thumb-frame('~assets/thumb_frame_silver.png')
-
-.thumb-frame-sr
-  position: absolute
-  thumb-frame('~assets/thumb_frame_gold.png')
-
-.thumb-frame-ssr
-  position: absolute
-  thumb-frame('~assets/thumb_frame_rainbow.png')
 
 thumd-attr(uri)
   top 2%
   right 1%
   width 30px
   height 30px
-  background url(uri) no-repeat
+  realUri = '~assets/icon_' + uri + '.png'
+  background url(realUri) no-repeat
   background-size cover
 
-.thumb-attr-powerful
+thumb-mini-frame(uri)
+  width 60px
+  height 60px
+  realUri = '~assets/thumb_frame_' + uri + '.png'
+  background url(realUri) no-repeat
+  background-size cover
+  left 0
+  top 0
+
+thumd-mini-attr(uri)
+  top 2%
+  right 1%
+  width 15px
+  height 15px
+  realUri = '~assets/icon_' + uri + '.png'
+  background url(realUri) no-repeat
+  background-size cover
+
+attrs = happy pure cool powerful
+
+for attr in attrs
+  .thumb-frame-normal-{attr}
+    position: absolute
+    thumb-frame(attr)
+
+  .thumb-attr-{attr}
+    position: absolute
+    thumd-attr(attr)
+
+  .thumb-mini-frame-normal-{attr}
+    position: absolute
+    thumb-mini-frame(attr)
+
+  .thumb-mini-attr-{attr}
+    position: absolute
+    thumd-mini-attr(attr)
+
+.thumb-frame-rare
   position: absolute
-  thumd-attr('~assets/icon_powerful.png')
+  thumb-frame('silver')
 
-.thumb-attr-cool
+.thumb-frame-sr
   position: absolute
-  thumd-attr('~assets/icon_cool.png')
+  thumb-frame('gold')
 
-.thumb-attr-happy
+.thumb-frame-ssr
   position: absolute
-  thumd-attr('~assets/icon_happy.png')
+  thumb-frame('rainbow')
 
-.thumb-attr-pure
+.thumb-mini-frame-rare
   position: absolute
-  thumd-attr('~assets/icon_pure.png')
+  thumb-mini-frame('silver')
 
-.thumb-rarity-0-1
-  position absolute
-  top 80%
-  left 2.5%
-  width 22.5px
-  height 22.5px
-  background url('~assets/star_untrained.png') no-repeat
-  background-size 100% 100%
+.thumb-mini-frame-sr
+  position: absolute
+  thumb-mini-frame('gold')
 
-.thumb-rarity-0-2
-  position absolute
-  top 65%
-  left 2.5%
-  width 22.5px
-  height 22.5px
-  background url('~assets/star_untrained.png') no-repeat
-  background-size 100% 100%
+.thumb-mini-frame-ssr
+  position: absolute
+  thumb-mini-frame('rainbow')
 
-.thumb-rarity-0-3
-  position absolute
-  top 50%
-  left 2.5%
-  width 22.5px
-  height 22.5px
-  background url('~assets/star_untrained.png') no-repeat
-  background-size 100% 100%
+for num in 1 2 3 4
+  .thumb-rarity-0-{num}
+    position absolute
+    top 80% - 15% * (num - 1)
+    left 2.5%
+    width 22.5px
+    height 22.5px
+    background url('~assets/star_untrained.png') no-repeat
+    background-size 100% 100%
 
-.thumb-rarity-0-4
-  position absolute
-  top 35%
-  left 2.5%
-  width 22.5px
-  height 22.5px
-  background url('~assets/star_untrained.png') no-repeat
-  background-size 100% 100%
+  .thumb-rarity-1-{num}
+    position absolute
+    top 80% - 15% * (num - 1)
+    left 2.5%
+    width 22.5px
+    height 22.5px
+    background url('~assets/star_after_training.png') no-repeat
+    background-size 100% 100%
 
-.thumb-rarity-1-1
-  position absolute
-  top 80%
-  left 2.5%
-  width 22.5px
-  height 22.5px
-  background url('~assets/star_after_training.png') no-repeat
-  background-size 100% 100%
+  .thumb-mini-rarity-0-{num}
+    position absolute
+    top 80% - 15% * (num - 1)
+    left 2.5%
+    width 11.25px
+    height 11.25px
+    background url('~assets/star_untrained.png') no-repeat
+    background-size 100% 100%
 
-.thumb-rarity-1-2
-  position absolute
-  top 65%
-  left 2.5%
-  width 22.5px
-  height 22.5px
-  background url('~assets/star_after_training.png') no-repeat
-  background-size 100% 100%
+  .thumb-mini-rarity-1-{num}
+    position absolute
+    top 80% - 15% * (num - 1)
+    left 2.5%
+    width 11.25px
+    height 11.25px
+    background url('~assets/star_after_training.png') no-repeat
+    background-size 100% 100%
 
-.thumb-rarity-1-3
-  position absolute
-  top 50%
-  left 2.5%
-  width 22.5px
-  height 22.5px
-  background url('~assets/star_after_training.png') no-repeat
-  background-size 100% 100%
+for num in 1 2 3 4 5
+  .thumb-band-{num}
+    position absolute
+    top 3%
+    left 2%
+    width 25px
+    height 25px
+    realUri = '~assets/band_icon_' + num +'.png'
+    background url(realUri) no-repeat center/cover
 
-.thumb-rarity-1-4
-  position absolute
-  top 35%
-  left 2.5%
-  width 22.5px
-  height 22.5px
-  background url('~assets/star_after_training.png') no-repeat
-  background-size 100% 100%
-
-.thumb-band-1
-  position absolute
-  top 3%
-  left 2%
-  width 25px
-  height 25px
-  background url('~assets/band_icon_1.png') no-repeat center/cover
-
-.thumb-band-2
-  position absolute
-  top 3%
-  left 2%
-  width 25px
-  height 25px
-  background url('~assets/band_icon_2.png') no-repeat center/cover
-
-.thumb-band-3
-  position absolute
-  top 3%
-  left 2%
-  width 25px
-  height 25px
-  background url('~assets/band_icon_3.png') no-repeat center/cover
-
-.thumb-band-4
-  position absolute
-  top 3%
-  left 2%
-  width 25px
-  height 25px
-  background url('~assets/band_icon_4.png') no-repeat center/cover
-
-.thumb-band-5
-  position absolute
-  top 3%
-  left 2%
-  width 25px
-  height 25px
-  background url('~assets/band_icon_5.png') no-repeat center/cover
+  .thumb-mini-band-{num}
+    position absolute
+    top 3%
+    left 2%
+    width 12.5px
+    height 12.5px
+    realUri = '~assets/band_icon_' + num +'.png'
+    background url(realUri) no-repeat center/cover
 </style>

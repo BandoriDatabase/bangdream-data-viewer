@@ -1,15 +1,37 @@
 <template>
   <q-page padding class="column q-gutter-sm">
     <!-- <p style="text-align: center;" v-if="!$q.platform.is.desktop">{{$t('mobile.click-expansion-item')}}</p> -->
-    <div v-if="birthdayInfo" class="row items-center q-gutter-sm">
-      <div v-if="birthdayInfo.today.length">{{$t('common.birthday.today')}}</div>
-      <div v-if="birthdayInfo.today.length">
-        <img v-for="todayInfo in birthdayInfo.today" :key="todayInfo.chara.characterId" :src="`statics/chara_icon_${todayInfo.chara.characterId}.png`">
-      </div>
-      <div>{{$t('common.birthday.next')}} {{`${birthdayInfo.next[0].birthday.month}/${birthdayInfo.next[0].birthday.day}`}}</div>
-      <div>
-        <img v-for="nextInfo in birthdayInfo.next" :key="nextInfo.chara.characterId" :src="`statics/chara_icon_${nextInfo.chara.characterId}.png`">
-      </div>
+    <div v-if="birthdayInfo">
+      <q-banner rounded class="bg-grey-3 q-mb-sm" v-if="birthdayInfo.today.length">
+        <template v-slot:avatar>
+          <img
+            v-for="todayInfo in birthdayInfo.today"
+            :key="todayInfo.chara.characterId"
+            :src="`statics/chara_icon_${todayInfo.chara.characterId}.png`"
+            style="width: 48px; height: 48px"
+          >
+        </template>
+        {{$t('common.birthday.today', { name: birthdayTodayCharaName })}}
+      </q-banner>
+      <q-banner rounded class="bg-grey-3 q-mb-sm">
+        <template v-slot:avatar>
+          <img
+            v-for="nextInfo in birthdayInfo.next"
+            :key="nextInfo.chara.characterId"
+            :src="`statics/chara_icon_${nextInfo.chara.characterId}.png`"
+            style="width: 48px; height: 48px"
+          >
+        </template>
+        {{$t('common.birthday.next', {
+          name: birthdayTodayCharaName,
+          date: `${birthdayInfo.next[0].birthday.month}/${birthdayInfo.next[0].birthday.day}`
+        })}}
+      </q-banner>
+    </div>
+    <div v-else>
+      <q-banner rounded class="bg-grey-3 q-mb-sm">
+        {{$t('common.birthday.loading')}}
+      </q-banner>
     </div>
     <q-expansion-item :label="$t('common.event')" v-model="isEventOpen">
       <div class="row col-12 q-col-gutter-sm q-mx-sm">
@@ -57,7 +79,7 @@ export default {
     GachaModal
   },
   mounted () {
-    this.$api.getBirthday('jp')
+    this.$api.getBirthday(this.$q.localStorage.getItem('dataLang') || 'jp')
       .then(res => {
         this.birthdayInfo = res
       })
@@ -83,6 +105,16 @@ export default {
     ]),
     servers () {
       return this.$servers.filter(elem => elem !== 'kr')
+    },
+    birthdayTodayCharaName () {
+      let names = this.birthdayInfo.today.map(elem => elem.chara.characterName)
+
+      return names.join(' & ')
+    },
+    birthdayNextCharaName () {
+      let names = this.birthdayInfo.next.map(elem => elem.chara.characterName)
+
+      return names.join(' & ')
     }
   },
   methods: {

@@ -65,15 +65,18 @@ export default {
     'data-ver': 'Data Ver',
     'app-ver': 'App Ver',
     'birthday': {
-      'today': 'Today is birthday of',
-      'next': 'Next birthday on'
+      'today': 'Today is birthday of {name}',
+      'next': 'Next birthday of {name} on {date}',
+      'loading': 'Loading birthday info...'
     },
     'data-lang': 'Game Data Lang',
     'cover': 'Cover',
     'original': 'Original',
     'all': 'All',
     'release-date': 'Release Date',
-    'back-to-list': 'Return to list'
+    'back-to-list': 'Return to list',
+    'points': 'Points',
+    'show-less': 'Show Less'
   },
   'gacha': {
     'list-title': '{srv} Scouts List',
@@ -177,6 +180,10 @@ export default {
     'badge': 'Event badge',
     'degrees': 'Degrees preview',
     'musics': 'Event musics',
-    'both-match': 'When both matches:'
+    'both-match': 'When both matches:',
+    'point-rewards': 'Event Point Rewards',
+    'ranking-rewards': 'Event Ranking Rewards',
+    'rewards-and-stories': 'Rewards and Stories',
+    'stories': 'Stories'
   }
 }

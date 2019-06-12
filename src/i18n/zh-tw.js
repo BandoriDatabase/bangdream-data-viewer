@@ -65,8 +65,8 @@ export default {
     'data-ver': '資料版本',
     'app-ver': '應用版本',
     'birthday': {
-      'today': '今天過生日的是',
-      'next': '下次過生日的是'
+      'today': '今天過生日的是{name}',
+      'next': '下次過生日的是{name}於{date}'
     },
     'data-lang': '遊戲數據語言',
     'cover': '翻唱',
