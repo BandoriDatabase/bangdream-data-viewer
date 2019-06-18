@@ -137,7 +137,7 @@
             <div class="row" style="max-height: 450px; width: 100%; overflow: auto;">
               <div v-for="item in pointRewards" :key="item.id"
                 class="column items-center col-3 col-lg-2">
-                <single-reward :data="item" :server="server"></single-reward>
+                <single-resource :data="item" :server="server" type-name="rewardType" id-name="rewardId" quantity-name="rewardQuantity"/>
                 <p class="text-h6 q-mb-none">{{item.point}}</p>
                 <p>{{$t('common.points')}}</p>
               </div>
@@ -157,7 +157,7 @@
                 <div class="col-9 row">
                   <div v-for="item in rankingItem.rewards" :key="item.id"
                     class="column items-center col-4 col-lg-2">
-                    <single-reward :data="item" :server="server"></single-reward>
+                    <single-resource :data="item" :server="server" type-name="rewardType" id-name="rewardId" quantity-name="rewardQuantity"/>
                   </div>
                 </div>
               </div>
@@ -177,7 +177,7 @@
                   <div class="row justify-center">
                     <div v-for="reward in item.rewards" :key="reward.id"
                       class="column items-center col-4 col-lg-3">
-                      <single-reward :data="reward" :server="server"></single-reward>
+                      <single-resource :data="reward" :server="server" type-name="rewardType" id-name="rewardId" quantity-name="rewardQuantity"/>
                     </div>
                   </div>
                 </div>
@@ -203,14 +203,14 @@
 import { mapState, mapActions } from 'vuex'
 import VueAplayer from 'vue-aplayer'
 import CountDown from '../components/common/countdown'
-import SingleReward from '../components/common/single-reward'
+import SingleResource from '../components/common/single-resource'
 
 export default {
   // name: 'PageName',
   components: {
     aPlayer: VueAplayer,
     CountDown,
-    SingleReward
+    SingleResource
   },
   data () {
     return {

@@ -133,7 +133,9 @@ module.exports = function (ctx) {
         'QTd',
         'QBar',
         'QBanner',
-        'QImg'
+        'QImg',
+        'QSlider',
+        'QBadge'
       ],
       directives: [
         'Ripple',

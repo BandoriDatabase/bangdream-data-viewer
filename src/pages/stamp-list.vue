@@ -1,11 +1,13 @@
 <template>
   <q-page padding>
     <div style="margin-bottom: 30px;">
-      <span class="q-display-2 text-bold">{{$t('left.stamp')}}</span>
+      <span class="text-h3 text-bold">{{$t('left.stamp')}}</span>
     </div>
-    <div class="row gutter-sm" v-if="isReady">
+    <div class="row q-col-gutter-sm" v-if="isReady">
       <div class="col-xl-2 col-lg-3 col-md-4 col-4" v-for="(singleStamp, idx) in stampList[server]" :key="idx">
-        <q-card class="stamp-img" v-lazy:background-image="`/assets-${server}/stamp/01_rip/${singleStamp.imageName}.png`"></q-card>
+        <q-card>
+          <q-img :src="`/assets-${server}/stamp/01_rip/${singleStamp.imageName}.png`"></q-img>
+        </q-card>
       </div>
     </div>
     <q-spinner v-else color="pink" size="48px"></q-spinner>

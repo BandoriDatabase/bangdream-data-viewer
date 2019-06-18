@@ -4,7 +4,7 @@
       <q-card-section class="bg-pink text-white">
         <div class="text-subtitle1">{{data.gachaName}}</div>
       </q-card-section>
-      <div class="gacha-img" v-lazy:background-image="`/assets-${server}/gacha/screen/${data.resourceName}_rip/logo.png`"></div>
+      <q-img class="gacha-img" :src="`/assets-${server}/gacha/screen/${data.resourceName}_rip/logo.png`"></q-img>
       <q-card-section>
         <h5 class="q-my-xs"
             v-if="Number(data.publishedAt) > Date.now()">{{$t('not-started')}}<br>{{(new Date(Number(data.publishedAt))).toLocaleString()}}</h5>
@@ -40,10 +40,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.gacha-img {
-  height: 140px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
+.gacha-img
+  height 140px
 </style>

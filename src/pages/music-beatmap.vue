@@ -9,7 +9,11 @@
             <q-btn class="col-3" @click="startRhythm(), $ga.event('music-score', 'start', 'view')" :disable="(audioDisable) || (audioStarted && !audioPaused)">Start</q-btn>
             <q-btn class="col-3" @click="pauseRhythm(), $ga.event('music-score', 'pause', 'view')" :disable="!audioStarted">Pause</q-btn>
             <q-btn class="col-3" @click="stopRhythm(), $ga.event('music-score', 'stop', 'view')" :disable="!audioStarted">Stop</q-btn>
-            <q-select class="col-3" float-label="Difficulty" v-model="difficulty" :options="difficultyOptions"></q-select>
+            <q-select class="col-3" label="Difficulty" v-model="difficulty" :options="difficultyOptions">
+              <template v-slot:selected-item="scope">
+                {{ scope.opt.label }}
+              </template>
+            </q-select>
           </div>
           <canvas ref="game"></canvas>
         </div>
@@ -159,7 +163,7 @@ export default {
     if (!AudioContext) return
     this.audioContext = new AudioContext()
     await this.getMusicById({ musicId: this.$route.params.musicId, server: this.server })
-    this.data = this.musicMap.jp[this.$route.params.musicId]
+    this.data = this.musicMap[this.server][this.$route.params.musicId]
     this.isReady = true
     this.difficultyOptions = [
       {
@@ -185,6 +189,7 @@ export default {
         value: 'special'
       })
     }
+    this.difficulty = this.difficultyOptions[0]
 
     this.loadRes()
   },
@@ -332,7 +337,7 @@ export default {
         this.audioPaused = false
         return
       }
-      this.$http.get(`/api/v1/jp/music/chart/${this.$route.params.musicId}/${this.difficulty}`)
+      this.$http.get(`/api/v1/jp/music/chart/${this.$route.params.musicId}/${this.difficulty.value}`)
         .then(res => res.json())
         .then(res => {
           const { metadata, objects } = res

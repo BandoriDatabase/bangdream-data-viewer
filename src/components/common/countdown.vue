@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%">
-    <div class="row gutter-sm items-center"
+    <div class="row q-col-gutter-sm items-center"
          v-if="!small">
       <div class="column items-center cd-elem col-3">
         <h4 class="q-ma-none">{{days}}</h4>

@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
-    <div v-if="isReady" class="row sm-column gutter-sm">
-      <div class="col-lg-6 col-xs-12">
+    <div v-if="isReady" class="row q-col-gutter-sm">
+      <div class="col-lg-6 col-12">
         <div
           class="jacket-img relative-position"
           style="cursor: pointer;"
@@ -15,7 +15,7 @@
           pic: musicData.thumb
         }" ref="player" mode="order" theme="#Cee"></a-player>
       </div>
-      <div class="col-lg-6 col-xs-12">
+      <div class="col-lg-6 col-12">
         <h3>{{musicData.title}}</h3>
         <p>{{$t('music.composer')}}: {{musicData.composer}}</p>
         <p>{{$t('music.lyricist')}}: {{musicData.lyricist}}</p>
@@ -27,100 +27,96 @@
         <!-- <p>{{$t('combo')}}: {{musicData.combo}}</p> -->
         <p>{{$t('music.howtoget')}}: {{musicData.howToGet}}</p>
         <p>{{$t('music.difficulty')}}:
-          <span class="music-difficulty">
-            <q-chip small color="indigo">{{musicData.difficulty[0].level}}</q-chip>
-            <q-chip small color="green">{{musicData.difficulty[3].level}}</q-chip>
-            <q-chip small color="amber">{{musicData.difficulty[2].level}}</q-chip>
-            <q-chip small color="red">{{musicData.difficulty[1].level}}</q-chip>
-            <q-chip v-if="musicData.difficulty[4]" small color="purple">{{musicData.difficulty[4].level}}</q-chip>
+          <span class="music-levels">
+            <span class="music-level music-level-easy">{{musicData.difficulty[0].level}}</span>
+            <span class="music-level music-level-normal">{{musicData.difficulty[3].level}}</span>
+            <span class="music-level music-level-hard">{{musicData.difficulty[2].level}}</span>
+            <span class="music-level music-level-expert">{{musicData.difficulty[1].level}}</span>
+            <span v-if="musicData.difficulty[4]" class="music-level music-level-special">{{musicData.difficulty[4].level}}</span>
           </span>
         </p>
         <q-btn @click="$router.push(`/music/${server}/${musicData.musicId}/beatmap`)">{{$t('music.check-beatmap')}}</q-btn>
         <q-btn @click="$router.push({ name: 'musicList', params: { server } })">{{$t('common.back-to-list')}}</q-btn>
-        <q-collapsible id="achievements" icon="move_to_inbox" :label="$t('music.achieve')">
-          <div class="row">
-            <div class="row items-center col-xl-6 col-12">
-              <p class="col-12">Combo</p>
-              <span class="row col-12">
-                <span class="col-md-3 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('combo_easy'))}.png`">
-                  <p>{{getAchievement('combo_easy').quantity}}</p>
-                  <p>Easy</p>
+        <q-btn @click="isAchieveVisible = true">{{$t('music.achieve')}}</q-btn>
+        <q-dialog v-model="isAchieveVisible">
+          <q-card>
+            <q-card-section class="row items-center">
+              <p class="col-12">{{$t('music.combo-reward')}}</p>
+              <span class="row justify-between col-12">
+                <span class="column items-center">
+                  <single-resource :server="server" :data="getAchievement('combo_easy')" type-name="rewardType" />
+                  <p class="text-subtitle1">{{$t('music.difficulties[0]')}}</p>
                 </span>
-                <span class="col-md-3 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('combo_normal'))}.png`">
-                  <p>{{getAchievement('combo_normal').quantity}}</p>
-                  <p>Normal</p>
+                <span class="column items-center">
+                  <single-resource :server="server" :data="getAchievement('combo_normal')" type-name="rewardType" />
+                  <p class="text-subtitle1">{{$t('music.difficulties[1]')}}</p>
                 </span>
-                <span class="col-md-3 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('combo_hard'))}.png`">
-                  <p>{{getAchievement('combo_hard').quantity}}</p>
-                  <p>Hard</p>
+                <span class="column items-center">
+                  <single-resource :server="server" :data="getAchievement('combo_hard')" type-name="rewardType" />
+                  <p class="text-subtitle1">{{$t('music.difficulties[2]')}}</p>
                 </span>
-                <span class="col-md-3 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('combo_expert'))}.png`">
-                  <p>{{getAchievement('combo_expert').quantity}}</p>
-                  <p>Expert</p>
+                <span class="column items-center">
+                  <single-resource :server="server" :data="getAchievement('combo_expert')" type-name="rewardType" />
+                  <p class="text-subtitle1">{{$t('music.difficulties[3]')}}</p>
                 </span>
-              </span>
-            </div>
-            <div class="row items-center col-xl-6 col-12">
-              <p class="col-12">Full combo</p>
-              <span class="row col-12">
-                <span class="col-md-3 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('full_combo_easy'))}.png`">
-                  <p>{{getAchievement('full_combo_easy').quantity}}</p>
-                  <p>Easy</p>
-                </span>
-                <span class="col-md-3 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('full_combo_normal'))}.png`">
-                  <p>{{getAchievement('full_combo_normal').quantity}}</p>
-                  <p>Normal</p>
-                </span>
-                <span class="col-md-3 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('full_combo_hard'))}.png`">
-                  <p>{{getAchievement('full_combo_hard').quantity}}</p>
-                  <p>Hard</p>
-                </span>
-                <span class="col-md-3 col-xs-6 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('full_combo_expert'))}.png`">
-                  <p>{{getAchievement('full_combo_expert').quantity}}</p>
-                  <p>Expert</p>
+                <span v-if="musicData.difficulty[4]" class="column items-center">
+                  <single-resource :server="server" :data="getAchievement('combo_special')" type-name="rewardType" />
+                  <p class="text-subtitle1">{{$t('music.difficulties[4]')}}</p>
                 </span>
               </span>
-            </div>
-            <div class="row items-center col-12">
-              <p class="col-12">Score rank</p>
-              <span class="row col-12">
-                <span class="col-md-2 col-xs-4 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('score_rank_c'))}.png`">
-                  <p>{{getAchievement('score_rank_c').quantity}}</p>
-                  <p>Rank C</p>
+            </q-card-section>
+            <q-card-section class="row items-center">
+              <p class="col-12">{{$t('music.full-combo-reward')}}</p>
+              <span class="row justify-between col-12">
+                <span class="column items-center">
+                  <single-resource :server="server" :data="getAchievement('full_combo_easy')" type-name="rewardType" />
+                  <p class="text-subtitle1">{{$t('music.difficulties[0]')}}</p>
                 </span>
-                <span class="col-md-2 col-xs-4 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('score_rank_b'))}.png`">
-                  <p>{{getAchievement('score_rank_b').quantity}}</p>
-                  <p>Rank B</p>
+                <span class="column items-center">
+                  <single-resource :server="server" :data="getAchievement('full_combo_normal')" type-name="rewardType" />
+                  <p class="text-subtitle1">{{$t('music.difficulties[1]')}}</p>
                 </span>
-                <span class="col-md-2 col-xs-4 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('score_rank_a'))}.png`">
-                  <p>{{getAchievement('score_rank_a').quantity}}</p>
-                  <p>Rank A</p>
+                <span class="column items-center">
+                  <single-resource :server="server" :data="getAchievement('full_combo_hard')" type-name="rewardType" />
+                  <p class="text-subtitle1">{{$t('music.difficulties[2]')}}</p>
                 </span>
-                <span class="col-md-2 col-xs-4 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('score_rank_s'))}.png`">
-                  <p>{{getAchievement('score_rank_s').quantity}}</p>
-                  <p>Rank S</p>
+                <span class="column items-center">
+                  <single-resource :server="server" :data="getAchievement('full_combo_expert')" type-name="rewardType" />
+                  <p class="text-subtitle1">{{$t('music.difficulties[3]')}}</p>
                 </span>
-                <span class="col-md-2 col-xs-4 column items-center">
-                  <img class="thumb-item" v-lazy="`/assets/thumb/common_rip/${getRwardFileName(getAchievement('score_rank_s'))}.png`">
-                  <p>{{getAchievement('score_rank_ss').quantity}}</p>
-                  <p>Rank SS</p>
+                <span v-if="musicData.difficulty[4]" class="column items-center">
+                  <single-resource :server="server" :data="getAchievement('full_combo_special')" type-name="rewardType" />
+                  <p class="text-subtitle1">{{$t('music.difficulties[4]')}}</p>
                 </span>
               </span>
-            </div>
-          </div>
-        </q-collapsible>
+            </q-card-section>
+            <q-card-section class="row items-center">
+              <p class="col-12">{{$t('music.score-rank-reward')}}</p>
+              <span class="row justify-between col-12">
+                <span class="column items-center">
+                  <single-resource :server="server" :data="getAchievement('score_rank_c')" type-name="rewardType" id-name="rewardId" />
+                  <p class="text-subtitle1">C</p>
+                </span>
+                <span class="column items-center">
+                  <single-resource :server="server" :data="getAchievement('score_rank_b')" type-name="rewardType" id-name="rewardId" />
+                  <p class="text-subtitle1">B</p>
+                </span>
+                <span class="column items-center">
+                  <single-resource :server="server" :data="getAchievement('score_rank_a')" type-name="rewardType" id-name="rewardId" />
+                  <p class="text-subtitle1">A</p>
+                </span>
+                <span class="column items-center">
+                  <single-resource :server="server" :data="getAchievement('score_rank_s')" type-name="rewardType" id-name="rewardId" />
+                  <p class="text-subtitle1">S</p>
+                </span>
+                <span class="column items-center">
+                  <single-resource :server="server" :data="getAchievement('score_rank_ss')" type-name="rewardType" id-name="rewardId" />
+                  <p class="text-subtitle1">SS</p>
+                </span>
+              </span>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
       </div>
     </div>
     <div v-else-if="isError">
@@ -137,16 +133,20 @@
 import VueAplayer from 'vue-aplayer'
 import { mapState, mapActions } from 'vuex'
 
+import singleResource from '../components/common/single-resource'
+
 export default {
   // name: 'PageName',
   data () {
     return {
       isReady: false,
-      isError: false
+      isError: false,
+      isAchieveVisible: false
     }
   },
   components: {
-    aPlayer: VueAplayer
+    aPlayer: VueAplayer,
+    singleResource
   },
   mounted () {
     this.$nextTick(async () => {
@@ -221,18 +221,37 @@ export default {
   width 72px
   height 72px
 
-span.music-difficulty span
-    display inline-block
-    font-size 85%
-    font-weight bold
-    width 30px
-    height 18px
-    border-radius 8px
-    background red
-    text-align center
-    line-height 18px
-    margin-right 5px
+.music-levels
+  font-family -apple-system, PingFang, Helvetica
+  margin-left 15px
+  padding-right 15px
 
-span.music-difficulty > div
-  margin 0 2px
+span.music-level
+  display inline-block
+  color white
+  font-size 85%
+  font-weight semi-bold
+  width 32px
+  height 20px
+  border-radius 10px
+  background red
+  text-align center
+  line-height 20px
+  margin-right 4px
+  margin-bottom 4px
+
+span.music-level-easy
+  background RGB(68, 79, 173)
+
+span.music-level-normal
+  background RGB(86, 175, 95)
+
+span.music-level-hard
+  background RGB(251, 195, 79)
+
+span.music-level-expert
+  background RGB(236, 69, 68)
+
+span.music-level-special
+  background RGB(152, 35, 168)
 </style>

@@ -73,7 +73,12 @@ export default {
     'original': '原创',
     'all': '全部',
     'release-date': '加入游戏时间',
-    'back-to-list': '返回列表'
+    'back-to-list': '返回列表',
+    'points': '点数',
+    'show-less': '显示更少',
+    'filter-applied': '已应用',
+    'settings': '设置',
+    'reset-filter': '重置'
   },
   'gacha': {
     'list-title': '{srv}当前扭蛋池',
@@ -119,7 +124,8 @@ export default {
     'story-none': '该卡牌没有剧情',
     'story-reward': '剧情阅读奖励',
     'jump-to-live2d-costume': '跳转至Live2D',
-    'not-exist': '要查询的卡片不存在： 服务器 {server} 卡片编号 {cardId}'
+    'not-exist': '要查询的卡片不存在： 服务器 {server} 卡片编号 {cardId}',
+    'read-story': '读故事'
   },
   'music': {
     'select-band': '选择乐队',
@@ -129,6 +135,7 @@ export default {
     'tag': '类型',
     'howtoget': '获得方式',
     'difficulty': '难度',
+    'difficulties': ['简单', '一般', '困难', '专家', '特别'],
     'band': '演奏者',
     'achieve': '歌曲成就',
     'combo': '音符数',
@@ -136,7 +143,10 @@ export default {
     'back-detail': '回到乐曲详情',
     'declaration': "仍在测试中，未适配移动设备，欢迎通过<a href='mailto:dev@bandori.ga'>email</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反映问题。",
     'fetch-music-data': '获取音乐详细数据中...',
-    'not-exist': '要查询的音乐不存在： 服务器 {server} 音乐编号 {musicId}'
+    'not-exist': '要查询的音乐不存在： 服务器 {server} 音乐编号 {musicId}',
+    'combo-reward': '连击奖励',
+    'full-combo-reward': '全连击奖励',
+    'score-rank-reward': '分数等级奖励'
   },
   'scenario': {
     'voice-text': '语音文本',
@@ -180,5 +190,8 @@ export default {
     'musics': '活动曲',
     'fetch-data': '获取活动数据中',
     'both-match': '当两者皆满足：'
+  },
+  'title-images': {
+    'failed-load': '无法加载游戏标题界面图像，选择的服务器可能不支持该特性'
   }
 }

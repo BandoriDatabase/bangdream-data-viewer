@@ -27,6 +27,9 @@
           date: `${birthdayInfo.next[0].birthday.month}/${birthdayInfo.next[0].birthday.day}`
         })}}
       </q-banner>
+      <q-banner rounded class="bg-grey-3 q-mb-sm">
+        Update notice now available <a href="//dnaroma.site/update-notice-en" target="_blank">here</a>
+      </q-banner>
     </div>
     <div v-else>
       <q-banner rounded class="bg-grey-3 q-mb-sm">

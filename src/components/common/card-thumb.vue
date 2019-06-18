@@ -4,7 +4,7 @@
         $emit('close');
         $router.push(`/card/${server}/${(card || cardMap[server][cardId]).cardId}/${Number(trained)}`);
       }">
-      <div class="thumb-table" v-lazy:background-image="`/assets-${server}/thumb/chara/card${cardGroup}_rip/${(card || cardMap[server][cardId]).cardRes}_${trained ? 'after_training' : 'normal'}.png`"></div>
+      <q-img class="thumb-table" :src="`/assets-${server}/thumb/chara/card${cardGroup}_rip/${(card || cardMap[server][cardId]).cardRes}_${trained ? 'after_training' : 'normal'}.png`"></q-img>
       <div :class="`thumb-frame-${getThumbFrame(Number((card || cardMap[server][cardId]).rarity), (card || cardMap[server][cardId]).attr)}`"></div>
       <div :class="`thumb-attr-${(card || cardMap[server][cardId]).attr}`"></div>
       <div :class="`thumb-band-${bandCharaList[server][Number((card || cardMap[server][cardId]).characterId) - 1].bandId}`"></div>
@@ -14,14 +14,14 @@
         $emit('close');
         $router.push(`/card/${server}/${(card || cardMap[server][cardId]).cardId}/${Number(trained)}`);
       }">
-      <div class="thumb-mini-table" v-lazy:background-image="`/assets-${server}/thumb/chara/card${cardGroup}_rip/${(card || cardMap[server][cardId]).cardRes}_${trained ? 'after_training' : 'normal'}.png`"></div>
+      <q-img class="thumb-mini-table" :src="`/assets-${server}/thumb/chara/card${cardGroup}_rip/${(card || cardMap[server][cardId]).cardRes}_${trained ? 'after_training' : 'normal'}.png`"></q-img>
       <div :class="`thumb-mini-frame-${getThumbFrame(Number((card || cardMap[server][cardId]).rarity), (card || cardMap[server][cardId]).attr)}`"></div>
       <div :class="`thumb-mini-attr-${(card || cardMap[server][cardId]).attr}`"></div>
       <div :class="`thumb-mini-band-${bandCharaList[server][Number((card || cardMap[server][cardId]).characterId) - 1].bandId}`"></div>
       <div v-for="i in (card || cardMap[server][cardId]).rarity" :key="i" :class="`thumb-mini-rarity-${Number(trained)}-${i}`"></div>
     </div>
     <div class="card-img-parent" v-else>
-      <q-inner-loading :visible="!isReady">
+      <q-inner-loading :showing="!isReady">
         <q-spinner-facebook color="pink" size="48px"></q-spinner-facebook>
       </q-inner-loading>
     </div>

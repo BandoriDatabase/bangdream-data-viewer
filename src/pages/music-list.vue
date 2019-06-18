@@ -1,40 +1,49 @@
 <template>
   <q-page padding>
     <div style="margin-bottom: 30px;">
-      <span class="q-display-2 text-bold">{{$t('left.music')}}</span>
-      <q-btn :label="$t('common.filter')" style="margin-left: 10px;" class="float-right" @click="isFilterVisible = true"></q-btn>
+      <span class="text-h3 text-bold">{{$t('left.music')}}</span>
+      <q-btn :label="$t('common.filter')" style="margin-left: 10px;" class="float-right" @click="isFilterVisible = true">
+        <q-badge color="pink-6" floating v-if="filterInUse">{{$t('common.filter-applied')}}</q-badge>
+      </q-btn>
     </div>
-    <q-modal v-model="isFilterVisible" :content-css="{padding: '15px', maxWidth: '500px'}">
-      <div>
-        <div class="row">
-          <p class="col-12">{{$t('music.select-band')}}</p>
-          <q-checkbox color="pink" class="col-md-4 col-6" v-model="selectBandId" v-for="opt in bandOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
-        </div>
-        <div class="q-mt-md">
-          <p>{{$t('music.tag')}}</p>
-          <div>
-            <q-radio color="pink" v-model="selectTag" val="anime" :label="$t('common.cover')" />
-            <q-radio color="pink" v-model="selectTag" val="normal" :label="$t('common.original')" />
-            <q-radio color="pink" v-model="selectTag" val="all" :label="$t('common.all')" />
+    <q-dialog v-model="isFilterVisible">
+      <q-card>
+        <q-card-section>
+          <div class="row">
+            <p class="col-12">{{$t('music.select-band')}}</p>
+            <q-checkbox color="pink" class="col-6" v-model="selectBandId" v-for="opt in bandOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
           </div>
-        </div>
-        <p class="q-mt-md">{{$t('common.sort.title')}}</p>
-        <div>
-          <q-radio color="pink" v-model="sortParam" val="asc" :label="$t('common.sort.asc')" />
-          <q-radio color="pink" v-model="sortParam" val="desc" :label="$t('common.sort.desc')" />
-        </div>
-        <div>
-          <q-radio color="pink" v-model="orderKey" val="musicId" label="ID" />
-          <!-- <q-radio color="pink" v-model="orderKey" val="bandId" :label="$t('common.band')" /> -->
-          <q-radio color="pink" v-model="orderKey" val="maxDifficilty" :label="$t('common.difficulty')" />
-          <q-radio color="pink" v-model="orderKey" val="publishedAt" :label="$t('common.release-date')" />
-        </div>
-        <div>
-          <q-btn color="pink" @click="doFilter(server), saveFilter(), isFilterVisible = false">{{$t('common.apply-save')}}</q-btn>
-        </div>
-      </div>
-    </q-modal>
-    <q-infinite-scroll ref="musicScroll" v-if="isReady" :handler="loadMore">
+          <div class="q-mt-md">
+            <p>{{$t('music.tag')}}</p>
+            <div>
+              <q-radio color="pink" v-model="selectTag" val="anime" :label="$t('common.cover')" />
+              <q-radio color="pink" v-model="selectTag" val="normal" :label="$t('common.original')" />
+              <q-radio color="pink" v-model="selectTag" val="all" :label="$t('common.all')" />
+            </div>
+          </div>
+          <p class="q-mt-md">{{$t('common.sort.title')}}</p>
+          <div>
+            <q-radio color="pink" v-model="sortParam" val="asc" :label="$t('common.sort.asc')" />
+            <q-radio color="pink" v-model="sortParam" val="desc" :label="$t('common.sort.desc')" />
+          </div>
+          <div>
+            <q-radio color="pink" v-model="orderKey" val="musicId" label="ID" />
+            <!-- <q-radio color="pink" v-model="orderKey" val="bandId" :label="$t('common.band')" /> -->
+            <q-radio color="pink" v-model="orderKey" val="maxDifficilty" :label="$t('common.difficulty')" />
+            <q-radio color="pink" v-model="orderKey" val="publishedAt" :label="$t('common.release-date')" />
+          </div>
+        </q-card-section>
+        <q-card-actions>
+          <q-btn color="secondary" @click="resetFilter()">
+            {{$t('common.reset-filter')}}
+          </q-btn>
+          <q-btn color="pink" @click="doFilter(server), saveFilter(), isFilterVisible = false">
+            {{$t('common.apply-save')}}
+          </q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <q-infinite-scroll ref="musicScroll" v-if="isReady" @load="loadMore">
       <div class="row">
         <div class="col-xl-4 col-md-6 col-sm-12 col-12" v-for="music in musicList" :key="music.cardId">
           <div class="row music">
@@ -60,7 +69,7 @@
         Loading more musics...
       </div>
     </q-infinite-scroll>
-    <q-inner-loading :visible="!isReady">
+    <q-inner-loading :showing="!isReady">
       <q-spinner color="pink" size="48px"></q-spinner>
     </q-inner-loading>
   </q-page>
@@ -93,6 +102,9 @@ export default {
     ]),
     server () {
       return this.$route.params.server
+    },
+    filterInUse () {
+      return this.selectBandId.length || this.sortParam !== 'desc' || this.orderKey !== 'publishedAt' || this.selectTag !== 'all'
     }
   },
   methods: {
@@ -143,6 +155,12 @@ export default {
         orderKey: this.orderKey,
         tag: this.selectTag
       })
+    },
+    resetFilter () {
+      this.selectBandId = []
+      this.sortParam = 'desc'
+      this.orderKey = 'publishedAt'
+      this.selectTag = 'all'
     },
     async loadMore (index, done) {
       try {

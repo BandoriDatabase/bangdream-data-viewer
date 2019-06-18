@@ -16,7 +16,7 @@
           <small>{{ appVer }}</small>
         </q-toolbar-title>
 
-        <q-btn flat label="Settings" @click="$refs.settings.open()" icon="settings">
+        <q-btn flat :label="$t('common.settings')" @click="$refs.settings.open()" icon="settings">
         </q-btn>
       </q-toolbar>
     </q-header>
@@ -49,7 +49,7 @@
             {{$t('common.app-ver')}}: v{{appVer}}
           </q-item-section>
         </q-item>
-        <q-item @click="openURL()" clickable>
+        <q-item @click="openURL('//dnaroma.site/update-notice-en')" clickable>
           <q-item-section>
             {{$t('left.update-note')}}
           </q-item-section>
@@ -146,7 +146,7 @@ export default {
         },
         {
           name: 'about',
-          url: '//dnaroma.site/',
+          url: '//dnaroma.site/about/',
           i18n: 'left.about',
           icon: 'info'
         }

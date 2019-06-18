@@ -17,7 +17,6 @@ export default [
       { name: 'stampList', path: 'stamp/:server(\\S{2})', component: () => import('pages/stamp-list') },
       { name: 'titleList', path: 'titles/:server(\\S{2})', component: () => import('pages/title-images') },
       { name: 'about', path: 'about', component: () => import('pages/about') },
-      { name: 'simulation', path: 'simulation', component: () => import('pages/simulation-play-songs') },
       { name: 'testGame', path: 'test/game', component: () => import('components/Game') }
     ]
   },
