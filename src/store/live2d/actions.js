@@ -13,3 +13,10 @@ export const getCharaLive2d = async ({ commit, state }, { server, charaId }) => 
 }
 
 export const setForceReload = ({ commit }) => commit('SET_FORCE_RELOAD')
+
+export const initState = {
+  root: true,
+  handler ({ commit }, servers) {
+    commit('INIT_STATE_DATA', servers)
+  }
+}

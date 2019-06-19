@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-layout-header v-model="isHeaderShow">
-      <q-toolbar color="pink">
+    <q-header v-model="isHeaderShow">
+      <q-toolbar class="bg-pink shadow-1">
         <q-btn
           flat
           dense
@@ -13,168 +13,186 @@
 
         <q-toolbar-title>
           Bandori Database
-          <div slot="subtitle">Version {{ appVer }}</div>
+          <small>{{ appVer }}</small>
         </q-toolbar-title>
 
-        <q-btn flat label="Settings" @click="$refs.settings.open()" icon="settings">
+        <q-btn flat :label="$t('common.settings')" @click="$refs.settings.open()" icon="settings">
         </q-btn>
       </q-toolbar>
-    </q-layout-header>
+    </q-header>
 
-    <q-layout-drawer
+    <q-drawer
       v-model="leftDrawerOpen"
       :breakpoint="1439"
       content-class="bg-grey-2"
     >
-      <q-list
-        no-border
-        link
-        inset-delimiter
-      >
-        <q-list-header>{{$t('left.title')}}</q-list-header>
-        <q-item @click.native="$router.push('/')" v-ripple>
-          <q-item-side icon="home" />
-          <q-item-main :label="$t('left.home')" />
+      <q-list>
+        <q-item-label header>{{$t('left.title')}}</q-item-label>
+        <q-item clickable v-for="(item, idx) in menuList" :key="idx"
+          :active="$route.name === item.name" @click="item.url ? openURL(item.url) : $router.push({ name: item.name, params: { server: $dataLang } })" v-ripple>
+          <q-item-section avatar>
+            <q-icon :name="item.icon"></q-icon>
+          </q-item-section>
+          <q-item-section>
+            {{$t(item.i18n)}}
+          </q-item-section>
         </q-item>
-        <q-item @click.native="$router.push(`/card/overview/${$dataLang}`)" v-ripple>
-          <q-item-side icon="picture_in_picture" />
-          <q-item-main :label="$t('left.card')" />
-        </q-item>
-        <q-item @click.native="$router.push(`/music/${$dataLang}`)" v-ripple>
-          <q-item-side icon="library_music" />
-          <q-item-main :label="$t('left.music')" />
-        </q-item >
-        <q-item @click.native="$router.push(`/sfcs/${$dataLang}`)" v-ripple>
-          <q-item-side icon="photo_library" />
-          <q-item-main :label="$t('left.SFC')" />
-        </q-item>
-        <q-item @click.native="$router.push(`/titles/${$dataLang}`)" v-ripple>
-          <q-item-side icon="aspect_ratio" />
-          <q-item-main :label="$t('left.gametitle')" />
-        </q-item>
-        <q-item @click.native="$router.push(`/stamp/${$dataLang}`)" v-ripple>
-          <q-item-side icon="loyalty" />
-          <q-item-main :label="$t('left.stamp')" />
-        </q-item>
-        <q-item @click.native="$router.push(`/l2d/${$dataLang}`)" v-ripple>
-          <q-item-side icon="record_voice_over" />
-          <q-item-main :label="$t('left.Live2d')" />
-        </q-item>
-        <q-item @click.native="$router.push(`/currevent/${$dataLang}`)" v-ripple>
-          <q-item-side icon="schedule" />
-          <q-item-main :label="$t('left.current-event')" />
-        </q-item>
-        <q-item @click.native="$router.push('/about')" v-ripple>
-          <q-item-side icon="info" />
-          <q-item-main :label="$t('left.about')" />
-        </q-item>
-        <q-item-separator />
-        <q-list-header>{{$t('left.secTitle')}}</q-list-header>
-        <q-item>
-          <q-item-main :label="`${$t('common.jp')} ${$t('common.data-ver')}: v${resVer.jp || '0.0.0.0'}`"></q-item-main>
+        <q-separator />
+        <q-item-label header>{{$t('left.secTitle')}}</q-item-label>
+        <q-item v-for="(server, idx) in $servers" :key="idx">
+          <q-item-section>
+            {{$t(`common.${server}`)}} {{$t('common.data-ver')}}: v{{resVer[server] || '0.0.0.0'}}
+          </q-item-section>
         </q-item>
         <q-item>
-          <q-item-main :label="`${$t('common.tw')} ${$t('common.data-ver')}: v${resVer.tw || '0.0.0.0'}`"></q-item-main>
+          <q-item-section>
+            {{$t('common.app-ver')}}: v{{appVer}}
+          </q-item-section>
         </q-item>
-        <q-item>
-          <q-item-main :label="`${$t('common.kr')} ${$t('common.data-ver')}: v${resVer.kr || '0.0.0.0'}`"></q-item-main>
+        <q-item @click="openURL('//dnaroma.site/update-notice-en')" clickable>
+          <q-item-section>
+            {{$t('left.update-note')}}
+          </q-item-section>
         </q-item>
-        <q-item>
-          <q-item-main :label="`${$t('common.en')} ${$t('common.data-ver')}: v${resVer.en || '0.0.0.0'}`"></q-item-main>
-        </q-item>
-        <q-item>
-          <q-item-main :label="`${$t('common.app-ver')}: v${appVer}`" />
-        </q-item>
-        <q-item @click.native="$refs['update-note'].open()">
-          <q-item-main :label="$t('left.update-note')" />
-        </q-item>
-        <q-item-separator />
-        <q-list-header>{{$t('left.useful-link')}}</q-list-header>
-        <q-item @click.native="openURL('https://discord.gg/vGb3eHH')">
-          <q-item-side icon="fab fa-discord" />
-          <q-item-main label="Discord server" sublabel="discord.gg/vGb3eHH" />
-        </q-item>
-        <q-item @click.native="openURL('https://www.reddit.com/r/BanGDream/')">
-          <q-item-side icon="fab fa-reddit" />
-          <q-item-main label="Reddit" sublabel="www.reddit.com/r/BanGDream/" />
-        </q-item>
-        <q-item @click.native="openURL('https://twitter.com/bang_dream_gbp')">
-          <q-item-side icon="fab fa-twitter" />
-          <q-item-main label="Twitter @bang_dream_gbp" sublabel="twitter.com/bang_dream_gbp" />
-        </q-item>
-        <q-item @click.native="openURL('https://twitter.com/BandoriD')">
-          <q-item-side icon="fab fa-twitter" />
-          <q-item-main label="Twitter @BandoriD" sublabel="twitter.com/BandoriD" />
-        </q-item>
-        <q-item @click.native="openURL('https://twitter.com/bandori_updates')">
-          <q-item-side icon="fab fa-twitter" />
-          <q-item-main label="Twitter @bandori_updates" sublabel="twitter.com/bandori_updates" />
-        </q-item>
-        <q-item @click.native="openURL('https://www.bangdream.moe/')">
-          <q-item-side icon="open_in_new" />
-          <q-item-main label="BanG Dream!导航站" sublabel="www.bangdream.moe" />
-        </q-item>
-        <q-item @click.native="openURL('https://www.bangdreamwiki.com/')">
-          <q-item-side icon="open_in_new" />
-          <q-item-main label="BanG Dream! WiKi!" sublabel="www.bangdreamwiki.com" />
-        </q-item>
-        <q-item @click.native="openURL('http://home.bangdream.space/')">
-          <q-item-side icon="open_in_new" />
-          <q-item-main label="炸帮裂梦乐团Mastodon" sublabel="home.bangdream.space" />
-        </q-item>
-        <q-item @click.native="openURL('https://forum.gamer.com.tw/A.php?bsn=31877')">
-          <q-item-side icon="open_in_new" />
-          <q-item-main label="少女樂團派對 哈啦板" sublabel="forum.gamer.com.tw/A.php?bsn=31877" />
-        </q-item>
-        <q-item @click.native="openURL('https://kekeke.cc/bang_dream_gbp')">
-          <q-item-side icon="open_in_new" />
-          <q-item-main label="bang_dream_gbp/kekeke" sublabel="kekeke.cc/bang_dream_gbp" />
+        <q-separator />
+        <q-item-label header>{{$t('left.useful-link')}}</q-item-label>
+        <q-item clickable v-for="(item, idx) in externalLinks" :key="idx" @click="openURL(item.url)" v-ripple>
+          <q-item-section avatar>
+            <q-icon :name="item.icon"></q-icon>
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{item.label}}</q-item-label>
+          </q-item-section>
         </q-item>
         <q-item @click.native="openURL('https://bang-dream.bushimo.jp/')">
           <q-item-side icon="open_in_new" />
           <q-item-main label="Game offcial site" sublabel="bang-dream.bushimo.jp" />
         </q-item>
       </q-list>
-    </q-layout-drawer>
+    </q-drawer>
 
     <q-page-container>
       <router-view />
-      <q-btn
-        v-back-to-top.animate="{offset: 500, duration: 200}"
-        round
-        color="pink"
-        class="fixed-bottom-right animate-pop"
-        style="margin: 0 15px 15px 0"
-      >
-        <q-icon name="keyboard_arrow_up" />
-      </q-btn>
+      <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
+        <q-btn fab-mini icon="keyboard_arrow_up" color="pink" />
+      </q-page-scroller>
     </q-page-container>
 
     <settings-modal ref="settings"></settings-modal>
-    <update-notes-modal ref="update-note"></update-notes-modal>
+    <!-- <update-notes-modal ref="update-note"></update-notes-modal> -->
   </q-layout>
 </template>
 
 <script>
-import { openURL, LocalStorage } from 'quasar'
+import { openURL } from 'quasar'
 import { mapActions, mapState } from 'vuex'
 import semver from 'semver'
 
 import SettingsModal from 'components/modals/settings'
-import UpdateNotesModal from 'components/modals/update-notes'
+// import UpdateNotesModal from 'components/modals/update-notes'
 
 export default {
   name: 'LayoutDefault',
   components: {
-    SettingsModal,
-    UpdateNotesModal
+    SettingsModal
+    // UpdateNotesModal
   },
   data () {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
       appVer: '0.8.2',
       moremenuOpen: false,
-      isHeaderShow: true
+      isHeaderShow: true,
+      menuList: [
+        {
+          name: 'index',
+          i18n: 'left.home',
+          icon: 'home'
+        },
+        {
+          name: 'cardList',
+          i18n: 'left.card',
+          icon: 'picture_in_picture'
+        },
+        {
+          name: 'musicList',
+          i18n: 'left.music',
+          icon: 'library_music'
+        },
+        {
+          name: 'sfc',
+          i18n: 'left.SFC',
+          icon: 'photo_library'
+        },
+        {
+          name: 'titleList',
+          i18n: 'left.gametitle',
+          icon: 'aspect_ratio'
+        },
+        {
+          name: 'stampList',
+          i18n: 'left.stamp',
+          icon: 'loyalty'
+        },
+        {
+          name: 'live2d',
+          i18n: 'left.Live2d',
+          icon: 'record_voice_over'
+        },
+        {
+          name: 'currEvent',
+          i18n: 'left.current-event',
+          icon: 'schedule'
+        },
+        {
+          name: 'about',
+          url: '//dnaroma.site/about/',
+          i18n: 'left.about',
+          icon: 'info'
+        }
+      ],
+      externalLinks: [
+        {
+          label: 'Discord',
+          icon: 'fab fa-discord',
+          url: '//discord.gg/vGb3eHH'
+        },
+        {
+          label: 'Reddit',
+          icon: 'fab fa-reddit',
+          url: '//www.reddit.com/r/BanGDream/'
+        },
+        {
+          label: '@bang_dream_gbp',
+          icon: 'fab fa-twitter',
+          url: '//twitter.com/bang_dream_gbp'
+        },
+        {
+          label: '@bandori_updates',
+          icon: 'fab fa-twitter',
+          url: '//twitter.com/bandori_updates'
+        },
+        {
+          label: 'Game Official Site',
+          icon: 'open_in_new',
+          url: '//bang-dream.bushimo.jp'
+        },
+        {
+          label: 'Bestdori!',
+          icon: 'open_in_new',
+          url: '//bestdori.com'
+        },
+        {
+          label: '少女樂團派對 哈啦板',
+          icon: 'open_in_new',
+          url: '//forum.gamer.com.tw/A.php?bsn=31877'
+        },
+        {
+          label: 'bang_dream_gbp/kekeke',
+          icon: 'open_in_new',
+          url: '//kekeke.cc/bang_dream_gbp'
+        }
+      ]
     }
   },
   computed: {
@@ -191,10 +209,10 @@ export default {
   mounted () {
     this.$nextTick(async () => {
       await this.getResourceVersion()
-      const lastAppVer = LocalStorage.get.item('appVer')
+      const lastAppVer = this.$q.localStorage.getItem('appVer')
       if (!lastAppVer || semver.gt(this.appVer, lastAppVer)) {
-        this.$refs['update-note'].open()
-        LocalStorage.set('appVer', this.appVer)
+        // this.$refs['update-note'].open()
+        this.$q.localStorage.set('appVer', this.appVer)
       }
 
       this.$root.$on('hide-header', () => {

@@ -1,8 +1,1 @@
-export default {
-  sfcList: {
-    jp: [],
-    tw: [],
-    kr: [],
-    en: []
-  }
-}
+export default {}

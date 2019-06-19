@@ -1,28 +1,36 @@
 <template>
-  <q-modal ref="modal" :content-css="{padding: '15px'}" v-model="isOpen" @hide="saveSetting">
-    <q-select
-      float-label="Language/语言/語言/言語"
-      v-model="lang"
-      @input="changeLang"
-      :options="languages"
-    />
-    <br>
-    <q-select
-      :float-label="$t('common.data-lang')"
-      v-model="dataLang"
-      @input="changeDataLang"
-      :options="dataLangOptions"
-    />
-    <br>
-    <div class="action-buttons">
-      <q-btn color="pink" @click="isOpen = false">Confirm</q-btn>
-    </div>
-  </q-modal>
+  <q-dialog ref="modal" :content-css="{padding: '15px'}" v-model="isOpen" @hide="saveSetting">
+    <q-card style="width: 100%; max-width: 350px;">
+      <q-card-section>
+        <q-select
+          label="Language/语言/語言/言語"
+          v-model="lang"
+          @input="changeLang"
+          :options="languages"
+        >
+          <template v-slot:selected-item="scope">
+            {{ scope.opt.label }}
+          </template>
+        </q-select>
+        <q-select
+          :label="$t('common.data-lang')"
+          v-model="dataLang"
+          @input="changeDataLang"
+          :options="dataLangOptions"
+        >
+          <template v-slot:selected-item="scope">
+            {{ scope.opt.label }}
+          </template>
+        </q-select>
+      </q-card-section>
+      <q-card-actions>
+        <q-btn color="pink" @click="isOpen = false">Confirm</q-btn>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
-import { LocalStorage } from 'quasar'
-
 export default {
   // name: 'ComponentName',
   data () {
@@ -53,25 +61,25 @@ export default {
     }
   },
   mounted () {
-    this.lang = LocalStorage.get.item('useLocale')
-    this.dataLang = LocalStorage.get.item('dataLang') || 'jp'
+    this.lang = this.languages.find(elem => elem.value === this.$q.localStorage.getItem('useLocale'))
+    this.dataLang = this.dataLangOptions.find(elem => elem.value === (this.$q.localStorage.getItem('dataLang') || 'jp'))
   },
   methods: {
     saveSetting () {
-      LocalStorage.set('useLocale', this.lang)
-      LocalStorage.set('dataLang', this.dataLang)
+      this.$q.localStorage.set('useLocale', this.lang.value)
+      this.$q.localStorage.set('dataLang', this.dataLang.value)
 
       const { name, params } = this.$router.currentRoute
-      if (params.server) params.server = this.dataLang
+      if (params.server) params.server = this.dataLang.value
       this.$router.push({ name, params })
     },
     changeLang (newVal) {
-      this.$i18n.locale = newVal || this.lang
+      this.$i18n.locale = newVal.value || this.lang.value
 
       this.updateSettings()
     },
     changeDataLang (newVal) {
-      this.$setDataLang(newVal)
+      this.$setDataLang(newVal.value)
     },
     updateSettings () {
       this.dataLangOptions = this.$servers.map(sr => ({

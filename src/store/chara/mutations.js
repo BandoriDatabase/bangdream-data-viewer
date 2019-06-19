@@ -9,3 +9,22 @@ export const SET_BAND_CHARA_LIST = async (state, { data, server }) => {
 export const ADD_CHARA_MAP_ENTRY = async (state, obj) => {
   state.charaMap[obj.server][obj.id] = obj.value
 }
+
+export const INIT_STATE_DATA = (state, servers) => {
+  state.bandList = servers.reduce((sum, curr) => {
+    sum[curr] = []
+    return sum
+  }, {})
+  state.bandCharaList = servers.reduce((sum, curr) => {
+    sum[curr] = []
+    return sum
+  }, {})
+  state.charaList = servers.reduce((sum, curr) => {
+    sum[curr] = []
+    return sum
+  }, {})
+  state.charaMap = servers.reduce((sum, curr) => {
+    sum[curr] = {}
+    return sum
+  }, {})
+}

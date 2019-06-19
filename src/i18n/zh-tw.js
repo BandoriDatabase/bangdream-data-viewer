@@ -22,13 +22,13 @@ export default {
     'desc': 'Bandori Database（少女樂團派對數據庫）網頁應用迎來重大更新，有多項改進優化您的使用體驗。完整鏈接請訪問<a href="https://dnaroma.site/update-notice-zhcn/">博客頁面</a>',
     'new-features': '新特性',
     'feature-detail': [
-      '遊戲標題畫面列表可以按照選定的伺服器顯示相應的圖片'
+      '遊戲標題畫面列表可以按照選定的服務器顯示相應的圖片'
     ],
     'fixed-bugs': '修復的問題',
     'bug-detail': [
-      '修复生日先后顺序错误的问题',
-      '修复不支持同一天两人生日的问题',
-      '修复国际服活动顺序错误的问题'
+      '修復生日先後順序錯誤的問題',
+      '修復不支持同壹天兩人以上生日的問題',
+      '修復國際服活動順序錯誤的問題'
     ],
     'welcome-bug-report': "如果妳在使用本網站的過程中遇到任何問題, 歡迎通過<a href='mailto:dev@bandori.ga'>Email</a>, <a href='https://dnaroma.site/2017/12/23/bug-report/'>問題反饋頁面</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反饋問題。"
   },
@@ -39,9 +39,10 @@ export default {
     'event': '活動',
     'gacha': '扭蛋',
     'jp': '日服',
-    'tw': '台服',
+    'tw': '臺服',
     'kr': '韓服',
     'en': '國際服',
+    'cn': '國服',
     'level': '等級',
     'perform': '表演力',
     'technic': '技術',
@@ -61,24 +62,29 @@ export default {
     'band': '樂隊/演奏者',
     'difficulty': '難度',
     'apply-save': '應用和保存',
-    'data-ver': '資料版本',
+    'data-ver': '數據版本',
     'app-ver': '應用版本',
     'birthday': {
-      'today': '今天過生日的是',
-      'next': '下次過生日的是'
+      'today': '今天過生日的是{name}',
+      'next': '下次過生日的是{name}於{date}'
     },
     'data-lang': '遊戲數據語言',
     'cover': '翻唱',
     'original': '原創',
     'all': '全部',
     'release-date': '加入遊戲時間',
-    'back-to-list': '返回列表'
+    'back-to-list': '返回列表',
+    'points': '點數',
+    'show-less': '顯示更少',
+    'filter-applied': '已應用',
+    'settings': '設置',
+    'reset-filter': '重置'
   },
   'gacha': {
     'list-title': '{srv}當前扭蛋池',
     'list-count': '數量',
     'start-at': '開始於:',
-    'end-at': '結束於:"',
+    'end-at': '結束於:',
     'desc': '扭蛋詳情',
     'new-members': '新加卡片',
     'rates': '扭蛋池概率',
@@ -87,7 +93,7 @@ export default {
     'open-detail': '查看詳情'
   },
   'mobile': {
-    'click-collapsible': '點擊壹個伺服器可展開查看'
+    'click-collapsible': '點擊壹個服務器可展開查看'
   },
   'card': {
     'name-display': [
@@ -118,7 +124,8 @@ export default {
     'story-none': '該卡牌沒有劇情',
     'story-reward': '劇情閱讀獎勵',
     'jump-to-live2d-costume': '跳轉至Live2D',
-    'not-exist': '要查詢的卡片不存在： 伺服器 {server} 卡片編號 {cardId}'
+    'not-exist': '要查詢的卡片不存在： 服務器 {server} 卡片編號 {cardId}',
+    'read-story': '讀故事'
   },
   'music': {
     'select-band': '選擇樂隊',
@@ -128,14 +135,18 @@ export default {
     'tag': '類型',
     'howtoget': '獲得方式',
     'difficulty': '難度',
+    'difficulties': ['簡單', '壹般', '困難', '專家', '特別'],
     'band': '演奏者',
     'achieve': '歌曲成就',
     'combo': '音符數',
     'check-beatmap': '打開譜面播放器',
     'back-detail': '回到樂曲詳情',
-    'declaration': "仍在測試中，未適配行動設備，歡迎通過<a href='mailto:dev@bandori.ga'>email</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我回報問題。",
+    'declaration': "仍在測試中，未適配移動設備，歡迎通過<a href='mailto:dev@bandori.ga'>email</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反映問題。",
     'fetch-music-data': '獲取音樂詳細數據中...',
-    'not-exist': '要查詢的音樂不存在： 伺服器 {server} 音樂編號 {musicId}'
+    'not-exist': '要查詢的音樂不存在： 服務器 {server} 音樂編號 {musicId}',
+    'combo-reward': '連擊獎勵',
+    'full-combo-reward': '全連擊獎勵',
+    'score-rank-reward': '分數等級獎勵'
   },
   'scenario': {
     'voice-text': '語音文本',
@@ -178,6 +189,9 @@ export default {
     'degrees': '活動頭銜',
     'musics': '活動曲',
     'fetch-data': '獲取活動數據中',
-    'both-match': '当两者皆满足：'
+    'both-match': '當兩者皆滿足：'
+  },
+  'title-images': {
+    'failed-load': '無法加載遊戲標題界面圖像，選擇的服務器可能不支持該特性'
   }
 }

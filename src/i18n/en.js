@@ -42,6 +42,7 @@ export default {
     'tw': 'Taiwan Server',
     'kr': 'Korean Server',
     'en': 'Intl. Server',
+    'cn': 'China Mainland Server',
     'level': 'Level',
     'perform': 'Perform',
     'technic': 'Technique',
@@ -64,15 +65,21 @@ export default {
     'data-ver': 'Data Ver',
     'app-ver': 'App Ver',
     'birthday': {
-      'today': 'Today is birthday of',
-      'next': 'Next birthday on'
+      'today': 'Today is birthday of {name}',
+      'next': 'Next birthday of {name} on {date}',
+      'loading': 'Loading birthday info...'
     },
     'data-lang': 'Game Data Lang',
     'cover': 'Cover',
     'original': 'Original',
     'all': 'All',
     'release-date': 'Release Date',
-    'back-to-list': 'Return to list'
+    'back-to-list': 'Return to list',
+    'points': 'Points',
+    'show-less': 'Show Less',
+    'filter-applied': 'Applied',
+    'settings': 'Settings',
+    'reset-filter': 'Reset'
   },
   'gacha': {
     'list-title': '{srv} Scouts List',
@@ -84,7 +91,7 @@ export default {
     'rates': 'Gacha rates',
     'pickup': 'Pickup gacha cards',
     'normal': 'Other gacha cards',
-    'open-detail': 'Open Detail'
+    'open-detail': 'View Detail'
   },
   'mobile': {
     'click-collapsible': 'Click one of the server name to expand'
@@ -118,7 +125,8 @@ export default {
     'story-none': 'No story avaliable',
     'story-reward': 'Story read reward',
     'jump-to-live2d-costume': 'Jump to Live2D',
-    'not-exist': 'This card does not exist: Server {server} CardID {cardId}'
+    'not-exist': 'This card does not exist: Server {server} CardID {cardId}',
+    'read-story': 'Read Story'
   },
   'music': {
     'select-band': 'Select Bands',
@@ -128,13 +136,17 @@ export default {
     'tag': 'Tag',
     'howtoget': 'How to get',
     'difficulty': 'Difficulty',
+    'difficulties': ['Easy', 'Normal', 'Hard', 'Expert', 'Special'],
     'achieve': 'Live achievement reward',
     'combo': 'Total notes',
     'check-beatmap': 'Open beatmap player',
     'back-detail': 'Back to music detail',
     'declaration': "This is still a test version, and not fit for mobile view. If you find any problem, please contact me through <a href='mailto:dev@bandori.ga'>email</a> or on <a href='https://discord.gg/vGb3eHH'>Discord</a>.",
     'fetch-music-data': 'Fetching music detail data...',
-    'not-exist': 'This music does not exist: Server {server} MusicID {musicId}'
+    'not-exist': 'This music does not exist: Server {server} MusicID {musicId}',
+    'combo-reward': 'Combo Reward',
+    'full-combo-reward': 'Full Combo Reward',
+    'score-rank-reward': 'Score Rank Reward'
   },
   'scenario': {
     'voice-text': 'Voice text',
@@ -176,6 +188,13 @@ export default {
     'badge': 'Event badge',
     'degrees': 'Degrees preview',
     'musics': 'Event musics',
-    'both-match': 'When both matches:'
+    'both-match': 'When both matches:',
+    'point-rewards': 'Event Point Rewards',
+    'ranking-rewards': 'Event Ranking Rewards',
+    'rewards-and-stories': 'Rewards and Stories',
+    'stories': 'Stories'
+  },
+  'title-images': {
+    'failed-load': 'Failed loading title screen images, this server may not support this feature'
   }
 }

@@ -20,3 +20,10 @@ export const getGachaCurrent = async ({ commit, state }, server) => {
   commit('SET_GACHA_CURRENT_LIST', { data: gachas.data, server })
   return gachas
 }
+
+export const initState = {
+  root: true,
+  handler ({ commit }, servers) {
+    commit('INIT_STATE_DATA', servers)
+  }
+}

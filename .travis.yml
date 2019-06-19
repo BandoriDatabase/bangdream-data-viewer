@@ -3,7 +3,7 @@ node_js:
 - '8'
 sudo: false
 before_script:
-- npm install -g quasar-cli
+- npm install -g @quasar/cli
 script:
 - quasar build -m pwa
 before_deploy:

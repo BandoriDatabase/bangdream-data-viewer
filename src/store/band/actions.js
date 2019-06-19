@@ -8,3 +8,10 @@ export const getBandList = async ({ commit, state }, server) => {
   commit('SET_BAND_LIST', { data: bands, server })
   return bands
 }
+
+export const initState = {
+  root: true,
+  handler ({ commit }, servers) {
+    commit('INIT_STATE_DATA', servers)
+  }
+}

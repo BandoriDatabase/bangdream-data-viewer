@@ -5,9 +5,9 @@ import messages from 'src/i18n'
 export default ({ app, router, Vue }) => {
   Vue.use(VueI18n)
 
-  let locale = LocalStorage.get.item('useLocale')
+  let locale = LocalStorage.getItem('useLocale')
   if (!locale || locale !== locale.toLowerCase()) {
-    locale = Quasar.i18n.getLocale().toLowerCase()
+    locale = Quasar.lang.getLocale().toLowerCase()
     LocalStorage.set('useLocale', locale)
   }
 
@@ -18,7 +18,7 @@ export default ({ app, router, Vue }) => {
     messages
   })
 
-  Vue.dataLang = Vue.prototype.$dataLang = LocalStorage.get.item('dataLang') || 'jp'
+  Vue.dataLang = Vue.prototype.$dataLang = LocalStorage.getItem('dataLang') || 'jp'
   Vue.setDataLang = Vue.prototype.$setDataLang = (newVal) => {
     Vue.dataLang = Vue.prototype.$dataLang = newVal
     LocalStorage.set('dataLang', newVal)

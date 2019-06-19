@@ -16,3 +16,10 @@ export const getMusicById = async ({ commit, state }, { musicId, server }) => {
   commit('ADD_MUSIC_MAP_ENTRY', { id: musicId, value: music, server })
   return music
 }
+
+export const initState = {
+  root: true,
+  handler ({ commit }, servers) {
+    commit('INIT_STATE_DATA', servers)
+  }
+}

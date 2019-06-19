@@ -35,3 +35,10 @@ export const getBatchCards = async ({ commit, state }, { cardIds, server }) => {
   const resCards = await Vue.apiClient.getCards(server, reqCardIds)
   commit('ADD_MULTI_CARD_MAP', { cardMap: resCards, server })
 }
+
+export const initState = {
+  root: true,
+  handler ({ commit }, servers) {
+    commit('INIT_STATE_DATA', servers)
+  }
+}

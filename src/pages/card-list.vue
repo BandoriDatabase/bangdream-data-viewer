@@ -1,90 +1,88 @@
 <template>
   <q-page padding>
     <div>
-      <div style="margin-bottom: 30px;">
-        <span class="q-display-2 text-bold">{{$t('left.card')}}</span>
-        <q-btn :label="$t('common.filter')" style="margin-left: 10px;" class="float-right" @click="isFilterVisible = true"></q-btn>
+      <div class="q-mb-lg">
+        <span class="text-h3 text-bold">{{$t('left.card')}}</span>
+        <q-btn :label="$t('common.filter')" class="float-right q-ml-sm" @click="isFilterVisible = true">
+          <q-badge color="pink-6" floating v-if="filterInUse">{{$t('common.filter-applied')}}</q-badge>
+        </q-btn>
       </div>
-      <q-modal v-model="isFilterVisible" :content-css="{padding: '15px', maxWidth: '500px'}">
-        <div>
-          <div class="row">
-            <p class="col-12">{{$t('common.rarity')}}</p>
-            <q-checkbox color="pink" class="col-3" v-model="selectRarity" v-for="opt in rarityOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
-          </div>
-          <div class="row q-mt-md">
-            <p class="col-12">{{$t('common.attr')}}</p>
-            <q-checkbox color="pink" class="col-md-3 col-6" v-model="selectAttrs" v-for="opt in attrOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
-          </div>
-          <div class="row q-mt-md">
-            <p class="col-12">{{$t('common.character')}}</p>
-            <q-checkbox color="pink" class="col-md-3 col-6" v-model="selectCharacters" v-for="opt in charaOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
-          </div>
-          <div class="row q-mt-md">
-            <p class="col-12">{{$t('common.skill')}}</p>
-            <q-checkbox color="pink" class="col-12" v-model="selectSkills" v-for="opt in skillOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
-          </div>
-        </div>
-        <p>{{$t('common.sort.title')}}</p>
-        <div class="row gutter">
-          <q-radio color="pink" v-model="sortParam" val="asc" :label="$t('common.sort.asc')" />
-          <q-radio color="pink" v-model="sortParam" val="desc" :label="$t('common.sort.desc')" />
-        </div>
-        <br>
-        <div class="row gutter">
-          <q-radio color="pink" v-model="orderKey" val="cardId" label="ID" />
-          <q-radio color="pink" v-model="orderKey" val="rarity" :label="$t('common.rarity')" />
-          <q-radio color="pink" v-model="orderKey" val="simpleParams.max.performance" :label="$t('common.perform')" />
-          <q-radio color="pink" v-model="orderKey" val="simpleParams.max.technique" :label="$t('common.technic')" />
-          <q-radio color="pink" v-model="orderKey" val="simpleParams.max.visual" :label="$t('common.visual')" />
-          <q-radio color="pink" v-model="orderKey" val="simpleParams.max.total" :label="$t('common.total')" />
-        </div>
-        <br>
-        <div>
-          <q-btn color="pink" @click="doFilter(server), saveFilter(), isFilterVisible = false, $ga.event('card-overview', 'filter', `apply-save`)">
-            {{$t('common.apply-save')}}
-          </q-btn>
-        </div>
-      </q-modal>
-      <q-infinite-scroll ref="cardScroll" v-if="isReady" :handler="loadMore">
-        <div class="row gutter-sm">
+      <q-dialog v-model="isFilterVisible">
+        <q-card>
+          <q-card-section>
+            <div class="row">
+              <p class="q-ml-sm col-12">{{$t('common.rarity')}}</p>
+              <q-checkbox color="pink" class="col-3" v-model="selectRarity" v-for="opt in rarityOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
+            </div>
+            <div class="row q-mt-md">
+              <p class="q-ml-sm col-12">{{$t('common.attr')}}</p>
+              <q-checkbox color="pink" class="col-md-3 col-6" v-model="selectAttrs" v-for="opt in attrOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
+            </div>
+            <div class="row q-mt-md">
+              <p class="q-ml-sm col-12">{{$t('common.character')}}</p>
+              <q-checkbox color="pink" class="col-md-3 col-6" v-model="selectCharacters" v-for="opt in charaOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
+            </div>
+            <div class="q-mt-md">
+              <q-expansion-item
+                :label="$t('common.skill')"
+              >
+                <div class="row">
+                  <q-checkbox color="pink" class="col-12" v-model="selectSkills" v-for="opt in skillOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
+                </div>
+              </q-expansion-item>
+            </div>
+          </q-card-section>
+          <q-card-section>
+            <p class="q-ml-sm">{{$t('common.sort.title')}}</p>
+            <div class="row gutter">
+              <q-radio color="pink" v-model="sortParam" val="asc" :label="$t('common.sort.asc')" />
+              <q-radio color="pink" v-model="sortParam" val="desc" :label="$t('common.sort.desc')" />
+            </div>
+          </q-card-section>
+          <q-card-section>
+            <div class="row gutter">
+              <q-radio color="pink" v-model="orderKey" val="cardId" label="ID" />
+              <q-radio color="pink" v-model="orderKey" val="rarity" :label="$t('common.rarity')" />
+              <q-radio color="pink" v-model="orderKey" val="simpleParams.max.performance" :label="$t('common.perform')" />
+              <q-radio color="pink" v-model="orderKey" val="simpleParams.max.technique" :label="$t('common.technic')" />
+              <q-radio color="pink" v-model="orderKey" val="simpleParams.max.visual" :label="$t('common.visual')" />
+              <q-radio color="pink" v-model="orderKey" val="simpleParams.max.total" :label="$t('common.total')" />
+            </div>
+          </q-card-section>
+          <q-card-actions>
+            <q-btn color="secondary" @click="resetFilter()">
+              {{$t('common.reset-filter')}}
+            </q-btn>
+            <q-btn color="pink" @click="doFilter(server), saveFilter(), isFilterVisible = false, $ga.event('card-overview', 'filter', `apply-save`)">
+              {{$t('common.apply-save')}}
+            </q-btn>
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+      <q-infinite-scroll ref="cardScroll" v-if="isReady" @load="loadMore">
+        <div class="row q-col-gutter-md">
           <div v-for="card in cardList" :key="card.cardId" class="col-12 col-xl-3 col-md-4 full-height">
             <q-card>
-              <q-card-main>
-                <div style="text-align: center;">
-                  <p class="q-subheading" :class="`text-${paletteMap[card.attr]}`">{{card.title}}</p>
-                  <p class="q-headline">{{displayName ?
-                    capitalizeFirstLetter(toRomaji(bandCharaList[server][Number(card.characterId) - 1].ruby)) :
-                    bandCharaList[server][Number(card.characterId) - 1].characterName}}</p>
+              <q-card-section>
+                <div class="text-center">
+                  <p class="text-h5" :class="`text-${paletteMap[card.attr]}`">{{card.title}}</p>
+                  <p class="text-subtitle1">{{bandCharaList[server][Number(card.characterId) - 1].characterName}}</p>
                 </div>
                 <div class="row items-center justify-center" style="padding-bottom: 10px;">
                   <card-thumb :card="card" :server="server" :trained="false" v-if="card.title !== 'ガルパ杯'"></card-thumb>
                   <card-thumb :card="card" :server="server" :trained="true" v-if="(card.rarity >= 3 && card.title !== 'ガルパ杯') || card.title === 'ガルパ杯'"></card-thumb>
-                </div><!--
-                <div style="text-align: center;">
-                  <p class="q-body-1">[{{card.skill.skillName}}]<br>{{skillList[server].find(elem => elem.skillId === card.skill.skillId).simpleDescription}}</p>
-                  <p class="q-body-1 card-list-param">Lv {{card.simpleParams.min.level}}:
-                    <q-chip small color="pink-6">{{card.simpleParams.min.performance}}</q-chip>
-                    <q-chip small color="indigo-6">{{card.simpleParams.min.technique}}</q-chip>
-                    <q-chip small color="orange-8">{{card.simpleParams.min.visual}}</q-chip>
-                    <q-chip small color="gray" class="text-black">{{card.simpleParams.min.total}}</q-chip>
-                  </p>
-                  <p class="q-body-1 card-list-param">Lv {{card.simpleParams.max.level}}:
-                    <q-chip small color="pink-6">{{card.simpleParams.max.performance}}</q-chip>
-                    <q-chip small color="indigo-6">{{card.simpleParams.max.technique}}</q-chip>
-                    <q-chip small color="orange-8">{{card.simpleParams.max.visual}}</q-chip>
-                    <q-chip small color="gray" class="text-black">{{card.simpleParams.max.total}}</q-chip>
-                  </p>
-                </div>-->
-              </q-card-main>
+                </div>
+              </q-card-section>
             </q-card>
           </div>
         </div>
-        <div slot="message" class="row justify-center items-center" style="margin-bottom: 50px;">
-          <q-spinner color="pink" size="48px"></q-spinner>
-          Loading more cards...
-        </div>
+        <template v-slot:loading>
+          <div class="row justify-center q-my-md">
+            <q-spinner-dots color="primary" size="40px" />
+          </div>
+        </template>
       </q-infinite-scroll>
-      <q-inner-loading :visible="!isReady">
+      <q-inner-loading :showing="!isReady">
         <q-spinner color="pink" size="48px"></q-spinner>
       </q-inner-loading>
     </div>
@@ -92,7 +90,6 @@
 </template>
 
 <script>
-import { LocalStorage } from 'quasar'
 import { toRomaji } from 'wanakana'
 import { mapState, mapActions } from 'vuex'
 import CardThumb from 'components/common/card-thumb'
@@ -101,7 +98,7 @@ export default {
   // name: 'PageName',
   data () {
     return {
-      displayName: false,
+      // displayName: false,
       selectCharacters: [],
       selectSkills: [],
       selectRarity: [],
@@ -168,6 +165,10 @@ export default {
     ]),
     server () {
       return this.$route.params.server
+    },
+    filterInUse () {
+      return this.selectCharacters.length || this.selectSkills.length || this.selectRarity.length ||
+        this.selectAttrs.length || this.sortParam !== 'desc' || this.orderKey !== 'cardId'
     }
   },
   methods: {
@@ -179,20 +180,18 @@ export default {
     ]),
     async updateData (server) {
       this.isReady = false
-      if (!LocalStorage.get.item(`cardfilter.${server}`)) LocalStorage.set(`cardfilter.${server}`, {})
-      this.selectCharacters = LocalStorage.get.item(`cardfilter.${server}`).charas || []
-      this.selectSkills = LocalStorage.get.item(`cardfilter.${server}`).skills || []
-      this.selectRarity = LocalStorage.get.item(`cardfilter.${server}`).rarity || []
-      this.selectAttrs = LocalStorage.get.item(`cardfilter.${server}`).attrs || []
-      this.sortParam = LocalStorage.get.item(`cardfilter.${server}`).sort || 'desc'
-      this.orderKey = LocalStorage.get.item(`cardfilter.${server}`).orderKey || 'cardId'
+      if (!this.$q.localStorage.getItem(`cardfilter.${server}`)) this.$q.localStorage.set(`cardfilter.${server}`, {})
+      this.selectCharacters = this.$q.localStorage.getItem(`cardfilter.${server}`).charas || []
+      this.selectSkills = this.$q.localStorage.getItem(`cardfilter.${server}`).skills || []
+      this.selectRarity = this.$q.localStorage.getItem(`cardfilter.${server}`).rarity || []
+      this.selectAttrs = this.$q.localStorage.getItem(`cardfilter.${server}`).attrs || []
+      this.sortParam = this.$q.localStorage.getItem(`cardfilter.${server}`).sort || 'desc'
+      this.orderKey = this.$q.localStorage.getItem(`cardfilter.${server}`).orderKey || 'cardId'
       await this.doFilter(server)
       await this.getBandCharaList(server)
       await this.getSkillList(server)
       this.charaOption = Object.keys(this.bandCharaList[server]).filter(key => Number(key) <= 25).map(key => ({
-        label: this.displayName
-          ? this.capitalizeFirstLetter(toRomaji(this.bandCharaList[server][key].ruby))
-          : this.bandCharaList[server][key].characterName,
+        label: this.bandCharaList[server][key].characterName,
         value: this.bandCharaList[server][key].characterId
       }))
       this.skillOption = this.skillList[server].map(elem => ({
@@ -242,7 +241,7 @@ export default {
       this.isReady = true
     },
     saveFilter () {
-      LocalStorage.set(`cardfilter.${this.server}`, {
+      this.$q.localStorage.set(`cardfilter.${this.server}`, {
         rarity: this.selectRarity,
         charas: this.selectCharacters,
         attrs: this.selectAttrs,
@@ -261,6 +260,14 @@ export default {
       } finally {
         done()
       }
+    },
+    resetFilter () {
+      this.selectCharacters = []
+      this.selectSkills = []
+      this.selectRarity = []
+      this.selectAttrs = []
+      this.sortParam = 'desc'
+      this.orderKey = 'cardId'
     }
     // getCardImg (cardId, cardRes, type) {
     //   if (this.$specialCardList[this.server].indexOf(cardId) !== -1) {

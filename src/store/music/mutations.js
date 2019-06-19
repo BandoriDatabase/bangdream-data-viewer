@@ -10,3 +10,14 @@ export const SET_MUSIC_LIST = (state, { data, params, server }) => {
 export const ADD_MUSIC_MAP_ENTRY = (state, obj) => {
   state.musicMap[obj.server][obj.id] = obj.value
 }
+
+export const INIT_STATE_DATA = (state, servers) => {
+  state.musicList = servers.reduce((sum, curr) => {
+    sum[curr] = []
+    return sum
+  }, {})
+  state.musicMap = servers.reduce((sum, curr) => {
+    sum[curr] = {}
+    return sum
+  }, {})
+}

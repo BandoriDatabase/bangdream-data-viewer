@@ -3,7 +3,7 @@
 module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
-    plugins: [
+    boot: [
       'i18n',
       'addressbar-color',
       'pixi-live2d',
@@ -14,11 +14,12 @@ module.exports = function (ctx) {
       'app.styl'
     ],
     extras: [
-      ctx.theme.mat ? 'roboto-font' : null,
+      'roboto-font',
       'material-icons',
-      // 'ionicons',
-      // 'mdi',
-      'fontawesome'
+      // 'ionicons-v4',
+      // 'mdi-v3',
+      'fontawesome-v5'
+      // 'eva-icons'
     ],
     supportIE: false,
     vendor: {
@@ -81,8 +82,8 @@ module.exports = function (ctx) {
           }
         },
         '/api': {
-          target: 'https://api.bandori.ga',
-          // target: 'http://localhost:8180',
+          // target: 'https://api.bandori.ga',
+          target: 'http://localhost:8180',
           changeOrigin: true,
           pathRewrite: {
             '^/api/v1': '/v1'
@@ -94,9 +95,10 @@ module.exports = function (ctx) {
     framework: {
       components: [
         'QLayout',
-        'QLayoutHeader',
-        'QLayoutDrawer',
+        'QHeader',
+        'QDrawer',
         'QPageContainer',
+        'QPageScroller',
         'QPage',
         'QToolbar',
         'QToolbarTitle',
@@ -105,38 +107,41 @@ module.exports = function (ctx) {
         'QCheckbox',
         'QIcon',
         'QList',
-        'QListHeader',
         'QItem',
-        'QItemMain',
-        'QItemSide',
-        'QItemSeparator',
-        'QPopover',
-        'QModal',
+        'QItemSection',
+        'QItemLabel',
+        'QSeparator',
+        'QMenu',
+        'QDialog',
         'QSelect',
-        'QCollapsible',
+        'QExpansionItem',
         'QSpinner',
         'QSpinnerFacebook',
         'QSpinnerDots',
         'QInnerLoading',
         'QCard',
-        'QCardTitle',
-        'QCardMain',
-        'QCardMedia',
-        'QCardSeparator',
+        'QCardSection',
         'QCardActions',
         'QTooltip',
         'QInfiniteScroll',
         'QToggle',
         'QRadio',
         'QInput',
-        'QProgress',
+        'QLinearProgress',
+        'QCircularProgress',
         'QTable',
-        'QTd'
+        'QTd',
+        'QBar',
+        'QBanner',
+        'QImg',
+        'QSlider',
+        'QBadge'
       ],
       directives: [
         'Ripple',
-        'BackToTop',
-        'CloseOverlay'
+        // 'BackToTop',
+        // 'CloseOverlay',
+        'ClosePopup'
       ],
       // Quasar plugins
       plugins: [
@@ -158,13 +163,13 @@ module.exports = function (ctx) {
       workboxOptions: {
         runtimeCaching: [{
           urlPattern: /api\/v\d\/\S{2}\/chara\/birthday/,
-          handler: 'networkFirst',
+          handler: 'NetworkFirst',
           options: {
             cacheName: 'bd-api-cache'
           }
         }, {
           urlPattern: /api\/v\d\/\S{2}\/(card|chara|live2d\/model|live2d\/costume|music|stamp|degree|event\/badge)\/.+/,
-          handler: 'staleWhileRevalidate',
+          handler: 'StaleWhileRevalidate',
           options: {
             cacheName: 'bd-api-cache'
           }

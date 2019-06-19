@@ -5,7 +5,7 @@
       <q-btn @click="playSoundList(talk, 0, true)" :disable="isPlaying">{{$t('scenario.auto-play-with-bgm')}}</q-btn>
       <q-btn @click="stop = true, isStopping = true" :disable="isStopping || !isPlaying" color="pink-6">{{$t('scenario.stop')}}</q-btn>
       <q-btn @click="openURL(env.backgroundImage)">{{$t('scenario.show-bg-image')}}</q-btn>
-      <q-inner-loading :visible="isStopping">
+      <q-inner-loading :showing="isStopping">
         <q-spinner-dots size="40px" color="pink-6"></q-spinner-dots>
         {{$t('scenario.stop-hint-text')}}
       </q-inner-loading>
@@ -32,7 +32,7 @@
         <q-btn @click="playSound(cell.value)">Play</q-btn>
       </q-td>
     </q-table>
-    <q-inner-loading :visible="isLoading">
+    <q-inner-loading :showing="isLoading">
       <q-spinner-dots size="80px" color="pink-6"></q-spinner-dots>
     </q-inner-loading>
   </q-page>
@@ -40,7 +40,7 @@
 
 <script>
 import { openURL } from 'quasar'
-import BufferLoader from '../plugins/bufferLoader'
+import BufferLoader from '../boot/bufferLoader'
 
 export default {
   // name: 'PageName',

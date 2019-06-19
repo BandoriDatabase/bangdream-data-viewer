@@ -13,3 +13,10 @@ export const getStampById = async ({ commit, state }, { id, server }) => {
   commit('ADD_STAMP_ENTRY', { id: id, value: stamp, server })
   return stamp
 }
+
+export const initState = {
+  root: true,
+  handler ({ commit }, servers) {
+    commit('INIT_STATE_DATA', servers)
+  }
+}
