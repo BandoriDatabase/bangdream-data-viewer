@@ -100,7 +100,7 @@ export default {
   data () {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
-      appVer: '0.8.2',
+      appVer: '0.9.0',
       moremenuOpen: false,
       isHeaderShow: true,
       menuList: [

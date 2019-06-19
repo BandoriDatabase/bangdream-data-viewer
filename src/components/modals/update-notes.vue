@@ -2,7 +2,7 @@
   <q-modal ref="modal" :content-css="{maxWidth: '800px', padding: '10px'}"
     v-model="isOpen"
   >
-    <h4 class="uppercase">{{$t('update.title')}} <small>0.8.2</small></h4>
+    <h4 class="uppercase">{{$t('update.title')}} <small>0.9.0</small></h4>
     <p v-html="$t('update.desc')"></p>
     <h5 class="uppercase">{{$t('update.new-features')}}</h5>
     <ul>
