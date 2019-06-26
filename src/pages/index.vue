@@ -23,7 +23,7 @@
           >
         </template>
         {{$t('common.birthday.next', {
-          name: birthdayTodayCharaName,
+          name: birthdayNextCharaName,
           date: `${birthdayInfo.next[0].birthday.month}/${birthdayInfo.next[0].birthday.day}`
         })}}
       </q-banner>
