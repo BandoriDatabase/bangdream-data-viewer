@@ -49,7 +49,7 @@
             {{$t('common.app-ver')}}: v{{appVer}}
           </q-item-section>
         </q-item>
-        <q-item @click="openURL('//dnaroma.site/update-notice-en')" clickable>
+        <q-item @click="openURL('//blog.dnaroma.eu/update-notice-en')" clickable>
           <q-item-section>
             {{$t('left.update-note')}}
           </q-item-section>
@@ -146,7 +146,7 @@ export default {
         },
         {
           name: 'about',
-          url: '//dnaroma.site/about/',
+          url: '//blog.dnaroma.eu/about/',
           i18n: 'left.about',
           icon: 'info'
         }
