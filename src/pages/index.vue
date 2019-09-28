@@ -28,7 +28,7 @@
         })}}
       </q-banner>
       <q-banner rounded class="bg-grey-3 q-mb-sm">
-        Update notice now available <a href="//dnaroma.site/update-notice-en" target="_blank">here</a>
+        Update notice now available <a href="//blog.dnaroma.eu/update-notice-en" target="_blank">here</a>
       </q-banner>
     </div>
     <div v-else>
