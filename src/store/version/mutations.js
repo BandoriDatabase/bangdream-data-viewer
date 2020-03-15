@@ -1,9 +1,10 @@
 /*
 export const someMutation = (state) => {}
  */
+import Vue from 'vue'
 
 export const SET_RES_VER = (state, { ver, server }) => {
-  state.resVer[server] = ver
+  Vue.set(state.resVer, server, ver)
 }
 
 export const SET_MASTER_VER = (state, ver) => {

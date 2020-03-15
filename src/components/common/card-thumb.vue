@@ -21,9 +21,7 @@
       <div v-for="i in (card || cardMap[server][cardId]).rarity" :key="i" :class="`thumb-mini-rarity-${Number(trained)}-${i}`"></div>
     </div>
     <div class="card-img-parent" v-else>
-      <q-inner-loading :showing="!isReady">
-        <q-spinner-facebook color="pink" size="48px"></q-spinner-facebook>
-      </q-inner-loading>
+      <q-skeleton width="120px" height="120px" />
     </div>
   </lazy-component>
 </template>
