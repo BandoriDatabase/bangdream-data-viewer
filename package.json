@@ -9,19 +9,19 @@
     "url": "https://github.com/BandoriDatabase/bangdream-data-viewer.git"
   },
   "productName": "Bandori Database",
-  "cordovaId": "org.bandoridb.app",
+  "cordovaId": "game.bandoridb.app",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.1.2",
+    "@quasar/extras": "^1.6.0",
     "bandori-pixi-live2d": "^1.2.3",
     "dat.gui": "^0.7.6",
     "phaser": "^3.16.2",
     "pixi.js": "^4.7.1",
-    "quasar": "^1.0.0-rc.4",
+    "quasar": "^1.9.10",
     "semver": "^5.5.0",
     "v-viewer": "^1.0.1",
     "vue-analytics": "^5.9.1",
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.1.0",
-    "@quasar/app": "^1.0.0-rc.6",
+    "@quasar/app": "^1.6.0",
     "babel-eslint": "^9.0.0",
     "babel-plugin-transform-imports": "^1.5.1",
     "eslint": "^5.16.0",
