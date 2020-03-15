@@ -28,7 +28,7 @@
     >
       <q-list>
         <q-item-label header>{{$t('left.title')}}</q-item-label>
-        <q-item clickable v-for="(item, idx) in menuList" :key="idx"
+        <q-item clickable v-for="(item, idx) in menuList" :key="`menu-${idx}`"
           :active="$route.name === item.name" @click="item.url ? openURL(item.url) : $router.push({ name: item.name, params: { server: $dataLang } })" v-ripple>
           <q-item-section avatar>
             <q-icon :name="item.icon"></q-icon>
@@ -39,7 +39,7 @@
         </q-item>
         <q-separator />
         <q-item-label header>{{$t('left.secTitle')}}</q-item-label>
-        <q-item v-for="(server, idx) in $servers" :key="idx">
+        <q-item v-for="(server, idx) in $servers" :key="`server-${idx}`">
           <q-item-section>
             {{$t(`common.${server}`)}} {{$t('common.data-ver')}}: v{{resVer[server] || '0.0.0.0'}}
           </q-item-section>
@@ -56,7 +56,7 @@
         </q-item>
         <q-separator />
         <q-item-label header>{{$t('left.useful-link')}}</q-item-label>
-        <q-item clickable v-for="(item, idx) in externalLinks" :key="idx" @click="openURL(item.url)" v-ripple>
+        <q-item clickable v-for="(item, idx) in externalLinks" :key="`external-${idx}`" @click="openURL(item.url)" v-ripple>
           <q-item-section avatar>
             <q-icon :name="item.icon"></q-icon>
           </q-item-section>
@@ -65,8 +65,8 @@
           </q-item-section>
         </q-item>
         <q-item @click.native="openURL('https://bang-dream.bushimo.jp/')">
-          <q-item-side icon="open_in_new" />
-          <q-item-main label="Game offcial site" sublabel="bang-dream.bushimo.jp" />
+          <q-item-section icon="open_in_new" />
+          <q-item-label label="Game offcial site" sublabel="bang-dream.bushimo.jp" />
         </q-item>
       </q-list>
     </q-drawer>

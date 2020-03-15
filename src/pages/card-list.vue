@@ -12,22 +12,22 @@
           <q-card-section>
             <div class="row">
               <p class="q-ml-sm col-12">{{$t('common.rarity')}}</p>
-              <q-checkbox color="pink" class="col-3" v-model="selectRarity" v-for="opt in rarityOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
+              <q-checkbox color="pink" class="col-3" v-model="selectRarity" v-for="opt in rarityOption" :key="`rarity-${opt.value}`" :val="opt.value" :label="opt.label"></q-checkbox>
             </div>
             <div class="row q-mt-md">
               <p class="q-ml-sm col-12">{{$t('common.attr')}}</p>
-              <q-checkbox color="pink" class="col-md-3 col-6" v-model="selectAttrs" v-for="opt in attrOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
+              <q-checkbox color="pink" class="col-md-3 col-6" v-model="selectAttrs" v-for="opt in attrOption" :key="`attr-${opt.value}`" :val="opt.value" :label="opt.label"></q-checkbox>
             </div>
             <div class="row q-mt-md">
               <p class="q-ml-sm col-12">{{$t('common.character')}}</p>
-              <q-checkbox color="pink" class="col-md-3 col-6" v-model="selectCharacters" v-for="opt in charaOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
+              <q-checkbox color="pink" class="col-md-3 col-6" v-model="selectCharacters" v-for="opt in charaOption" :key="`chara-${opt.value}`" :val="opt.value" :label="opt.label"></q-checkbox>
             </div>
             <div class="q-mt-md">
               <q-expansion-item
                 :label="$t('common.skill')"
               >
                 <div class="row">
-                  <q-checkbox color="pink" class="col-12" v-model="selectSkills" v-for="opt in skillOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
+                  <q-checkbox color="pink" class="col-12" v-model="selectSkills" v-for="opt in skillOption" :key="`skill-${opt.value}`" :val="opt.value" :label="opt.label"></q-checkbox>
                 </div>
               </q-expansion-item>
             </div>
@@ -61,14 +61,16 @@
       </q-dialog>
       <q-infinite-scroll ref="cardScroll" v-if="isReady" @load="loadMore">
         <div class="row q-col-gutter-md">
-          <div v-for="card in cardList" :key="card.cardId" class="col-12 col-xl-3 col-md-4 full-height">
+          <div v-for="card in cardList" :key="`card-${card.cardId}`" class="col-12 col-xl-3 col-md-4 full-height">
             <q-card>
               <q-card-section>
                 <div class="text-center">
                   <p class="text-h5" :class="`text-${paletteMap[card.attr]}`">{{card.title}}</p>
                   <p class="text-subtitle1">{{bandCharaList[server][Number(card.characterId) - 1].characterName}}</p>
                 </div>
-                <div class="row items-center justify-center" style="padding-bottom: 10px;">
+              </q-card-section>
+              <q-card-section class="q-pt-none">
+                <div class="row items-center justify-center q-col-gutter-md">
                   <card-thumb :card="card" :server="server" :trained="false" v-if="card.title !== 'ガルパ杯'"></card-thumb>
                   <card-thumb :card="card" :server="server" :trained="true" v-if="(card.rarity >= 3 && card.title !== 'ガルパ杯') || card.title === 'ガルパ杯'"></card-thumb>
                 </div>
@@ -77,14 +79,58 @@
           </div>
         </div>
         <template v-slot:loading>
-          <div class="row justify-center q-my-md">
-            <q-spinner-dots color="primary" size="40px" />
+          <div v-if="!infiniteLoading" class="row q-col-gutter-md">
+            <div v-for="i in 1" :key="`skel-${i}`" class="col-12 col-xl-3 col-md-4 full-height">
+              <q-card>
+                <q-card-section>
+                  <q-skeleton type="text" height="32px" />
+                  <q-skeleton type="text" height="24px" />
+                </q-card-section>
+                <q-card-section>
+                  <div class="row items-center justify-center q-col-gutter-md">
+                    <q-skeleton width="120px" height="120px" />
+                    <q-skeleton width="120px" height="120px" />
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+          </div>
+          <div v-if="infiniteLoading" class="row q-col-gutter-md">
+            <div v-for="i in 4" :key="`skel-${i}`" class="col-12 col-xl-3 col-md-4 full-height">
+              <q-card>
+                <q-card-section>
+                  <q-skeleton type="text" height="32px" />
+                  <q-skeleton type="text" height="24px" />
+                </q-card-section>
+                <q-card-section>
+                  <div class="row items-center justify-center q-col-gutter-md">
+                    <q-skeleton width="120px" height="120px" />
+                    <q-skeleton width="120px" height="120px" />
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
           </div>
         </template>
       </q-infinite-scroll>
-      <q-inner-loading :showing="!isReady">
-        <q-spinner color="pink" size="48px"></q-spinner>
-      </q-inner-loading>
+      <div v-if="!isReady">
+        <div class="row q-col-gutter-md">
+          <div v-for="i in 12" :key="`skel-${i}`" class="col-12 col-xl-3 col-md-4 full-height">
+            <q-card>
+              <q-card-section>
+                <q-skeleton type="text" height="32px" />
+                <q-skeleton type="text" height="24px" />
+              </q-card-section>
+              <q-card-section>
+                <div class="row items-center justify-center q-col-gutter-md">
+                  <q-skeleton width="120px" height="120px" />
+                  <q-skeleton width="120px" height="120px" />
+                </div>
+              </q-card-section>
+            </q-card>
+          </div>
+        </div>
+      </div>
     </div>
   </q-page>
 </template>
@@ -147,7 +193,8 @@ export default {
         cool: 'indigo-6',
         pure: 'green-8',
         powerful: 'pink-6'
-      }
+      },
+      infiniteLoading: false
     }
   },
   mounted () {
@@ -252,8 +299,10 @@ export default {
     },
     async loadMore (index, done) {
       try {
+        this.infiniteLoading = true
         this.queryParams.page += 1
         await this.getCardList(this.queryParams, this.server)
+        this.infiniteLoading = false
       } catch (error) {
         console.log('no more cards', error)
         this.$refs.cardScroll.stop()

@@ -11,7 +11,7 @@
         <q-card-section>
           <div class="row">
             <p class="col-12">{{$t('music.select-band')}}</p>
-            <q-checkbox color="pink" class="col-6" v-model="selectBandId" v-for="opt in bandOption" :key="opt.value" :val="opt.value" :label="opt.label"></q-checkbox>
+            <q-checkbox color="pink" class="col-6" v-model="selectBandId" v-for="opt in bandOption" :key="`band-${opt.value}`" :val="opt.value" :label="opt.label"></q-checkbox>
           </div>
           <div class="q-mt-md">
             <p>{{$t('music.tag')}}</p>
@@ -45,7 +45,7 @@
     </q-dialog>
     <q-infinite-scroll ref="musicScroll" v-if="isReady" @load="loadMore">
       <div class="row">
-        <div class="col-xl-4 col-md-6 col-sm-12 col-12" v-for="music in musicList" :key="music.cardId">
+        <div class="col-xl-4 col-md-6 col-sm-12 col-12" v-for="music in musicList" :key="`music-${music.musicId}`">
           <div class="row music">
             <q-card class="music-cover col-xl-6 col-md-6 col-sm-4 col-4" @click.native="$router.push(`/music/${server}/${music.musicId}`)" v-lazy:background-image="music.jacket">
             </q-card>
@@ -64,14 +64,53 @@
           </div>
         </div>
       </div>
-      <div slot="message" class="row justify-center items-center" style="margin-bottom: 50px;">
-        <q-spinner color="pink" size="48px"></q-spinner>
-        Loading more musics...
-      </div>
+      <template v-slot:loading>
+        <div class="row">
+          <div class="col-xl-4 col-md-6 col-sm-12 col-12" v-for="i in 3" :key="`skel-${i}`">
+            <div class="row music">
+              <q-card class="col-xl-6 col-md-6 col-sm-4 col-4">
+                <q-skeleton class="lt-sm" width="130px" height="130px" />
+                <q-skeleton class="gt-md" width="260px" height="260px" />
+              </q-card>
+              <div class="music-desc col-xl-6 col-md-6 col-sm-8 col-8">
+                <q-skeleton type="text" height="32px" />
+                <q-skeleton type="text" height="24px" />
+                <!-- <p class="music-publish">{{(new Date(Number(music.publishedAt))).toLocaleString()}}</p> -->
+                <div class="music-levels row">
+                  <q-skeleton class="col-2" type="QChip" width="30px" height="12px"/>
+                  <q-skeleton class="col-2" type="QChip" width="30px" height="12px"/>
+                  <q-skeleton class="col-2" type="QChip" width="30px" height="12px"/>
+                  <q-skeleton class="col-2" type="QChip" width="30px" height="12px"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
     </q-infinite-scroll>
-    <q-inner-loading :showing="!isReady">
-      <q-spinner color="pink" size="48px"></q-spinner>
-    </q-inner-loading>
+    <div v-if="!isReady">
+      <div class="row">
+        <div class="col-xl-4 col-md-6 col-sm-12 col-12" v-for="i in 12" :key="`skel-${i}`">
+          <div class="row music">
+            <q-card class="col-xl-6 col-md-6 col-sm-4 col-4">
+              <q-skeleton class="lt-sm" width="130px" height="130px" />
+              <q-skeleton class="gt-md" width="260px" height="260px" />
+            </q-card>
+            <div class="music-desc col-xl-6 col-md-6 col-sm-8 col-8">
+              <q-skeleton type="text" height="32px" />
+              <q-skeleton type="text" height="24px" />
+              <!-- <p class="music-publish">{{(new Date(Number(music.publishedAt))).toLocaleString()}}</p> -->
+              <div class="music-levels row">
+                <q-skeleton class="col-2" type="QChip" width="30px" height="12px"/>
+                <q-skeleton class="col-2" type="QChip" width="30px" height="12px"/>
+                <q-skeleton class="col-2" type="QChip" width="30px" height="12px"/>
+                <q-skeleton class="col-2" type="QChip" width="30px" height="12px"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </q-page>
 </template>
 

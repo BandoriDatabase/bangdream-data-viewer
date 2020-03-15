@@ -6,15 +6,26 @@
     <div class="row q-col-gutter-sm" v-if="isReady" :options="{navbar: false, toolbar: false}">
       <div class="col-lg-4 col-xl-3 col-md-6 col-12" v-for="(singleFrame, idx) in sfcList[server]" :key="idx">
         <q-card style="cursor: pointer;" @click="openURL(singleFrame.assetAddress)">
-          <q-card-section v-bind:title="singleFrame.title">
-            <q-img :src="singleFrame.assetAddress">
-              <div class="single-frame-img-title-f absolute-bottom text-subtitle2 text-center">{{singleFrame.title}}</div>
+          <q-card-section>
+            <q-img height="250px" :src="singleFrame.assetAddress">
+              <template v-slot:loading>
+                <q-skeleton type="rect" height="250px" />
+              </template>
+              <div class="absolute-bottom text-subtitle2 text-center">{{singleFrame.title}}</div>
             </q-img>
           </q-card-section>
         </q-card>
       </div>
     </div>
-    <q-spinner v-else color="pink" size="48px"></q-spinner>
+    <div class="row q-col-gutter-sm" v-else>
+      <div class="col-lg-4 col-xl-3 col-md-6 col-12" v-for="i in 12" :key="i">
+        <q-card>
+          <q-card-section>
+            <q-skeleton type="rect" height="250px" />
+          </q-card-section>
+        </q-card>
+      </div>
+    </div>
   </q-page>
 </template>
 

@@ -7,13 +7,14 @@
           {{$t('event-srv', { srv: $t(`common.${server}`) }) }} - {{currentEvent[server].eventType}}
         </div>
       </q-card-section>
-      <q-img contain class="event-card-img" v-if="server === 'kr'"
+      <q-skeleton v-if="showImgSkeleton" width="380px" height="127px" />
+      <q-img contain class="event-card-img" v-if="server === 'kr'" @load="showImgSkeleton = false"
             :src="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}.png`"></q-img>
-      <q-img contain class="event-card-img" v-else-if="server !== 'en'"
+      <q-img contain class="event-card-img" v-else-if="server !== 'en'" @load="showImgSkeleton = false"
             :src="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.png`"></q-img>
-      <q-img contain class="event-card-img" v-else-if="server === 'en' && currentEvent[server].eventId >= 3"
+      <q-img contain class="event-card-img" v-else-if="server === 'en' && currentEvent[server].eventId >= 3" @load="showImgSkeleton = false"
             :src="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.png`"></q-img>
-      <q-img contain class="event-card-img" v-else-if="server === 'en'"
+      <q-img contain class="event-card-img" v-else-if="server === 'en'" @load="showImgSkeleton = false"
             :src="`/assets-${server}/homebanner_rip/banner-0${14 + currentEvent[server].eventId * 2}.png`"></q-img>
       <q-card-section>
         <div class="row items-center justify-center">
@@ -27,11 +28,11 @@
             <card-thumb :cardId="Number(eventSpecialCardId)"
                         :server="server" />
           </div>
-          <div class="col-12"
+          <div class="col-12 q-mt-sm"
                v-if="Number(currentEvent[server].startAt) > Date.now()">
             <h5 class="q-my-xs">{{$t('not-started')}}<br>{{(new Date(Number(currentEvent[server].startAt))).toLocaleString()}}</h5>
           </div>
-          <count-down class="col-12"
+          <count-down class="col-12 q-mt-sm"
                       :target-time="Number(currentEvent[server].endAt)"
                       v-else-if="Number(currentEvent[server].endAt) > Date.now()"></count-down>
         </div>
@@ -51,9 +52,24 @@
           {{$t('fetch-data', { type: $t('common.event') })}}
         </div>
       </q-card-section>
+      <q-skeleton width="380px" height="127px" />
       <q-card-section>
-        <q-spinner color="pink" size="48px"></q-spinner>
+          <div class="row items-center justify-center">
+            <div class="col-6">
+              <q-skeleton width="120px" height="120px" />
+            </div>
+            <div class="col-6">
+              <q-skeleton width="120px" height="120px" />
+            </div>
+            <div class="col-12 q-mt-sm">
+              <q-skeleton width="350px" height="80px" />
+            </div>
+          </div>
       </q-card-section>
+      <q-separator />
+      <q-card-actions vertical>
+        <q-skeleton type="rect" />
+      </q-card-actions>
     </q-card>
   </div>
 </template>
@@ -69,6 +85,7 @@ export default {
   data () {
     return {
       isReady: false,
+      showImgSkeleton: true,
       eventNormalCardId: null,
       eventSpecialCardId: null
     }
