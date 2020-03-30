@@ -102,10 +102,10 @@
             <span v-if="currentEvent[server].eventType === 'live_try'">
               <div class="row justify-center" v-if="isDegreeReady">
                 <div class="event-degree relative-position">
-                  <q-img :src="`/assets-${server}/thumb/degree_rip/${degreeMap[server][currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.normal.entries[10].resourceId].imageName}.png`" class="absolute-left"></q-img>
+                  <q-img :src="`/assets-${server}/thumb/degree_rip/${degreeMap[server][Object.values(this.currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.normal.entries).find(e => e.resourceType === 'degree').resourceId].imageName}.png`" class="absolute-left"></q-img>
                   <q-img :src="`/assets-${server}/thumb/degree_rip/try_clear_normal.png`" class="absolute-left"></q-img>
                 </div>
-                <div class="event-degree" :style="{ 'background-image': `url(/assets-${server}/thumb/degree_rip/try_clear_extra.png), url(/assets-${server}/thumb/degree_rip/${degreeMap[server][currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.extra.entries[5].resourceId].imageName}.png)` }" />
+                <div class="event-degree" :style="{ 'background-image': `url(/assets-${server}/thumb/degree_rip/try_clear_extra.png), url(/assets-${server}/thumb/degree_rip/${degreeMap[server][Object.values(this.currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.normal.entries).find(e => e.resourceType === 'degree').resourceId].imageName}.png)` }" />
               </div>
               <q-spinner-facebook v-else color="pink" size="48px"></q-spinner-facebook>
             </span>
@@ -347,11 +347,11 @@ export default {
         }
       } else if (this.currentEvent[server].eventType === 'live_try') {
         await this.getDegreeById({
-          id: this.currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.normal.entries[10].resourceId,
+          id: Object.values(this.currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.normal.entries).find(e => e.resourceType === 'degree').resourceId,
           server: server
         })
         await this.getDegreeById({
-          id: this.currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.extra.entries[5].resourceId,
+          id: Object.values(this.currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.extra.entries).find(e => e.resourceType === 'degree').resourceId,
           server: server
         })
       }
