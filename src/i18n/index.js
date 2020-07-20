@@ -1,8 +1,8 @@
 import en from './en.json'
-import zhCN from './zh-cn.json'
-import zhTW from './zh-tw.json'
-import ja from './ja.json'
-import kr from './kr.json'
+import zhCN from './zh_CN.json'
+import zhTW from './zh_TW.json'
+import ja from './ja_JP.json'
+import kr from './ko_KR.json'
 
 export default {
   en,
