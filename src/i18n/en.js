@@ -35,6 +35,7 @@ export default {
   'event-srv': 'Event {srv}',
   'fetch-data': 'Fetching {type} Data...',
   'not-started': 'Not started until',
+  'event-ends': 'Event ended, next event expected starting at',
   'common': {
     'event': 'Event',
     'gacha': 'Gacha',
@@ -67,7 +68,8 @@ export default {
     'birthday': {
       'today': 'Today is birthday of {name}',
       'next': 'Next birthday of {name} on {date}',
-      'loading': 'Loading birthday info...'
+      'loading': 'Loading birthday info...',
+      'notoday': 'No character'
     },
     'data-lang': 'Game Data Lang',
     'cover': 'Cover',
@@ -79,7 +81,8 @@ export default {
     'show-less': 'Show Less',
     'filter-applied': 'Applied',
     'settings': 'Settings',
-    'reset-filter': 'Reset'
+    'reset-filter': 'Reset',
+    'refresh': 'Refresh'
   },
   'gacha': {
     'list-title': '{srv} Scouts List',
@@ -125,7 +128,7 @@ export default {
     'story-none': 'No story avaliable',
     'story-reward': 'Story read reward',
     'jump-to-live2d-costume': 'Jump to Live2D',
-    'not-exist': 'This card does not exist: Server {server} CardID {cardId}',
+    'not-exist': 'This card does not exist: Server {server} CardID {situationId}',
     'read-story': 'Read Story'
   },
   'music': {
@@ -196,5 +199,10 @@ export default {
   },
   'title-images': {
     'failed-load': 'Failed loading title screen images, this server may not support this feature'
+  },
+  'worker': {
+    'update-found': 'New version found, updating...',
+    'updated': 'Refresh for new version',
+    'offline': 'Running in offline mode'
   }
 }

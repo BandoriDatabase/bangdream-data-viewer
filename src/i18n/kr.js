@@ -116,7 +116,7 @@ export default {
     'story-none': '스토리 없음',
     'story-reward': '에피소드 달성 보너스 보상',
     'jump-to-live2d-costume': 'Live2D 보기',
-    'not-exist': 'This card does not exist: Server {server} CardID {cardId}'
+    'not-exist': 'This card does not exist: Server {server} CardID {situationId}'
   },
   'music': {
     'select-band': '밴드 선택',

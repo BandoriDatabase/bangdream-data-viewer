@@ -35,6 +35,7 @@ export default {
   'event-srv': '{srv}活動',
   'fetch-data': '獲取{type}數據中',
   'not-started': '將開始於',
+  'event-ends': '活動已結束，下次活動可能開始於',
   'common': {
     'event': '活動',
     'gacha': '扭蛋',
@@ -66,7 +67,8 @@ export default {
     'app-ver': '應用版本',
     'birthday': {
       'today': '今天過生日的是{name}',
-      'next': '下次過生日的是{name}於{date}'
+      'next': '下次過生日的是{name}於{date}',
+      'notoday': '無角色'
     },
     'data-lang': '遊戲數據語言',
     'cover': '翻唱',
@@ -124,7 +126,7 @@ export default {
     'story-none': '該卡牌沒有劇情',
     'story-reward': '劇情閱讀獎勵',
     'jump-to-live2d-costume': '跳轉至Live2D',
-    'not-exist': '要查詢的卡片不存在： 服務器 {server} 卡片編號 {cardId}',
+    'not-exist': '要查詢的卡片不存在： 服務器 {server} 卡片編號 {situationId}',
     'read-story': '讀故事'
   },
   'music': {
@@ -193,5 +195,10 @@ export default {
   },
   'title-images': {
     'failed-load': '無法加載遊戲標題界面圖像，選擇的服務器可能不支持該特性'
+  },
+  'worker': {
+    'update-found': '發現新版本，更新中...',
+    'updated': '新版本更新好了',
+    'offline': '運行在離線模式下'
   }
 }

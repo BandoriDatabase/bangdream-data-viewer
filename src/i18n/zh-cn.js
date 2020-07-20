@@ -35,6 +35,7 @@ export default {
   'event-srv': '{srv}活动',
   'fetch-data': '获取{type}数据中',
   'not-started': '将开始于',
+  'event-ends': '活动已结束，下次活动可能开始于',
   'common': {
     'event': '活动',
     'gacha': '扭蛋',
@@ -66,7 +67,8 @@ export default {
     'app-ver': '应用版本',
     'birthday': {
       'today': '今天过生日的是{name}',
-      'next': '下次过生日的是{name}于{date}'
+      'next': '下次过生日的是{name}于{date}',
+      'notoday': '无角色'
     },
     'data-lang': '游戏数据语言',
     'cover': '翻唱',
@@ -78,7 +80,8 @@ export default {
     'show-less': '显示更少',
     'filter-applied': '已应用',
     'settings': '设置',
-    'reset-filter': '重置'
+    'reset-filter': '重置',
+    'refresh': '刷新'
   },
   'gacha': {
     'list-title': '{srv}当前扭蛋池',
@@ -124,7 +127,7 @@ export default {
     'story-none': '该卡牌没有剧情',
     'story-reward': '剧情阅读奖励',
     'jump-to-live2d-costume': '跳转至Live2D',
-    'not-exist': '要查询的卡片不存在： 服务器 {server} 卡片编号 {cardId}',
+    'not-exist': '要查询的卡片不存在： 服务器 {server} 卡片编号 {situationId}',
     'read-story': '读故事'
   },
   'music': {
@@ -193,5 +196,10 @@ export default {
   },
   'title-images': {
     'failed-load': '无法加载游戏标题界面图像，选择的服务器可能不支持该特性'
+  },
+  'worker': {
+    'update-found': '发现新版本，更新中...',
+    'updated': '新版本更新好了',
+    'offline': '运行在离线模式下'
   }
 }
