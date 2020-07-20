@@ -23,7 +23,11 @@
     "new-features":"新特性",
     "feature-detail":["游戏标题画面列表可以按照选定的服务器显示相应的图片"],
     "fixed-bugs":"修复的问题",
-    "bug-detail":["修复生日先后顺序错误的问题","修复不支持同一天两人以上生日的问题","修复国际服活动顺序错误的问题"],
+    "bug-detail":[
+      "修复生日先后顺序错误的问题",
+      "修复不支持同一天两人以上生日的问题",
+      "修复国际服活动顺序错误的问题"
+    ],
     "welcome-bug-report":"如果你在使用本网站的过程中遇到任何问题, 欢迎通过<a href='mailto:dev@bandori.ga'>Email</a>, <a href='https://dnaroma.site/2017/12/23/bug-report/'>问题反馈页面</a>或者<a href='https://discord.gg/vGb3eHH'>Discord</a>向我反馈问题。"
   },
   "event-srv":"{srv}活动",
@@ -55,7 +59,12 @@
     "apply-save":"应用和保存",
     "data-ver":"数据版本",
     "app-ver":"应用版本",
-    "birthday":{"today":"今天过生日的是{name}","next":"下次过生日的是{name}于{date}","notoday":"无角色"},
+    "birthday":{
+      "today":"今天过生日的是{name}",
+      "next":"下次过生日的是{name}于{date}",
+      "loading":"加载生日信息……",
+      "notoday":"无角色"
+    },
     "data-lang":"游戏数据语言",
     "cover":"翻唱",
     "original":"原创",
@@ -114,7 +123,6 @@
     "howtoget":"获得方式",
     "difficulty":"难度",
     "difficulties":["简单","一般","困难","专家","特别"],
-    "band":"演奏者",
     "achieve":"歌曲成就",
     "combo":"音符数",
     "check-beatmap":"打开谱面播放器",
@@ -166,9 +174,18 @@
     "badge":"活动徽章",
     "degrees":"活动头衔",
     "musics":"活动曲",
-    "fetch-data":"获取活动数据中",
-    "both-match":"当两者皆满足："
+    "both-match":"当两者皆满足：",
+    "point-rewards":"活动点数奖励",
+    "ranking-rewards":"活动排名奖励",
+    "rewards-and-stories":"奖励及故事",
+    "stories":"故事"
   },
-  "title-images":{"failed-load":"无法加载游戏标题界面图像，选择的服务器可能不支持该特性"},
-  "worker":{"update-found":"发现新版本，更新中...","updated":"新版本更新好了","offline":"运行在离线模式下"}
+  "title-images":{
+    "failed-load":"无法加载游戏标题界面图像，选择的服务器可能不支持该特性"
+  },
+  "worker":{
+    "update-found":"发现新版本，更新中...",
+    "updated":"新版本更新好了",
+    "offline":"运行在离线模式下"
+  }
 }
