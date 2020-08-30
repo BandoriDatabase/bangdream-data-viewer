@@ -20,10 +20,3 @@ export const getCharaById = async ({ commit, state }, { charaId, server }) => {
   commit('ADD_CHARA_MAP_ENTRY', { id: charaId, value: chara, server })
   return chara
 }
-
-export const initState = {
-  root: true,
-  handler ({ commit }, servers) {
-    commit('INIT_STATE_DATA', servers)
-  }
-}

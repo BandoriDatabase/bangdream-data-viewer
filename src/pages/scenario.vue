@@ -16,7 +16,7 @@
         <transition appear enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutUp" :duration="500">
           <div class="row items-center" v-if="isShowCurr">
             <div class="col-3 column items-center">
-              <img :src="`statics/chara_icon_${currVoice.charaId}.png`">
+              <img :src="`chara_icon_${currVoice.charaId}.png`">
               <div>{{currVoice.charaName}}</div>
             </div>
             <div class="col-9">{{currVoice.text}}</div>
@@ -26,7 +26,7 @@
     </div>
     <q-table v-if="!isLoading" :data="talk" :columns="tableCols">
       <q-td slot="body-cell-charaId" slot-scope="cell" :props="cell">
-        <img v-if="cell.value > 0 && cell.value < 26" :src="`statics/chara_icon_${cell.value}.png`" class="responsive">
+        <img v-if="cell.value > 0 && cell.value < 26" :src="`chara_icon_${cell.value}.png`" class="responsive">
       </q-td>
       <q-td slot="body-cell-voice" slot-scope="cell" :props="cell">
         <q-btn @click="playSound(cell.value)">Play</q-btn>

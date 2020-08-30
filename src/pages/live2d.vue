@@ -47,8 +47,8 @@
             <p>{{$t('live2d.costume-avaliable-from')}} {{(new Date(Number(costumeMap[server][selectedChara.value].find(elem => elem.costumeId === selectedCostume.value).publishedAt))).toLocaleString()}}</p>
           </q-card-section>
           <q-card-actions>
-            <q-btn v-if="costumeMap[server][selectedChara.value].find(elem => elem.costumeId === selectedCostume.value).cardId" flat :label="$t('live2d.jump-to-card-detail')"
-              @click="$router.push({name: 'cardDetail', params: {server: $route.params.server, cardId: costumeMap[server][selectedChara.value].find(elem => elem.costumeId === selectedCostume.value).cardId, isTrained: 0}})"></q-btn>
+            <q-btn v-if="costumeMap[server][selectedChara.value].find(elem => elem.costumeId === selectedCostume.value).situationId" flat :label="$t('live2d.jump-to-card-detail')"
+              @click="$router.push({name: 'cardDetail', params: {server: $route.params.server, situationId: costumeMap[server][selectedChara.value].find(elem => elem.costumeId === selectedCostume.value).situationId, isTrained: 0}})"></q-btn>
           </q-card-actions>
         </q-card>
       </div>

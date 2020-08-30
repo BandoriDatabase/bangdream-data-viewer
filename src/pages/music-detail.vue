@@ -22,7 +22,7 @@
         <p>{{$t('music.arranger')}}: {{musicData.arranger}}</p>
         <p>{{$t('common.band')}}:
           <span v-if="Number(musicData.bandId) > 5">{{musicData.bandName}}</span>
-          <img height="60px" width="100px" v-if="Number(musicData.bandId) <= 5" v-lazy="`/assets/band/logo/00${musicData.bandId}_rip/logoL.png`">
+          <img height="60px" width="100px" v-if="Number(musicData.bandId) <= 5" v-lazy="`/assets/band/logo/00${musicData.bandId}_rip/logoL.webp`">
         </p>
         <!-- <p>{{$t('combo')}}: {{musicData.combo}}</p> -->
         <p>{{$t('music.howtoget')}}: {{musicData.howToGet}}</p>

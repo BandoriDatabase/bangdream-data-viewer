@@ -17,10 +17,10 @@
               <div class="img-div" v-if="cardImgType === 'card'">
                 <img :src="cardImageUrl" alt="" class="card-img">
                 <div class="card-img-parent"  @click="$viewer.show()">
-                  <div :class="`card-img-frame-${frameMap[cardInfo.rarity] || cardInfo.attr}`" />
+                  <div :class="`card-img-frame-${frameMap[cardInfo.rarity] || cardInfo.attribute}`" />
                   <div v-for="i in Number(cardInfo.rarity)" :class="`card-img-rarity-${cardResType}-${i}`" :key="i"></div>
                   <div class="card-img-band-icon" :class="`card-img-band-${charaInfo.bandId}`"></div>
-                  <div :class="`card-img-attr-${cardInfo.attr}`"></div>
+                  <div :class="`card-img-attr-${cardInfo.attribute}`"></div>
                 </div>
               </div>
               <div class="img-div" v-else style="padding-bottom:66%">
@@ -68,7 +68,7 @@
             <div class="col-6">
               <q-btn outline class="full-width"
               :color="cardResType === 'normal' ? 'green' : 'red'"
-              @click="$router.push(`/card/${server}/${cardId}/${Number(!isTrained)}`)">
+              @click="$router.push(`/card/${server}/${situationId}/${Number(!isTrained)}`)">
                 {{$t('card.un-trained')}}
               </q-btn>
             </div>
@@ -222,7 +222,7 @@
                 <q-separator space />
                 <q-card-actions>
                   <q-btn color="pink full-width" flat
-                    @click="$router.push(`/scenario/${server}/${cardInfo.cardRes}/${episode.scenarioId}`), $ga.event('card-detail', 'jump', `scenario`)">
+                    @click="$router.push(`/scenario/${server}/${cardInfo.resourceSetName}/${episode.scenarioId}`), $ga.event('card-detail', 'jump', `scenario`)">
                     <q-icon name="launch"></q-icon>
                     {{$t('card.read-story')}}
                   </q-btn>
@@ -234,7 +234,7 @@
       </div>
     </div>
     <div v-else-if="isError">
-      {{$t('card.not-exist', { server: $t(`common.${server}`), cardId })}}
+      {{$t('card.not-exist', { server: $t(`common.${server}`), situationId })}}
     </div>
     <div v-else>
       {{$t('card.fetch-card-data')}}
@@ -280,8 +280,8 @@ export default {
   },
   async mounted () {
     try {
-      const card = await this.getCardById({ cardId: this.$route.params.cardId, server: this.$route.params.server })
-      await this.getSkillById({ cardId: card.cardId, server: this.$route.params.server })
+      const card = await this.getCardById({ situationId: this.$route.params.situationId, server: this.$route.params.server })
+      await this.getSkillById({ situationId: card.situationId, server: this.$route.params.server })
       this.charaInfo = await this.getCharaById({ charaId: card.characterId, server: this.$route.params.server })
       if (card.costumeId) this.costumeInfo = await this.$api.getCostumeById(this.$route.params.server, card.costumeId)
       this.isReady = true
@@ -301,32 +301,32 @@ export default {
     ...mapState('chara', [
       'charaMap'
     ]),
-    cardId () {
-      return Number(this.$route.params.cardId)
+    situationId () {
+      return Number(this.$route.params.situationId)
     },
     cardInfo () {
       if (!this.isReady) return {}
-      return this.cardMap[this.server][this.cardId]
+      return this.cardMap[this.server][this.situationId]
     },
     skillInfo () {
       if (!this.isReady) return {}
-      return this.skillMap[this.server][this.cardId]
+      return this.skillMap[this.server][this.situationId]
     },
     isTrained () {
       return Boolean(Number(this.$route.params.isTrained))
     },
     cardGroup () {
-      const groupId = Math.trunc(this.cardInfo.cardId / 50).toString()
+      const groupId = Math.trunc(this.cardInfo.situationId / 50).toString()
       return `${'0'.repeat(5 - groupId.length)}${groupId}`
     },
     cardImageUrl () {
-      return `/assets-${this.server}/characters/resourceset/${this.cardInfo.cardRes}_rip/${this.cardImgType}_${this.cardResType}.png`
+      return `/assets/${this.server}/characters/resourceset/${this.cardInfo.resourceSetName}_rip/${this.cardImgType}_${this.cardResType}.webp`
     },
     cardLivesdUrl () {
-      return `/assets-${this.server}/characters/livesd/${this.cardInfo.live2dRes}_rip/sdchara.png`
+      return `/assets/${this.server}/characters/livesd/${this.cardInfo.live2dRes}_rip/sdchara.webp`
     },
     cardThumbUrl () {
-      return `/assets-${this.server}/thumb/chara/card${this.cardGroup}_rip/${this.cardInfo.cardRes}_${this.cardResType}.png`
+      return `/assets/${this.server}/thumb/chara/card${this.cardGroup}_rip/${this.cardInfo.resourceSetName}_${this.cardResType}.webp`
     },
     server () {
       return this.$route.params.server
@@ -390,8 +390,8 @@ export default {
 
     this.$nextTick(async () => {
       try {
-        const card = await this.getCardById({ cardId: to.params.cardId, server: to.params.server })
-        await this.getSkillById({ cardId: card.cardId, server: to.params.server })
+        const card = await this.getCardById({ situationId: to.params.situationId, server: to.params.server })
+        await this.getSkillById({ situationId: card.situationId, server: to.params.server })
         this.charaInfo = await this.getCharaById({ charaId: card.characterId, server: to.params.server })
         if (card.costumeId) this.costumeInfo = await this.$api.getCostumeById(to.params.server, card.costumeId)
         this.isReady = true
@@ -569,19 +569,19 @@ div.row
   background url('~assets/band_icon_5.png') no-repeat
 
 .img-band-1
-  background-image url('/statics/band_logo_1.png')
+  background-image url('/band_logo_1.png')
 
 .img-band-2
-  background-image url('/statics/band_logo_2.png')
+  background-image url('/band_logo_2.png')
 
 .img-band-3
-  background-image url('/statics/band_logo_3.png')
+  background-image url('/band_logo_3.png')
 
 .img-band-4
-  background-image url('/statics/band_logo_4.png')
+  background-image url('/band_logo_4.png')
 
 .img-band-5
-  background-image url('/statics/band_logo_5.png')
+  background-image url('/band_logo_5.png')
 
 .card-img-band
   // position absolute

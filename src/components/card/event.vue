@@ -1,70 +1,87 @@
 <template>
   <div>
     <q-card v-if="isReady">
-      <q-card-section class="bg-pink text-white">
+      <!-- <q-card-section class="bg-pink text-white">
         <div class="text-subtitle1">{{currentEvent[server].eventName}}</div>
         <div class="text-caption">
           {{$t('event-srv', { srv: $t(`common.${server}`) }) }} - {{currentEvent[server].eventType}}
         </div>
-      </q-card-section>
-      <q-skeleton v-if="showImgSkeleton" width="380px" height="127px" />
-      <q-img contain class="event-card-img" v-if="server === 'kr'" @load="showImgSkeleton = false"
-            :src="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}.png`"></q-img>
-      <q-img contain class="event-card-img" v-else-if="server !== 'en'" @load="showImgSkeleton = false"
-            :src="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.png`"></q-img>
-      <q-img contain class="event-card-img" v-else-if="server === 'en' && currentEvent[server].eventId >= 3" @load="showImgSkeleton = false"
-            :src="`/assets-${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.png`"></q-img>
-      <q-img contain class="event-card-img" v-else-if="server === 'en'" @load="showImgSkeleton = false"
-            :src="`/assets-${server}/homebanner_rip/banner-0${14 + currentEvent[server].eventId * 2}.png`"></q-img>
+      </q-card-section> -->
       <q-card-section>
         <div class="row items-center justify-center">
-          <div class="col-6"
+          <div class="col-12 col-sm-6 cursor-pointer event-card-img" @click="$router.push(`/currevent/${server}`), $ga.event('event-detail', 'jump', server)">
+            <q-skeleton v-if="showImgSkeleton" width="380px" height="127px" />
+            <!-- <q-img contain v-if="server === 'kr'" @load="showImgSkeleton = false"
+                  :src="`/assets/${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}.webp`"></q-img> -->
+            <q-img contain v-if="server !== 'en'" @load="showImgSkeleton = false"
+                  :src="`/assets/${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.webp`"></q-img>
+            <q-img contain v-else-if="server === 'en' && currentEvent[server].eventId >= 3" @load="showImgSkeleton = false"
+                  :src="`/assets/${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.webp`"></q-img>
+            <q-img contain v-else-if="server === 'en'" @load="showImgSkeleton = false"
+                  :src="`/assets/${server}/homebanner_rip/banner-0${14 + currentEvent[server].eventId * 2}.webp`"></q-img>
+          </div>
+          <div class="col-3 gt-xs"
                @click="$ga.event('event-card', 'jump', `normal-${server}`)">
-            <card-thumb :cardId="Number(eventNormalCardId)"
+            <card-thumb :situationId="Number(eventNormalCardId)"
                         :server="server" />
           </div>
-          <div class="col-6"
+          <div class="col-3 gt-xs"
                @click="$ga.event('event-card', 'jump', `sr-${server}`)">
-            <card-thumb :cardId="Number(eventSpecialCardId)"
+            <card-thumb :situationId="Number(eventSpecialCardId)"
                         :server="server" />
           </div>
-          <div class="col-12 q-mt-sm"
-               v-if="Number(currentEvent[server].startAt) > Date.now()">
-            <h5 class="q-my-xs">{{$t('not-started')}}<br>{{(new Date(Number(currentEvent[server].startAt))).toLocaleString()}}</h5>
+          <div class="col-6 xs q-mt-sm"
+               @click="$ga.event('event-card', 'jump', `normal-${server}`)">
+            <card-thumb :situationId="Number(eventNormalCardId)" mini
+                        :server="server" />
           </div>
-          <count-down class="col-12 q-mt-sm"
+          <div class="col-6 xs q-mt-sm"
+               @click="$ga.event('event-card', 'jump', `sr-${server}`)">
+            <card-thumb :situationId="Number(eventSpecialCardId)" mini
+                        :server="server" />
+          </div>
+          <div class="col-12"
+               v-if="Number(currentEvent[server].startAt) > Date.now()">
+            <h5 class="q-my-md">{{$t('not-started')}} {{(new Date(Number(currentEvent[server].startAt))).toLocaleString()}}</h5>
+          </div>
+          <count-down class="col-12 q-mt-xs"
                       :target-time="Number(currentEvent[server].endAt)"
                       v-else-if="Number(currentEvent[server].endAt) > Date.now()"></count-down>
+          <div class="col-12" v-else>
+            <h5 class="q-my-md">{{$t('event-ends')}} {{(new Date(Number(currentEvent[server].publicEndAt) + 1000)).toLocaleString()}}</h5>
+          </div>
         </div>
       </q-card-section>
-      <q-separator />
+      <!-- <q-separator />
       <q-card-actions vertical>
         <q-btn flat
                class="text-pink"
                @click="$router.push(`/currevent/${server}`), $ga.event('event-detail', 'jump', server)"
                icon="launch">{{$t('gacha.open-detail')}}</q-btn>
-      </q-card-actions>
+      </q-card-actions> -->
     </q-card>
     <q-card v-else>
-      <q-card-section class="bg-pink text-white">
+      <!-- <q-card-section class="bg-pink text-white">
         <div class="text-subtitle1">{{$t('fetch-data', { type: $t('common.event') })}}</div>
         <div class="text-caption">
           {{$t('fetch-data', { type: $t('common.event') })}}
         </div>
-      </q-card-section>
-      <q-skeleton width="380px" height="127px" />
+      </q-card-section> -->
       <q-card-section>
-          <div class="row items-center justify-center">
-            <div class="col-6">
-              <q-skeleton width="120px" height="120px" />
-            </div>
-            <div class="col-6">
-              <q-skeleton width="120px" height="120px" />
-            </div>
-            <div class="col-12 q-mt-sm">
-              <q-skeleton width="350px" height="80px" />
-            </div>
+        <div class="row items-center justify-center">
+          <div class="col-12 col-sm-6">
+            <q-skeleton v-if="showImgSkeleton" width="380px" height="127px" />
           </div>
+          <div class="col-6 col-sm-3">
+            <q-skeleton width="120px" height="120px" />
+          </div>
+          <div class="col-6 col-sm-3">
+            <q-skeleton width="120px" height="120px" />
+          </div>
+          <div class="col-12 q-mt-sm">
+            <q-skeleton width="350px" height="80px" />
+          </div>
+        </div>
       </q-card-section>
       <q-separator />
       <q-card-actions vertical>

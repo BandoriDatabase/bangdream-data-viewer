@@ -1,14 +1,17 @@
+import db from '../../db'
+
+const banddb = db.band
+
 export const SET_BAND_LIST = (state, { data, server }) => {
   state.bandList[server] = data
-}
+  state.bandMap[server] = data.reduce((obj, item) => {
+    obj[item.bandId] = item
+    return obj
+  }, {})
 
-export const INIT_STATE_DATA = (state, servers) => {
-  state.bandList = servers.reduce((sum, curr) => {
-    sum[curr] = []
-    return sum
-  }, {})
-  state.bandMap = servers.reduce((sum, curr) => {
-    sum[curr] = {}
-    return sum
-  }, {})
+  data.forEach(band => {
+    banddb.get({ bandId: band.bandId, server }).then(_band => {
+      if (!_band) banddb.put(Object.assign({}, band, { server }))
+    })
+  })
 }

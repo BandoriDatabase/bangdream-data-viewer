@@ -12,7 +12,7 @@
         </q-btn>
 
         <q-toolbar-title>
-          Bandori Database
+          Bandori Top
           <small>{{ appVer }}</small>
         </q-toolbar-title>
 

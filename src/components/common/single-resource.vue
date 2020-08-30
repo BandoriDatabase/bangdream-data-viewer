@@ -1,17 +1,17 @@
 <template>
   <div class="text-center" v-if="isReady">
     <q-img contain v-if="data[typeName] === 'practice_ticket' && data[idName] <=4" class="resource-img"
-    :src="`/assets/thumb/common_rip/practiceTicket${data[idName]}.png`"></q-img>
+    :src="`/assets/thumb/common_rip/practiceTicket${data[idName]}.webp`"></q-img>
     <q-img contain v-else-if="data[typeName] === 'practice_ticket'" class="resource-img"
-    :src="`/assets/thumb/common_rip/skillticket_${data[idName]}.png`"></q-img>
+    :src="`/assets/thumb/common_rip/skillticket_${data[idName]}.webp`"></q-img>
     <q-img contain v-else-if="data[typeName] === 'item'" class="resource-img"
-    :src="`/assets/thumb/material_rip/material${String(data[idName]).padStart(3, '0')}.png`"></q-img>
+    :src="`/assets/thumb/material_rip/material${String(data[idName]).padStart(3, '0')}.webp`"></q-img>
     <q-img contain v-else-if="data[typeName] === 'stamp'" class="resource-img"
-    :src="`/assets-${server}/stamp/01_rip/${stampMap[server][data[idName]].imageName}.png`"></q-img>
+    :src="`/assets/${server}/stamp/01_rip/${stampMap[server][data[idName]].imageName}.webp`"></q-img>
     <card-thumb v-else-if="data[typeName] === 'situation'" mini
-    :cardId="Number(data[idName])" :server="server"></card-thumb>
+    :situationId="Number(data[idName])" :server="server"></card-thumb>
     <q-img contain v-else class="resource-img"
-    :src="`/assets/thumb/common_rip/${data[typeName]}.png`"></q-img>
+    :src="`/assets/thumb/common_rip/${data[typeName]}.webp`"></q-img>
     <p class="text-subtitle2 q-mb-xs">x{{data[quantityName]}}</p>
   </div>
   <div v-else class="resource-img">

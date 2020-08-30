@@ -2,23 +2,23 @@
   <lazy-component @show="loadData">
     <div class="card-img-parent" v-if="isReady && !mini" @click="() => {
         $emit('close');
-        $router.push(`/card/${server}/${(card || cardMap[server][cardId]).cardId}/${Number(trained)}`);
+        $router.push(`/card/${server}/${(card || cardMap[server][situationId]).situationId}/${Number(trained)}`);
       }">
-      <q-img class="thumb-table" :src="`/assets-${server}/thumb/chara/card${cardGroup}_rip/${(card || cardMap[server][cardId]).cardRes}_${trained ? 'after_training' : 'normal'}.png`"></q-img>
-      <div :class="`thumb-frame-${getThumbFrame(Number((card || cardMap[server][cardId]).rarity), (card || cardMap[server][cardId]).attr)}`"></div>
-      <div :class="`thumb-attr-${(card || cardMap[server][cardId]).attr}`"></div>
-      <div :class="`thumb-band-${bandCharaList[server][Number((card || cardMap[server][cardId]).characterId) - 1].bandId}`"></div>
-      <div v-for="i in (card || cardMap[server][cardId]).rarity" :key="i" :class="`thumb-rarity-${Number(trained)}-${i}`"></div>
+      <q-img class="thumb-table" :src="`/assets/${server}/thumb/chara/card${cardGroup}_rip/${(card || cardMap[server][situationId]).resourceSetName}_${trained ? 'after_training' : 'normal'}.webp`"></q-img>
+      <div :class="`thumb-frame-${getThumbFrame(Number((card || cardMap[server][situationId]).rarity), (card || cardMap[server][situationId]).attribute)}`"></div>
+      <div :class="`thumb-attr-${(card || cardMap[server][situationId]).attribute}`"></div>
+      <div :class="`thumb-band-${bandCharaList[server][Number((card || cardMap[server][situationId]).characterId) - 1].bandId}`"></div>
+      <div v-for="i in (card || cardMap[server][situationId]).rarity" :key="i" :class="`thumb-rarity-${Number(trained)}-${i}`"></div>
     </div>
     <div class="card-img-mini-parent" v-else-if="isReady" @click="() => {
         $emit('close');
-        $router.push(`/card/${server}/${(card || cardMap[server][cardId]).cardId}/${Number(trained)}`);
+        $router.push(`/card/${server}/${(card || cardMap[server][situationId]).situationId}/${Number(trained)}`);
       }">
-      <q-img class="thumb-mini-table" :src="`/assets-${server}/thumb/chara/card${cardGroup}_rip/${(card || cardMap[server][cardId]).cardRes}_${trained ? 'after_training' : 'normal'}.png`"></q-img>
-      <div :class="`thumb-mini-frame-${getThumbFrame(Number((card || cardMap[server][cardId]).rarity), (card || cardMap[server][cardId]).attr)}`"></div>
-      <div :class="`thumb-mini-attr-${(card || cardMap[server][cardId]).attr}`"></div>
-      <div :class="`thumb-mini-band-${bandCharaList[server][Number((card || cardMap[server][cardId]).characterId) - 1].bandId}`"></div>
-      <div v-for="i in (card || cardMap[server][cardId]).rarity" :key="i" :class="`thumb-mini-rarity-${Number(trained)}-${i}`"></div>
+      <q-img class="thumb-mini-table" :src="`/assets/${server}/thumb/chara/card${cardGroup}_rip/${(card || cardMap[server][situationId]).resourceSetName}_${trained ? 'after_training' : 'normal'}.webp`"></q-img>
+      <div :class="`thumb-mini-frame-${getThumbFrame(Number((card || cardMap[server][situationId]).rarity), (card || cardMap[server][situationId]).attribute)}`"></div>
+      <div :class="`thumb-mini-attr-${(card || cardMap[server][situationId]).attribute}`"></div>
+      <div :class="`thumb-mini-band-${bandCharaList[server][Number((card || cardMap[server][situationId]).characterId) - 1].bandId}`"></div>
+      <div v-for="i in (card || cardMap[server][situationId]).rarity" :key="i" :class="`thumb-mini-rarity-${Number(trained)}-${i}`"></div>
     </div>
     <div class="card-img-parent" v-else>
       <q-skeleton width="120px" height="120px" />
@@ -33,7 +33,7 @@ export default {
   name: 'cardThumbDiv',
   props: {
     card: Object,
-    cardId: Number,
+    situationId: Number,
     server: {
       type: String,
       required: true
@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     cardGroup () {
-      const groupId = Math.trunc((this.cardId || this.card.cardId) / 50).toString()
+      const groupId = Math.trunc((this.situationId || this.card.situationId) / 50).toString()
       return `${'0'.repeat(5 - groupId.length)}${groupId}`
     },
     ...mapState('card', [
@@ -84,7 +84,7 @@ export default {
       }
       this.$nextTick(async () => {
         await this.getCardById({
-          cardId: this.cardId,
+          situationId: this.situationId,
           server: this.server
         })
         await this.getBandCharaList(this.server)
@@ -104,8 +104,8 @@ export default {
   cursor pointer
 
 .card-img-mini-parent
-  width 60px
-  height 60px
+  width 90px
+  height 90px
   margin 0 auto
   position relative
   cursor pointer
@@ -120,8 +120,8 @@ export default {
 
 .thumb-mini-table
   position absolute
-  width 55.5px
-  height 55.5px
+  width 83.25px
+  height 83.25px
   background-size cover
   left 2.5px
   top 2.5px
@@ -145,8 +145,8 @@ thumd-attr(uri)
   background-size cover
 
 thumb-mini-frame(uri)
-  width 60px
-  height 60px
+  width 90px
+  height 90px
   realUri = '~assets/thumb_frame_' + uri + '.png'
   background url(realUri) no-repeat
   background-size cover
@@ -155,9 +155,9 @@ thumb-mini-frame(uri)
 
 thumd-mini-attr(uri)
   top 2%
-  right 1%
-  width 15px
-  height 15px
+  right 1.2%
+  width 22.5px
+  height 22.5px
   realUri = '~assets/icon_' + uri + '.png'
   background url(realUri) no-repeat
   background-size cover
@@ -228,8 +228,8 @@ for num in 1 2 3 4
     position absolute
     top 80% - 15% * (num - 1)
     left 2.5%
-    width 11.25px
-    height 11.25px
+    width 16.875px
+    height 16.875px
     background url('~assets/star_untrained.png') no-repeat
     background-size 100% 100%
 
@@ -237,8 +237,8 @@ for num in 1 2 3 4
     position absolute
     top 80% - 15% * (num - 1)
     left 2.5%
-    width 11.25px
-    height 11.25px
+    width 16.875px
+    height 16.875px
     background url('~assets/star_after_training.png') no-repeat
     background-size 100% 100%
 
@@ -256,8 +256,8 @@ for num in 1 2 3 4 5
     position absolute
     top 3%
     left 2%
-    width 12.5px
-    height 12.5px
+    width 18.75px
+    height 18.75px
     realUri = '~assets/band_icon_' + num +'.png'
     background url(realUri) no-repeat center/cover
 </style>

@@ -41,7 +41,7 @@
           </q-card-section>
           <q-card-section>
             <div class="row gutter">
-              <q-radio color="pink" v-model="orderKey" val="cardId" label="ID" />
+              <q-radio color="pink" v-model="orderKey" val="situationId" label="ID" />
               <q-radio color="pink" v-model="orderKey" val="rarity" :label="$t('common.rarity')" />
               <q-radio color="pink" v-model="orderKey" val="simpleParams.max.performance" :label="$t('common.perform')" />
               <q-radio color="pink" v-model="orderKey" val="simpleParams.max.technique" :label="$t('common.technic')" />
@@ -61,26 +61,48 @@
       </q-dialog>
       <q-infinite-scroll ref="cardScroll" v-if="isReady" @load="loadMore">
         <div class="row q-col-gutter-md">
-          <div v-for="card in cardList" :key="`card-${card.cardId}`" class="col-12 col-xl-3 col-md-4 full-height">
-            <q-card>
-              <q-card-section>
+          <div v-for="card in cardList" :key="`card-${card.situationId}`" class="col-12 col-xl-3 col-md-4">
+            <q-card class="full-height">
+              <q-card-section class="q-pb-sm">
                 <div class="text-center">
-                  <p class="text-h5" :class="`text-${paletteMap[card.attr]}`">{{card.title}}</p>
-                  <p class="text-subtitle1">{{bandCharaList[server][Number(card.characterId) - 1].characterName}}</p>
+                  <p class="text-h5 q-my-none" :class="`text-${paletteMap[card.attribute]}`">{{card.prefix}}</p>
+                  <div class="row items-center justify-center">
+                    <img
+                      :src="`chara_icon_${bandCharaList[server][Number(card.characterId) - 1].characterId}.png`"
+                      style="width: 36px; height: 36px"
+                    >
+                    <p class="text-subtitle1 q-my-none col-4">{{bandCharaList[server][Number(card.characterId) - 1].characterName}}</p>
+                  </div>
                 </div>
               </q-card-section>
-              <q-card-section class="q-pt-none">
+              <q-separator />
+              <q-card-section>
                 <div class="row items-center justify-center q-col-gutter-md">
-                  <card-thumb :card="card" :server="server" :trained="false" v-if="card.title !== 'ガルパ杯'"></card-thumb>
-                  <card-thumb :card="card" :server="server" :trained="true" v-if="(card.rarity >= 3 && card.title !== 'ガルパ杯') || card.title === 'ガルパ杯'"></card-thumb>
+                  <card-thumb :card="card" :server="server" :trained="false" v-if="card.prefix !== 'ガルパ杯'"></card-thumb>
+                  <card-thumb :card="card" :server="server" :trained="true" v-if="(card.rarity >= 3 && card.prefix !== 'ガルパ杯') || card.prefix === 'ガルパ杯'"></card-thumb>
                 </div>
               </q-card-section>
+              <q-separator />
+              <q-card-section class="q-py-sm">
+                <p class="q-mb-xs text-center">{{card.skill.skillName}}</p>
+                <p class="q-mb-xs" style="min-height: 2.5rem;">{{card.skill.skillDetail.simpleDescription}}</p>
+              </q-card-section>
+              <q-separator />
+              <q-card-actions align="evenly">
+                <q-btn class="text-primary" flat icon="more_horiz">Detail</q-btn>
+                <q-btn class="text-primary" flat icon="account_box">Character</q-btn>
+                <q-btn class="text-primary" flat icon="record_voice_over">Live 2D</q-btn>
+              </q-card-actions>
+              <!-- <q-card-actions align="evenly">
+                <q-btn class="text-secondary" flat icon="slideshow">Scenario 1</q-btn>
+                <q-btn class="text-secondary" flat icon="slideshow">Scenario 2</q-btn>
+              </q-card-actions> -->
             </q-card>
           </div>
         </div>
         <template v-slot:loading>
           <div v-if="!infiniteLoading" class="row q-col-gutter-md">
-            <div v-for="i in 1" :key="`skel-${i}`" class="col-12 col-xl-3 col-md-4 full-height">
+            <div v-for="i in 1" :key="`skel-${i}`" class="col-12 col-xl-3 col-md-4">
               <q-card>
                 <q-card-section>
                   <q-skeleton type="text" height="32px" />
@@ -96,7 +118,7 @@
             </div>
           </div>
           <div v-if="infiniteLoading" class="row q-col-gutter-md">
-            <div v-for="i in 4" :key="`skel-${i}`" class="col-12 col-xl-3 col-md-4 full-height">
+            <div v-for="i in 4" :key="`skel-${i}`" class="col-12 col-xl-3 col-md-4">
               <q-card>
                 <q-card-section>
                   <q-skeleton type="text" height="32px" />
@@ -115,7 +137,7 @@
       </q-infinite-scroll>
       <div v-if="!isReady">
         <div class="row q-col-gutter-md">
-          <div v-for="i in 12" :key="`skel-${i}`" class="col-12 col-xl-3 col-md-4 full-height">
+          <div v-for="i in 12" :key="`skel-${i}`" class="col-12 col-xl-3 col-md-4">
             <q-card>
               <q-card-section>
                 <q-skeleton type="text" height="32px" />
@@ -187,7 +209,7 @@ export default {
       isReady: false,
       isFilterVisible: false,
       sortParam: 'desc',
-      orderKey: 'cardId',
+      orderKey: 'situationId',
       paletteMap: {
         happy: 'orange-8',
         cool: 'indigo-6',
@@ -215,7 +237,7 @@ export default {
     },
     filterInUse () {
       return this.selectCharacters.length || this.selectSkills.length || this.selectRarity.length ||
-        this.selectAttrs.length || this.sortParam !== 'desc' || this.orderKey !== 'cardId'
+        this.selectAttrs.length || this.sortParam !== 'desc' || this.orderKey !== 'situationId'
     }
   },
   methods: {
@@ -233,7 +255,7 @@ export default {
       this.selectRarity = this.$q.localStorage.getItem(`cardfilter.${server}`).rarity || []
       this.selectAttrs = this.$q.localStorage.getItem(`cardfilter.${server}`).attrs || []
       this.sortParam = this.$q.localStorage.getItem(`cardfilter.${server}`).sort || 'desc'
-      this.orderKey = this.$q.localStorage.getItem(`cardfilter.${server}`).orderKey || 'cardId'
+      this.orderKey = this.$q.localStorage.getItem(`cardfilter.${server}`).orderKey || 'situationId'
       await this.doFilter(server)
       await this.getBandCharaList(server)
       await this.getSkillList(server)
@@ -255,9 +277,9 @@ export default {
       }
       this.$refs[ref][0].className += ' show-full'
     },
-    handleMouseOut (cardId) {
-      this.$refs[`splitL${cardId}`][0].className = 'two-img-split full-height gt-md'
-      this.$refs[`splitR${cardId}`][0].className = 'two-img-split full-height gt-md'
+    handleMouseOut (situationId) {
+      this.$refs[`splitL${situationId}`][0].className = 'two-img-split full-height gt-md'
+      this.$refs[`splitR${situationId}`][0].className = 'two-img-split full-height gt-md'
     },
     capitalizeFirstLetter (str) {
       return str.split(' ')
@@ -316,21 +338,21 @@ export default {
       this.selectRarity = []
       this.selectAttrs = []
       this.sortParam = 'desc'
-      this.orderKey = 'cardId'
+      this.orderKey = 'situationId'
     }
-    // getCardImg (cardId, cardRes, type) {
-    //   if (this.$specialCardList[this.server].indexOf(cardId) !== -1) {
-    //     return `/assets-${this.server}/characters/resourceset/${cardRes}_card_${type}.png`
+    // getCardImg (situationId, resourceSetName, type) {
+    //   if (this.$specialCardList[this.server].indexOf(situationId) !== -1) {
+    //     return `/assets/${this.server}/characters/resourceset/${resourceSetName}_card_${type}.webp`
     //   }
-    //   return `/assets/characters/resourceset/${cardRes}_card_${type}.png`
+    //   return `/assets/characters/resourceset/${resourceSetName}_card_${type}.webp`
     // },
     // getCardThumb (card, type) {
-    //   let groupId = Math.trunc(card.cardId / 50).toString()
+    //   let groupId = Math.trunc(card.situationId / 50).toString()
     //   groupId = `${'0'.repeat(5 - groupId.length)}${groupId}`
-    //   if (this.$specialCardList[this.server].indexOf(card.cardId) !== -1) {
-    //     return `/assets-${this.server}/thumb/chara/card${groupId}_${card.cardRes}_${type}.png`
+    //   if (this.$specialCardList[this.server].indexOf(card.situationId) !== -1) {
+    //     return `/assets/${this.server}/thumb/chara/card${groupId}_${card.resourceSetName}_${type}.webp`
     //   }
-    //   return `/assets/thumb/chara/card${groupId}_${card.cardRes}_${type}.png`
+    //   return `/assets/thumb/chara/card${groupId}_${card.resourceSetName}_${type}.webp`
     // }
   },
   beforeRouteUpdate (to, from, next) {

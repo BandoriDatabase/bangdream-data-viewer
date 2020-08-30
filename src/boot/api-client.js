@@ -8,12 +8,16 @@ export default ({ app, router, Vue }) => {
       return Vue.http.get(`/api/v1/${server}/event`)
         .then(res => res.json())
     },
+    getEventId (server) {
+      return Vue.http.get(`/api/v2/${server}/event/currid`)
+        .then(res => res.json())
+    },
     getCardById (id, server) {
       return Vue.http.get(`/api/v1/${server}/card/${id}`)
         .then(res => res.json())
     },
     getSkillByCardId (id, server) {
-      return Vue.http.get(`/api/v1/${server}/skill/cardId/${id}`)
+      return Vue.http.get(`/api/v2/${server}/skill/bycard/${id}`)
         .then(res => res.json())
     },
     getCard (params, server) {
@@ -56,15 +60,15 @@ export default ({ app, router, Vue }) => {
       return Vue.http.get(`/api/v1/${server}/version/res`)
     },
     getSkill (server) {
-      return Vue.http.get(`/api/v1/${server}/skill`)
+      return Vue.http.get(`/api/v2/${server}/skill`)
         .then(res => res.json())
     },
     getSkillDetail (id, server) {
-      return Vue.http.get(`/api/v1/${server}/skill/${id}`)
+      return Vue.http.get(`/api/v2/${server}/skill/${id}`)
         .then(res => res.json())
     },
     getCardsBySkillId (id, server) {
-      return Vue.http.get(`/api/v1/${server}/skill/cards/${id}`)
+      return Vue.http.get(`/api/v2/${server}/skill/${id}/cards`)
         .then(res => res.json())
     },
     getSingleFrameCartoon (server) {
@@ -116,7 +120,7 @@ export default ({ app, router, Vue }) => {
         .then(res => res.json())
     },
     getTitles (server) {
-      return Vue.http.get(`/assets-${server}/title/`).then(res => res.json())
+      return Vue.http.get(`/assets/${server}/title/`).then(res => res.json())
     }
   }
 }

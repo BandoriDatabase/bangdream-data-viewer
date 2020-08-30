@@ -5,13 +5,17 @@ import VueAnalytics from 'vue-analytics'
 
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
+import VueOffline from 'vue-offline'
+import { WebpMachine } from 'webp-hero'
+
+import { servers } from '../constants'
 
 // leave the export, even if you don't use it
 export default ({ app, router, Vue }) => {
   // something to do
   Vue.use(VueResource)
   Vue.use(VueLazyload, {
-    loading: 'statics/loading.gif',
+    loading: 'loading.gif',
     lazyComponent: true,
     observer: true
   })
@@ -26,8 +30,9 @@ export default ({ app, router, Vue }) => {
   }
 
   Vue.use(Viewer)
+  Vue.use(VueOffline)
 
-  Vue.serverList = Vue.prototype.$servers = ['jp', 'tw', 'kr', 'en', 'cn']
+  Vue.serverList = Vue.prototype.$servers = servers
 
   Vue.specialCardList = Vue.prototype.$specialCardList = {
     jp: [],
@@ -36,4 +41,7 @@ export default ({ app, router, Vue }) => {
     en: [],
     cn: []
   }
+
+  const webpMachine = new WebpMachine()
+  webpMachine.polyfillDocument()
 }

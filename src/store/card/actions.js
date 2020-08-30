@@ -10,10 +10,10 @@ export const getCardList = async ({ commit, state }, { params, server }) => {
   return cards
 }
 
-export const getCardById = async ({ commit, state }, { cardId, server }) => {
-  if (state.cardMap[server][cardId]) return state.cardMap[server][cardId]
-  const card = await Vue.apiClient.getCardById(cardId, server)
-  commit('ADD_CARD_MAP_ENTRY', { id: cardId, value: card, server })
+export const getCardById = async ({ commit, state }, { situationId, server }) => {
+  if (state.cardMap[server][situationId]) return state.cardMap[server][situationId]
+  const card = await Vue.apiClient.getCardById(situationId, server)
+  commit('ADD_CARD_MAP_ENTRY', { id: situationId, value: card, server })
   return card
 }
 
@@ -24,21 +24,14 @@ export const getSkillList = async ({ commit, state }, server) => {
   return skills
 }
 
-export const getSkillById = async ({ commit, state }, { cardId, server }) => {
-  if (state.skillMap[server][cardId]) return state.skillMap[server][cardId]
-  const skill = await Vue.apiClient.getSkillByCardId(cardId, server)
-  commit('ADD_SKILL_MAP_ENTRY', { id: cardId, value: skill, server })
+export const getSkillById = async ({ commit, state }, { situationId, server }) => {
+  if (state.skillMap[server][situationId]) return state.skillMap[server][situationId]
+  const skill = await Vue.apiClient.getSkillByCardId(situationId, server)
+  commit('ADD_SKILL_MAP_ENTRY', { id: situationId, value: skill, server })
 }
 
-export const getBatchCards = async ({ commit, state }, { cardIds, server }) => {
-  const reqCardIds = cardIds.filter(id => !state.cardMap[server][id])
+export const getBatchCards = async ({ commit, state }, { situationIds, server }) => {
+  const reqCardIds = situationIds.filter(id => !state.cardMap[server][id])
   const resCards = await Vue.apiClient.getCards(server, reqCardIds)
   commit('ADD_MULTI_CARD_MAP', { cardMap: resCards, server })
-}
-
-export const initState = {
-  root: true,
-  handler ({ commit }, servers) {
-    commit('INIT_STATE_DATA', servers)
-  }
 }

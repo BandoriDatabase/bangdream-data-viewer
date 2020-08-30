@@ -6,7 +6,7 @@
     <div class="row q-col-gutter-sm" v-if="isReady">
       <div class="col-xl-2 col-lg-3 col-md-4 col-4" v-for="(singleStamp, idx) in stampList[server]" :key="idx">
         <q-card>
-          <q-img :src="`/assets-${server}/stamp/01_rip/${singleStamp.imageName}.png`"></q-img>
+          <q-img :src="`/assets/${server}/stamp/01_rip/${singleStamp.imageName}.webp`"></q-img>
         </q-card>
       </div>
     </div>

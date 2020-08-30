@@ -2,7 +2,7 @@
   <q-dialog v-model="isOpen" @hide="stopMultiPickupSlideShow">
     <q-card class="q-ma-none" v-if="gacha" style="width: 100%; max-width: 700px;">
       <q-img v-if="!multiPickupImg"
-        v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_rip/pickup${gacha.gachaId === 106 ? '_kasumi' : ''}.png`"
+        v-lazy:background-image="`/assets/${server}/gacha/screen/${gacha.resourceName}_rip/pickup${gacha.gachaId === 106 ? '_kasumi' : ''}.webp`"
         alt="" class="gacha-banner">
         <div class="absolute-bottom text-subtitle2">
           <p class="text-h6">{{gacha.gachaName}}
@@ -14,7 +14,7 @@
       </q-img>
       <div v-if="multiPickupImg" class="multiPickup">
         <q-img :class="{active: isActive}"
-          v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_rip/pickup1.png`"
+          v-lazy:background-image="`/assets/${server}/gacha/screen/${gacha.resourceName}_rip/pickup1.webp`"
           class="gacha-banner">
           <div class="absolute-bottom text-subtitle2">
             <p class="text-h6">{{gacha.gachaName}}
@@ -25,7 +25,7 @@
           </div>
         </q-img>
         <q-img :class="{active: !isActive}"
-          v-lazy:background-image="`/assets-${server}/gacha/screen/${gacha.resourceName}_rip/pickup2.png`"
+          v-lazy:background-image="`/assets/${server}/gacha/screen/${gacha.resourceName}_rip/pickup2.webp`"
           class="gacha-banner">
           <div class="absolute-bottom text-subtitle2">
             <p class="text-h6">{{gacha.gachaName}}
@@ -43,13 +43,13 @@
         <h6 v-if="gacha.information && gacha.information.newMemberInfo">{{$t('gacha.new-members')}}</h6>
         <p v-if="gacha.information && gacha.information.newMemberInfo" v-html="gacha.information.newMemberInfo.replace(/\n/g, '<br>')"></p>
         <h6>{{$t('gacha.rates')}}</h6>
-        <p v-for="(rate, idx) in gacha.rates" :key="idx * 10000" v-if="rate.rate">
-          {{'\u2605'.repeat(Number(rate.rarityIndex))}} {{rate.rate}}%
-        </p>
+        <div v-for="(rate, idx) in gacha.rates" :key="idx * 10000">
+          <p v-if="rate.rate">{{'\u2605'.repeat(Number(rate.rarityIndex))}} {{rate.rate}}%</p>
+        </div>
         <h6>{{$t('gacha.pickup')}}</h6>
-        <div class="center" v-for="gc in gacha.details.filter(gc => gc.pickup)" :key="gc.situationId" style="display: inline-block; margin: 3px 3px;" v-if="isPickupReady">
-          <card-thumb :cardId="Number(gc.situationId)" :server="server" @click="isOpen = false"></card-thumb>
-          <q-tooltip v-show="gc.weight != 1">Rate: {{Number(gc.weight)/10000}}%</q-tooltip>
+        <div class="center" v-for="gc in gacha.details.filter(gc => gc.pickup)" :key="gc.situationId" style="display: inline-block; margin: 3px 3px;">
+          <card-thumb :situationId="Number(gc.situationId)" :server="server" @click="isOpen = false" v-if="isPickupReady"></card-thumb>
+          <q-tooltip v-show="gc.weight != 1" v-if="isPickupReady">Rate: {{Number(gc.weight)/10000}}%</q-tooltip>
         </div>
         <div v-if="!isPickupReady">
           <q-spinner color="pink" size="48px"></q-spinner>
@@ -57,9 +57,9 @@
         <h6>{{$t('gacha.normal')}}</h6>
         <q-btn class="center" color="pink-6" :label="$t('live2d.show') + ' ' + $t('gacha.normal')" @click="showNormalCards" v-show="!isShowNormalCards"></q-btn>
         <div v-if="isShowNormalCards">
-          <div class="center" v-for="gc in gacha.details.filter(gc => !gc.pickup)" :key="gc.situationId" style="display: inline-block; margin: 3px 3px;" v-if="isNormalReady">
-            <card-thumb :card="cardMap[server][gc.situationId]" :server="server" @click="isOpen = false"></card-thumb>
-            <q-tooltip v-show="gc.weight != 1">Rate: {{Number(gc.weight)/10000}}%</q-tooltip>
+          <div class="center" v-for="gc in gacha.details.filter(gc => !gc.pickup)" :key="gc.situationId" style="display: inline-block; margin: 3px 3px;">
+            <card-thumb :card="cardMap[server][gc.situationId]" :server="server" @click="isOpen = false" v-if="isNormalReady"></card-thumb>
+            <q-tooltip v-show="gc.weight != 1" v-if="isNormalReady">Rate: {{Number(gc.weight)/10000}}%</q-tooltip>
           </div>
           <div v-if="!isNormalReady">
             <q-spinner color="pink" size="48px"></q-spinner>
@@ -118,7 +118,7 @@ export default {
       this.isShowNormalCards = false
       this.getBatchCards({
         server,
-        cardIds: data.details.filter(gc => gc.pickup).map(gc => gc.situationId)
+        situationIds: data.details.filter(gc => gc.pickup).map(gc => gc.situationId)
       }).then(() => {
         this.isPickupReady = true
       })
@@ -127,7 +127,7 @@ export default {
       this.isShowNormalCards = true
       this.getBatchCards({
         server: this.server,
-        cardIds: this.gacha.details.filter(gc => !gc.pickup).map(gc => gc.situationId)
+        situationIds: this.gacha.details.filter(gc => !gc.pickup).map(gc => gc.situationId)
       }).then(() => {
         this.isNormalReady = true
       })
