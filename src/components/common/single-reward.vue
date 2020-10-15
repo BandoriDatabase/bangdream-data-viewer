@@ -1,17 +1,17 @@
 <template>
   <div class="text-center" v-if="isReady">
-    <q-img contain v-if="data.rewardType === 'practice_ticket' && data.rewardId <=4" class="reward-img"
-    :src="`/assets/thumb/common_rip/practiceTicket${data.rewardId}.webp`"></q-img>
-    <q-img contain v-else-if="data.rewardType === 'practice_ticket'" class="reward-img"
-    :src="`/assets/thumb/common_rip/skillticket_${data.rewardId}.webp`"></q-img>
-    <q-img contain v-else-if="data.rewardType === 'item'" class="reward-img"
-    :src="`/assets/thumb/material_rip/material${String(data.rewardId).padStart(3, '0')}.webp`"></q-img>
-    <q-img contain v-else-if="data.rewardType === 'stamp'" class="reward-img"
-    :src="`/assets/${server}/stamp/01_rip/${stampMap[server][data.rewardId].imageName}.webp`"></q-img>
+    <my-q-img contain v-if="data.rewardType === 'practice_ticket' && data.rewardId <=4" class="reward-img"
+    :src="`/assets/jp/thumb/common_rip/practiceTicket${data.rewardId}.webp`" />
+    <my-q-img contain v-else-if="data.rewardType === 'practice_ticket'" class="reward-img"
+    :src="`/assets/jp/thumb/common_rip/skillticket_${data.rewardId}.webp`" />
+    <my-q-img contain v-else-if="data.rewardType === 'item'" class="reward-img"
+    :src="`/assets/jp/thumb/material_rip/material${String(data.rewardId).padStart(3, '0')}.webp`" />
+    <my-q-img contain v-else-if="data.rewardType === 'stamp'" class="reward-img"
+    :src="`/assets/${server}/stamp/01_rip/${stampMap[server][data.rewardId].imageName}.webp`" />
     <card-thumb v-else-if="data.rewardType === 'situation'" mini
     :situationId="Number(data.rewardId)" :server="server"></card-thumb>
-    <q-img contain v-else class="reward-img"
-    :src="`/assets/thumb/common_rip/${data.rewardType}.webp`"></q-img>
+    <my-q-img contain v-else class="reward-img"
+    :src="`/assets/jp/thumb/common_rip/${data.rewardType}.webp`" />
     <p class="text-subtitle2 q-mb-xs">x{{data.rewardQuantity}}</p>
   </div>
   <div v-else class="reward-img">

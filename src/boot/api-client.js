@@ -36,8 +36,8 @@ export default ({ app, router, Vue }) => {
       return Vue.http.get(`/api/v1/${server}/chara/${id}`)
         .then(res => res.json())
     },
-    getStamp (server) {
-      return Vue.http.get(`/api/v1/${server}/stamp`)
+    getStamp (server, params) {
+      return Vue.http.get(`/api/v2/${server}/stamp`, { params })
         .then(res => res.json())
     },
     getStampById (id, server) {
@@ -71,8 +71,12 @@ export default ({ app, router, Vue }) => {
       return Vue.http.get(`/api/v2/${server}/skill/${id}/cards`)
         .then(res => res.json())
     },
-    getSingleFrameCartoon (server) {
-      return Vue.http.get(`/api/v1/${server}/sfc`)
+    getSingleFrameCartoon (server, params) {
+      return Vue.http.get(`/api/v2/${server}/sfc`, { params })
+        .then(res => res.json())
+    },
+    getFourFrameCartoon (server, params) {
+      return Vue.http.get(`/api/v2/${server}/ffc`, { params })
         .then(res => res.json())
     },
     getEventBadgeById (id, server) {

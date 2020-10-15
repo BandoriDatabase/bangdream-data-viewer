@@ -61,14 +61,14 @@
       </q-dialog>
       <q-infinite-scroll ref="cardScroll" v-if="isReady" @load="loadMore">
         <div class="row q-col-gutter-md">
-          <div v-for="card in cardList" :key="`card-${card.situationId}`" class="col-12 col-xl-3 col-md-4">
+          <div v-for="card in cardList" :key="`card-${card.situationId}`" class="col-12 col-md-6">
             <q-card class="full-height">
               <q-card-section class="q-pb-sm">
                 <div class="text-center">
                   <p class="text-h5 q-my-none" :class="`text-${paletteMap[card.attribute]}`">{{card.prefix}}</p>
                   <div class="row items-center justify-center">
                     <img
-                      :src="`chara_icon_${bandCharaList[server][Number(card.characterId) - 1].characterId}.png`"
+                      :src="`chara/chara_icon_${bandCharaList[server][Number(card.characterId) - 1].characterId}.png`"
                       style="width: 36px; height: 36px"
                     >
                     <p class="text-subtitle1 q-my-none col-4">{{bandCharaList[server][Number(card.characterId) - 1].characterName}}</p>
@@ -89,8 +89,8 @@
               </q-card-section>
               <q-separator />
               <q-card-actions align="evenly">
-                <q-btn class="text-primary" flat icon="more_horiz">Detail</q-btn>
-                <q-btn class="text-primary" flat icon="account_box">Character</q-btn>
+                <!-- <q-btn class="text-primary" flat icon="more_horiz">Detail</q-btn> -->
+                <q-btn class="text-primary" flat icon="account_box">Profile</q-btn>
                 <q-btn class="text-primary" flat icon="record_voice_over">Live 2D</q-btn>
               </q-card-actions>
               <!-- <q-card-actions align="evenly">
@@ -102,7 +102,7 @@
         </div>
         <template v-slot:loading>
           <div v-if="!infiniteLoading" class="row q-col-gutter-md">
-            <div v-for="i in 1" :key="`skel-${i}`" class="col-12 col-xl-3 col-md-4">
+            <div v-for="i in 1" :key="`skel-${i}`" class="col-12 col-md-6">
               <q-card>
                 <q-card-section>
                   <q-skeleton type="text" height="32px" />
@@ -118,7 +118,7 @@
             </div>
           </div>
           <div v-if="infiniteLoading" class="row q-col-gutter-md">
-            <div v-for="i in 4" :key="`skel-${i}`" class="col-12 col-xl-3 col-md-4">
+            <div v-for="i in 4" :key="`skel-${i}`" class="col-12 col-md-6">
               <q-card>
                 <q-card-section>
                   <q-skeleton type="text" height="32px" />
@@ -137,7 +137,7 @@
       </q-infinite-scroll>
       <div v-if="!isReady">
         <div class="row q-col-gutter-md">
-          <div v-for="i in 12" :key="`skel-${i}`" class="col-12 col-xl-3 col-md-4">
+          <div v-for="i in 12" :key="`skel-${i}`" class="col-12 col-md-6">
             <q-card>
               <q-card-section>
                 <q-skeleton type="text" height="32px" />
@@ -363,149 +363,165 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.two-img-split
-  width: 50%
-  height: 100%
-  float: left
-  background-size: auto 100%
-  background-repeat: no-repeat
-  transition: width 0.75s
+// .two-img-split
+//   width: 50%
+//   height: 100%
+//   float: left
+//   background-size: auto 100%
+//   background-repeat: no-repeat
+//   transition: width 0.75s
 
-.two-img-split:nth-child(even)
-  background-position: 45%
+// .two-img-split:nth-child(even)
+//   background-position: 45%
 
-.two-img-split:nth-child(odd)
-  background-position: 60%
+// .two-img-split:nth-child(odd)
+//   background-position: 60%
 
-.two-img-split.show-full
-  width: 100%
-  background-size: auto 100%
+// .two-img-split.show-full
+//   width: 100%
+//   background-size: auto 100%
 
-.two-img-split.hide
-  width: 0%
-  background-size: auto 100%
+// .two-img-split.hide
+//   width: 0%
+//   background-size: auto 100%
 
-.one-img-full
-  background-size: auto 100%
-  background-repeat: no-repeat
-  background-position: center
+// .one-img-full
+//   background-size: auto 100%
+//   background-repeat: no-repeat
+//   background-position: center
 
-.two-img-full
-  background-size: 100% auto
-  background-repeat: no-repeat
-  background-position: center
+// .two-img-full
+//   background-size: 100% auto
+//   background-repeat: no-repeat
+//   background-position: center
 
-.card-img-attr-powerful
-  position: absolute
-  top: 2%
-  right: 5%
-  width: 50px
-  height: 50px
-  background url('~assets/icon_powerful.png') no-repeat
-  background-size cover
+// .card-img-attr-powerful
+//   position: absolute
+//   top: 2%
+//   right: 5%
+//   width: 50px
+//   height: 50px
+//   background url('~assets/icon_powerful.png') no-repeat
+//   background-size cover
 
-.card-img-attr-cool
-  position: absolute
-  top: 2%
-  right: 5%
-  width: 50px
-  height: 50px
-  background url('~assets/icon_cool.png') no-repeat
-  background-size cover
+// .card-img-attr-cool
+//   position: absolute
+//   top: 2%
+//   right: 5%
+//   width: 50px
+//   height: 50px
+//   background url('~assets/icon_cool.png') no-repeat
+//   background-size cover
 
-.card-img-attr-happy
-  position: absolute
-  top: 2%
-  right: 5%
-  width: 50px
-  height: 50px
-  background url('~assets/icon_happy.png') no-repeat
-  background-size cover
+// .card-img-attr-happy
+//   position: absolute
+//   top: 2%
+//   right: 5%
+//   width: 50px
+//   height: 50px
+//   background url('~assets/icon_happy.png') no-repeat
+//   background-size cover
 
-.card-img-attr-pure
-  position: absolute
-  top: 2%
-  right: 5%
-  width: 50px
-  height: 50px
-  background url('~assets/icon_pure.png') no-repeat
-  background-size cover
+// .card-img-attr-pure
+//   position: absolute
+//   top: 2%
+//   right: 5%
+//   width: 50px
+//   height: 50px
+//   background url('~assets/icon_pure.png') no-repeat
+//   background-size cover
 
-.card-img-band-1
-  position: absolute
-  top: 2%
-  left: 5%
-  width: 50px
-  height: 50px
-  background: url('~assets/band_icon_1.png') no-repeat
+// .card-img-band-1
+//   position: absolute
+//   top: 2%
+//   left: 5%
+//   width: 50px
+//   height: 50px
+//   background: url('~assets/band_icon_1.png') no-repeat
 
-.card-img-band-2
-  position: absolute
-  top: 2%
-  left: 5%
-  width: 50px
-  height: 50px
-  background: url('~assets/band_icon_2.png') no-repeat
+// .card-img-band-2
+//   position: absolute
+//   top: 2%
+//   left: 5%
+//   width: 50px
+//   height: 50px
+//   background: url('~assets/band_icon_2.png') no-repeat
 
-.card-img-band-3
-  position: absolute
-  top: 2%
-  left: 5%
-  width: 50px
-  height: 50px
-  background: url('~assets/band_icon_3.png') no-repeat
+// .card-img-band-3
+//   position: absolute
+//   top: 2%
+//   left: 5%
+//   width: 50px
+//   height: 50px
+//   background: url('~assets/band_icon_3.png') no-repeat
 
-.card-img-band-4
-  position: absolute
-  top: 2%
-  left: 5%
-  width: 50px
-  height: 50px
-  background: url('~assets/band_icon_4.png') no-repeat
+// .card-img-band-4
+//   position: absolute
+//   top: 2%
+//   left: 5%
+//   width: 50px
+//   height: 50px
+//   background: url('~assets/band_icon_4.png') no-repeat
 
-.card-img-band-5
-  position: absolute
-  top: 2%
-  left: 5%
-  width: 50px
-  height: 50px
-  background: url('~assets/band_icon_5.png') no-repeat
+// .card-img-band-5
+//   position: absolute
+//   top: 2%
+//   left: 5%
+//   width: 50px
+//   height: 50px
+//   background: url('~assets/band_icon_5.png') no-repeat
 
-.card-img-rarity-normal-1
-  position absolute
-  bottom 78%
-  right 6.5%
-  width 35px
-  height 35px
-  background url('~assets/star_untrained.png') no-repeat
-  background-size 100% 100%
+// .card-img-band-18
+//   position: absolute
+//   top: 2%
+//   left: 5%
+//   width: 50px
+//   height: 50px
+//   background: url('~assets/band_icon_18.png') no-repeat
 
-.card-img-rarity-normal-2
-  position absolute
-  bottom 71%
-  right 6.5%
-  width 35px
-  height 35px
-  background url('~assets/star_untrained.png') no-repeat
-  background-size 100% 100%
+// .card-img-band-21
+//   position: absolute
+//   top: 2%
+//   left: 5%
+//   width: 50px
+//   height: 50px
+//   background: url('~assets/band_icon_21.png') no-repeat
 
-.card-img-rarity-normal-3
-  position absolute
-  bottom 64%
-  right 6.5%
-  width 35px
-  height 35px
-  background url('~assets/star_untrained.png') no-repeat
-  background-size 100% 100%
+// .card-img-rarity-normal-1
+//   position absolute
+//   bottom 78%
+//   right 6.5%
+//   width 35px
+//   height 35px
+//   background url('~assets/star_untrained.png') no-repeat
+//   background-size 100% 100%
 
-.card-img-rarity-normal-4
-  position absolute
-  bottom 57%
-  right 6.5%
-  width 35px
-  height 35px
-  background url('~assets/star_untrained.png') no-repeat
-  background-size 100% 100%
+// .card-img-rarity-normal-2
+//   position absolute
+//   bottom 71%
+//   right 6.5%
+//   width 35px
+//   height 35px
+//   background url('~assets/star_untrained.png') no-repeat
+//   background-size 100% 100%
+
+// .card-img-rarity-normal-3
+//   position absolute
+//   bottom 64%
+//   right 6.5%
+//   width 35px
+//   height 35px
+//   background url('~assets/star_untrained.png') no-repeat
+//   background-size 100% 100%
+
+// .card-img-rarity-normal-4
+//   position absolute
+//   bottom 57%
+//   right 6.5%
+//   width 35px
+//   height 35px
+//   background url('~assets/star_untrained.png') no-repeat
+//   background-size 100% 100%
 
 p.card-list-param > div
   margin 0 2px

@@ -48,18 +48,21 @@ module.exports = function (ctx) {
       open: true, // opens browser window automatically
       proxy: {
         '/assets': {
-          // target: 'https://res.bandori.ga',
-          target: 'http://localhost:8000',
-          changeOrigin: true
-        },
-        '/live2d': {
-          target: 'http://localhost:8000/assets/live2d/chara',
-          // target: 'https://res.bandori.ga/assets/live2d/chara',
+          target: 'https://res.bandori.top/file/bandori-assets/',
+          // target: 'http://localhost:8000',
           changeOrigin: true,
           pathRewrite: {
-            '^/live2d': ''
+            '^/assets': ''
           }
         },
+        // '/live2d': {
+        //   target: 'http://localhost:8000/assets/live2d/chara',
+        //   // target: 'https://res.bandori.ga/assets/live2d/chara',
+        //   changeOrigin: true,
+        //   pathRewrite: {
+        //     '^/live2d': ''
+        //   }
+        // },
         '/api': {
           // target: 'https://api.bandori.ga',
           target: 'http://localhost:8180',
@@ -135,7 +138,11 @@ module.exports = function (ctx) {
     // animations: 'all' --- includes all animations
     animations: [
       'bounceInUp',
-      'bounceOutUp'
+      'bounceOutUp',
+      'bounceInDown',
+      'bounceOutDown',
+      'bounceInLeft',
+      'bounceOutRight'
     ],
     pwa: {
       start_url: '/',

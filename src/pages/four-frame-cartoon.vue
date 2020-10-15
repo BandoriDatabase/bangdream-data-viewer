@@ -1,32 +1,33 @@
 <template>
   <q-page padding>
     <div style="margin-bottom: 30px;">
-      <span class="text-h3 text-bold">{{$t('left.SFC')}}</span>
+      <span class="text-h3 text-bold">{{$t('left.FFC')}}</span>
     </div>
     <div class="q-mb-md">
       {{$t('common.sort.title')}}
       <q-btn-toggle :value="queryParams.sort" @input="onSortChange"
       :options="[{ label: $t('common.sort.asc'), value: 'asc' }, { label: $t('common.sort.desc'), value: 'desc' }]"></q-btn-toggle>
     </div>
-    <viewer v-if="isReady" ref="singleframe" :options="{navbar: false}">
-      <q-infinite-scroll ref="sfcScroll" @load="loadMore">
+    <viewer v-if="isReady" ref="fourframe" :options="{navbar: false}">
+      <q-infinite-scroll ref="ffcScroll" @load="loadMore">
         <div class="row q-col-gutter-sm">
-          <div class="col-md-6 col-12" v-for="(singleFrame, idx) in sfcList[server]" :key="idx">
-            <q-card class="cursor-pointer" @click="$refs.singleframe.$viewer.view(idx)">
+          <div class="col-md-6 col-12" v-for="(fourFrame, idx) in ffcList[server]" :key="idx">
+            <q-card class="cursor-pointer" @click="$refs.fourframe.$viewer.view(idx)">
               <q-card-section>
-                <img v-show="false" :src="singleFrame.assetAddress" />
-                <my-q-img height="250px" :src="singleFrame.assetAddress">
+                <img v-show="false" :src="fourFrame.assetAddress" />
+                <my-q-img height="250px" :src="fourFrame.assetAddress">
                   <template v-slot:loading>
                     <q-skeleton type="rect" width="250px" height="250px" />
                   </template>
-                  <div class="absolute-bottom text-subtitle2 text-center">{{singleFrame.title}}</div>
+                  <div class="absolute-bottom text-subtitle2 text-center">{{fourFrame.title}}</div>
+                  <!-- <div class="absolute-bottom text-subtitle2 text-center">{{fourFrame.subTitle}}</div> -->
                 </my-q-img>
               </q-card-section>
             </q-card>
           </div>
         </div>
         <template v-slot:loading>
-          <div class="row q-col-gutter-sm q-mt-xs">
+          <div class="row q-col-gutter-md q-mt-xs">
             <div v-for="i in 2" :key="`skel-${i}`" class="col-12 col-md-6">
               <q-card>
                 <q-card-section class="row justify-center">
@@ -58,19 +59,19 @@ export default {
   data () {
     return {
       isReady: false,
-      queryParams: { limit: 12, page: 1, sort: this.$q.localStorage.getItem('sfc.sort') || 'asc' }
+      queryParams: { limit: 12, page: 1, sort: this.$q.localStorage.getItem('ffc.sort') || 'asc' }
     }
   },
   mounted () {
     this.$nextTick(async () => {
-      await this.getSFCList({ server: this.server, params: this.queryParams })
+      await this.getFFCList({ server: this.server, params: this.queryParams })
       this.isReady = true
-      document.title = `${this.$t('left.SFC')} | Bandori Top`
+      document.title = `${this.$t('left.FFC')} | Bandori Top`
     })
   },
   computed: {
-    ...mapState('sfc', [
-      'sfcList'
+    ...mapState('ffc', [
+      'ffcList'
     ]),
     server () {
       return this.$route.params.server
@@ -79,52 +80,43 @@ export default {
   watch: {
     '$route.params.server': function () {
       this.isReady = false
-      this.queryParams = { limit: 12, page: 1, sort: this.$q.localStorage.getItem('sfc.sort') || 'asc' }
+      this.queryParams = { limit: 12, page: 1, sort: this.$q.localStorage.getItem('ffc.sort') || 'asc' }
       this.$nextTick(async () => {
-        await this.getSFCList({ server: this.server, params: this.queryParams })
+        await this.getFFCList({ server: this.server, params: this.queryParams })
         this.isReady = true
-        document.title = `${this.$t('left.SFC')} | Bandori Top`
+        document.title = `${this.$t('left.FFC')} | Bandori Top`
       })
     }
   },
   methods: {
-    ...mapActions('sfc', [
-      'getSFCList',
-      'clearSFCList'
+    ...mapActions('ffc', [
+      'getFFCList',
+      'clearFFCList'
     ]),
     async loadMore (index, done) {
       try {
         // this.infiniteLoading = true
         this.queryParams.page += 1
-        await this.getSFCList({ server: this.server, params: this.queryParams })
+        await this.getFFCList({ server: this.server, params: this.queryParams })
         // this.infiniteLoading = false
       } catch (error) {
         console.log('no more cards', error)
-        this.$refs.sfcScroll.stop()
+        this.$refs.ffcScroll.stop()
       } finally {
         done()
       }
     },
     onSortChange (value) {
-      this.$q.localStorage.set('sfc.sort', value)
-      this.queryParams.page = 1
+      this.$q.localStorage.set('ffc.sort', value)
       this.queryParams.sort = value
-      this.clearSFCList(this.server)
+      this.clearFFCList(this.server)
       this.isReady = false
-      this.getSFCList({ server: this.server, params: this.queryParams }).then(() => { this.isReady = true })
+      this.getFFCList({ server: this.server, params: this.queryParams }).then(() => { this.isReady = true })
     }
   }
 }
 </script>
 
 <style scoped lang="stylus">
-.single-frame-img-title
-  padding 1% 5% 2% 5%
-  background-color rgba(0,0,0,0.5)
-.single-frame-img-title-f
-  font-size 15px
-  width 90%
-  overflow hidden
-  white-space nowrap
-  text-overflow ellipsis
+
 </style>

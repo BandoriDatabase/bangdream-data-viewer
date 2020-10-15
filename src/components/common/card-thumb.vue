@@ -2,9 +2,9 @@
   <lazy-component @show="loadData">
     <div class="card-img-parent" v-if="isReady && !mini" @click="() => {
         $emit('close');
-        $router.push(`/card/${server}/${(card || cardMap[server][situationId]).situationId}/${Number(trained)}`);
+        $router.push(`/card/${server}/${(card || cardMap[server][situationId]).situationId}`);
       }">
-      <q-img class="thumb-table" :src="`/assets/${server}/thumb/chara/card${cardGroup}_rip/${(card || cardMap[server][situationId]).resourceSetName}_${trained ? 'after_training' : 'normal'}.webp`"></q-img>
+      <my-q-img class="thumb-table" :src="`/assets/jp/thumb/chara/card${cardGroup}_rip/${(card || cardMap[server][situationId]).resourceSetName}_${trained ? 'after_training' : 'normal'}.webp`" />
       <div :class="`thumb-frame-${getThumbFrame(Number((card || cardMap[server][situationId]).rarity), (card || cardMap[server][situationId]).attribute)}`"></div>
       <div :class="`thumb-attr-${(card || cardMap[server][situationId]).attribute}`"></div>
       <div :class="`thumb-band-${bandCharaList[server][Number((card || cardMap[server][situationId]).characterId) - 1].bandId}`"></div>
@@ -12,9 +12,9 @@
     </div>
     <div class="card-img-mini-parent" v-else-if="isReady" @click="() => {
         $emit('close');
-        $router.push(`/card/${server}/${(card || cardMap[server][situationId]).situationId}/${Number(trained)}`);
+        $router.push(`/card/${server}/${(card || cardMap[server][situationId]).situationId}`);
       }">
-      <q-img class="thumb-mini-table" :src="`/assets/${server}/thumb/chara/card${cardGroup}_rip/${(card || cardMap[server][situationId]).resourceSetName}_${trained ? 'after_training' : 'normal'}.webp`"></q-img>
+      <my-q-img class="thumb-mini-table" :src="`/assets/jp/thumb/chara/card${cardGroup}_rip/${(card || cardMap[server][situationId]).resourceSetName}_${trained ? 'after_training' : 'normal'}.webp`" />
       <div :class="`thumb-mini-frame-${getThumbFrame(Number((card || cardMap[server][situationId]).rarity), (card || cardMap[server][situationId]).attribute)}`"></div>
       <div :class="`thumb-mini-attr-${(card || cardMap[server][situationId]).attribute}`"></div>
       <div :class="`thumb-mini-band-${bandCharaList[server][Number((card || cardMap[server][situationId]).characterId) - 1].bandId}`"></div>
@@ -242,7 +242,7 @@ for num in 1 2 3 4
     background url('~assets/star_after_training.png') no-repeat
     background-size 100% 100%
 
-for num in 1 2 3 4 5
+for num in 1 2 3 4 5 18 21
   .thumb-band-{num}
     position absolute
     top 3%

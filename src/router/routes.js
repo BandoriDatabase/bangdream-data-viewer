@@ -6,9 +6,10 @@ export default [
     children: [
       { name: 'index', path: '', component: () => import('pages/index') },
       { name: 'cardList', path: 'card/overview/:server(\\S{2})', component: () => import('pages/card-list') },
-      { name: 'cardDetail', path: 'card/:server(\\S{2})/:situationId(\\d+)/:isTrained(\\d{1})', component: () => import('pages/card-detail') },
+      { name: 'cardDetail', path: 'card/:server(\\S{2})/:situationId(\\d+)', component: () => import('pages/card-detail') },
       { name: 'scenario', path: 'scenario/:server(\\S{2})/:scenarioType/:scenarioName', component: () => import('pages/scenario') },
       { name: 'sfc', path: 'sfcs/:server(\\S{2})', component: () => import('pages/single-frame-cartoon') },
+      { name: 'ffc', path: 'ffcs/:server(\\S{2})', component: () => import('pages/four-frame-cartoon') },
       { name: 'musicList', path: 'music/:server(\\S{2})', component: () => import('pages/music-list') },
       { name: 'musicDetail', path: 'music/:server(\\S{2})/:musicId(\\d+)', component: () => import('pages/music-detail') },
       { name: 'musicBeatmap', path: 'music/:server(\\S{2})/:musicId(\\d+)/beatmap', component: () => import('pages/music-beatmap') },

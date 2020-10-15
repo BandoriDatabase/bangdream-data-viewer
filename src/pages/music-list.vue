@@ -20,6 +20,8 @@
               <q-radio color="pink" v-model="selectTag" val="normal" :label="$t('common.original')" />
               <q-radio color="pink" v-model="selectTag" val="all" :label="$t('common.all')" />
             </div>
+            <q-toggle v-model="selectMV" :label="$t('music.has-mv')"></q-toggle>
+            <q-toggle v-model="selectSP" :label="$t('music.has-sp')"></q-toggle>
           </div>
           <p class="q-mt-md">{{$t('common.sort.title')}}</p>
           <div>
@@ -45,14 +47,14 @@
     </q-dialog>
     <q-infinite-scroll ref="musicScroll" v-if="isReady" @load="loadMore">
       <div class="row">
-        <div class="col-xl-4 col-md-6 col-sm-12 col-12" v-for="music in musicList" :key="`music-${music.musicId}`">
-          <div class="row music">
-            <q-card class="music-cover col-xl-6 col-md-6 col-sm-4 col-4" @click.native="$router.push(`/music/${server}/${music.musicId}`)" v-lazy:background-image="music.jacket">
+        <div class="col-md-6 col-12" v-for="music in musicList" :key="`music-${music.musicId}`">
+          <div class="row music cursor-pointer" @click="$router.push(`/music/${server}/${music.musicId}`)">
+            <q-card class="music-cover col-md-6 col-4" v-lazy:background-image="music.jacket">
+              <q-badge v-if="music.hasMV" align="top" style="font-size: 16px;">{{$t('music.has-mv')}}</q-badge>
             </q-card>
-            <div class="music-desc col-xl-6 col-md-6 col-sm-8 col-8">
-              <p class="music-title">{{music.title}}</p>
+            <div class="music-desc col-md-6 col-8">
+              <p class="music-title">{{music.musicTitle}}</p>
               <p class="music-band-name">{{music.bandName}}</p>
-              <!-- <p class="music-publish">{{(new Date(Number(music.publishedAt))).toLocaleString()}}</p> -->
               <div class="music-levels">
                 <span class="music-level music-level-easy">{{music.difficulty[0]}}</span>
                 <span class="music-level music-level-normal">{{music.difficulty[3]}}</span>
@@ -66,13 +68,13 @@
       </div>
       <template v-slot:loading>
         <div class="row">
-          <div class="col-xl-4 col-md-6 col-sm-12 col-12" v-for="i in 3" :key="`skel-${i}`">
+          <div class="col-md-6 col-12" v-for="i in 4" :key="`skel-${i}`">
             <div class="row music">
-              <q-card class="col-xl-6 col-md-6 col-sm-4 col-4">
+              <q-card class="col-md-6 col-4">
                 <q-skeleton class="lt-sm" width="130px" height="130px" />
                 <q-skeleton class="gt-md" width="260px" height="260px" />
               </q-card>
-              <div class="music-desc col-xl-6 col-md-6 col-sm-8 col-8">
+              <div class="music-desc col-md-6 col-8">
                 <q-skeleton type="text" height="32px" />
                 <q-skeleton type="text" height="24px" />
                 <!-- <p class="music-publish">{{(new Date(Number(music.publishedAt))).toLocaleString()}}</p> -->
@@ -90,13 +92,13 @@
     </q-infinite-scroll>
     <div v-if="!isReady">
       <div class="row">
-        <div class="col-xl-4 col-md-6 col-sm-12 col-12" v-for="i in 12" :key="`skel-${i}`">
+        <div class="col-md-6 col-12" v-for="i in 12" :key="`skel-${i}`">
           <div class="row music">
-            <q-card class="col-xl-6 col-md-6 col-sm-4 col-4">
+            <q-card class="col-md-6 col-4">
               <q-skeleton class="lt-sm" width="130px" height="130px" />
               <q-skeleton class="gt-md" width="260px" height="260px" />
             </q-card>
-            <div class="music-desc col-xl-6 col-md-6 col-sm-8 col-8">
+            <div class="music-desc col-md-6 col-8">
               <q-skeleton type="text" height="32px" />
               <q-skeleton type="text" height="24px" />
               <!-- <p class="music-publish">{{(new Date(Number(music.publishedAt))).toLocaleString()}}</p> -->
@@ -129,11 +131,14 @@ export default {
       queryParams: { limit: 12, page: 1 },
       orderKey: 'publishedAt',
       sortParam: 'desc',
-      selectTag: 'all'
+      selectTag: 'all',
+      selectMV: false,
+      selectSP: false
     }
   },
   mounted () {
     this.updateData(this.server)
+    document.title = `${this.$t('left.music')} | Bandori Top`
   },
   computed: {
     ...mapState('band', [
@@ -143,7 +148,8 @@ export default {
       return this.$route.params.server
     },
     filterInUse () {
-      return this.selectBandId.length || this.sortParam !== 'desc' || this.orderKey !== 'publishedAt' || this.selectTag !== 'all'
+      return this.selectBandId.length || this.sortParam !== 'desc' || this.orderKey !== 'publishedAt' ||
+      this.selectTag !== 'all' || this.selectMV || this.selectSP
     }
   },
   methods: {
@@ -157,6 +163,8 @@ export default {
       this.sortParam = this.$q.localStorage.getItem(`musicfilter.${server}`).sort || 'desc'
       this.orderKey = this.$q.localStorage.getItem(`musicfilter.${server}`).orderKey || 'publishedAt'
       this.selectTag = this.$q.localStorage.getItem(`musicfilter.${server}`).tag || 'all'
+      this.selectMV = this.$q.localStorage.getItem(`musicfilter.${server}`).mv || false
+      this.selectSP = this.$q.localStorage.getItem(`musicfilter.${server}`).sp || false
       await this.doFilter(server)
       await this.getBandList(server)
       this.bandOption = this.bandList[server].map(elem => ({
@@ -177,7 +185,9 @@ export default {
         bandId: this.selectBandId,
         sort: this.sortParam,
         orderKey: this.orderKey,
-        tag: this.selectTag
+        tag: this.selectTag,
+        mv: this.selectMV,
+        sp: this.selectSP
       }
       if (this.$refs.musicScroll) this.$refs.musicScroll.reset()
       try {
@@ -192,7 +202,9 @@ export default {
         bandId: this.selectBandId,
         sort: this.sortParam,
         orderKey: this.orderKey,
-        tag: this.selectTag
+        tag: this.selectTag,
+        mv: this.selectMV,
+        sp: this.selectSP
       })
     },
     resetFilter () {
@@ -200,6 +212,8 @@ export default {
       this.sortParam = 'desc'
       this.orderKey = 'publishedAt'
       this.selectTag = 'all'
+      this.selectMV = false
+      this.selectSP = false
     },
     async loadMore (index, done) {
       try {
@@ -232,17 +246,18 @@ export default {
 .music-cover
   position relative
   padding-top 50%
-  cursor pointer
+  // cursor pointer
+  min-height 120px
   background-size contain
   background-repeat no-repeat
   background-size 100% 100%
 
 h3
-  font-family -apple-system, PingFang, Helvetica
+  // font-family -apple-system, PingFang, Helvetica
   font-weight bold
 
 .music-desc p, .music-levels
-  font-family -apple-system, PingFang, Helvetica
+  // font-family -apple-system, PingFang, Helvetica
   margin-left 15px
   padding-right 15px
 

@@ -72,7 +72,8 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <q-ajax-bar color="white"></q-ajax-bar>
+      <router-view style="max-width: 718px; margin: auto;" />
       <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
         <q-btn fab-mini icon="keyboard_arrow_up" color="pink" />
       </q-page-scroller>
@@ -125,6 +126,11 @@ export default {
           icon: 'photo_library'
         },
         {
+          name: 'ffc',
+          i18n: 'left.FFC',
+          icon: 'burst_mode'
+        },
+        {
           name: 'titleList',
           i18n: 'left.gametitle',
           icon: 'aspect_ratio'
@@ -136,6 +142,7 @@ export default {
         },
         {
           name: 'live2d',
+          url: '/live2d.html',
           i18n: 'left.Live2d',
           icon: 'record_voice_over'
         },

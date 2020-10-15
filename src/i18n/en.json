@@ -6,7 +6,8 @@
     "table":"Table",
     "gallery":"Gallery",
     "music":"Musics",
-    "SFC":"Loading Cartoons",
+    "SFC":"Single-frame Comic",
+    "FFC":"Four-frame Comic",
     "about":"About",
     "secTitle":"Building info",
     "current-event":"Current Event",
@@ -33,7 +34,7 @@
   "event-srv":"Event {srv}",
   "fetch-data":"Fetching {type} Data...",
   "not-started":"Not started until",
-  "event-ends":"Event ended, next event expected starting at",
+  "event-ends":"Event ended, next event may start at",
   "common":{
     "event":"Event",
     "gacha":"Gacha",
@@ -76,7 +77,8 @@
     "filter-applied":"Applied",
     "settings":"Settings",
     "reset-filter":"Reset",
-    "refresh":"Refresh"
+    "refresh":"Refresh",
+    "basic-info": "Basic Info"
   },
   "gacha":{
     "list-title":"{srv} Scouts List",
@@ -132,7 +134,14 @@
     "not-exist":"This music does not exist: Server {server} MusicID {musicId}",
     "combo-reward":"Combo Reward",
     "full-combo-reward":"Full Combo Reward",
-    "score-rank-reward":"Score Rank Reward"
+    "score-rank-reward":"Score Rank Reward",
+    "has-mv": "MV",
+    "has-sp": "Special Level",
+    "startat": "Release Date",
+    "type": {
+      "name": "Type",
+      "normal": "Original"
+    }
   },
   "scenario":{
     "voice-text":"Voice text",
@@ -171,6 +180,8 @@
     "reward-card":"Reward cards",
     "reward-stamp":"Reward stamp",
     "bonus-attr-card":"Bonus attribute and cards",
+    "bonus-attr": "Bonus attribute",
+    "bonus-chara": "Bonus characters",
     "badge":"Event badge",
     "degrees":"Degrees preview",
     "musics":"Event musics",

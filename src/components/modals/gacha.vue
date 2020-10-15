@@ -1,7 +1,7 @@
 <template>
   <q-dialog v-model="isOpen" @hide="stopMultiPickupSlideShow">
     <q-card class="q-ma-none" v-if="gacha" style="width: 100%; max-width: 700px;">
-      <q-img v-if="!multiPickupImg"
+      <my-q-img v-if="!multiPickupImg"
         v-lazy:background-image="`/assets/${server}/gacha/screen/${gacha.resourceName}_rip/pickup${gacha.gachaId === 106 ? '_kasumi' : ''}.webp`"
         alt="" class="gacha-banner">
         <div class="absolute-bottom text-subtitle2">
@@ -11,9 +11,9 @@
           <p slot="subtitle">{{$t('gacha.start-at')}} {{(new Date(Number(gacha.publishedAt))).toLocaleString()}}</p>
           <p slot="subtitle">{{$t('gacha.end-at')}} {{(new Date(Number(gacha.closedAt))).toLocaleString()}}</p>
         </div>
-      </q-img>
+      </my-q-img>
       <div v-if="multiPickupImg" class="multiPickup">
-        <q-img :class="{active: isActive}"
+        <my-q-img :class="{active: isActive}"
           v-lazy:background-image="`/assets/${server}/gacha/screen/${gacha.resourceName}_rip/pickup1.webp`"
           class="gacha-banner">
           <div class="absolute-bottom text-subtitle2">
@@ -23,8 +23,8 @@
             <p slot="subtitle">{{$t('gacha.start-at')}} {{(new Date(Number(gacha.publishedAt))).toLocaleString()}}</p>
             <p slot="subtitle">{{$t('gacha.end-at')}} {{(new Date(Number(gacha.closedAt))).toLocaleString()}}</p>
           </div>
-        </q-img>
-        <q-img :class="{active: !isActive}"
+        </my-q-img>
+        <my-q-img :class="{active: !isActive}"
           v-lazy:background-image="`/assets/${server}/gacha/screen/${gacha.resourceName}_rip/pickup2.webp`"
           class="gacha-banner">
           <div class="absolute-bottom text-subtitle2">
@@ -34,7 +34,7 @@
             <p slot="subtitle">{{$t('gacha.start-at')}} {{(new Date(Number(gacha.publishedAt))).toLocaleString()}}</p>
             <p slot="subtitle">{{$t('gacha.end-at')}} {{(new Date(Number(gacha.closedAt))).toLocaleString()}}</p>
           </div>
-        </q-img>
+        </my-q-img>
       </div>
       <q-card-section style="text-align: center">
         <h6>{{$t('gacha.desc')}}</h6>

@@ -4,7 +4,7 @@
       <q-card-section class="bg-pink text-white">
         <div class="text-subtitle1">{{data.gachaName}}</div>
       </q-card-section>
-      <q-img contain class="gacha-img" :src="`/assets/${server}/gacha/screen/${data.resourceName}_rip/logo.webp`"></q-img>
+      <my-q-img contain class="gacha-img" :src="`/assets/${server}/gacha/screen/${data.resourceName}_rip/logo.webp`" />
       <q-card-section>
         <h5 class="q-my-xs"
             v-if="Number(data.publishedAt) > Date.now()">{{$t('not-started')}}<br>{{(new Date(Number(data.publishedAt))).toLocaleString()}}</h5>

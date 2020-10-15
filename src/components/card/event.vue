@@ -11,14 +11,12 @@
         <div class="row items-center justify-center">
           <div class="col-12 col-sm-6 cursor-pointer event-card-img" @click="$router.push(`/currevent/${server}`), $ga.event('event-detail', 'jump', server)">
             <q-skeleton v-if="showImgSkeleton" width="380px" height="127px" />
-            <!-- <q-img contain v-if="server === 'kr'" @load="showImgSkeleton = false"
-                  :src="`/assets/${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}.webp`"></q-img> -->
-            <q-img contain v-if="server !== 'en'" @load="showImgSkeleton = false"
-                  :src="`/assets/${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.webp`"></q-img>
-            <q-img contain v-else-if="server === 'en' && currentEvent[server].eventId >= 3" @load="showImgSkeleton = false"
-                  :src="`/assets/${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.webp`"></q-img>
-            <q-img contain v-else-if="server === 'en'" @load="showImgSkeleton = false"
-                  :src="`/assets/${server}/homebanner_rip/banner-0${14 + currentEvent[server].eventId * 2}.webp`"></q-img>
+            <my-q-img contain v-if="server !== 'en'" @load="showImgSkeleton = false"
+                  :src="`/assets/${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.webp`" />
+            <my-q-img contain v-else-if="server === 'en' && currentEvent[server].eventId >= 3" @load="showImgSkeleton = false"
+                  :src="`/assets/${server}/homebanner_rip/banner_event${padEventId(currentEvent[server].eventId)}${currentEvent[server].eventId >= 13 ? '' : '_open'}.webp`" />
+            <my-q-img contain v-else-if="server === 'en'" @load="showImgSkeleton = false"
+                  :src="`/assets/${server}/homebanner_rip/banner-0${14 + currentEvent[server].eventId * 2}.webp`" />
           </div>
           <div class="col-3 gt-xs"
                @click="$ga.event('event-card', 'jump', `normal-${server}`)">

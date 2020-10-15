@@ -1,8 +1,9 @@
 <template>
   <q-page padding>
     <!-- <p style="text-align: center;" v-if="!$q.platform.is.desktop">{{$t('mobile.click-expansion-item')}}</p> -->
+    {{supportWebp}}
     <div class="row q-col-gutter-md">
-      <div class="col-12 col-sm-4">
+      <div class="col-12 col-sm-6">
         <q-card class="full-height">
           <q-card-section>Birthday Info</q-card-section>
           <q-separator></q-separator>
@@ -13,7 +14,7 @@
                 <div class="row items-center" v-for="todayInfo in birthdayInfo.today" :key="todayInfo.chara.characterId">
                   <img
                     class="q-mr-md"
-                    :src="`chara_icon_${todayInfo.chara.characterId}.png`"
+                    :src="`chara/chara_icon_${todayInfo.chara.characterId}.png`"
                     style="width: 48px; height: 48px"
                   >
                   <span>{{todayInfo.chara.characterName}}<br>{{todayInfo.birthday.month}}/{{todayInfo.birthday.day}}</span>
@@ -31,7 +32,7 @@
                 <div class="row items-center" v-for="nextInfo in birthdayInfo.next" :key="nextInfo.chara.characterId">
                   <img
                     class="q-mr-md"
-                    :src="`chara_icon_${nextInfo.chara.characterId}.png`"
+                    :src="`chara/chara_icon_${nextInfo.chara.characterId}.png`"
                     style="width: 48px; height: 48px"
                   >
                   <span>{{nextInfo.chara.characterName}}<br>{{nextInfo.birthday.month}}/{{nextInfo.birthday.day}}</span>
@@ -45,7 +46,7 @@
           </q-card-section>
         </q-card>
       </div>
-      <div class="col-12 col-sm-4">
+      <!-- <div class="col-12 col-sm-4">
         <q-card class="full-height">
           <q-card-section>Version Info</q-card-section>
           <q-separator></q-separator>
@@ -59,15 +60,9 @@
               </q-badge>
             </div>
           </q-card-section>
-          <!-- <q-separator></q-separator>
-          <q-card-actions class="col-auto">
-            <q-btn flat @click="openURL('//blog.dnaroma.eu/update-notice-en')">
-              {{$t('left.update-note')}}
-            </q-btn>
-          </q-card-actions> -->
         </q-card>
-      </div>
-      <div class="col-12 col-sm-4">
+      </div> -->
+      <div class="col-12 col-sm-6">
         <q-card class="full-height">
           <q-card-section>Shortcuts</q-card-section>
           <q-separator></q-separator>
@@ -82,7 +77,7 @@
     </div>
 
     <div class="row q-col-gutter-md q-mt-xs">
-      <div v-for="server in servers" :key="server" class="col-md-6 col-12">
+      <div v-for="server in servers" :key="server" class="col-12">
         <event-card :server="server"></event-card>
       </div>
     </div>
@@ -112,6 +107,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import { detectWebpSupport } from 'webp-hero'
 
 import EventCard from 'components/card/event'
 // import GachaCard from 'components/card/gacha'
@@ -130,6 +126,9 @@ export default {
         this.birthdayInfo = res
       })
     // this.getResourceVersion()
+    detectWebpSupport().then(state => {
+      this.supportWebp = state
+    })
   },
   data () {
     return {
@@ -143,7 +142,8 @@ export default {
       isGcahaReady: this.$servers.reduce((sum, curr) => {
         sum[curr] = false
         return sum
-      }, {})
+      }, {}),
+      supportWebp: false
     }
   },
   computed: {
