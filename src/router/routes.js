@@ -7,6 +7,8 @@ export default [
       { name: 'index', path: '', component: () => import('pages/index') },
       { name: 'cardList', path: 'card/overview/:server(\\S{2})', component: () => import('pages/card-list') },
       { name: 'cardDetail', path: 'card/:server(\\S{2})/:situationId(\\d+)', component: () => import('pages/card-detail') },
+      { name: 'charaList', path: 'chara/overview/:server(\\S{2})', component: () => import('pages/chara-list') },
+      { name: 'charaDetail', path: 'chara/:server(\\S{2})/:charaId(\\d+)', component: () => import('pages/chara-detail') },
       { name: 'scenario', path: 'scenario/:server(\\S{2})/:scenarioType/:scenarioName', component: () => import('pages/scenario') },
       { name: 'sfc', path: 'sfcs/:server(\\S{2})', component: () => import('pages/single-frame-cartoon') },
       { name: 'ffc', path: 'ffcs/:server(\\S{2})', component: () => import('pages/four-frame-cartoon') },

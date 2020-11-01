@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 export const getCharaList = async ({ commit, state }, server) => {
   if (state.charaList[server].length) return state.charaList[server]
-  const charas = await Vue.apiClient.getChara(server)
+  const charas = await Vue.apiClient.getChara({}, server)
   commit('SET_CHARA_LIST', { data: charas.data, server })
   return charas.data
 }

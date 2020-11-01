@@ -16,7 +16,12 @@
           <small>{{ appVer }}</small>
         </q-toolbar-title>
 
-        <q-btn flat :label="$t('common.settings')" @click="$refs.settings.open()" icon="settings">
+        <q-btn
+          flat
+          :label="$t('common.settings')"
+          @click="$refs.settings.open()"
+          icon="settings"
+        >
         </q-btn>
       </q-toolbar>
     </q-header>
@@ -28,8 +33,14 @@
     >
       <q-list>
         <q-item-label header>{{$t('left.title')}}</q-item-label>
-        <q-item clickable v-for="(item, idx) in menuList" :key="`menu-${idx}`"
-          :active="$route.name === item.name" @click="item.url ? openURL(item.url) : $router.push({ name: item.name, params: { server: $dataLang } })" v-ripple>
+        <q-item
+          clickable
+          v-for="(item, idx) in menuList"
+          :key="`menu-${idx}`"
+          :active="$route.name === item.name"
+          @click="item.url ? openURL(item.url) : $router.push({ name: item.name, params: { server: $dataLang } })"
+          v-ripple
+        >
           <q-item-section avatar>
             <q-icon :name="item.icon"></q-icon>
           </q-item-section>
@@ -39,7 +50,10 @@
         </q-item>
         <q-separator />
         <q-item-label header>{{$t('left.secTitle')}}</q-item-label>
-        <q-item v-for="(server, idx) in $servers" :key="`server-${idx}`">
+        <q-item
+          v-for="(server, idx) in $servers"
+          :key="`server-${idx}`"
+        >
           <q-item-section>
             {{$t(`common.${server}`)}} {{$t('common.data-ver')}}: v{{resVer[server] || '0.0.0.0'}}
           </q-item-section>
@@ -49,14 +63,23 @@
             {{$t('common.app-ver')}}: v{{appVer}}
           </q-item-section>
         </q-item>
-        <q-item @click="openURL('//blog.dnaroma.eu/update-notice-en')" clickable>
+        <q-item
+          @click="openURL('//blog.dnaroma.eu/update-notice-en')"
+          clickable
+        >
           <q-item-section>
             {{$t('left.update-note')}}
           </q-item-section>
         </q-item>
         <q-separator />
         <q-item-label header>{{$t('left.useful-link')}}</q-item-label>
-        <q-item clickable v-for="(item, idx) in externalLinks" :key="`external-${idx}`" @click="openURL(item.url)" v-ripple>
+        <q-item
+          clickable
+          v-for="(item, idx) in externalLinks"
+          :key="`external-${idx}`"
+          @click="openURL(item.url)"
+          v-ripple
+        >
           <q-item-section avatar>
             <q-icon :name="item.icon"></q-icon>
           </q-item-section>
@@ -66,7 +89,10 @@
         </q-item>
         <q-item @click.native="openURL('https://bang-dream.bushimo.jp/')">
           <q-item-section icon="open_in_new" />
-          <q-item-label label="Game offcial site" sublabel="bang-dream.bushimo.jp" />
+          <q-item-label
+            label="Game offcial site"
+            sublabel="bang-dream.bushimo.jp"
+          />
         </q-item>
       </q-list>
     </q-drawer>
@@ -74,8 +100,16 @@
     <q-page-container>
       <q-ajax-bar color="white"></q-ajax-bar>
       <router-view style="max-width: 718px; margin: auto;" />
-      <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-        <q-btn fab-mini icon="keyboard_arrow_up" color="pink" />
+      <q-page-scroller
+        position="bottom-right"
+        :scroll-offset="150"
+        :offset="[18, 18]"
+      >
+        <q-btn
+          fab-mini
+          icon="keyboard_arrow_up"
+          color="pink"
+        />
       </q-page-scroller>
     </q-page-container>
 
@@ -116,6 +150,11 @@ export default {
           icon: 'picture_in_picture'
         },
         {
+          name: 'charaList',
+          i18n: 'left.chara',
+          icon: 'assignment_ind'
+        },
+        {
           name: 'musicList',
           i18n: 'left.music',
           icon: 'library_music'
@@ -130,22 +169,22 @@ export default {
           i18n: 'left.FFC',
           icon: 'burst_mode'
         },
-        {
-          name: 'titleList',
-          i18n: 'left.gametitle',
-          icon: 'aspect_ratio'
-        },
+        // {
+        //   name: 'titleList',
+        //   i18n: 'left.gametitle',
+        //   icon: 'aspect_ratio'
+        // },
         {
           name: 'stampList',
           i18n: 'left.stamp',
           icon: 'loyalty'
         },
-        {
-          name: 'live2d',
-          url: '/live2d.html',
-          i18n: 'left.Live2d',
-          icon: 'record_voice_over'
-        },
+        // {
+        //   name: 'live2d',
+        //   url: '/live2d.html',
+        //   i18n: 'left.Live2d',
+        //   icon: 'record_voice_over'
+        // },
         {
           name: 'currEvent',
           i18n: 'left.current-event',

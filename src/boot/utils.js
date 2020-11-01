@@ -103,8 +103,9 @@ export default ({ app, router, Vue }) => {
                 img.src = pngData
               }
             })
+        } else {
+          img.src = this.src
         }
-        // img.src = this.src
 
         if (this.srcset) {
           img.srcset = this.srcset

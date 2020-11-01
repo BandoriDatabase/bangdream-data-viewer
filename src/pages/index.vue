@@ -1,17 +1,24 @@
 <template>
   <q-page padding>
     <!-- <p style="text-align: center;" v-if="!$q.platform.is.desktop">{{$t('mobile.click-expansion-item')}}</p> -->
-    {{supportWebp}}
+    <!-- {{supportWebp}} -->
     <div class="row q-col-gutter-md">
       <div class="col-12 col-sm-6">
         <q-card class="full-height">
-          <q-card-section>Birthday Info</q-card-section>
+          <q-card-section>{{$t('common.birthday.title')}}</q-card-section>
           <q-separator></q-separator>
           <q-card-section class="row q-col-gutter-md">
             <div class="col-12 col-sm-6">
-              <q-badge>Today</q-badge>
-              <div class="row q-gutter-md" v-if="birthdayInfo">
-                <div class="row items-center" v-for="todayInfo in birthdayInfo.today" :key="todayInfo.chara.characterId">
+              <q-badge>{{$t('common.birthday.today')}}</q-badge>
+              <div
+                class="row q-gutter-md"
+                v-if="birthdayInfo"
+              >
+                <div
+                  class="row items-center"
+                  v-for="todayInfo in birthdayInfo.today"
+                  :key="todayInfo.chara.characterId"
+                >
                   <img
                     class="q-mr-md"
                     :src="`chara/chara_icon_${todayInfo.chara.characterId}.png`"
@@ -21,15 +28,31 @@
                 </div>
                 <p v-if="birthdayInfo.today.length === 0">{{$t('common.birthday.notoday')}}</p>
               </div>
-              <div v-else class="row q-gutter-md">
-                <q-skeleton type="circle" size="48px"></q-skeleton>
-                <q-skeleton type="text" width="80px"></q-skeleton>
+              <div
+                v-else
+                class="row q-gutter-md"
+              >
+                <q-skeleton
+                  type="circle"
+                  size="48px"
+                ></q-skeleton>
+                <q-skeleton
+                  type="text"
+                  width="80px"
+                ></q-skeleton>
               </div>
             </div>
             <div class="col-12 col-sm-6">
-              <q-badge>Next</q-badge>
-              <div class="row q-gutter-md" v-if="birthdayInfo">
-                <div class="row items-center" v-for="nextInfo in birthdayInfo.next" :key="nextInfo.chara.characterId">
+              <q-badge>{{$t('common.birthday.next')}}</q-badge>
+              <div
+                class="row q-gutter-md"
+                v-if="birthdayInfo"
+              >
+                <div
+                  class="row items-center"
+                  v-for="nextInfo in birthdayInfo.next"
+                  :key="nextInfo.chara.characterId"
+                >
                   <img
                     class="q-mr-md"
                     :src="`chara/chara_icon_${nextInfo.chara.characterId}.png`"
@@ -38,9 +61,18 @@
                   <span>{{nextInfo.chara.characterName}}<br>{{nextInfo.birthday.month}}/{{nextInfo.birthday.day}}</span>
                 </div>
               </div>
-              <div v-else class="row q-gutter-md">
-                <q-skeleton type="circle" size="48px"></q-skeleton>
-                <q-skeleton type="text" width="80px"></q-skeleton>
+              <div
+                v-else
+                class="row q-gutter-md"
+              >
+                <q-skeleton
+                  type="circle"
+                  size="48px"
+                ></q-skeleton>
+                <q-skeleton
+                  type="text"
+                  width="80px"
+                ></q-skeleton>
               </div>
             </div>
           </q-card-section>
@@ -66,18 +98,37 @@
         <q-card class="full-height">
           <q-card-section>Shortcuts</q-card-section>
           <q-separator></q-separator>
-          <q-card-actions align="evenly" class="q-gutter-md">
-            <q-btn icon="picture_in_picture" @click="$router.push({ name: 'cardList', params: { server: $dataLang } })">{{$t('left.card')}}</q-btn>
-            <q-btn icon="account_box" @click="$router.push({ name: 'charaList', params: { server: $dataLang } })">{{$t('left.chara')}}</q-btn>
-            <q-btn icon="library_music" @click="$router.push({ name: 'musicList', params: { server: $dataLang } })">{{$t('left.music')}}</q-btn>
-            <q-btn icon="record_voice_over" @click="$router.push({ name: 'live2d', params: { server: $dataLang } })">{{$t('left.Live2d')}}</q-btn>
+          <q-card-actions
+            align="evenly"
+            class="q-gutter-md"
+          >
+            <q-btn
+              icon="picture_in_picture"
+              @click="$router.push({ name: 'cardList', params: { server: $dataLang } })"
+            >{{$t('left.card')}}</q-btn>
+            <q-btn
+              icon="account_box"
+              @click="$router.push({ name: 'charaList', params: { server: $dataLang } })"
+            >{{$t('left.chara')}}</q-btn>
+            <q-btn
+              icon="library_music"
+              @click="$router.push({ name: 'musicList', params: { server: $dataLang } })"
+            >{{$t('left.music')}}</q-btn>
+            <q-btn
+              icon="record_voice_over"
+              @click="$router.push({ name: 'live2d', params: { server: $dataLang } })"
+            >{{$t('left.Live2d')}}</q-btn>
           </q-card-actions>
         </q-card>
       </div>
     </div>
 
     <div class="row q-col-gutter-md q-mt-xs">
-      <div v-for="server in servers" :key="server" class="col-12">
+      <div
+        v-for="server in servers"
+        :key="server"
+        class="col-12"
+      >
         <event-card :server="server"></event-card>
       </div>
     </div>
