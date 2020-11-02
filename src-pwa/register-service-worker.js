@@ -10,16 +10,14 @@ import { i18n } from '../src/boot/i18n'
 if (!window.location.origin.includes('bandori.top') && !window.location.origin.includes('localhost')) {
   navigator.serviceWorker.getRegistrations().then((registerations) => {
     registerations.forEach(reg => reg.unregister())
-    if (registerations.length) {
-      Notify.create({
-        message: i18n.t('worker.unregistred'),
-        color: 'primary',
-        timeout: 5000,
-        actions: [
-          { label: i18n.t('worker.toNewSite'), color: 'yellow', handler: () => { location.replace('https://bandori.top') } }
-        ]
-      })
-    }
+    Notify.create({
+      message: i18n.t('worker.unregistered'),
+      color: 'primary',
+      timeout: 0,
+      actions: [
+        { label: i18n.t('worker.toNewSite'), color: 'yellow', handler: () => { location.replace('https://bandori.top') } }
+      ]
+    })
   })
 } else {
   register(process.env.SERVICE_WORKER_FILE, {
