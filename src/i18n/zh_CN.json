@@ -202,7 +202,9 @@
   "worker": {
     "update-found": "发现新版本，更新中...",
     "updated": "新版本更新好了",
-    "offline": "运行在离线模式下"
+    "offline": "运行在离线模式下",
+    "unregister": "本域名即将过期",
+    "toNewSite": "访问新域名"
   },
   "chara": {
     "name": "姓名",

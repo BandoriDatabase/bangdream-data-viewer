@@ -199,7 +199,9 @@
   "worker": {
     "update-found": "發現新版本，更新中...",
     "updated": "新版本更新好了",
-    "offline": "運行在離線模式下"
+    "offline": "運行在離線模式下",
+    "unregister": "本域名即將過期",
+    "toNewSite": "訪問新域名"
   },
   "chara": {
     "name": "姓名",

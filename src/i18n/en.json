@@ -210,7 +210,9 @@
   "worker": {
     "update-found": "New version found, updating...",
     "updated": "Refresh for new version",
-    "offline": "Running in offline mode"
+    "offline": "Running in offline mode",
+    "unregister": "Current domain will be deprecated",
+    "toNewSite": "Redirect to new domain"
   },
   "chara": {
     "name": "Name",
