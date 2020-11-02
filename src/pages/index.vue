@@ -102,8 +102,9 @@
             align="evenly"
             class="q-gutter-md"
           >
-            icon="picture_in_picture"
-            @click="$router.push({ name: 'cardList', params: { server: $dataLang } })"
+            <q-btn
+              icon="picture_in_picture"
+              @click="$router.push({ name: 'cardList', params: { server: $dataLang } })"
             >{{$t('left.card')}}</q-btn>
             <q-btn
               icon="account_box"
@@ -116,28 +117,41 @@
             <q-btn
               icon="record_voice_over"
               @click="$router.push({ name: 'live2d', params: { server: $dataLang } })"
-              <gacha-card
-              :server="server"
-              class="col-xl-3 col-lg-4 col-md-6 col-12"
-              v-for="gacha in currentGachaList[server]"
-              :key="gacha.seq"
-              :data="gacha"
-              @open-modal="$refs.gachaModal.open(gacha, server)"
-            >
-              </gacha-card>
-      </div>
-      <div
-        v-if="!isGcahaReady[server]"
-        class="col-12"
-      >
-        <q-spinner
-          color="pink"
-          size="48px"
-        ></q-spinner>
+            >{{$t('left.Live2d')}}</q-btn>
+            <q-btn
+              icon="translate"
+              @click="openURL('https://www.transifex.com/dnaroma/bandori-top-website/dashboard/')"
+            >{{$t('common.translation')}}</q-btn>
+          </q-card-actions>
+        </q-card>
       </div>
     </div>
-    </lazy-component>
-    </q-expansion-item>
+
+    <div class="row q-col-gutter-md q-mt-xs">
+      <div
+        v-for="server in servers"
+        :key="server"
+        class="col-12"
+      >
+        <event-card :server="server"></event-card>
+      </div>
+    </div>
+    <!-- <q-expansion-item :label="$t('common.gacha')" v-model="isGachaOpen">
+      <q-expansion-item v-for="server in servers" :key="server" :label="$t(`common.${server}`)"
+        v-model="isOpen[server]" class="q-mx-xs">
+        <lazy-component @show="loadGachaData(server)">
+          <div class="row col-12 q-col-gutter-sm q-mx-sm">
+            <div v-if="isGcahaReady[server]" class="row col-12 q-col-gutter-sm">
+              <gacha-card :server="server" class="col-xl-3 col-lg-4 col-md-6 col-12"
+              v-for="gacha in currentGachaList[server]" :key="gacha.seq" :data="gacha"
+              @open-modal="$refs.gachaModal.open(gacha, server)"></gacha-card>
+            </div>
+            <div v-if="!isGcahaReady[server]" class="col-12">
+              <q-spinner color="pink" size="48px"></q-spinner>
+            </div>
+          </div>
+        </lazy-component>
+      </q-expansion-item>
     </q-expansion-item>
     <gacha-modal ref="gachaModal"></gacha-modal> -->
   </q-page>
