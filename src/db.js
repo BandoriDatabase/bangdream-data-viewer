@@ -15,6 +15,7 @@ db.version(1).stores({
   eventitem: '[eventItemId+server]',
   sfc: '[sfcId+server]',
   skill: '[skillId+server]',
+  cardSkill: '[situationSkillId+server]',
   stamp: '[stampId+server]',
   birthday: 'server'
 })

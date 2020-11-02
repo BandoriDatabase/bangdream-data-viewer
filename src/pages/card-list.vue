@@ -15,7 +15,10 @@
           >{{$t('common.filter-applied')}}</q-badge>
         </q-btn>
       </div>
-      <q-dialog v-model="isFilterVisible">
+      <q-dialog
+        v-model="isFilterVisible"
+        @hide="doFilter(server), saveFilter(), $ga.event('card-overview', 'filter', `apply-save`)"
+      >
         <q-card>
           <q-card-section>
             <div class="row">
@@ -42,17 +45,20 @@
                 :label="opt.label"
               ></q-checkbox>
             </div>
-            <div class="row q-mt-md">
-              <p class="q-ml-sm col-12">{{$t('common.character')}}</p>
-              <q-checkbox
-                color="pink"
-                class="col-md-3 col-6"
-                v-model="selectCharacters"
-                v-for="opt in charaOption"
-                :key="`chara-${opt.value}`"
-                :val="opt.value"
-                :label="opt.label"
-              ></q-checkbox>
+            <div class="q-mt-md">
+              <q-expansion-item :label="$t('common.character')">
+                <div class="row">
+                  <q-checkbox
+                    color="pink"
+                    class="col-md-3 col-6"
+                    v-model="selectCharacters"
+                    v-for="opt in charaOption"
+                    :key="`chara-${opt.value}`"
+                    :val="opt.value"
+                    :label="opt.label"
+                  ></q-checkbox>
+                </div>
+              </q-expansion-item>
             </div>
             <div class="q-mt-md">
               <q-expansion-item :label="$t('common.skill')">
@@ -136,7 +142,7 @@
             </q-btn>
             <q-btn
               color="pink"
-              @click="doFilter(server), saveFilter(), isFilterVisible = false, $ga.event('card-overview', 'filter', `apply-save`)"
+              @click="isFilterVisible = false"
             >
               {{$t('common.apply-save')}}
             </q-btn>
@@ -201,6 +207,12 @@
                 <q-btn
                   class="text-primary"
                   flat
+                  icon="more_horiz"
+                  @click="$router.push({ name: 'cardDetail', params: { server, situationId: card.situationId } })"
+                >{{$t('card.detail')}}</q-btn>
+                <q-btn
+                  class="text-primary"
+                  flat
                   icon="account_box"
                   @click="$router.push({ name: 'charaDetail', params: { server, charaId: card.characterId } })"
                 >{{$t('common.profile')}}</q-btn>
@@ -208,6 +220,7 @@
                   class="text-primary"
                   flat
                   icon="record_voice_over"
+                  disable
                 >Live 2D</q-btn>
               </q-card-actions>
               <!-- <q-card-actions align="evenly">
@@ -438,6 +451,7 @@ export default {
         label: elem.simpleDescription,
         value: elem.skillId
       }))
+      document.title = `${this.$t('card.title', { srv: this.$t(`common.${this.server}`) })} | Bandori Top`
       this.isReady = true
     },
     handleMouseOver (ref) {

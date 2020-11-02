@@ -22,7 +22,7 @@
               title: cardInfo.gachaText,
               artist: charaInfo.profile.characterVoice,
               src: `/assets/jp/sound/voice/gacha/spin_rip/${cardInfo.resourceSetName}.mp3`,
-              pic: `/assets/jp/thumb/chara/card${Math.floor(cardInfo.situationId / 50).toString().padStart(5, '0')}_rip/${cardInfo.resourceSetName}_normal.webp`
+              pic: `/assets/${$specialCardList[server].indexOf(cardInfo.situationId) !== -1 ? server : 'jp'}/thumb/chara/card${Math.floor(cardInfo.situationId / 50).toString().padStart(5, '0')}_rip/${cardInfo.resourceSetName}_normal.webp`
             }"
               mini
               class="col-4"
@@ -118,6 +118,7 @@
             class="full-width"
             v-if="cardInfo.costumeId"
             @click="$router.push({ name:'live2d', params: { server: $route.params.server, costumeId: cardInfo.costumeId }})"
+            disable
           >
             <q-icon name="record_voice_over" />{{$t('common.live2d')}}: {{costumeInfo.description}}
           </q-btn>
@@ -140,7 +141,7 @@
               <q-tab
                 name="sdchara"
                 :label="$t('card.live-chara')"
-                v-if="cardInfo.prefix !== 'ガルパ杯'"
+                v-if="cardInfo.prefix !== 'ガルパ杯' && cardInfo.situationId <= 5000"
               ></q-tab>
               <q-tab
                 name="trim"
@@ -217,12 +218,12 @@
                   <my-q-img
                     class="col-6"
                     style="width: 90px;"
-                    :src="`/assets/jp/thumb/chara/card${Math.floor(cardInfo.situationId / 50).toString().padStart(5, '0')}_rip/${cardInfo.resourceSetName}_normal.webp`"
+                    :src="`/assets/${$specialCardList[server].indexOf(cardInfo.situationId) !== -1 ? server : 'jp'}/thumb/chara/card${Math.floor(cardInfo.situationId / 50).toString().padStart(5, '0')}_rip/${cardInfo.resourceSetName}_normal.webp`"
                   />
                   <my-q-img
                     class="col-6"
                     style="width: 90px;"
-                    :src="`/assets/jp/thumb/chara/card${Math.floor(cardInfo.situationId / 50).toString().padStart(5, '0')}_rip/${cardInfo.resourceSetName}_after_training.webp`"
+                    :src="`/assets/${$specialCardList[server].indexOf(cardInfo.situationId) !== -1 ? server : 'jp'}/thumb/chara/card${Math.floor(cardInfo.situationId / 50).toString().padStart(5, '0')}_rip/${cardInfo.resourceSetName}_after_training.webp`"
                     v-if="cardInfo.rarity >= 3"
                   />
                 </div>
@@ -531,7 +532,7 @@ export default {
       this.level = this.cardInfo.simpleParams.max.level
       this.skillLv = this.skillInfo.skillDetail.slice(-1)[0].skillLevel
       if (this.cardInfo.rarity >= 3) this.levelToggleOptions.splice(1, 0, { label: 'Untrained Max', value: 3 })
-
+      document.title = `${this.cardInfo.prefix} | ${this.charaInfo.characterName} | ${this.$t('card.title', { srv: this.$t(`common.${this.server}`) })} | Bandori Top`
       // if (this.isTrained) this.switchCardResType()
     } catch (error) {
       this.isError = true
@@ -564,22 +565,22 @@ export default {
       return `${'0'.repeat(5 - groupId.length)}${groupId}`
     },
     cardImageNormalUrl () {
-      return `/assets/${this.server}/characters/resourceset/${this.cardInfo.resourceSetName}_rip/card_normal.webp`
+      return `/assets/${this.$specialCardList[this.server].indexOf(this.cardInfo.situationId) !== -1 ? this.server : 'jp'}/characters/resourceset/${this.cardInfo.resourceSetName}_rip/card_normal.webp`
     },
     trimImageNormalUrl () {
-      return `/assets/${this.server}/characters/resourceset/${this.cardInfo.resourceSetName}_rip/trim_normal.webp`
+      return `/assets/${this.$specialCardList[this.server].indexOf(this.cardInfo.situationId) !== -1 ? this.server : 'jp'}/characters/resourceset/${this.cardInfo.resourceSetName}_rip/trim_normal.webp`
     },
     cardImageAfterTrainingUrl () {
-      return `/assets/${this.server}/characters/resourceset/${this.cardInfo.resourceSetName}_rip/card_after_training.webp`
+      return `/assets/${this.$specialCardList[this.server].indexOf(this.cardInfo.situationId) !== -1 ? this.server : 'jp'}/characters/resourceset/${this.cardInfo.resourceSetName}_rip/card_after_training.webp`
     },
     trimImageAfterTrainingUrl () {
-      return `/assets/${this.server}/characters/resourceset/${this.cardInfo.resourceSetName}_rip/trim_after_training.webp`
+      return `/assets/${this.$specialCardList[this.server].indexOf(this.cardInfo.situationId) !== -1 ? this.server : 'jp'}/characters/resourceset/${this.cardInfo.resourceSetName}_rip/trim_after_training.webp`
     },
     cardLivesdUrl () {
-      return `/assets/${this.server}/characters/livesd/${this.cardInfo.sdResourceName}_rip`
+      return `/assets/${this.$specialCardList[this.server].indexOf(this.cardInfo.situationId) !== -1 ? this.server : 'jp'}/characters/livesd/${this.cardInfo.sdResourceName}_rip`
     },
     cardThumbUrl () {
-      return `/assets/${this.server}/thumb/chara/card${this.cardGroup}_rip/${this.cardInfo.resourceSetName}_normal.webp`
+      return `/assets/${this.$specialCardList[this.server].indexOf(this.cardInfo.situationId) !== -1 ? this.server : 'jp'}/thumb/chara/card${this.cardGroup}_rip/${this.cardInfo.resourceSetName}_normal.webp`
     },
     server () {
       return this.$route.params.server
@@ -663,6 +664,7 @@ export default {
         this.isReady = true
         this.level = this.cardInfo.simpleParams.max.level
         this.skillLv = this.skillInfo.skillDetail.slice(-1)[0].skillLevel
+        document.title = `${this.cardInfo.prefix} | ${this.charaInfo.characterName} | ${this.$t('card.title', { srv: this.$t(`common.${this.server}`) })} | Bandori Top`
       } catch (error) {
         this.isError = true
       }

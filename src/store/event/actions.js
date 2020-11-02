@@ -21,7 +21,7 @@ export const getCurrentEvent = async ({ commit, state }, server) => {
   const isOnline = navigator.onLine
   if (!curreventLoaded[server]) {
     const events = await curreventdb.toArray()
-    if (events.length) {
+    if (events.length && events.find(event => event.server === server)) {
       const event = events.find(event => event.server === server)
       if (isOnline) {
         const { eventId } = await Vue.apiClient.getEventId(server)

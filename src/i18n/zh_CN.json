@@ -82,7 +82,8 @@
     "refresh": "刷新",
     "basic-info": "基本信息",
     "live2d": "Live2D",
-    "profile": "人物简介"
+    "profile": "人物简介",
+    "translation": "翻译"
   },
   "gacha": {
     "list-title": "{srv}当前扭蛋池",
@@ -98,6 +99,7 @@
   },
   "mobile": { "click-collapsible": "点击一个服务器可展开查看" },
   "card": {
+    "title": "{srv}卡牌",
     "name-display": ["切换姓名显示: ", "罗马字", "汉字"],
     "attr": {
       "powerful": "Powerful",
@@ -123,9 +125,13 @@
     "story-reward": "剧情阅读奖励",
     "jump-to-live2d-costume": "跳转至Live2D",
     "not-exist": "要查询的卡片不存在： 服务器 {server} 卡片编号 {situationId}",
-    "read-story": "读故事"
+    "read-story": "读故事",
+    "transparent": "透明",
+    "icons": "图标",
+    "detail": "详情"
   },
   "music": {
+    "title": "{srv}歌曲",
     "select-band": "选择乐队",
     "composer": "作曲",
     "lyricist": "作词",
@@ -203,10 +209,11 @@
     "update-found": "发现新版本，更新中...",
     "updated": "新版本更新好了",
     "offline": "运行在离线模式下",
-    "unregister": "本域名即将过期",
+    "unregistered": "本域名即将过期",
     "toNewSite": "访问新域名"
   },
   "chara": {
+    "title": "{srv}角色",
     "name": "姓名",
     "voice-actor": "声优",
     "band": "乐队",
@@ -250,5 +257,8 @@
     "hated-food": "讨厌的食物",
     "hobby": "兴趣",
     "self-intro": "自我介绍"
+  },
+  "stamp": {
+    "title": "{srv}表情贴纸"
   }
 }

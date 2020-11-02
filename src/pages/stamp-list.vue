@@ -5,18 +5,46 @@
     </div>
     <div class="q-mb-md">
       {{$t('common.sort.title')}}
-      <q-btn-toggle :value="queryParams.sort" @input="onSortChange"
-      :options="[{ label: $t('common.sort.asc'), value: 'asc' }, { label: $t('common.sort.desc'), value: 'desc' }]"></q-btn-toggle>
+      <q-btn-toggle
+        :value="queryParams.sort"
+        @input="onSortChange"
+        :options="[{ label: $t('common.sort.asc'), value: 'asc' }, { label: $t('common.sort.desc'), value: 'desc' }]"
+      ></q-btn-toggle>
     </div>
-    <viewer v-if="isReady" ref="stamp-viewer" :options="{navbar: false}">
-      <q-infinite-scroll ref="stampScroll" @load="loadMore">
+    <viewer
+      v-if="isReady"
+      ref="stamp-viewer"
+      :options="{navbar: false}"
+    >
+      <q-infinite-scroll
+        ref="stampScroll"
+        @load="loadMore"
+      >
         <div class="row q-col-gutter-sm">
-          <div class="col-md-3 col-6" v-for="(singleStamp, idx) in stampList[server]" :key="idx">
-            <img v-show="false" :src="`/assets/${server}/stamp/01_rip/${singleStamp.imageName}.webp`" />
-            <q-card class="cursor-pointer" @click="$refs['stamp-viewer'].$viewer.view(idx)">
-              <my-q-img style="min-height: 120px;" contain :src="`/assets/${server}/stamp/01_rip/${singleStamp.imageName}.webp`">
+          <div
+            class="col-md-3 col-6"
+            v-for="(singleStamp, idx) in stampList[server]"
+            :key="idx"
+          >
+            <img
+              v-show="false"
+              :src="`/assets/${server}/stamp/01_rip/${singleStamp.imageName}.webp`"
+            />
+            <q-card
+              class="cursor-pointer"
+              @click="$refs['stamp-viewer'].$viewer.view(idx)"
+            >
+              <my-q-img
+                style="min-height: 120px;"
+                contain
+                :src="`/assets/${server}/stamp/01_rip/${singleStamp.imageName}.webp`"
+              >
                 <template v-slot:loading>
-                  <q-skeleton type="rect" width="100px" height="100px" />
+                  <q-skeleton
+                    type="rect"
+                    width="100px"
+                    height="100px"
+                  />
                 </template>
               </my-q-img>
             </q-card>
@@ -24,10 +52,18 @@
         </div>
         <template v-slot:loading>
           <div class="row q-col-gutter-sm">
-            <div class="col-md-3 col-6" v-for="i in 4" :key="`skel-${i}`">
+            <div
+              class="col-md-3 col-6"
+              v-for="i in 4"
+              :key="`skel-${i}`"
+            >
               <q-card>
                 <q-card-section class="row justify-center">
-                  <q-skeleton type="rect" width="100px" height="100px" />
+                  <q-skeleton
+                    type="rect"
+                    width="100px"
+                    height="100px"
+                  />
                 </q-card-section>
               </q-card>
             </div>
@@ -35,11 +71,22 @@
         </template>
       </q-infinite-scroll>
     </viewer>
-    <div class="row q-col-gutter-sm" v-else>
-      <div class="col-md-3 col-6" v-for="i in 12" :key="`skel-${i}`">
+    <div
+      class="row q-col-gutter-sm"
+      v-else
+    >
+      <div
+        class="col-md-3 col-6"
+        v-for="i in 12"
+        :key="`skel-${i}`"
+      >
         <q-card>
           <q-card-section class="row justify-center">
-            <q-skeleton type="rect" width="100px" height="100px" />
+            <q-skeleton
+              type="rect"
+              width="100px"
+              height="100px"
+            />
           </q-card-section>
         </q-card>
       </div>
@@ -61,6 +108,7 @@ export default {
     this.$nextTick(async () => {
       await this.getStampList({ server: this.server, params: this.queryParams })
       this.isReady = true
+      document.title = `${this.$t('stamp.title', { srv: this.$t(`common.${this.server}`) })} | Bandori Top`
     })
   },
   computed: {
@@ -78,6 +126,7 @@ export default {
       this.$nextTick(async () => {
         await this.getStampList({ server: this.server, params: this.queryParams })
         this.isReady = true
+        document.title = `${this.$t('stamp.title', { srv: this.$t(`common.${this.server}`) })} | Bandori Top`
       })
     }
   },
@@ -112,10 +161,11 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.stamp-img
-  position relative
-  width 100%
-  padding-top 82.5%
-  background-size contain
-  background-repeat no-repeat
+.stamp-img {
+  position: relative;
+  width: 100%;
+  padding-top: 82.5%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 </style>

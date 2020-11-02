@@ -118,6 +118,10 @@
               icon="record_voice_over"
               @click="$router.push({ name: 'live2d', params: { server: $dataLang } })"
             >{{$t('left.Live2d')}}</q-btn>
+            <q-btn
+              icon="translate"
+              @click="openURL('https://www.transifex.com/dnaroma/bandori-top-website/dashboard/')"
+            >{{$t('common.translation')}}</q-btn>
           </q-card-actions>
         </q-card>
       </div>
@@ -159,6 +163,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import { detectWebpSupport } from 'webp-hero'
+import { openURL } from 'quasar'
 
 import EventCard from 'components/card/event'
 // import GachaCard from 'components/card/gacha'
@@ -172,6 +177,7 @@ export default {
     // GachaModal
   },
   mounted () {
+    document.title = `${this.$t('left.home')} | Bandori Top`
     this.$api.getBirthday(this.$q.localStorage.getItem('dataLang') || 'jp')
       .then(res => {
         this.birthdayInfo = res
@@ -230,7 +236,8 @@ export default {
         await this.getGachaCurrent(server)
         this.isGcahaReady[server] = true
       })
-    }
+    },
+    openURL
   }
 }
 </script>

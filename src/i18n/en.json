@@ -84,7 +84,8 @@
     "refresh": "Refresh",
     "basic-info": "Basic Info",
     "live2d": "Live2D",
-    "profile": "Profile"
+    "profile": "Profile",
+    "translation": "Translation"
   },
   "gacha": {
     "list-title": "{srv} Scouts List",
@@ -100,6 +101,7 @@
   },
   "mobile": { "click-collapsible": "Click one of the server name to expand" },
   "card": {
+    "title": "Card {srv}",
     "name-display": ["Switch name display: ", "Romaji", "Kanji"],
     "attr": {
       "powerful": "Powerful",
@@ -127,9 +129,11 @@
     "not-exist": "This card does not exist: Server {server} CardID {situationId}",
     "read-story": "Read Story",
     "transparent": "Transparent",
-    "icons": "Icons"
+    "icons": "Icons",
+    "detail": "Detail"
   },
   "music": {
+    "title": "Music {srv}",
     "select-band": "Select Bands",
     "composer": "Composer",
     "lyricist": "Lyricist",
@@ -211,10 +215,11 @@
     "update-found": "New version found, updating...",
     "updated": "Refresh for new version",
     "offline": "Running in offline mode",
-    "unregister": "Current domain will be deprecated",
+    "unregistered": "Current domain will be deprecated",
     "toNewSite": "Redirect to new domain"
   },
   "chara": {
+    "title": "Chara {srv}",
     "name": "Name",
     "voice-actor": "Voice Actor",
     "band": "Band",
@@ -258,5 +263,8 @@
     "hated-food": "Hated Food",
     "hobby": "Hobby",
     "self-intro": "Self Introduction"
+  },
+  "stamp": {
+    "title": "Stamp {srv}"
   }
 }

@@ -124,6 +124,9 @@
 
 <script>
 export default {
+  mounted () {
+    document.title = `${this.$t('chara.title', { srv: this.$t(`common.${this.server}`) })} | Bandori Top`
+  },
   computed: {
     server () {
       return this.$route.params.server

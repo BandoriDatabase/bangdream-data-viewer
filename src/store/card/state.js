@@ -3,6 +3,7 @@ import db from '../../db'
 
 const carddb = db.card
 const skilldb = db.skill
+const cardSkilldb = db.cardSkill
 const state = {}
 
 state.cardList = servers.reduce((sum, curr) => {
@@ -36,11 +37,15 @@ carddb.toArray().then(cards => {
 
 skilldb.toArray().then(skills => {
   servers.forEach(server => {
-    state.skillList = skills.filter(skill => skill.server === server)
-    state.skillList.sort((a, b) => a.skillId - b.skillId)
+    state.skillList[server] = skills.filter(skill => skill.server === server)
+    state.skillList[server].sort((a, b) => a.skillId - b.skillId)
+  })
+})
 
-    state.skillMap[server] = state.skillList.reduce((obj, item) => {
-      obj[item.skillId] = item
+cardSkilldb.toArray().then(cardSkills => {
+  servers.forEach(server => {
+    state.skillMap[server] = cardSkills.reduce((obj, item) => {
+      obj[item.situationSkillId] = item
       return obj
     }, {})
   })

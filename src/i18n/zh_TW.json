@@ -81,7 +81,8 @@
     "reset-filter": "重置",
     "basic-info": "基本信息",
     "live2d": "Live2D",
-    "profile": "人物簡介"
+    "profile": "人物簡介",
+    "translation": "翻譯"
   },
   "gacha": {
     "list-title": "{srv}當前扭蛋池",
@@ -122,7 +123,10 @@
     "story-reward": "劇情閱讀獎勵",
     "jump-to-live2d-costume": "跳轉至Live2D",
     "not-exist": "要查詢的卡片不存在： 服務器 {server} 卡片編號 {situationId}",
-    "read-story": "讀故事"
+    "read-story": "讀故事",
+    "transparent": "透明",
+    "icons": "圖標",
+    "detail": "詳情"
   },
   "music": {
     "select-band": "選擇樂隊",
@@ -200,7 +204,7 @@
     "update-found": "發現新版本，更新中...",
     "updated": "新版本更新好了",
     "offline": "運行在離線模式下",
-    "unregister": "本域名即將過期",
+    "unregistered": "本域名即將過期",
     "toNewSite": "訪問新域名"
   },
   "chara": {

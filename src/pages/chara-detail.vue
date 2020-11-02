@@ -186,6 +186,7 @@ export default {
         await this.getCharaById({ charaId: this.charaId, server: this.server })
         await this.getBandList(this.server)
         this.isReady = true
+        document.title = `${this.charaData.characterName} | ${this.$t('chara.title', { srv: this.$t(`common.${this.server}`) })} | Bandori Top`
       } catch (error) {
         this.isError = true
       }
@@ -228,6 +229,7 @@ export default {
         await this.getCharaById({ charaId: this.charaId, server: this.server })
         await this.getBandList(this.server)
         this.isReady = true
+        document.title = `${this.charaData.characterName} | ${this.$t('chara.title', { srv: this.$t(`common.${this.server}`) })} | Bandori Top`
       } catch (error) {
         this.isError = true
       }

@@ -2,6 +2,7 @@ import db from '../../db'
 
 const carddb = db.card
 const skilldb = db.skill
+const cardSkilldb = db.cardSkill
 
 export const SET_CARD_LIST = (state, { data, params, server }) => {
   // check params and set data in correct position
@@ -31,7 +32,7 @@ export const SET_SKILL_LIST = (state, { data, server }) => {
 export const ADD_SKILL_MAP_ENTRY = (state, obj) => {
   state.skillMap[obj.server][obj.id] = obj.value
 
-  skilldb.put(Object.assign({}, obj.value, { server: obj.server }))
+  cardSkilldb.put(Object.assign({}, obj.value, { server: obj.server }))
 }
 
 export const ADD_MULTI_CARD_MAP = (state, obj) => {

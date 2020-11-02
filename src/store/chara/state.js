@@ -23,7 +23,7 @@ charadb.toArray().then(charas => {
     state.charaList[server] = charas.filter(chara => chara.server === server)
     state.charaList[server].sort((a, b) => a.characterId - b.characterId)
 
-    state.charaMap[server] = charas.reduce((obj, item) => {
+    state.charaMap[server] = charas.filter(chara => chara.server === server).reduce((obj, item) => {
       obj[item.characterId] = item
       return obj
     }, {})
