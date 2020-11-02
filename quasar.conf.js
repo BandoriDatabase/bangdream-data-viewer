@@ -162,11 +162,12 @@ module.exports = function (ctx) {
         //     cacheName: 'bd-api-cache'
         //   }
         // }]
-        skipWaiting: true
+        skipWaiting: true,
+        cleanupOutdatedCaches: true
       },
       manifest: {
         name: 'Bandori Top',
-        short_name: 'Bandori DB',
+        short_name: 'BanTop',
         description: 'The unified Database for the mobile idol rhythm game BanG Dream! Girls Band Party!',
         display: 'standalone',
         orientation: 'portrait',
