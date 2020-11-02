@@ -1,20 +1,50 @@
 <template>
-  <div class="text-center" v-if="isReady">
-    <q-img contain v-if="data[typeName] === 'practice_ticket' && data[idName] <=4" class="resource-img"
-    :src="`/assets/thumb/common_rip/practiceTicket${data[idName]}.png`"></q-img>
-    <q-img contain v-else-if="data[typeName] === 'practice_ticket'" class="resource-img"
-    :src="`/assets/thumb/common_rip/skillticket_${data[idName]}.png`"></q-img>
-    <q-img contain v-else-if="data[typeName] === 'item'" class="resource-img"
-    :src="`/assets/thumb/material_rip/material${String(data[idName]).padStart(3, '0')}.png`"></q-img>
-    <q-img contain v-else-if="data[typeName] === 'stamp'" class="resource-img"
-    :src="`/assets-${server}/stamp/01_rip/${stampMap[server][data[idName]].imageName}.png`"></q-img>
-    <card-thumb v-else-if="data[typeName] === 'situation'" mini
-    :cardId="Number(data[idName])" :server="server"></card-thumb>
-    <q-img contain v-else class="resource-img"
-    :src="`/assets/thumb/common_rip/${data[typeName]}.png`"></q-img>
+  <div
+    class="text-center"
+    v-if="isReady"
+  >
+    <my-q-img
+      contain
+      v-if="data[typeName] === 'practice_ticket' && data[idName] <=4"
+      class="resource-img"
+      :src="`/assets/jp/thumb/common_rip/practiceticket${data[idName]}.webp`"
+    />
+    <my-q-img
+      contain
+      v-else-if="data[typeName] === 'practice_ticket'"
+      class="resource-img"
+      :src="`/assets/jp/thumb/common_rip/skillticket_${data[idName]}.webp`"
+    />
+    <my-q-img
+      contain
+      v-else-if="data[typeName] === 'item'"
+      class="resource-img"
+      :src="`/assets/jp/thumb/material_rip/material${String(data[idName]).padStart(3, '0')}.webp`"
+    />
+    <my-q-img
+      contain
+      v-else-if="data[typeName] === 'stamp'"
+      class="stamp-img"
+      :src="`/assets/${server}/stamp/01_rip/${stampMap[server][data[idName]].imageName}.webp`"
+    />
+    <card-thumb
+      v-else-if="data[typeName] === 'situation'"
+      mini
+      :situationId="Number(data[idName])"
+      :server="server"
+    ></card-thumb>
+    <my-q-img
+      contain
+      v-else
+      class="resource-img"
+      :src="`/assets/jp/thumb/common_rip/${data[typeName]}.webp`"
+    />
     <p class="text-subtitle2 q-mb-xs">x{{data[quantityName]}}</p>
   </div>
-  <div v-else class="resource-img">
+  <div
+    v-else
+    class="resource-img"
+  >
     <q-spinner></q-spinner>
   </div>
 </template>
@@ -75,7 +105,13 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.resource-img
-  width 60px
-  height 60px
+.resource-img {
+  width: 60px;
+  height: 60px;
+}
+
+.stamp-img {
+  width: 96px;
+  height: 96px;
+}
 </style>

@@ -43,7 +43,7 @@ export default {
       this.$nextTick(async () => {
         try {
           const titleList = (await this.$api.getTitles(this.server)).filter(elem => elem.type === 'directory')
-          this.imgs = titleList.map(elem => `/assets-${this.server}/title/${elem.name}/title_bg.png`)
+          this.imgs = titleList.map(elem => `/assets/${this.server}/title/${elem.name}/title_bg.webp`)
         } catch (error) {
           this.imgs = []
         }
@@ -55,7 +55,7 @@ export default {
     this.isReady = false
     try {
       const titleList = (await this.$api.getTitles(this.server)).filter(elem => elem.type === 'directory')
-      this.imgs = titleList.map(elem => `/assets-${this.server}/title/${elem.name}/title_bg.png`)
+      this.imgs = titleList.map(elem => `/assets/${this.server}/title/${elem.name}/title_bg.webp`)
     } catch (error) {
       this.imgs = []
     }

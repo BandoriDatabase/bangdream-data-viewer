@@ -30,7 +30,7 @@
           <p>{{$t('music.arranger')}}: {{data.arranger}}</p>
           <p>{{$t('common.band')}}:
             <span v-if="Number(data.bandId) > 5">{{data.bandName}}</span>
-            <img height="60px" width="100px" v-if="Number(data.bandId) <= 5" v-lazy="`/assets/band/logo/00${data.bandId}_rip/logoL.png`">
+            <img height="60px" width="100px" v-if="Number(data.bandId) <= 5" v-lazy="`/assets/band/logo/00${data.bandId}_rip/logoL.webp`">
           </p>
           <p>{{$t('music.combo')}}: {{data.combo}}</p>
         </div>
@@ -103,21 +103,21 @@ export default {
       ],
       currentNotes: [[], [], [], [], [], [], []],
       typeNoteMap: {
-        Single: 'statics/gameres/note_normal_3.png',
-        Flick: 'statics/gameres/note_flick_3.png',
-        FeverFlick: 'statics/gameres/note_flick_3.png',
-        LongStart: 'statics/gameres/note_long_3.png',
-        LongEnd: 'statics/gameres/note_long_3.png',
-        SlideStart_A: 'statics/gameres/note_long_3.png',
-        SlideStart_B: 'statics/gameres/note_long_3.png',
-        Slide_A: 'statics/gameres/note_slide_among.png',
-        Slide_B: 'statics/gameres/note_slide_among.png',
-        SlideEnd_A: 'statics/gameres/note_long_3.png',
-        SlideEnd_B: 'statics/gameres/note_long_3.png',
-        SlideEndFlick_A: 'statics/gameres/note_flick_3.png',
-        SlideEndFlick_B: 'statics/gameres/note_flick_3.png',
-        Skill: 'statics/gameres/note_skill_3.png',
-        LongLine: 'statics/gameres/longNoteLine.png'
+        Single: 'gameres/note_normal_3.webp',
+        Flick: 'gameres/note_flick_3.webp',
+        FeverFlick: 'gameres/note_flick_3.webp',
+        LongStart: 'gameres/note_long_3.webp',
+        LongEnd: 'gameres/note_long_3.webp',
+        SlideStart_A: 'gameres/note_long_3.webp',
+        SlideStart_B: 'gameres/note_long_3.webp',
+        Slide_A: 'gameres/note_slide_among.webp',
+        Slide_B: 'gameres/note_slide_among.webp',
+        SlideEnd_A: 'gameres/note_long_3.webp',
+        SlideEnd_B: 'gameres/note_long_3.webp',
+        SlideEndFlick_A: 'gameres/note_flick_3.webp',
+        SlideEndFlick_B: 'gameres/note_flick_3.webp',
+        Skill: 'gameres/note_skill_3.webp',
+        LongLine: 'gameres/longNoteLine.webp'
       },
       containerNotes: [[], [], [], [], [], [], []],
       laneContainers: [null, null, null, null, null, null, null],
@@ -302,8 +302,8 @@ export default {
         this.audioContext,
         [
           this.data.bgmFile,
-          '/statics/hihat.wav',
-          '/statics/flick.mp3'
+          '/hihat.wav',
+          '/flick.mp3'
         ],
         () => { this.audioDisable = false }
       )
@@ -321,12 +321,12 @@ export default {
           this.renderStage()
         } else {
           PIXI.loader.add([
-            'statics/gameres/note_normal_3.png',
-            'statics/gameres/note_flick_3.png',
-            'statics/gameres/note_long_3.png',
-            'statics/gameres/note_skill_3.png',
-            'statics/gameres/note_slide_among.png',
-            'statics/gameres/longNoteLine.png'
+            'gameres/note_normal_3.webp',
+            'gameres/note_flick_3.webp',
+            'gameres/note_long_3.webp',
+            'gameres/note_skill_3.webp',
+            'gameres/note_slide_among.webp',
+            'gameres/longNoteLine.webp'
           ]).load(this.startRhythm)
           return
         }

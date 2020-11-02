@@ -1,6 +1,9 @@
 import VueI18n from 'vue-i18n'
 import { Quasar, LocalStorage } from 'quasar'
 import messages from 'src/i18n'
+import moment from 'moment'
+
+let i18n
 
 export default ({ app, router, Vue }) => {
   Vue.use(VueI18n)
@@ -10,9 +13,10 @@ export default ({ app, router, Vue }) => {
     locale = Quasar.lang.getLocale().toLowerCase()
     LocalStorage.set('useLocale', locale)
   }
+  moment.locale(locale)
 
   // Set i18n instance on app
-  app.i18n = new VueI18n({
+  i18n = app.i18n = new VueI18n({
     locale,
     fallbackLocale: 'en',
     messages
@@ -22,5 +26,8 @@ export default ({ app, router, Vue }) => {
   Vue.setDataLang = Vue.prototype.$setDataLang = (newVal) => {
     Vue.dataLang = Vue.prototype.$dataLang = newVal
     LocalStorage.set('dataLang', newVal)
+    moment.locale(newVal)
   }
 }
+
+export { i18n }

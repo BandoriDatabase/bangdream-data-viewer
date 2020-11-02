@@ -21,7 +21,6 @@ module.exports = function (ctx) {
       'fontawesome-v5'
       // 'eva-icons'
     ],
-    supportIE: false,
     vendor: {
       add: [],
       remove: []
@@ -49,51 +48,35 @@ module.exports = function (ctx) {
       open: true, // opens browser window automatically
       proxy: {
         '/assets': {
-          target: 'https://res.bandori.ga',
-          // target: 'http://localhost:8080',
-          changeOrigin: true
-        },
-        '/assets-jp': {
-          target: 'https://res.bandori.ga',
-          // target: 'http://localhost:8080',
-          changeOrigin: true
-        },
-        '/assets-tw': {
-          target: 'https://res.bandori.ga',
-          // target: 'http://localhost:8080',
-          changeOrigin: true
-        },
-        '/assets-kr': {
-          target: 'https://res.bandori.ga',
-          // target: 'http://localhost:8080',
-          changeOrigin: true
-        },
-        '/assets-en': {
-          target: 'https://res.bandori.ga',
-          // target: 'http://localhost:8080',
-          changeOrigin: true
-        },
-        '/live2d': {
-          // target: 'http://localhost:8080/assets/live2d/chara',
-          target: 'https://res.bandori.ga/assets/live2d/chara',
+          target: 'https://res.bandori.top/file/bandori-assets/',
+          // target: 'http://localhost:8000',
           changeOrigin: true,
           pathRewrite: {
-            '^/live2d': ''
+            '^/assets': ''
           }
         },
+        // '/live2d': {
+        //   target: 'http://localhost:8000/assets/live2d/chara',
+        //   // target: 'https://res.bandori.ga/assets/live2d/chara',
+        //   changeOrigin: true,
+        //   pathRewrite: {
+        //     '^/live2d': ''
+        //   }
+        // },
         '/api': {
-          target: 'https://api.bandori.ga',
-          // target: 'http://localhost:8180',
+          // target: 'https://api.bandori.ga',
+          target: 'http://localhost:8180',
           changeOrigin: true,
           pathRewrite: {
-            '^/api/v1': '/v1'
+            '^/api/v1': '/v1',
+            '^/api/v2': '/v2'
           }
         }
       }
     },
     // framework: 'all' --- includes everything; for dev only!
     framework: {
-      all: 'auto',
+      importStrategy: 'auto',
       // components: [
       //   'QLayout',
       //   'QHeader',
@@ -155,29 +138,34 @@ module.exports = function (ctx) {
     // animations: 'all' --- includes all animations
     animations: [
       'bounceInUp',
-      'bounceOutUp'
+      'bounceOutUp',
+      'bounceInDown',
+      'bounceOutDown',
+      'bounceInLeft',
+      'bounceOutRight'
     ],
     pwa: {
       start_url: '/',
       // workboxPluginMode: 'InjectManifest',
       workboxPluginMode: 'GenerateSW',
       workboxOptions: {
-        runtimeCaching: [{
-          urlPattern: /api\/v\d\/\S{2}\/chara\/birthday/,
-          handler: 'NetworkFirst',
-          options: {
-            cacheName: 'bd-api-cache'
-          }
-        }, {
-          urlPattern: /api\/v\d\/\S{2}\/(card|chara|live2d\/model|live2d\/costume|music|stamp|degree|event\/badge)\/.+/,
-          handler: 'StaleWhileRevalidate',
-          options: {
-            cacheName: 'bd-api-cache'
-          }
-        }]
+        // runtimeCaching: [{
+        //   urlPattern: /api\/v1\/\S{2}\/chara\/birthday/,
+        //   handler: 'NetworkFirst',
+        //   options: {
+        //     cacheName: 'bd-api-cache'
+        //   }
+        // }, {
+        //   urlPattern: /api\/v1\/\S{2}\/(card|chara|live2d\/model|live2d\/costume|music|stamp|degree|event\/badge)\/.+/,
+        //   handler: 'StaleWhileRevalidate',
+        //   options: {
+        //     cacheName: 'bd-api-cache'
+        //   }
+        // }]
+        skipWaiting: true
       },
       manifest: {
-        name: 'Bandori Database',
+        name: 'Bandori Top',
         short_name: 'Bandori DB',
         description: 'The unified Database for the mobile idol rhythm game BanG Dream! Girls Band Party!',
         display: 'standalone',
@@ -186,42 +174,42 @@ module.exports = function (ctx) {
         background_color: '#e91e63',
         icons: [
           {
-            'src': 'statics/icons/icon-72x72.png',
+            'src': 'icons/icon-72x72.png',
             'sizes': '72x72',
             'type': 'image/png'
           },
           {
-            'src': 'statics/icons/icon-96x96.png',
+            'src': 'icons/icon-96x96.png',
             'sizes': '96x96',
             'type': 'image/png'
           },
           {
-            'src': 'statics/icons/icon-128x128.png',
+            'src': 'icons/icon-128x128.png',
             'sizes': '128x128',
             'type': 'image/png'
           },
           {
-            'src': 'statics/icons/icon-144x144.png',
+            'src': 'icons/icon-144x144.png',
             'sizes': '144x144',
             'type': 'image/png'
           },
           {
-            'src': 'statics/icons/icon-152x152.png',
+            'src': 'icons/icon-152x152.png',
             'sizes': '152x152',
             'type': 'image/png'
           },
           {
-            'src': 'statics/icons/icon-192x192.png',
+            'src': 'icons/icon-192x192.png',
             'sizes': '192x192',
             'type': 'image/png'
           },
           {
-            'src': 'statics/icons/icon-384x384.png',
+            'src': 'icons/icon-384x384.png',
             'sizes': '384x384',
             'type': 'image/png'
           },
           {
-            'src': 'statics/icons/icon-512x512.png',
+            'src': 'icons/icon-512x512.png',
             'sizes': '512x512',
             'type': 'image/png'
           }
