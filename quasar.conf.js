@@ -162,7 +162,7 @@ module.exports = function (ctx) {
         //     cacheName: 'bd-api-cache'
         //   }
         // }]
-        // skipWaiting: true,
+        skipWaiting: true,
         cleanupOutdatedCaches: true
       },
       manifest: {
