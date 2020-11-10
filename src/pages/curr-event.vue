@@ -195,7 +195,7 @@
                   size="48px"
                 ></q-spinner-facebook>
               </div>
-              <div class="col-12 col-md-6 column justify-center items-center">
+              <div class="col-12 col-md-6 column justify-center items-center q-gutter-sm">
                 <p class="q-mt-md text-h5 lt-md">{{$t('event.degrees')}}</p>
                 <div
                   v-if="isDegreeReady && (currentEvent[server].eventId >= 13 || server === 'cn')"
@@ -225,60 +225,64 @@
                   v-else
                   size="48px"
                 ></q-spinner-facebook>
+                <div v-if="currentEvent[server].eventType === 'challenge'">
+                  <div
+                    class="row justify-center"
+                    v-if="isDegreeReady"
+                  >
+                    <div
+                      class="event-degree relative-position"
+                      v-for="eventMusic in currentEvent[server].detail.musics"
+                      :key="eventMusic.seq"
+                    >
+                      <my-q-img
+                        :src="`/assets/${server}/thumb/degree_rip/${degreeMap[server][eventMusic.musicRankingRewards[0].resourceId].baseImageName}.webp`"
+                        class="absolute-left"
+                      />
+                      <my-q-img
+                        :src="`/assets/${server}/thumb/degree_rip/score_ranking_1.webp`"
+                        class="absolute-left"
+                      />
+                      <q-tooltip>{{degreeMap[server][eventMusic.musicRankingRewards[0].resourceId].description}}</q-tooltip>
+                    </div>
+                  </div>
+                  <q-spinner-facebook
+                    v-else
+                    color="pink"
+                    size="48px"
+                  ></q-spinner-facebook>
+                </div>
+                <div v-if="currentEvent[server].eventType === 'live_try'">
+                  <div
+                    class="row justify-center"
+                    v-if="isDegreeReady"
+                  >
+                    <div class="event-degree relative-position">
+                      <my-q-img
+                        :src="`/assets/${server}/thumb/degree_rip/${degreeMap[server][Object.values(this.currentEvent[server].detail.masterLiveTryLevelRewardDifficultyMap.entries.normal.entries).find(e => e.resourceType === 'degree').resourceId].baseImageName}.webp`"
+                        class="absolute-left"
+                      />
+                      <my-q-img
+                        :src="`/assets/${server}/thumb/degree_rip/try_clear_normal.webp`"
+                        class="absolute-left"
+                      />
+                      <q-tooltip>{{degreeMap[server][Object.values(this.currentEvent[server].detail.masterLiveTryLevelRewardDifficultyMap.entries.normal.entries).find(e => e.resourceType === 'degree').resourceId].description}}</q-tooltip>
+                    </div>
+                    <div
+                      class="event-degree"
+                      :style="{ 'background-image': `url(/assets/${server}/thumb/degree_rip/try_clear_extra.webp), url(/assets/${server}/thumb/degree_rip/${degreeMap[server][Object.values(this.currentEvent[server].detail.masterLiveTryLevelRewardDifficultyMap.entries.extra.entries).find(e => e.resourceType === 'degree').resourceId].baseImageName}.webp)` }"
+                    >
+                      <q-tooltip>{{degreeMap[server][Object.values(this.currentEvent[server].detail.masterLiveTryLevelRewardDifficultyMap.entries.extra.entries).find(e => e.resourceType === 'degree').resourceId].description}}</q-tooltip>
+                    </div>
+                  </div>
+                  <q-spinner-facebook
+                    v-else
+                    color="pink"
+                    size="48px"
+                  ></q-spinner-facebook>
+                </div>
               </div>
             </div>
-            <span v-if="currentEvent[server].eventType === 'challenge'">
-              <div
-                class="row justify-center"
-                v-if="isDegreeReady"
-              >
-                <div
-                  class="event-degree relative-position"
-                  v-for="eventMusic in currentEvent[server].detail.musics"
-                  :key="eventMusic.seq"
-                >
-                  <my-q-img
-                    :src="`/assets/${server}/thumb/degree_rip/${degreeMap[server][eventMusic.musicRankingRewards[0].resourceId].baseImageName}.webp`"
-                    class="absolute-left"
-                  />
-                  <my-q-img
-                    :src="`/assets/${server}/thumb/degree_rip/score_ranking_1.webp`"
-                    class="absolute-left"
-                  />
-                </div>
-              </div>
-              <q-spinner-facebook
-                v-else
-                color="pink"
-                size="48px"
-              ></q-spinner-facebook>
-            </span>
-            <span v-if="currentEvent[server].eventType === 'live_try'">
-              <div
-                class="row justify-center"
-                v-if="isDegreeReady"
-              >
-                <div class="event-degree relative-position">
-                  <my-q-img
-                    :src="`/assets/${server}/thumb/degree_rip/${degreeMap[server][Object.values(this.currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.normal.entries).find(e => e.resourceType === 'degree').resourceId].baseImageName}.webp`"
-                    class="absolute-left"
-                  />
-                  <my-q-img
-                    :src="`/assets/${server}/thumb/degree_rip/try_clear_normal.webp`"
-                    class="absolute-left"
-                  />
-                </div>
-                <div
-                  class="event-degree"
-                  :style="{ 'background-image': `url(/assets/${server}/thumb/degree_rip/try_clear_extra.webp), url(/assets/${server}/thumb/degree_rip/${degreeMap[server][Object.values(this.currentEvent[server].detail.liveTryLevelRewardDifficultyMap.entries.normal.entries).find(e => e.resourceType === 'degree').resourceId].baseImageName}.webp)` }"
-                />
-              </div>
-              <q-spinner-facebook
-                v-else
-                color="pink"
-                size="48px"
-              ></q-spinner-facebook>
-            </span>
             <span
               class="column items-center q-mt-md"
               v-if="currentEvent[server].eventType === 'challenge'"
