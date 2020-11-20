@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 import { servers } from '../../constants'
 import db from '../../db'
 
@@ -32,8 +34,22 @@ charadb.toArray().then(charas => {
 
 bandcharadb.toArray().then(bandcharas => {
   servers.forEach(server => {
+    // validate with remote
     state.bandCharaList[server] = bandcharas.filter(bandchara => bandchara.server === server)
     state.bandCharaList[server].sort((a, b) => a.characterId - b.characterId)
+    if (state.bandCharaList[server].length) {
+      Vue.apiClient.getBandChara(server).then(charas => {
+        if (charas.length !== state.bandCharaList[server].length) {
+          state.bandCharaList[server] = charas
+          state.bandCharaList[server].sort((a, b) => a.characterId - b.characterId)
+          charas.forEach(bandchara => {
+            bandcharadb.get({ characterId: bandchara.characterId, server }).then((_bandchara) => {
+              if (!_bandchara) bandcharadb.put(Object.assign({}, bandchara, { server }))
+            })
+          })
+        }
+      })
+    }
   })
 })
 
