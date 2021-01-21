@@ -1,4 +1,4 @@
-# Bang Dream Data Viewer
+# Bandori Top
 
 > A unified game data viewer of the rhythm game Bang Dream! Girls Band Party!
 
