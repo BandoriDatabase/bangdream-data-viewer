@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.1.0",
-    "@quasar/app": "^2.0.3",
+    "@quasar/app": "^2.4.3",
     "babel-eslint": "^9.0.0",
     "babel-plugin-transform-imports": "^1.5.1",
     "eslint": "^5.16.0",
